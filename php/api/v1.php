@@ -1,4 +1,28 @@
 <?php
+// 1) ALWAYS send CORS headers � even on preflight OPTIONS
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    // if you ever use credentials, echo back the exact origin
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+} else {
+    header("Access-Control-Allow-Origin: *");
+}
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth-Token");
+// (you can omit Sec-CH-UA� here � the browser adds those automatically)
+
+// 2) SHORT-CIRCUIT OPTIONS preflight
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    // optional: header("Access-Control-Max-Age: 86400");
+    // no body for preflight
+    http_response_code(204);
+    exit;
+}
+
+// 3) Now handle your real request
+header('Content-Type: application/json; charset=utf-8');
+
+
 @ini_set("display_errors","1");
 $restApiCall = true;
 
