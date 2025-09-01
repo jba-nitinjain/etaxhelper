@@ -1,3 +1,5 @@
+import mysql from 'mysql2/promise';
+
 // AWS RDS MySQL Configuration for Indian locale
 export const dbConfig = {
   host: 'whatsapp-saas1.clf8qe6egrav.ap-south-2.rds.amazonaws.com',
@@ -6,85 +8,31 @@ export const dbConfig = {
   port: 3306,
   database: 'etaxhelper',
   timezone: '+05:30', // Indian Standard Time
-  charset: 'utf8mb4'
+  charset: 'utf8mb4',
+  acquireTimeout: 60000,
+  timeout: 60000,
+  reconnect: true
 };
 
-// For WebContainer demo, we'll use localStorage as a mock database
-export class MockDatabase {
-  private static getInstance() {
-    return new MockDatabase();
-  }
+// Create connection pool for better performance
+export const pool = mysql.createPool({
+  ...dbConfig,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 
-  static contacts = MockDatabase.getInstance();
-  static organizations = MockDatabase.getInstance();
-
-  private getKey(table: string): string {
-    return `crm_${table}`;
-  }
-
-  async findAll<T>(table: string): Promise<T[]> {
-    const key = this.getKey(table);
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : [];
-  }
-
-  async findById<T>(table: string, id: string | number): Promise<T | null> {
-    const items = await this.findAll<T & { id?: string; org_id?: number; contact_id?: number }>(table);
-    return items.find(item => 
-      item.id === id || 
-      item.org_id === id || 
-      item.contact_id === id
-    ) || null;
-  }
-
-  async create<T extends { id?: string; org_id?: number; contact_id?: number }>(table: string, data: T): Promise<T> {
-    const items = await this.findAll<T>(table);
-    const newItem = {
-      ...data,
-      id: data.id || crypto.randomUUID(),
-      org_id: data.org_id || Date.now(),
-      contact_id: data.contact_id || Date.now(),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    } as T;
-    
-    items.push(newItem);
-    localStorage.setItem(this.getKey(table), JSON.stringify(items));
-    return newItem;
-  }
-
-  async update<T extends { id?: string; org_id?: number; contact_id?: number }>(table: string, id: string | number, data: Partial<T>): Promise<T | null> {
-    const items = await this.findAll<T>(table);
-    const index = items.findIndex(item => 
-      (item as any).id === id || 
-      (item as any).org_id === id || 
-      (item as any).contact_id === id
-    );
-    
-    if (index === -1) return null;
-    
-    items[index] = {
-      ...items[index],
-      ...data,
-      updatedAt: new Date()
-    };
-    
-    localStorage.setItem(this.getKey(table), JSON.stringify(items));
-    return items[index];
-  }
-
-  async delete(table: string, id: string | number): Promise<boolean> {
-    const items = await this.findAll(table);
-    const filteredItems = items.filter((item: any) => 
-      item.id !== id && 
-      item.org_id !== id && 
-      item.contact_id !== id
-    );
-    
-    if (filteredItems.length === items.length) return false;
-    
-    localStorage.setItem(this.getKey(table), JSON.stringify(filteredItems));
+// Test database connection
+export async function testConnection(): Promise<boolean> {
+  try {
+    const connection = await pool.getConnection();
+    await connection.ping();
+    connection.release();
+    console.log('Database connection successful');
     return true;
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    return false;
   }
 }
 
@@ -123,5 +71,20 @@ export const formatPhone = (phone: string): string => {
   if (cleaned.length === 10) {
     return `+91 ${cleaned.slice(0, 5)} ${cleaned.slice(5)}`;
   }
+  if (cleaned.length === 12 && cleaned.startsWith('91')) {
+    return `+91 ${cleaned.slice(2, 7)} ${cleaned.slice(7)}`;
+  }
   return phone;
+};
+
+// Helper function to convert MySQL date strings to Date objects
+export const parseDate = (dateString: string | null): Date | null => {
+  if (!dateString) return null;
+  return new Date(dateString);
+};
+
+// Helper function to format Date objects for MySQL
+export const formatDateForMySQL = (date: Date | null): string | null => {
+  if (!date) return null;
+  return date.toISOString().slice(0, 19).replace('T', ' ');
 };

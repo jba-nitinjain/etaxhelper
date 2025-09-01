@@ -1,53 +1,70 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { X } from 'lucide-react';
-import { Contact } from '../../types';
+import { OrganizationContact, Organization } from '../../types';
+import { useOrganizations } from '../../hooks/useOrganizations';
 
 const contactSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(10, 'Phone number must be at least 10 digits').regex(/^[+]?[0-9\s-()]+$/, 'Invalid phone number format'),
-  company: z.string().min(1, 'Company is required'),
-  position: z.string().min(1, 'Position is required'),
-  source: z.enum(['website', 'referral', 'cold_call', 'social_media', 'event', 'other']),
-  status: z.enum(['active', 'inactive', 'prospect']),
-  notes: z.string().optional(),
+  org_id: z.number().min(1, 'Organization is required'),
+  NAME: z.string().min(1, 'Name is required'),
+  designation: z.string().optional(),
+  email: z.string().email('Invalid email address').optional().or(z.literal('')),
+  phone: z.string().optional(),
+  dob: z.string().optional(),
+  city: z.string().optional(),
+  pin: z.string().optional(),
+  country: z.string().optional(),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
 interface ContactFormProps {
-  contact?: Contact;
-  onSubmit: (data: ContactFormData) => void;
+  contact?: OrganizationContact;
+  onSubmit: (data: any) => void;
   onClose: () => void;
   isLoading: boolean;
 }
 
 export function ContactForm({ contact, onSubmit, onClose, isLoading }: ContactFormProps) {
+  const { data: organizations = [] } = useOrganizations();
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: contact ? {
-      firstName: contact.firstName,
-      lastName: contact.lastName,
-      email: contact.email,
-      phone: contact.phone,
-      company: contact.company,
-      position: contact.position,
-      source: contact.source,
-      status: contact.status,
-      notes: contact.notes,
+      org_id: contact.org_id,
+      NAME: contact.NAME,
+      designation: contact.designation || '',
+      email: contact.email || '',
+      phone: contact.phone || '',
+      dob: contact.dob ? contact.dob.toISOString().slice(0, 10) : '',
+      city: contact.city || '',
+      pin: contact.pin || '',
+      country: contact.country || 'India',
     } : {
-      source: 'website',
-      status: 'prospect',
+      country: 'India',
     },
   });
+
+  const handleFormSubmit = (data: ContactFormData) => {
+    const submitData = {
+      ...data,
+      dob: data.dob ? new Date(data.dob) : undefined,
+      email: data.email || undefined,
+      phone: data.phone || undefined,
+      designation: data.designation || undefined,
+      city: data.city || undefined,
+      pin: data.pin || undefined,
+      country: data.country || undefined,
+    };
+    onSubmit(submitData);
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -64,32 +81,51 @@ export function ContactForm({ contact, onSubmit, onClose, isLoading }: ContactFo
           </button>
         </div>
         
-        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit(handleFormSubmit)} className="p-6 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                First Name
+                Organization *
+              </label>
+              <select
+                {...register('org_id', { valueAsNumber: true })}
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">Select Organization</option>
+                {organizations.map((org) => (
+                  <option key={org.org_id} value={org.org_id}>
+                    {org.display_name} {org.company_name && `(${org.company_name})`}
+                  </option>
+                ))}
+              </select>
+              {errors.org_id && (
+                <p className="text-red-600 text-sm mt-1">{errors.org_id.message}</p>
+              )}
+            </div>
+            
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Full Name *
               </label>
               <input
-                {...register('firstName')}
+                {...register('NAME')}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Enter full name"
               />
-              {errors.firstName && (
-                <p className="text-red-600 text-sm mt-1">{errors.firstName.message}</p>
+              {errors.NAME && (
+                <p className="text-red-600 text-sm mt-1">{errors.NAME.message}</p>
               )}
             </div>
             
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Last Name
+                Designation
               </label>
               <input
-                {...register('lastName')}
+                {...register('designation')}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="e.g., Manager, Director"
               />
-              {errors.lastName && (
-                <p className="text-red-600 text-sm mt-1">{errors.lastName.message}</p>
-              )}
             </div>
             
             <div>
@@ -100,6 +136,7 @@ export function ContactForm({ contact, onSubmit, onClose, isLoading }: ContactFo
                 type="email"
                 {...register('email')}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="email@example.com"
               />
               {errors.email && (
                 <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
@@ -113,80 +150,53 @@ export function ContactForm({ contact, onSubmit, onClose, isLoading }: ContactFo
               <input
                 {...register('phone')}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="+91 98765 43210"
               />
-              {errors.phone && (
-                <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>
-              )}
             </div>
             
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Company
+                Date of Birth
               </label>
               <input
-                {...register('company')}
+                type="date"
+                {...register('dob')}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
-              {errors.company && (
-                <p className="text-red-600 text-sm mt-1">{errors.company.message}</p>
-              )}
             </div>
             
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Position
+                City
               </label>
               <input
-                {...register('position')}
+                {...register('city')}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="e.g., Mumbai, Delhi"
               />
-              {errors.position && (
-                <p className="text-red-600 text-sm mt-1">{errors.position.message}</p>
-              )}
             </div>
             
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Source
+                PIN Code
               </label>
-              <select
-                {...register('source')}
+              <input
+                {...register('pin')}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="website">Website</option>
-                <option value="referral">Referral</option>
-                <option value="cold_call">Cold Call</option>
-                <option value="social_media">Social Media</option>
-                <option value="event">Event</option>
-                <option value="other">Other</option>
-              </select>
+                placeholder="e.g., 400001"
+              />
             </div>
             
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Status
+                Country
               </label>
-              <select
-                {...register('status')}
+              <input
+                {...register('country')}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="prospect">Prospect</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
+                placeholder="India"
+              />
             </div>
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Notes
-            </label>
-            <textarea
-              {...register('notes')}
-              rows={4}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Additional notes about this contact..."
-            />
           </div>
           
           <div className="flex justify-end space-x-3">

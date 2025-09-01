@@ -1,20 +1,13 @@
 import React from 'react';
-import { formatDistanceToNow } from 'date-fns';
 import { formatPhone, formatDate } from '../../config/database';
-import { Edit, Trash2, Mail, Phone } from 'lucide-react';
-import { Contact } from '../../types';
+import { Edit, Trash2, Mail, Phone, Building } from 'lucide-react';
+import { OrganizationContact } from '../../types';
 
 interface ContactTableProps {
-  contacts: Contact[];
-  onEdit: (contact: Contact) => void;
-  onDelete: (id: string) => void;
+  contacts: OrganizationContact[];
+  onEdit: (contact: OrganizationContact) => void;
+  onDelete: (contact_id: number) => void;
 }
-
-const statusColors = {
-  active: 'bg-green-100 text-green-800',
-  inactive: 'bg-red-100 text-red-800',
-  prospect: 'bg-yellow-100 text-yellow-800',
-};
 
 export function ContactTable({ contacts, onEdit, onDelete }: ContactTableProps) {
   return (
@@ -27,13 +20,13 @@ export function ContactTable({ contacts, onEdit, onDelete }: ContactTableProps) 
                 Contact
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                Company
+                Organization
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                Status
+                Location
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                Last Contact
+                Date of Birth
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                 Actions
@@ -42,50 +35,76 @@ export function ContactTable({ contacts, onEdit, onDelete }: ContactTableProps) 
           </thead>
           <tbody className="bg-white divide-y divide-slate-200">
             {contacts.map((contact) => (
-              <tr key={contact.id} className="hover:bg-slate-50 transition-colors">
+              <tr key={contact.contact_id} className="hover:bg-slate-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div>
                     <div className="text-sm font-medium text-slate-900">
-                      {contact.firstName} {contact.lastName}
+                      {contact.NAME}
                     </div>
-                    <div className="text-sm text-slate-500 flex items-center space-x-4">
-                      <span className="flex items-center">
-                        <Mail className="h-3 w-3 mr-1" />
-                        {contact.email}
-                      </span>
-                      <span className="flex items-center">
-                        <Phone className="h-3 w-3 mr-1" />
-                        {formatPhone(contact.phone)}
-                      </span>
+                    {contact.designation && (
+                      <div className="text-sm text-slate-500">{contact.designation}</div>
+                    )}
+                    <div className="text-sm text-slate-500 flex items-center space-x-4 mt-1">
+                      {contact.email && (
+                        <span className="flex items-center">
+                          <Mail className="h-3 w-3 mr-1" />
+                          {contact.email}
+                        </span>
+                      )}
+                      {contact.phone && (
+                        <span className="flex items-center">
+                          <Phone className="h-3 w-3 mr-1" />
+                          {formatPhone(contact.phone)}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-slate-900">{contact.company}</div>
-                  <div className="text-sm text-slate-500">{contact.position}</div>
+                  {contact.organization && (
+                    <div>
+                      <div className="text-sm font-medium text-slate-900 flex items-center">
+                        <Building className="h-4 w-4 mr-2 text-slate-400" />
+                        {contact.organization.display_name}
+                      </div>
+                      {contact.organization.company_name && (
+                        <div className="text-sm text-slate-500">
+                          {contact.organization.company_name}
+                        </div>
+                      )}
+                      {contact.organization.org_type && (
+                        <div className="text-xs text-slate-400">
+                          {contact.organization.org_type}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${statusColors[contact.status]}`}>
-                    {contact.status}
-                  </span>
+                  <div className="text-sm text-slate-900">
+                    {contact.city && contact.country ? `${contact.city}, ${contact.country}` : 
+                     contact.city || contact.country || '-'}
+                  </div>
+                  {contact.pin && (
+                    <div className="text-sm text-slate-500">PIN: {contact.pin}</div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                  {contact.lastContactDate 
-                    ? formatDate(new Date(contact.lastContactDate))
-                    : 'Never'
-                  }
+                  {contact.dob ? formatDate(contact.dob) : '-'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <div className="flex space-x-2">
                     <button
                       onClick={() => onEdit(contact)}
                       className="text-blue-600 hover:text-blue-900 transition-colors"
+                      title="Edit Contact"
                     >
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
-                      onClick={() => onDelete(contact.id)}
+                      onClick={() => onDelete(contact.contact_id)}
                       className="text-red-600 hover:text-red-900 transition-colors"
+                      title="Delete Contact"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
