@@ -15,60 +15,24 @@ export interface Contact {
   lastContactDate?: Date;
 }
 
-export interface Lead {
-  id: string;
-  contactId: string;
-  title: string;
-  description: string;
-  value: number;
-  stage: 'prospect' | 'qualified' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
-  probability: number;
-  expectedCloseDate: Date;
-  assignedTo: string;
-  source: string;
-  createdAt: Date;
-  updatedAt: Date;
+export interface Organization {
+  org_id: number;
+  org_type: 'Proprietorship' | 'Partnership' | 'Private Limited' | 'Public Limited' | 'LLP' | 'NGO' | 'Cooperative' | 'Government' | 'Individual' | 'Other';
+  company_name?: string;
+  display_name: string;
+  email?: string;
+  phone_work?: string;
 }
 
-export interface Deal {
-  id: string;
-  contactId: string;
-  leadId?: string;
-  title: string;
-  description: string;
-  value: number;
-  stage: 'discovery' | 'proposal' | 'negotiation' | 'contract' | 'closed_won' | 'closed_lost';
-  probability: number;
-  expectedCloseDate: Date;
-  actualCloseDate?: Date;
-  assignedTo: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface Activity {
-  id: string;
-  contactId: string;
-  leadId?: string;
-  dealId?: string;
-  type: 'call' | 'email' | 'meeting' | 'note' | 'task';
-  title: string;
-  description: string;
-  dueDate?: Date;
-  completedAt?: Date;
-  priority: 'low' | 'medium' | 'high';
-  assignedTo: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface DashboardStats {
-  totalContacts: number;
-  totalLeads: number;
-  totalDeals: number;
-  totalRevenue: number;
-  conversionRate: number;
-  avgDealSize: number;
-  pipelineValue: number;
-  activitiesThisWeek: number;
+export interface OrganizationContact {
+  contact_id: number;
+  org_id: number;
+  NAME: string;
+  designation?: string;
+  email?: string;
+  phone?: string;
+  dob?: Date;
+  city?: string;
+  pin?: string;
+  country?: string;
 }

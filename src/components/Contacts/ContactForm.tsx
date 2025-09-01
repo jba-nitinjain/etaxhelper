@@ -9,7 +9,7 @@ const contactSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().min(1, 'Phone number is required'),
+  phone: z.string().min(10, 'Phone number must be at least 10 digits').regex(/^[+]?[0-9\s-()]+$/, 'Invalid phone number format'),
   company: z.string().min(1, 'Company is required'),
   position: z.string().min(1, 'Position is required'),
   source: z.enum(['website', 'referral', 'cold_call', 'social_media', 'event', 'other']),

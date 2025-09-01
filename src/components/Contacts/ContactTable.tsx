@@ -1,5 +1,6 @@
 import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
+import { formatPhone, formatDate } from '../../config/database';
 import { Edit, Trash2, Mail, Phone } from 'lucide-react';
 import { Contact } from '../../types';
 
@@ -54,7 +55,7 @@ export function ContactTable({ contacts, onEdit, onDelete }: ContactTableProps) 
                       </span>
                       <span className="flex items-center">
                         <Phone className="h-3 w-3 mr-1" />
-                        {contact.phone}
+                        {formatPhone(contact.phone)}
                       </span>
                     </div>
                   </div>
@@ -70,7 +71,7 @@ export function ContactTable({ contacts, onEdit, onDelete }: ContactTableProps) 
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                   {contact.lastContactDate 
-                    ? formatDistanceToNow(new Date(contact.lastContactDate), { addSuffix: true })
+                    ? formatDate(new Date(contact.lastContactDate))
                     : 'Never'
                   }
                 </td>

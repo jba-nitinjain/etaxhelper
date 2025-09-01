@@ -4,10 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Sidebar } from './components/Layout/Sidebar';
 import { Dashboard } from './pages/Dashboard';
 import { Contacts } from './pages/Contacts';
-import { Leads } from './pages/Leads';
-import { Deals } from './pages/Deals';
-import { Activities } from './pages/Activities';
-import { Analytics } from './pages/Analytics';
 import { initializeSampleData } from './utils/sampleData';
 
 // Initialize sample data on app start
@@ -34,10 +30,12 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/contacts" element={<Contacts />} />
-                <Route path="/leads" element={<Leads />} />
-                <Route path="/deals" element={<Deals />} />
-                <Route path="/activities" element={<Activities />} />
-                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/organizations" element={
+                  <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
+                    <h1 className="text-2xl font-bold text-slate-900 mb-4">Organizations</h1>
+                    <p className="text-slate-600">Organizations management coming soon...</p>
+                  </div>
+                } />
                 <Route path="/settings" element={
                   <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
                     <h1 className="text-2xl font-bold text-slate-900 mb-4">Settings</h1>

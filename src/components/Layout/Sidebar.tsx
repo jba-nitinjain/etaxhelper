@@ -3,20 +3,14 @@ import { NavLink } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Users, 
-  Target, 
-  DollarSign, 
-  Calendar,
   Settings,
-  BarChart3
+  Building
 } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Contacts', href: '/contacts', icon: Users },
-  { name: 'Leads', href: '/leads', icon: Target },
-  { name: 'Deals', href: '/deals', icon: DollarSign },
-  { name: 'Activities', href: '/activities', icon: Calendar },
-  { name: 'Analytics', href: '/analytics', icon: BarChart3 },
+  { name: 'Organizations', href: '/organizations', icon: Building },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 
