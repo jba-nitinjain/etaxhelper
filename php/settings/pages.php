@@ -253,20 +253,34 @@ $runnerPageInfo = array(
 			'admin_members_list' => array( 
 				'admin_members_list' 
 			) 
+		),
+		'users' => array(
+			'list' => array( 
+				'list' 
+			),
+			'edit' => array( 
+				'edit' 
+			),
+			'add' => array( 
+				'add' 
+			),
+			'view' => array( 
+				'view' 
+			) 
 		) 
 	),
 	'tableMasks' => array(
 		'ORGANIZATION' => 'ADESPI',
-		'organization_bank' => 'ADESPI',
 		'admin_users' => 'ADESPI',
 		'organization_branch' => 'ADESPI',
-		'organization_contact' => 'ADESPI',
-		'users' => '',
-		'organization_registration' => 'ADESPI',
 		'organization_bank_signatory' => 'ADESPI',
-		'organization_login' => 'ADESPI',
-		'organization_director' => 'ADESPI',
+		'users' => 'ADES',
 		'organization_social_media' => 'ADESPI',
+		'organization_registration' => 'ADESPI',
+		'organization_director' => 'ADESPI',
+		'organization_login' => 'ADESPI',
+		'organization_bank' => 'ADESPI',
+		'organization_contact' => 'ADESPI',
 		'<global>' => 'S' 
 	) 
 );

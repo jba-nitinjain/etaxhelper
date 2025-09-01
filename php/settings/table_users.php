@@ -3,6 +3,37 @@ global $runnerTableSettings;
 $runnerTableSettings['users'] = array(
 	'name' => 'users',
 	'shortName' => 'users',
+	'pagesByType' => array(
+		'list' => array( 
+			'list' 
+		),
+		'edit' => array( 
+			'edit' 
+		),
+		'add' => array( 
+			'add' 
+		),
+		'view' => array( 
+			'view' 
+		),
+		'search' => array( 
+			'search' 
+		) 
+	),
+	'pageTypes' => array(
+		'list' => 'list',
+		'edit' => 'edit',
+		'add' => 'add',
+		'view' => 'view',
+		'search' => 'search' 
+	),
+	'defaultPages' => array(
+		'list' => 'list',
+		'edit' => 'edit',
+		'add' => 'add',
+		'view' => 'view',
+		'search' => 'search' 
+	),
 	'afterEditDetails' => 'users',
 	'afterAddDetail' => 'users',
 	'detailsBadgeColor' => 'e07878',
@@ -194,7 +225,7 @@ FROM
 					 
 				) 
 			),
-			'tableName' => '' 
+			'tableName' => 'users' 
 		) 
 	),
 	'query' => array(
@@ -504,13 +535,35 @@ FROM
 	),
 	'originalTable' => 'users',
 	'originalPagesByType' => array(
-		 
+		'list' => array( 
+			'list' 
+		),
+		'edit' => array( 
+			'edit' 
+		),
+		'add' => array( 
+			'add' 
+		),
+		'view' => array( 
+			'view' 
+		),
+		'search' => array( 
+			'search' 
+		) 
 	),
 	'originalPageTypes' => array(
-		 
+		'list' => 'list',
+		'edit' => 'edit',
+		'add' => 'add',
+		'view' => 'view',
+		'search' => 'search' 
 	),
 	'originalDefaultPages' => array(
-		 
+		'list' => 'list',
+		'edit' => 'edit',
+		'add' => 'add',
+		'view' => 'view',
+		'search' => 'search' 
 	),
 	'searchSettings' => array(
 		'caseSensitiveSearch' => false,
