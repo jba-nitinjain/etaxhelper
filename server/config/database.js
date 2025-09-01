@@ -1,7 +1,8 @@
-import mysql from 'mysql2/promise';
+const mysql = require('mysql2/promise');
+require('dotenv').config();
 
 // AWS RDS MySQL Configuration for Indian locale
-export const dbConfig = {
+const dbConfig = {
   host: 'whatsapp-saas1.clf8qe6egrav.ap-south-2.rds.amazonaws.com',
   user: 'root',
   password: '04b36ff89c62ccd6',
@@ -15,7 +16,7 @@ export const dbConfig = {
 };
 
 // Create connection pool for better performance
-export const pool = mysql.createPool({
+const pool = mysql.createPool({
   ...dbConfig,
   waitForConnections: true,
   connectionLimit: 10,
@@ -23,7 +24,7 @@ export const pool = mysql.createPool({
 });
 
 // Test database connection
-export async function testConnection(): Promise<boolean> {
+async function testConnection() {
   try {
     const connection = await pool.getConnection();
     await connection.ping();
@@ -37,7 +38,7 @@ export async function testConnection(): Promise<boolean> {
 }
 
 // Indian locale formatting utilities
-export const formatCurrency = (amount: number): string => {
+const formatCurrency = (amount) => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
@@ -46,7 +47,7 @@ export const formatCurrency = (amount: number): string => {
   }).format(amount);
 };
 
-export const formatDate = (date: Date): string => {
+const formatDate = (date) => {
   return new Intl.DateTimeFormat('en-IN', {
     day: '2-digit',
     month: '2-digit',
@@ -54,7 +55,7 @@ export const formatDate = (date: Date): string => {
   }).format(date);
 };
 
-export const formatDateTime = (date: Date): string => {
+const formatDateTime = (date) => {
   return new Intl.DateTimeFormat('en-IN', {
     day: '2-digit',
     month: '2-digit',
@@ -65,7 +66,7 @@ export const formatDateTime = (date: Date): string => {
   }).format(date);
 };
 
-export const formatPhone = (phone: string): string => {
+const formatPhone = (phone) => {
   // Format Indian phone numbers
   const cleaned = phone.replace(/\D/g, '');
   if (cleaned.length === 10) {
@@ -78,13 +79,24 @@ export const formatPhone = (phone: string): string => {
 };
 
 // Helper function to convert MySQL date strings to Date objects
-export const parseDate = (dateString: string | null): Date | null => {
+const parseDate = (dateString) => {
   if (!dateString) return null;
   return new Date(dateString);
 };
 
 // Helper function to format Date objects for MySQL
-export const formatDateForMySQL = (date: Date | null): string | null => {
+const formatDateForMySQL = (date) => {
   if (!date) return null;
   return date.toISOString().slice(0, 19).replace('T', ' ');
+};
+
+module.exports = {
+  pool,
+  testConnection,
+  formatCurrency,
+  formatDate,
+  formatDateTime,
+  formatPhone,
+  parseDate,
+  formatDateForMySQL
 };

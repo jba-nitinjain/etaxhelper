@@ -1,143 +1,51 @@
-import { pool } from '../config/database';
+import { apiClient } from '../config/api';
 import { Organization, CreateOrganizationData, UpdateOrganizationData } from '../types';
-import { RowDataPacket, ResultSetHeader } from 'mysql2';
-
-interface OrganizationRow extends RowDataPacket {
-  org_id: number;
-  org_type: string | null;
-  company_name: string | null;
-  display_name: string;
-  email: string | null;
-  phone_work: string | null;
-}
 
 class OrganizationService {
   async getAll(): Promise<Organization[]> {
-    try {
-      const [rows] = await pool.execute<OrganizationRow[]>(
-        'SELECT * FROM ORGANIZATION ORDER BY display_name'
-      );
-      return rows.map(this.mapRowToOrganization);
-    } catch (error) {
-      console.error('Error fetching organizations:', error);
-      throw new Error('Failed to fetch organizations');
-    }
+    return apiClient.get<Organization[]>('/organizations');
   }
 
   async getById(org_id: number): Promise<Organization | null> {
     try {
-      const [rows] = await pool.execute<OrganizationRow[]>(
-        'SELECT * FROM ORGANIZATION WHERE org_id = ?',
-        [org_id]
-      );
-      return rows.length > 0 ? this.mapRowToOrganization(rows[0]) : null;
+      return await apiClient.get<Organization>(`/organizations/${org_id}`);
     } catch (error) {
-      console.error('Error fetching organization:', error);
-      throw new Error('Failed to fetch organization');
+      if (error instanceof Error && error.message.includes('404')) {
+        return null;
+      }
+      throw error;
     }
   }
 
   async create(data: CreateOrganizationData): Promise<Organization> {
-    try {
-      const [result] = await pool.execute<ResultSetHeader>(
-        `INSERT INTO ORGANIZATION (org_type, company_name, display_name, email, phone_work) 
-         VALUES (?, ?, ?, ?, ?)`,
-        [data.org_type || null, data.company_name || null, data.display_name, data.email || null, data.phone_work || null]
-      );
-      
-      const newOrganization = await this.getById(result.insertId);
-      if (!newOrganization) {
-        throw new Error('Failed to retrieve created organization');
-      }
-      return newOrganization;
-    } catch (error) {
-      console.error('Error creating organization:', error);
-      throw new Error('Failed to create organization');
-    }
+    return apiClient.post<Organization>('/organizations', data);
   }
 
   async update(org_id: number, data: UpdateOrganizationData): Promise<Organization | null> {
     try {
-      const updateFields: string[] = [];
-      const updateValues: any[] = [];
-
-      if (data.org_type !== undefined) {
-        updateFields.push('org_type = ?');
-        updateValues.push(data.org_type);
-      }
-      if (data.company_name !== undefined) {
-        updateFields.push('company_name = ?');
-        updateValues.push(data.company_name);
-      }
-      if (data.display_name !== undefined) {
-        updateFields.push('display_name = ?');
-        updateValues.push(data.display_name);
-      }
-      if (data.email !== undefined) {
-        updateFields.push('email = ?');
-        updateValues.push(data.email);
-      }
-      if (data.phone_work !== undefined) {
-        updateFields.push('phone_work = ?');
-        updateValues.push(data.phone_work);
-      }
-
-      if (updateFields.length === 0) {
-        return this.getById(org_id);
-      }
-
-      updateValues.push(org_id);
-      
-      await pool.execute(
-        `UPDATE ORGANIZATION SET ${updateFields.join(', ')} WHERE org_id = ?`,
-        updateValues
-      );
-
-      return this.getById(org_id);
+      return await apiClient.put<Organization>(`/organizations/${org_id}`, data);
     } catch (error) {
-      console.error('Error updating organization:', error);
-      throw new Error('Failed to update organization');
+      if (error instanceof Error && error.message.includes('404')) {
+        return null;
+      }
+      throw error;
     }
   }
 
   async delete(org_id: number): Promise<boolean> {
     try {
-      const [result] = await pool.execute<ResultSetHeader>(
-        'DELETE FROM ORGANIZATION WHERE org_id = ?',
-        [org_id]
-      );
-      return result.affectedRows > 0;
+      await apiClient.delete(`/organizations/${org_id}`);
+      return true;
     } catch (error) {
-      console.error('Error deleting organization:', error);
-      throw new Error('Failed to delete organization');
+      if (error instanceof Error && error.message.includes('404')) {
+        return false;
+      }
+      throw error;
     }
   }
 
   async search(query: string): Promise<Organization[]> {
-    try {
-      const searchTerm = `%${query}%`;
-      const [rows] = await pool.execute<OrganizationRow[]>(
-        `SELECT * FROM ORGANIZATION 
-         WHERE display_name LIKE ? OR company_name LIKE ? OR email LIKE ?
-         ORDER BY display_name`,
-        [searchTerm, searchTerm, searchTerm]
-      );
-      return rows.map(this.mapRowToOrganization);
-    } catch (error) {
-      console.error('Error searching organizations:', error);
-      throw new Error('Failed to search organizations');
-    }
-  }
-
-  private mapRowToOrganization(row: OrganizationRow): Organization {
-    return {
-      org_id: row.org_id,
-      org_type: row.org_type as Organization['org_type'],
-      company_name: row.company_name,
-      display_name: row.display_name,
-      email: row.email,
-      phone_work: row.phone_work
-    };
+    return apiClient.get<Organization[]>(`/organizations/search/${encodeURIComponent(query)}`);
   }
 }
 

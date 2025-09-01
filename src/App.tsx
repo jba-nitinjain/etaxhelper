@@ -4,14 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Sidebar } from './components/Layout/Sidebar';
 import { Dashboard } from './pages/Dashboard';
 import { Contacts } from './pages/Contacts';
-import { testConnection } from './config/database';
-
-// Test database connection on app start
-testConnection().then(success => {
-  if (!success) {
-    console.warn('Database connection failed. Please check your connection settings.');
-  }
-});
 
 const queryClient = new QueryClient({
   defaultOptions: {

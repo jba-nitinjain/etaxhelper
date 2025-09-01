@@ -3,7 +3,7 @@ import { Users, Building, Phone, MapPin } from 'lucide-react';
 import { StatsCard } from '../components/Dashboard/StatsCard';
 import { useContacts } from '../hooks/useContacts';
 import { useOrganizations } from '../hooks/useOrganizations';
-import { formatPhone } from '../config/database';
+import { formatPhone } from '../config/api';
 
 export function Dashboard() {
   const { data: contacts = [], isLoading: contactsLoading } = useContacts();
