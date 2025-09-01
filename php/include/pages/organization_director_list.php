@@ -2,10 +2,10 @@
 			$optionsArray = array(
 	'list' => array(
 		'inlineAdd' => false,
-		'detailsAdd' => false,
+		'detailsAdd' => true,
 		'inlineEdit' => false,
 		'addToBottom' => false,
-		'delete' => false,
+		'delete' => true,
 		'updateSelected' => false,
 		'clickSort' => true,
 		'sortDropdown' => false,
@@ -13,6 +13,11 @@
 		'reorderFields' => false,
 		'fieldFilter' => false,
 		'hideNumberOfRecords' => false 
+	),
+	'master' => array(
+		'ORGANIZATION' => array(
+			'preview' => true 
+		) 
 	),
 	'listSearch' => array(
 		'alwaysOnPanelFields' => array( 
@@ -170,6 +175,8 @@
 			'formItems' => array(
 				'above-grid' => array( 
 					'add',
+					'inline_add',
+					'delete',
 					'details_found',
 					'page_size',
 					'print_panel' 
@@ -193,7 +200,7 @@
 					'username_button' 
 				),
 				'top' => array( 
-					 
+					'master_info' 
 				),
 				'grid' => array( 
 					'simple_grid_field12',
@@ -223,12 +230,15 @@
 					'grid_checkbox_head',
 					'grid_checkbox',
 					'grid_edit',
+					'grid_inline_cancel',
 					'grid_view' 
 				) 
 			),
 			'formXtTags' => array(
 				'above-grid' => array( 
 					'add_link',
+					'inlineadd_link',
+					'deleteselected_link',
 					'details_found',
 					'recsPerPage',
 					'print_friendly' 
@@ -237,11 +247,13 @@
 					'pagination' 
 				),
 				'top' => array( 
-					 
+					'mastertable_block' 
 				) 
 			),
 			'itemForms' => array(
 				'add' => 'above-grid',
+				'inline_add' => 'above-grid',
+				'delete' => 'above-grid',
 				'details_found' => 'above-grid',
 				'page_size' => 'above-grid',
 				'print_panel' => 'above-grid',
@@ -257,6 +269,7 @@
 				'list_options' => 'supertop',
 				'loginform_login' => 'supertop',
 				'username_button' => 'supertop',
+				'master_info' => 'top',
 				'simple_grid_field12' => 'grid',
 				'simple_grid_field' => 'grid',
 				'simple_grid_field13' => 'grid',
@@ -284,6 +297,7 @@
 				'grid_checkbox_head' => 'grid',
 				'grid_checkbox' => 'grid',
 				'grid_edit' => 'grid',
+				'grid_inline_cancel' => 'grid',
 				'grid_view' => 'grid' 
 			),
 			'itemLocations' => array(
@@ -395,6 +409,10 @@
 					'location' => 'grid',
 					'cellId' => 'cell_icons' 
 				),
+				'grid_inline_cancel' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_icons' 
+				),
 				'grid_view' => array(
 					'location' => 'grid',
 					'cellId' => 'cell_icons' 
@@ -464,18 +482,6 @@
 			'add' => array( 
 				'add' 
 			),
-			'print_panel' => array( 
-				'print_panel' 
-			),
-			'print_scope' => array( 
-				'print_scope' 
-			),
-			'print_button' => array( 
-				'print_button' 
-			),
-			'print_records' => array( 
-				'print_records' 
-			),
 			'export' => array( 
 				'export' 
 			),
@@ -491,14 +497,41 @@
 			'import' => array( 
 				'import' 
 			),
+			'print_panel' => array( 
+				'print_panel' 
+			),
+			'print_scope' => array( 
+				'print_scope' 
+			),
+			'print_button' => array( 
+				'print_button' 
+			),
+			'print_records' => array( 
+				'print_records' 
+			),
+			'delete' => array( 
+				'delete' 
+			),
+			'delete_selected' => array( 
+				'delete_selected' 
+			),
+			'master_info' => array( 
+				'master_info' 
+			),
 			'username_button' => array( 
 				'username_button' 
 			),
 			'loginform_login' => array( 
 				'loginform_login' 
 			),
+			'userinfo_link' => array( 
+				'userinfo_link' 
+			),
 			'logout_link' => array( 
 				'logout_link' 
+			),
+			'adminarea_link' => array( 
+				'adminarea_link' 
 			),
 			'grid_field' => array( 
 				'simple_grid_field',
@@ -542,6 +575,12 @@
 			),
 			'expand_button' => array( 
 				'expand_button' 
+			),
+			'inline_add' => array( 
+				'inline_add' 
+			),
+			'grid_inline_cancel' => array( 
+				'grid_inline_cancel' 
 			) 
 		),
 		'cellMaps' => array(
@@ -780,10 +819,12 @@
 						),
 						'tags' => array( 
 							'edit_column',
+							'inline_cancel',
 							'view_column' 
 						),
 						'items' => array( 
 							'grid_edit',
+							'grid_inline_cancel',
 							'grid_view' 
 						),
 						'fixedAtServer' => false,
@@ -1318,7 +1359,9 @@
 				'c1' => array(
 					'model' => 'c1',
 					'items' => array( 
-						'add' 
+						'add',
+						'inline_add',
+						'delete' 
 					) 
 				),
 				'c2' => array(
@@ -1443,10 +1486,22 @@
 		'top' => array(
 			'modelId' => 'list-sidebar-top',
 			'grid' => array( 
-				 
+				array(
+					'cells' => array( 
+						array(
+							'cell' => 'c2' 
+						) 
+					),
+					'section' => '' 
+				) 
 			),
 			'cells' => array(
-				 
+				'c2' => array(
+					'model' => 'c2',
+					'items' => array( 
+						'master_info' 
+					) 
+				) 
 			),
 			'deferredItems' => array( 
 				 
@@ -1891,6 +1946,7 @@
 					'model' => 'cell_icons',
 					'items' => array( 
 						'grid_edit',
+						'grid_inline_cancel',
 						'grid_view' 
 					) 
 				),
@@ -1951,6 +2007,7 @@
 			'type' => 'list_options',
 			'items' => array( 
 				'export_selected',
+				'delete_selected',
 				'-3',
 				'show_search_panel',
 				'hide_search_panel',
@@ -2023,23 +2080,6 @@
 		'add' => array(
 			'type' => 'add' 
 		),
-		'print_panel' => array(
-			'type' => 'print_panel',
-			'items' => array( 
-				'print_scope',
-				'print_records',
-				'print_button' 
-			) 
-		),
-		'print_scope' => array(
-			'type' => 'print_scope' 
-		),
-		'print_button' => array(
-			'type' => 'print_button' 
-		),
-		'print_records' => array(
-			'type' => 'print_records' 
-		),
 		'export' => array(
 			'type' => 'export' 
 		),
@@ -2058,18 +2098,55 @@
 		'-2' => array(
 			'type' => '-' 
 		),
+		'print_panel' => array(
+			'type' => 'print_panel',
+			'items' => array( 
+				'print_scope',
+				'print_records',
+				'print_button' 
+			) 
+		),
+		'print_scope' => array(
+			'type' => 'print_scope' 
+		),
+		'print_button' => array(
+			'type' => 'print_button' 
+		),
+		'print_records' => array(
+			'type' => 'print_records' 
+		),
+		'delete' => array(
+			'type' => 'delete' 
+		),
+		'delete_selected' => array(
+			'type' => 'delete_selected' 
+		),
+		'master_info' => array(
+			'type' => 'master_info',
+			'tables' => array(
+				'3171' => 'true' 
+			) 
+		),
 		'username_button' => array(
 			'type' => 'username_button',
 			'items' => array( 
-				'logout_link' 
+				'userinfo_link',
+				'logout_link',
+				'adminarea_link' 
 			) 
 		),
 		'loginform_login' => array(
 			'type' => 'loginform_login',
 			'popup' => false 
 		),
+		'userinfo_link' => array(
+			'type' => 'userinfo_link' 
+		),
 		'logout_link' => array(
 			'type' => 'logout_link' 
+		),
+		'adminarea_link' => array(
+			'type' => 'adminarea_link' 
 		),
 		'-3' => array(
 			'type' => '-' 
@@ -2184,6 +2261,13 @@
 		),
 		'expand_button' => array(
 			'type' => 'expand_button' 
+		),
+		'inline_add' => array(
+			'type' => 'inline_add',
+			'detailsOnly' => true 
+		),
+		'grid_inline_cancel' => array(
+			'type' => 'grid_inline_cancel' 
 		) 
 	),
 	'dbProps' => array(

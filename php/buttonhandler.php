@@ -20,17 +20,24 @@ if( $params["_base64fields"] ) {
 $buttId = $params['buttId'];
 $eventId = postvalue('event');
 $table = $params['table'];
-if( !GetTableURL( $table ) ) {
+$pageTable = $params['pageTable'];
+if( !$pageTable ) {
+	$pageTable = $table;
+}
+if( !GetTableURL( $table ) || !GetTableURL( $pageTable ) ) {
 	exit;
 }
 $page = $params['page'];
-if( !Security::userCanSeePage($table, $page ) ) {
+
+
+if( !Security::userCanSeePage( $pageTable, $page ) ) {
 	exit;
 }
 
 $field = $params['field'];
 
-$pSet = new ProjectSettings( $table, "", $page );
+
+$pSet = new ProjectSettings( $table, "", $page, $pageTable );
 $cipherer = new RunnerCipherer( $table );
 
 //	check button or ajax snippet permissions
@@ -60,12 +67,14 @@ if( $buttId ) {
 
 if( $eventId && !$field ) {
 	$method = 'ajaxHandler_'. $eventId;
+	$params[ 'location' ] = 'grid';
 	$globalEvents->$method( $params );
 	exit();
 }
 
 if( $eventId && $field ) {
 	$method = 'fieldEvent_'. $eventId;
+	$params[ 'location' ] = postvalue( 'pageType' );
 	$globalEvents->$method( $params );
 	exit();
 }

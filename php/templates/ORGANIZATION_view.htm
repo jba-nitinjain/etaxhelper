@@ -97,17 +97,15 @@
 	data-signal-error-for="org_id{$id}" {$required_attr_org_id}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="org_id" data-fieldname="org_id" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_org_id}">
-		{BEGIN org_id_label}{$label ORGANIZATION org_id }{END org_id_label}
+	<label class="r-edit-label control-label {$org_id_label_class}" for="{$labelfor_org_id}">
+		{BEGIN org_id_label}
+			{$org_id_forward_control}
+			{$label ORGANIZATION org_id }			{END org_id_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$org_id_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr ORGANIZATION org_id } >
-		<div class="text-muted" >
-		{$tooltip ORGANIZATION org_id }		</div>
 	</div>
-</div>
 
 
 {END org_id_fieldblock}
@@ -119,17 +117,15 @@
 	data-signal-error-for="org_type{$id}" {$required_attr_org_type}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="org_type" data-fieldname="org_type" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_org_type}">
-		{BEGIN org_type_label}{$label ORGANIZATION org_type }{END org_type_label}
+	<label class="r-edit-label control-label {$org_type_label_class}" for="{$labelfor_org_type}">
+		{BEGIN org_type_label}
+			{$org_type_forward_control}
+			{$label ORGANIZATION org_type }			{END org_type_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$org_type_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="org_type" {$tooltipAttr ORGANIZATION org_type } >
-		<div class="text-muted" >
-		{$tooltip ORGANIZATION org_type }		</div>
 	</div>
-</div>
 
 
 {END org_type_fieldblock}
@@ -141,17 +137,15 @@
 	data-signal-error-for="company_name{$id}" {$required_attr_company_name}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="company_name" data-fieldname="company_name" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_company_name}">
-		{BEGIN company_name_label}{$label ORGANIZATION company_name }{END company_name_label}
+	<label class="r-edit-label control-label {$company_name_label_class}" for="{$labelfor_company_name}">
+		{BEGIN company_name_label}
+			{$company_name_forward_control}
+			{$label ORGANIZATION company_name }			{END company_name_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$company_name_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="company_name" {$tooltipAttr ORGANIZATION company_name } >
-		<div class="text-muted" >
-		{$tooltip ORGANIZATION company_name }		</div>
 	</div>
-</div>
 
 
 {END company_name_fieldblock}
@@ -163,17 +157,15 @@
 	data-signal-error-for="display_name{$id}" {$required_attr_display_name}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="display_name" data-fieldname="display_name" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_display_name}">
-		{BEGIN display_name_label}{$label ORGANIZATION display_name }{END display_name_label}
+	<label class="r-edit-label control-label {$display_name_label_class}" for="{$labelfor_display_name}">
+		{BEGIN display_name_label}
+			{$display_name_forward_control}
+			{$label ORGANIZATION display_name }			{END display_name_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$display_name_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="display_name" {$tooltipAttr ORGANIZATION display_name } >
-		<div class="text-muted" >
-		{$tooltip ORGANIZATION display_name }		</div>
 	</div>
-</div>
 
 
 {END display_name_fieldblock}
@@ -185,17 +177,15 @@
 	data-signal-error-for="email{$id}" {$required_attr_email}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="email" data-fieldname="email" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_email}">
-		{BEGIN email_label}{$label ORGANIZATION email }{END email_label}
+	<label class="r-edit-label control-label {$email_label_class}" for="{$labelfor_email}">
+		{BEGIN email_label}
+			{$email_forward_control}
+			{$label ORGANIZATION email }			{END email_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$email_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="email" {$tooltipAttr ORGANIZATION email } >
-		<div class="text-muted" >
-		{$tooltip ORGANIZATION email }		</div>
 	</div>
-</div>
 
 
 {END email_fieldblock}
@@ -207,17 +197,15 @@
 	data-signal-error-for="phone_work{$id}" {$required_attr_phone_work}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field5" {$item_integrated_edit_field5} data-pageid="{$pageid}" data-field="phone_work" data-fieldname="phone_work" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_phone_work}">
-		{BEGIN phone_work_label}{$label ORGANIZATION phone_work }{END phone_work_label}
+	<label class="r-edit-label control-label {$phone_work_label_class}" for="{$labelfor_phone_work}">
+		{BEGIN phone_work_label}
+			{$phone_work_forward_control}
+			{$label ORGANIZATION phone_work }			{END phone_work_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$phone_work_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="phone_work" {$tooltipAttr ORGANIZATION phone_work } >
-		<div class="text-muted" >
-		{$tooltip ORGANIZATION phone_work }		</div>
 	</div>
-</div>
 
 
 {END phone_work_fieldblock}

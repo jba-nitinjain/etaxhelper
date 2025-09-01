@@ -4,9 +4,16 @@ $runnerDbTableInfo['organization_bank'] = array(
 	'type' => 0,
 	'foreignKeys' => array( 
 		array(
-			'name' => '`fk_bank_org`',
+			'name' => 'fk_bank_org',
+			'refTable' => 'ORGANIZATION',
+			'refSchema' => '',
+			'del_rule' => 1,
+			'upd_rule' => 4,
 			'columns' => array( 
-				 
+				array(
+					'column' => 'org_id',
+					'ref_column' => 'org_id' 
+				) 
 			) 
 		) 
 	),
@@ -105,6 +112,13 @@ $runnerDbTableInfo['organization_bank'] = array(
 			'size' => 0,
 			'scale' => 0,
 			'typeName' => 'enum(\'Singly\',\'Jointly\',\'Any two jointly\',\'Either or survivor\',\'Other\')',
+			'enumValues' => array( 
+				'Singly',
+				'Jointly',
+				'Any two jointly',
+				'Either or survivor',
+				'Other' 
+			),
 			'nullable' => true,
 			'autoinc' => false,
 			'defaultValueSQL' => null,

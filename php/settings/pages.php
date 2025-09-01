@@ -5,12 +5,6 @@ $runnerPageInfo = array(
 			'add' => array( 
 				'add' 
 			),
-			'list' => array( 
-				'list' 
-			),
-			'print' => array( 
-				'print' 
-			),
 			'export' => array( 
 				'export' 
 			),
@@ -22,18 +16,18 @@ $runnerPageInfo = array(
 			),
 			'view' => array( 
 				'view' 
+			),
+			'list' => array( 
+				'list' 
+			),
+			'print' => array( 
+				'print' 
 			) 
 		),
 		'organization_bank' => array(
 			'add' => array( 
 				'add' 
 			),
-			'list' => array( 
-				'list' 
-			),
-			'print' => array( 
-				'print' 
-			),
 			'export' => array( 
 				'export' 
 			),
@@ -45,40 +39,40 @@ $runnerPageInfo = array(
 			),
 			'view' => array( 
 				'view' 
-			) 
-		),
-		'organization_bank_signatory' => array(
-			'add' => array( 
-				'add' 
 			),
 			'list' => array( 
 				'list' 
 			),
 			'print' => array( 
 				'print' 
-			),
-			'export' => array( 
-				'export' 
-			),
-			'import' => array( 
-				'import' 
-			),
-			'edit' => array( 
-				'edit' 
-			),
-			'view' => array( 
-				'view' 
 			) 
 		),
 		'organization_branch' => array(
 			'add' => array( 
 				'add' 
 			),
+			'export' => array( 
+				'export' 
+			),
+			'import' => array( 
+				'import' 
+			),
+			'edit' => array( 
+				'edit' 
+			),
+			'view' => array( 
+				'view' 
+			),
 			'list' => array( 
 				'list' 
 			),
 			'print' => array( 
 				'print' 
+			) 
+		),
+		'organization_bank_signatory' => array(
+			'add' => array( 
+				'add' 
 			),
 			'export' => array( 
 				'export' 
@@ -91,18 +85,18 @@ $runnerPageInfo = array(
 			),
 			'view' => array( 
 				'view' 
+			),
+			'list' => array( 
+				'list' 
+			),
+			'print' => array( 
+				'print' 
 			) 
 		),
 		'organization_contact' => array(
 			'add' => array( 
 				'add' 
 			),
-			'list' => array( 
-				'list' 
-			),
-			'print' => array( 
-				'print' 
-			),
 			'export' => array( 
 				'export' 
 			),
@@ -114,18 +108,18 @@ $runnerPageInfo = array(
 			),
 			'view' => array( 
 				'view' 
+			),
+			'list' => array( 
+				'list' 
+			),
+			'print' => array( 
+				'print' 
 			) 
 		),
 		'organization_director' => array(
 			'add' => array( 
 				'add' 
 			),
-			'list' => array( 
-				'list' 
-			),
-			'print' => array( 
-				'print' 
-			),
 			'export' => array( 
 				'export' 
 			),
@@ -137,41 +131,18 @@ $runnerPageInfo = array(
 			),
 			'view' => array( 
 				'view' 
-			) 
-		),
-		'organization_login' => array(
-			'add' => array( 
-				'add' 
 			),
 			'list' => array( 
 				'list' 
 			),
 			'print' => array( 
 				'print' 
-			),
-			'export' => array( 
-				'export' 
-			),
-			'import' => array( 
-				'import' 
-			),
-			'edit' => array( 
-				'edit' 
-			),
-			'view' => array( 
-				'view' 
 			) 
 		),
 		'organization_registration' => array(
 			'add' => array( 
 				'add' 
 			),
-			'list' => array( 
-				'list' 
-			),
-			'print' => array( 
-				'print' 
-			),
 			'export' => array( 
 				'export' 
 			),
@@ -183,17 +154,46 @@ $runnerPageInfo = array(
 			),
 			'view' => array( 
 				'view' 
+			),
+			'list' => array( 
+				'list' 
+			),
+			'print' => array( 
+				'print' 
 			) 
 		),
 		'organization_social_media' => array(
 			'add' => array( 
 				'add' 
 			),
+			'export' => array( 
+				'export' 
+			),
+			'import' => array( 
+				'import' 
+			),
+			'edit' => array( 
+				'edit' 
+			),
+			'view' => array( 
+				'view' 
+			),
 			'list' => array( 
 				'list' 
 			),
 			'print' => array( 
 				'print' 
+			),
+			'masterlist' => array( 
+				'masterlist' 
+			),
+			'masterprint' => array( 
+				'masterprint' 
+			) 
+		),
+		'organization_login' => array(
+			'add' => array( 
+				'add' 
 			),
 			'export' => array( 
 				'export' 
@@ -206,6 +206,35 @@ $runnerPageInfo = array(
 			),
 			'view' => array( 
 				'view' 
+			),
+			'list' => array( 
+				'list' 
+			),
+			'print' => array( 
+				'print' 
+			) 
+		),
+		'admin_users' => array(
+			'add' => array( 
+				'add' 
+			),
+			'export' => array( 
+				'export' 
+			),
+			'import' => array( 
+				'import' 
+			),
+			'edit' => array( 
+				'edit' 
+			),
+			'view' => array( 
+				'view' 
+			),
+			'list' => array( 
+				'list' 
+			),
+			'print' => array( 
+				'print' 
 			) 
 		),
 		'<global>' => array(
@@ -214,20 +243,31 @@ $runnerPageInfo = array(
 			),
 			'login' => array( 
 				'login' 
+			),
+			'userinfo' => array( 
+				'userinfo' 
+			),
+			'admin_rights_list' => array( 
+				'admin_rights_list' 
+			),
+			'admin_members_list' => array( 
+				'admin_members_list' 
 			) 
 		) 
 	),
 	'tableMasks' => array(
-		'<global>' => 'S',
-		'organization_bank' => 'ADESPI',
-		'organization_bank_signatory' => 'ADESPI',
 		'ORGANIZATION' => 'ADESPI',
-		'organization_social_media' => 'ADESPI',
-		'organization_director' => 'ADESPI',
-		'organization_login' => 'ADESPI',
+		'admin_users' => 'ADESPI',
+		'organization_bank' => 'ADESPI',
 		'organization_branch' => 'ADESPI',
+		'organization_bank_signatory' => 'ADESPI',
 		'organization_contact' => 'ADESPI',
-		'organization_registration' => 'ADESPI' 
+		'organization_director' => 'ADESPI',
+		'organization_registration' => 'ADESPI',
+		'users' => '',
+		'organization_social_media' => 'ADESPI',
+		'organization_login' => 'ADESPI',
+		'<global>' => 'S' 
 	) 
 );
 ?>

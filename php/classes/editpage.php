@@ -1,4 +1,7 @@
 <?php
+require_once( getabspath('classes/edit_calendar.php' ) );
+require_once( getabspath('classes/edit_gantt.php' ) );
+
 class EditPage extends RunnerPage
 {
 	protected $cachedRecord = null;
@@ -73,6 +76,12 @@ class EditPage extends RunnerPage
 	protected $sqlValues = array();
 	
 	public $listPage = "";
+
+	public $lookupTable = "";
+	public $lookupField = "";
+	public $lookupPageType = "";
+	public $parentCtrlsData;
+
 
 	/**
 	 * @constructor
@@ -442,7 +451,7 @@ class EditPage extends RunnerPage
 		if( $this->eventsObject->exists("BeforeShowEdit") )
 			$this->eventsObject->BeforeShowEdit($this->xt, $templateFile, $this->getCurrentrecordInternal(), $this);
 
-		if( $this->mode != EDIT_INLINE )
+		if( $this->mode != EDIT_INLINE && $this->mode != EDIT_ONTHEFLY )
 			$this->displayMasterTableInfo();
 		// invoked after displayMasterTableInfo to add master viewcontrols maps
 		$this->fillSetCntrlMaps();
@@ -453,7 +462,7 @@ class EditPage extends RunnerPage
 			return;
 		}
 
-		if( $this->isPopupMode() || $this->mode == EDIT_DASHBOARD )
+		if( $this->isPopupMode() || $this->mode == EDIT_DASHBOARD || $this->mode == EDIT_ONTHEFLY )
 		{
 			$this->xt->assign("footer", false);
 			$this->xt->assign("header", false);
@@ -572,7 +581,9 @@ class EditPage extends RunnerPage
 		if( $this->mode == EDIT_INLINE )
 			return;
 
-		$this->prepareNextPrevButtons();
+		if( $this->mode !== EDIT_ONTHEFLY ) {
+			$this->prepareNextPrevButtons();
+		}
 
 		if( $this->isPopupMode() )
 		{
@@ -619,8 +630,7 @@ class EditPage extends RunnerPage
 			}
 		}
 
-		if( $this->viewAvailable() )
-		{
+		if( $this->viewAvailable() && $this->mode !== EDIT_ONTHEFLY ) {
 			$this->xt->assign("view_page_button", true);
 			$this->xt->assign("view_page_button_attrs", "id=\"viewPageButton".$this->id."\"");
 			if( $_SESSION["successfulEdit"] ) {
@@ -640,6 +650,8 @@ class EditPage extends RunnerPage
 		}
 
 		$nextPrev = $this->getNextPrevRecordKeys( $this->getCurrentRecordInternal() );
+		$this->prevKeys = $nextPrev['prev'];
+		$this->nextKeys = $nextPrev['next'];
 
 		//show Prev/Next buttons
 		$this->assignPrevNextButtons( !!$nextPrev["next"], !!$nextPrev["prev"], $this->mode == EDIT_DASHBOARD && ($this->hasTableDashGridElement() || $this->hasDashMapElement()) ); // TODO: haMajorDashElem
@@ -790,6 +802,7 @@ class EditPage extends RunnerPage
 		}
 		$keylink = "&" . implode("&", $keyParams);
 
+
 		//	values
 		$values = array();
 		$rawValues = array();
@@ -821,8 +834,18 @@ class EditPage extends RunnerPage
 		{
 			$returnJSON['oldKeys'][ $i++ ] = $value;
 		}
+		
+		if( $this->mode == EDIT_ONTHEFLY )
+		{
+			$lokupData = $this->getLookupData( $this->lookupTable, $this->lookupField, $this->lookupPageType, $this->newRecordData );
+			$returnJSON['linkValue'] = $lokupData['linkValue'];
+			$returnJSON['displayValue'] = $lokupData['displayValue'];
+			$returnJSON['vals'] = $lokupData['vals'];
 
-		$returnJSON['controlValues'] = $controlValues;		
+			return $returnJSON;
+		}
+
+		$returnJSON['controlValues'] = $controlValues;
 		
 		$returnJSON['vals'] = $values;
 		$returnJSON['fields'] = $this->pSet->getFieldsList();
@@ -929,7 +952,6 @@ class EditPage extends RunnerPage
 
 		$keys = $this->getNextPrevRecordKeys( $this->getCurrentRecordInternal(), PREV_RECORD );
 		$this->prevKeys = $keys['prev'];
-		$this->nextKeys = $keys['next'];
 		return $this->prevKeys;
 	}
 
@@ -943,7 +965,6 @@ class EditPage extends RunnerPage
 			return $this->nextKeys;
 
 		$keys = $this->getNextPrevRecordKeys( $this->getCurrentRecordInternal(), NEXT_RECORD );
-		$this->prevKeys = $keys['prev'];
 		$this->nextKeys = $keys['next'];
 		return $this->nextKeys;
 	}
@@ -1134,18 +1155,33 @@ class EditPage extends RunnerPage
 
 
 	protected function prepareEditControl( $fName, &$data ) {
+		$gf = GoodFieldName( $fName );
 		$firstElementId = $this->getControl( $fName, $this->id )->getFirstElementId();
 		if( $firstElementId )
-			$this->xt->assign( "labelfor_" . GoodFieldName( $fName ), $firstElementId );
+			$this->xt->assign( "labelfor_" . $gf, $firstElementId );
 
 		$parameters = $this->getEditContolParams( $fName, $this->id, $data );
-		$this->xt->assign_function( GoodFieldName( $fName )."_editcontrol", "xt_buildeditcontrol", $parameters );
+		if( $this->pSet->getEditFormat( $fName ) == EDIT_FORMAT_CHECKBOX ) {
+			$parameters[ "xt" ] = $this->xt;
+			$parameters[ "clearVar" ] = $gf . "_forward_control";
+		}
+		$this->xt->assign_function( $gf . "_editcontrol", "xt_buildeditcontrol", $parameters );
 
 		$controls = $this->getContolMapData( $fName, $this->id, $data, $this->editFields );
 		if ( in_array( $fName, $this->errorFields ) )
 			$controls["controls"]["isInvalid"] = true;
 
 		$this->fillControlsMap( $controls );
+
+		if( $this->pSet->getEditFormat( $fName ) == EDIT_FORMAT_CHECKBOX ) {
+			$parameters[ "xt" ] = $this->xt;
+			$parameters[ "clearVar" ] = $gf . "_editcontrol";
+			$this->xt->assign_function( $gf . "_forward_control", "xt_buildforwardcontrol", $parameters );
+
+			$this->xt->assign( $gf . '_label_class' , 'r-checkbox-label' );
+
+		}
+
 
 		$this->fillControlFlags( $fName );
 
@@ -1157,14 +1193,6 @@ class EditPage extends RunnerPage
 	 * Prepare edit controls
 	 */
 	public function prepareEditControls() {
-		if( $this->mode == EDIT_INLINE ) {
-			$this->editFields = $this->removeHiddenColumnsFromInlineFields(
-					$this->editFields,
-					$this->screenWidth,
-					$this->screenHeight,
-					$this->orientation
-				);
-		}
 
 		//	prepare values
 		$data = $this->getFieldControlValues();
@@ -1175,14 +1203,18 @@ class EditPage extends RunnerPage
 	}
 
 
-	public static function readEditModeFromRequest()
-	{
-		if(postvalue("editType") == "inline")
+	public static function readEditModeFromRequest() {
+		$editType = postvalue("editType");
+		$mode = postvalue("mode");
+
+		if($editType == "inline")
 			return EDIT_INLINE;
-		elseif(postvalue("editType") == EDIT_POPUP)
+		elseif($editType == EDIT_POPUP)
 			return EDIT_POPUP;
-		elseif(postvalue("mode") == "dashrecord")
+		elseif($mode == "dashrecord")
 			return EDIT_DASHBOARD;
+		elseif( $editType == EDIT_ONTHEFLY )
+			return EDIT_ONTHEFLY;
 		else
 			return EDIT_SIMPLE;
 	}
@@ -1544,7 +1576,7 @@ class EditPage extends RunnerPage
 	 */
 	function captchaExists()
 	{
-		if ( $this->mode == ADD_ONTHEFLY || $this->mode == ADD_INLINE || $this->mode == EDIT_INLINE )
+		if ( $this->mode == ADD_ONTHEFLY || $this->mode == ADD_INLINE || $this->mode == EDIT_INLINE || $this->mode == EDIT_ONTHEFLY )
 		{
 			return false;
 		}
@@ -1790,6 +1822,12 @@ class EditPage extends RunnerPage
 				require_once( getabspath("classes/editselectedpage.php") );
 				return new EditSelectedPage( $params );
 			}
+		}
+		if( $params['pageName'] == 'edit_calendar' ) {
+			return new EditCalendarPage( $params );
+		}
+		if( $params['gantt'] ) {
+			return new EditGanttPage( $params );
 		}
 
 		return new EditPage($params);

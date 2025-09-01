@@ -3,6 +3,16 @@
 	'pdf' => array(
 		'pdfView' => false 
 	),
+	'details' => array(
+		'organization_bank_signatory' => array(
+			'displayPreview' => 1 
+		) 
+	),
+	'master' => array(
+		'ORGANIZATION' => array(
+			'preview' => true 
+		) 
+	),
 	'totals' => array(
 		'bank_id' => array(
 			'totalsType' => '' 
@@ -102,14 +112,17 @@
 		'formItems' => array(
 			'formItems' => array(
 				'above-grid' => array( 
-					'print_pages' 
+					'print_pages',
+					'grid_inline_cancel',
+					'inline_add' 
 				),
 				'below-grid' => array( 
 					 
 				),
 				'top' => array( 
 					'print_header',
-					'print_subheader' 
+					'print_subheader',
+					'master_info' 
 				),
 				'grid' => array( 
 					'simple_grid_field9',
@@ -129,12 +142,15 @@
 					'simple_grid_field16',
 					'simple_grid_field7',
 					'simple_grid_field17',
-					'simple_grid_field8' 
+					'simple_grid_field8',
+					'details_preview' 
 				) 
 			),
 			'formXtTags' => array(
 				'above-grid' => array( 
-					'print_pages' 
+					'print_pages',
+					'inline_cancel',
+					'inlineadd_link' 
 				),
 				'below-grid' => array( 
 					 
@@ -142,8 +158,11 @@
 			),
 			'itemForms' => array(
 				'print_pages' => 'above-grid',
+				'grid_inline_cancel' => 'above-grid',
+				'inline_add' => 'above-grid',
 				'print_header' => 'top',
 				'print_subheader' => 'top',
+				'master_info' => 'top',
 				'simple_grid_field9' => 'grid',
 				'simple_grid_field' => 'grid',
 				'simple_grid_field10' => 'grid',
@@ -161,7 +180,8 @@
 				'simple_grid_field16' => 'grid',
 				'simple_grid_field7' => 'grid',
 				'simple_grid_field17' => 'grid',
-				'simple_grid_field8' => 'grid' 
+				'simple_grid_field8' => 'grid',
+				'details_preview' => 'grid' 
 			),
 			'itemLocations' => array(
 				'simple_grid_field9' => array(
@@ -235,6 +255,10 @@
 				'simple_grid_field8' => array(
 					'location' => 'grid',
 					'cellId' => 'cell_field8' 
+				),
+				'details_preview' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_dpreview' 
 				) 
 			),
 			'itemVisiblity' => array(
@@ -250,6 +274,9 @@
 			),
 			'print_pages' => array( 
 				'print_pages' 
+			),
+			'master_info' => array( 
+				'master_info' 
 			),
 			'grid_field' => array( 
 				'simple_grid_field',
@@ -272,6 +299,15 @@
 				'simple_grid_field15',
 				'simple_grid_field16',
 				'simple_grid_field17' 
+			),
+			'details_preview' => array( 
+				'details_preview' 
+			),
+			'inline_add' => array( 
+				'inline_add' 
+			),
+			'grid_inline_cancel' => array( 
+				'grid_inline_cancel' 
 			) 
 		),
 		'cellMaps' => array(
@@ -565,12 +601,36 @@
 						'fixedAtServer' => false,
 						'fixedAtClient' => false 
 					),
+					'cell_dpreview' => array(
+						'cols' => array( 
+							0,
+							1,
+							2,
+							3,
+							4,
+							5,
+							6,
+							7,
+							8 
+						),
+						'rows' => array( 
+							2 
+						),
+						'tags' => array( 
+							 
+						),
+						'items' => array( 
+							'details_preview' 
+						),
+						'fixedAtServer' => true,
+						'fixedAtClient' => false 
+					),
 					'footcell_field' => array(
 						'cols' => array( 
 							0 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -586,7 +646,7 @@
 							1 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -602,7 +662,7 @@
 							2 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -618,7 +678,7 @@
 							3 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -634,7 +694,7 @@
 							4 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -650,7 +710,7 @@
 							5 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -666,7 +726,7 @@
 							6 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -682,7 +742,7 @@
 							7 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -698,7 +758,7 @@
 							8 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -711,7 +771,7 @@
 					) 
 				),
 				'width' => 9,
-				'height' => 3 
+				'height' => 4 
 			) 
 		) 
 	),
@@ -800,7 +860,9 @@
 				'c1' => array(
 					'model' => 'c1',
 					'items' => array( 
-						'print_pages' 
+						'print_pages',
+						'grid_inline_cancel',
+						'inline_add' 
 					) 
 				) 
 			),
@@ -844,6 +906,14 @@
 						) 
 					),
 					'section' => '' 
+				),
+				array(
+					'cells' => array( 
+						array(
+							'cell' => 'c4' 
+						) 
+					),
+					'section' => '' 
 				) 
 			),
 			'cells' => array(
@@ -852,6 +922,12 @@
 					'items' => array( 
 						'print_header',
 						'print_subheader' 
+					) 
+				),
+				'c4' => array(
+					'model' => 'c4',
+					'items' => array( 
+						'master_info' 
 					) 
 				) 
 			),
@@ -926,6 +1002,15 @@
 							'cell' => 'cell_field8' 
 						) 
 					) 
+				),
+				array(
+					'cells' => array( 
+						array(
+							'cell' => 'cell_dpreview',
+							'colspan' => 9 
+						) 
+					),
+					'section' => 'body' 
 				),
 				array(
 					'section' => 'foot',
@@ -1158,6 +1243,12 @@
 					'items' => array( 
 						 
 					) 
+				),
+				'cell_dpreview' => array(
+					'model' => 'cell_dpreview',
+					'items' => array( 
+						'details_preview' 
+					) 
 				) 
 			),
 			'deferredItems' => array( 
@@ -1175,6 +1266,12 @@
 		),
 		'print_pages' => array(
 			'type' => 'print_pages' 
+		),
+		'master_info' => array(
+			'type' => 'master_info',
+			'tables' => array(
+				'3171' => 'true' 
+			) 
 		),
 		'simple_grid_field' => array(
 			'field' => 'bank_id',
@@ -1247,6 +1344,21 @@
 		'simple_grid_field17' => array(
 			'type' => 'grid_field_label',
 			'field' => 'mode_of_operation' 
+		),
+		'details_preview' => array(
+			'type' => 'details_preview',
+			'table' => 3293,
+			'items' => array( 
+				 
+			),
+			'popup' => false 
+		),
+		'inline_add' => array(
+			'type' => 'inline_add',
+			'detailsOnly' => true 
+		),
+		'grid_inline_cancel' => array(
+			'type' => 'grid_inline_cancel' 
 		) 
 	),
 	'dbProps' => array(

@@ -136,13 +136,24 @@ while( $data = $qResult->fetchAssoc() )
 		$ctrlData[ $lookupField ] = $data[ $linkField ];
 		$viewContainer = new ViewControlsContainer( $pSet, PAGE_LIST, null );		
 		$displayedValue = $viewContainer->getControl( $lookupField )->getTextValue( $ctrlData );
-	}		
+	}
+
+	$keys = array();
+	if( $lookupPSet ) {
+		foreach( $lookupPSet->getTableKeys() as $kf ) {
+			$keys[] = $data[ $kf ];
+		}
+	}
 	
-	$response[] = $data[ $linkField ];
-	$response[] = $displayedValue;
+	$response[] = array( 
+		"link"=> $data[ $linkField ], 
+		"display" => $displayedValue, 
+		"displayEscaped" => runner_htmlspecialchars( $displayedValue ),
+		"keys" => $keys,
+	);
 }
 
-$respObj = array('success' => true, 'data' => array_slice($response, 0, 40));
+$respObj = array('success' => true, 'data' => array_slice($response, 0, $runnerProjectSettings['lookupSuggestsNumber'] ));
 echo printJSON($respObj);
 exit();
 ?>

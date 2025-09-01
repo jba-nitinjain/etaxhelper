@@ -857,7 +857,15 @@ class Security
 	public static function permissionsAvailable() {
 		if( !Security::hasUsers() )
 			return false;
-		return Security::dynamicPermissions() || count( ProjectSettings::staticPermissions() ) > 0;
+		if( Security::dynamicPermissions() ) {
+			return true;
+		}
+		$dbProv = Security::dbProvider();
+		if( $dbProv && $dbProv["active"] ) {
+			return count( ProjectSettings::staticPermissions() ) > 0;
+		}
+		//	non-db providers can only have Dynamic permissions
+		return false;
 	}
 
 	/**
@@ -948,8 +956,14 @@ class Security
 		return $pSet->appearOnPage( $field );
 	}
 
+	/**
+	 * Returns array
+	 */
 	public static function getRestrictedPages( $table, $pSet )
 	{
+		if( !Security::permissionsAvailable() ) {
+			return array();
+		}
 		global $globalEvents;
 		
 		if( $globalEvents->exists("GetTablePermissions", $table) ) {
@@ -1023,6 +1037,9 @@ class Security
 			return "P";
 		else if( $pageType == "import" )
 			return "I";
+		else if( $pageType == PAGE_REGISTER || $pageType == PAGE_USERINFO || $pageType == PAGE_LOGIN ) {
+			return "";
+		}
 		return "S";
 	}
 
@@ -1250,13 +1267,14 @@ class Security
 	 */
 	public static function getOpenIdJWK( $jwt, $wellKnown ) {
 		$response = runner_http_request( $wellKnown["jwks_uri"] );
-		$keys = runner_json_decode( $response["content"] );
+		$keyData = runner_json_decode( $response["content"] );
+		$keys = $keyData["keys"];
 
 		$parts = explode('.', $jwt);
 		$tokenHeader = runner_json_decode( base64_decode_url( $parts[0] ) );
 
 		if( isset( $tokenHeader["kid"] ) ) {
-			foreach( $keys["keys"] as $key ) {
+			foreach( $keys as $key ) {
 				if( $key["kid"] == $tokenHeader["kid"] )
 					return $key;
 			}
@@ -1493,6 +1511,7 @@ class Security
 		}
 		$tablesAdvSecurity =& ProjectSettings::getProjectValue( 'tablesAdvSecurity' );
 		$adMode = $securityType == stAD && !$provider["useDbGroups"];
+		$userId = Security::getUserName();
 		if( $adMode ) {
 			storageSet( "OwnerID", $userId );
 		}
@@ -1551,6 +1570,8 @@ class Security
 
 		if( $userId && Security::getUserName() !== $userId ) {
 			regenerateSessionId();
+			//	language may have with session regeneration
+			loadLanguage( mlang_getcurrentlang() );
 		}
 
 		$accessLevel = ACCESS_LEVEL_USER;
@@ -2242,7 +2263,7 @@ class Security
 
 		if( $payload[ "external" ] ) {
 			//	token created by external.php
-			//	no additional chek needed
+			//	no additional check needed
 			return $payload;
 		}
 
@@ -3016,7 +3037,7 @@ class Security
 	 * Return user data provided by SecurityPlugin in login routine
 	 * @return Array
 	 */
-	public static function & rawUserData() {
+	public static function rawUserData() {
 		return storageGet("rawUserData");
 	}
 
@@ -3045,7 +3066,7 @@ class Security
 				return '';
 			}
 		} else {
-			$adminPerm = $groupRights['isAdmin'] ? 'M' : '';
+			$adminPerm = $groupRights['admin'] ? 'M' : '';
 		}
 		return $tableRights['mask'] . $adminPerm;
 

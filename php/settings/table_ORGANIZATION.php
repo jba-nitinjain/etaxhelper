@@ -7,12 +7,6 @@ $runnerTableSettings['ORGANIZATION'] = array(
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -25,33 +19,49 @@ $runnerTableSettings['ORGANIZATION'] = array(
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
+		'masterlist' => array( 
+			'masterlist' 
+		),
+		'masterprint' => array( 
+			'masterprint' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'pageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'defaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'afterEditDetails' => 'ORGANIZATION',
 	'afterAddDetail' => 'ORGANIZATION',
-	'detailsBadgeColor' => '00c2c5',
+	'detailsBadgeColor' => '8fbc8b',
 	'sql' => 'SELECT
 	org_id,
 	org_type,
@@ -80,6 +90,7 @@ FROM
 			'index' => 1,
 			'type' => 20,
 			'autoinc' => true,
+			'sqlExpression' => 'org_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -89,7 +100,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'ORGANIZATION' 
 		),
 		'org_type' => array(
 			'name' => 'org_type',
@@ -97,6 +109,7 @@ FROM
 			'strField' => 'org_type',
 			'index' => 2,
 			'type' => 129,
+			'sqlExpression' => 'org_type',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -104,15 +117,30 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 0,
+					'lookupValues' => array( 
+						'Proprietorship',
+						'Partnership',
+						'Private Limited',
+						'Public Limited',
+						'LLP',
+						'NGO',
+						'Cooperative',
+						'Government',
+						'Individual',
+						'Other' 
+					) 
 				) 
-			) 
+			),
+			'tableName' => 'ORGANIZATION' 
 		),
 		'company_name' => array(
 			'name' => 'company_name',
 			'goodName' => 'company_name',
 			'strField' => 'company_name',
 			'index' => 3,
+			'sqlExpression' => 'company_name',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -122,13 +150,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'ORGANIZATION' 
 		),
 		'display_name' => array(
 			'name' => 'display_name',
 			'goodName' => 'display_name',
 			'strField' => 'display_name',
 			'index' => 4,
+			'sqlExpression' => 'display_name',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -138,13 +168,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'ORGANIZATION' 
 		),
 		'email' => array(
 			'name' => 'email',
 			'goodName' => 'email',
 			'strField' => 'email',
 			'index' => 5,
+			'sqlExpression' => 'email',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -154,13 +186,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'ORGANIZATION' 
 		),
 		'phone_work' => array(
 			'name' => 'phone_work',
 			'goodName' => 'phone_work',
 			'strField' => 'phone_work',
 			'index' => 6,
+			'sqlExpression' => 'phone_work',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -170,8 +204,18 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'ORGANIZATION' 
 		) 
+	),
+	'detailsTables' => array( 
+		'organization_bank',
+		'organization_branch',
+		'organization_contact',
+		'organization_director',
+		'organization_login',
+		'organization_registration',
+		'organization_social_media' 
 	),
 	'query' => array(
 		'sql' => 'SELECT
@@ -192,9 +236,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'org_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'ORGANIZATION',
+					'name' => 'org_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'org_id' 
@@ -205,9 +251,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'org_type',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'ORGANIZATION',
+					'name' => 'org_type' 
 				),
 				'encrypted' => false,
 				'columnName' => 'org_type' 
@@ -218,9 +266,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'company_name',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'ORGANIZATION',
+					'name' => 'company_name' 
 				),
 				'encrypted' => false,
 				'columnName' => 'company_name' 
@@ -231,9 +281,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'display_name',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'ORGANIZATION',
+					'name' => 'display_name' 
 				),
 				'encrypted' => false,
 				'columnName' => 'display_name' 
@@ -244,9 +296,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'email',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'ORGANIZATION',
+					'name' => 'email' 
 				),
 				'encrypted' => false,
 				'columnName' => 'email' 
@@ -257,9 +311,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'phone_work',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'ORGANIZATION',
+					'name' => 'phone_work' 
 				),
 				'encrypted' => false,
 				'columnName' => 'phone_work' 
@@ -275,7 +331,12 @@ FROM
 					'parsed' => true,
 					'type' => 'SQLTable',
 					'columns' => array( 
-						 
+						'org_id',
+						'org_type',
+						'company_name',
+						'display_name',
+						'email',
+						'phone_work' 
 					),
 					'name' => 'ORGANIZATION' 
 				),
@@ -390,12 +451,6 @@ FROM
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -408,28 +463,44 @@ FROM
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
+		'masterlist' => array( 
+			'masterlist' 
+		),
+		'masterprint' => array( 
+			'masterprint' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'originalPageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'originalDefaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'searchSettings' => array(
@@ -483,6 +554,16 @@ FROM
 	),
 	'dataSourceOperations' => array(
 		 
+	),
+	'calendarSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
+	),
+	'ganttSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
 	) 
 );
 

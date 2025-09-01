@@ -104,10 +104,10 @@ class ListPage_DPDash extends ListPage_Dashboard
 	}
 
 	function inlineEditAvailable() {
-		return false; 
+		return ListPage_Embed::inlineEditAvailable() && $this->dashElementData["details"][$this->tName]["inlineEdit"];
 	}
 	function inlineAddAvailable() {
-		return false;
+		return ListPage_Embed::inlineAddAvailable() && $this->dashElementData["details"][$this->tName]["inlineAdd"];
 	}
 
 	function displayTabsInPage()

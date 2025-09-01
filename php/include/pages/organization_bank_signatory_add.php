@@ -1,5 +1,10 @@
 <?php
 			$optionsArray = array(
+	'master' => array(
+		'organization_bank' => array(
+			'preview' => false 
+		) 
+	),
 	'captcha' => array(
 		'captcha' => false 
 	),

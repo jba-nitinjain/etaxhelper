@@ -7511,6 +7511,9 @@ table.indenttables > * > .rightsindent5 > td.rightscell.rightscell.rightscell.ri
   background-color: lightyellow;
   color: #333333;
 }
+.rnr-dbselectedrow.rnr-dbselectedrow.rnr-dbselectedrow.rnr-dbselectedrow.rnr-dbselectedrow.rnr-dbselectedrow .btn-link {
+  color: inherit;
+}
 .navbar-form > .breadcrumb {
   font-size: 14px;
 }
@@ -7973,6 +7976,10 @@ table.indenttables > * > .rightsindent5 > td.rightscell.rightscell.rightscell.ri
   background: none;
   color: inherit;
   padding: 0 12px;
+}
+/* To define elements visibility only. Don't add 'display: none;'*/
+.rnr-invisible-button {
+  visibility: hidden;
 }
 .bs-number {
   font-weight: bold;
@@ -8864,6 +8871,10 @@ table.indenttables > * > .rightsindent5 > td.rightscell.rightscell.rightscell.ri
 }
 [data-fieldfilter].loading .dropdown-toggle i.loading {
   display: inline-block;
+}
+[data-itemtype="expired_stay"],
+[data-itemtype="expired_logout"] {
+  padding: 0 5px;
 }
 @media print, (min-width: 768px) {
   .r-small-page[data-body-align="left"] {
@@ -10059,6 +10070,33 @@ td.bs-details-opened.bs-details-opened.bs-details-opened {
     background: rgba(0, 0, 255, 0.07);
   }
 }
+/* Admin area styles begin */
+.groupCopyLink {
+  font-size: 14px;
+  line-height: 16px;
+  text-decoration: none;
+  display: block;
+  font-family: monospace;
+}
+.groupCopySelector {
+  min-height: 100px;
+}
+.groupCopyLink:hover {
+  background: silver;
+  font-weight: bold;
+}
+.chooseColumnsLink {
+  font-size: 14px;
+  line-height: 22px;
+  text-decoration: none;
+  display: block;
+  font-family: monospace;
+}
+.chooseColumnsLink:hover {
+  background: silver;
+  font-weight: bold;
+}
+/* Admin area styles end */
 @media print, (min-width: 768px) {
   .r-panel-page {
     margin: auto;
@@ -11541,12 +11579,19 @@ However there might have been the case where dropdown showed up where it shouldn
   max-width: 500px;
   max-height: 300px;
 }
+.icon-required:before {
+  content: '*';
+  color: red;
+}
 [data-itemtype="integrated_edit_field"]:not([data-required]) .icon-required,
 [data-itemtype="edit_field_label"]:not([data-required]) .icon-required {
   display: none;
 }
 .bs-lookup-links a {
-  padding-right: 5px;
+  padding-right: 10px;
+}
+.bs-lookup-links a.hidden-link {
+  visibility: hidden;
 }
 .mobile-multiselection option {
   color: #555;
@@ -11562,6 +11607,34 @@ However there might have been the case where dropdown showed up where it shouldn
 .rnr-vertical-lookup.rnr-vertical-lookup.rnr-vertical-lookup > span {
   display: block;
 }
+.r-img-control {
+  font-weight: normal;
+  cursor: pointer;
+}
+.r-img-control .rnr-uploadtype {
+  margin-right: 3px;
+  position: relative;
+  top: 1px;
+}
+.r-img-control .rnr-uploadtype[value="file1"],
+.r-img-control .rnr-uploadtype[value="file2"] {
+  margin-left: 12px;
+}
+/* begin checkbox in label styles */
+.r-checkbox-label {
+  cursor: pointer;
+}
+label .r-checkbox-image {
+  margin-right: 4px;
+  position: relative;
+  top: -2px;
+}
+.r-checkbox-inlabel {
+  margin-right: 4px;
+  position: relative;
+  top: 1px;
+}
+/* end checkbox in label styles */
 /* Vertical grid Reordering */
 .ui-sortable-handle {
   overflow: auto;
@@ -12214,6 +12287,26 @@ td.prvcell {
 .filterPanelContainer[data-horizontal] .filter-field[data-selected] > .btn-link > .r-filter-value {
   font-weight: bold;
 }
+/* styles copied from default.css */
+.filter-indicator {
+  float: right;
+}
+.filter-expander {
+  user-select: none;
+}
+.filter-slider {
+  width: 85%;
+  margin: 10px auto;
+}
+.filter-slider-values {
+  text-align: center;
+  margin: auto;
+  direction: ltr;
+}
+.filter-values:hover .delete-button {
+  visibility: visible;
+}
+/* end styles from default.css */
 .r-report > * > tr > .blackshade {
   background-color: #f9f9f9;
 }
@@ -12748,6 +12841,10 @@ td.prvcell {
 .template-upload > td {
   padding: 2px;
 }
+.r-upload-hidden {
+  visibility: hidden;
+  display: none;
+}
 .panel > .alert {
   margin-bottom: 0;
 }
@@ -12843,6 +12940,8 @@ td.prvcell {
 .rnr-orderlink {
   cursor: pointer;
   text-decoration: underline;
+  display: flex;
+  gap: 3px;
 }
 /*Begin s508 style*/
 .rnr-s508 {
@@ -12853,6 +12952,26 @@ td.prvcell {
   position: absolute;
 }
 /*End s508 style*/
+/*Begin locking style*/
+.rnr-locking {
+  top: 0;
+  left: 0;
+  padding: 5pt;
+  text-align: center;
+  margin-bottom: 8pt;
+  background-color: #FFC85D;
+  /*dinamic*/
+  border-bottom: 1pt solid Black;
+  /*dinamic*/
+}
+.rnr-locking a {
+  margin-left: 15pt;
+}
+.rnr-locking,
+.rnr-locking a {
+  font-size: 10pt;
+}
+/*End styles for locking*/
 /*Begin search suggest style*/
 .search_suggest {
   background-color: #FFFFFF;
@@ -12890,6 +13009,26 @@ td.prvcell {
   vertical-align: middle;
 }
 /**/
+[data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"] {
+  --g-progress-color: #dbdbdba1;
+  display: grid;
+}
+[data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"] .gantt-container .popup-wrapper .details {
+  font-size: 14px;
+}
+[data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"][data-itemtype="gantt"] .gantt-container .popup-wrapper .title {
+  font-size: 14px;
+  font-weight: normal;
+}
+[data-itemtype="calendar"][data-can-add] td[data-time] {
+  cursor: pointer;
+}
+[data-itemtype="calendar"][data-can-add] .fc-daygrid td[data-date] {
+  cursor: pointer;
+}
+[data-itemtype="calendar"][data-can-add] .fc-daygrid td[data-date]:hover {
+  background: #add8e625;
+}
 @media print, (min-width: 768px) {
   .r-pretty-login-page {
     display: flex;

@@ -3,6 +3,29 @@
 	'pdf' => array(
 		'pdfView' => false 
 	),
+	'details' => array(
+		'organization_bank' => array(
+			'displayPreview' => 1 
+		),
+		'organization_branch' => array(
+			'displayPreview' => 1 
+		),
+		'organization_contact' => array(
+			'displayPreview' => 1 
+		),
+		'organization_director' => array(
+			'displayPreview' => 1 
+		),
+		'organization_login' => array(
+			'displayPreview' => 1 
+		),
+		'organization_registration' => array(
+			'displayPreview' => 1 
+		),
+		'organization_social_media' => array(
+			'displayPreview' => 1 
+		) 
+	),
 	'totals' => array(
 		'org_id' => array(
 			'totalsType' => '' 
@@ -99,7 +122,14 @@
 					'simple_grid_field10',
 					'simple_grid_field4',
 					'simple_grid_field11',
-					'simple_grid_field5' 
+					'simple_grid_field5',
+					'details_preview',
+					'details_preview1',
+					'details_preview2',
+					'details_preview3',
+					'details_preview4',
+					'details_preview5',
+					'details_preview6' 
 				) 
 			),
 			'formXtTags' => array(
@@ -125,7 +155,14 @@
 				'simple_grid_field10' => 'grid',
 				'simple_grid_field4' => 'grid',
 				'simple_grid_field11' => 'grid',
-				'simple_grid_field5' => 'grid' 
+				'simple_grid_field5' => 'grid',
+				'details_preview' => 'grid',
+				'details_preview1' => 'grid',
+				'details_preview2' => 'grid',
+				'details_preview3' => 'grid',
+				'details_preview4' => 'grid',
+				'details_preview5' => 'grid',
+				'details_preview6' => 'grid' 
 			),
 			'itemLocations' => array(
 				'simple_grid_field6' => array(
@@ -175,6 +212,34 @@
 				'simple_grid_field5' => array(
 					'location' => 'grid',
 					'cellId' => 'cell_field5' 
+				),
+				'details_preview' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_dpreview' 
+				),
+				'details_preview1' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_dpreview' 
+				),
+				'details_preview2' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_dpreview' 
+				),
+				'details_preview3' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_dpreview' 
+				),
+				'details_preview4' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_dpreview' 
+				),
+				'details_preview5' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_dpreview' 
+				),
+				'details_preview6' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_dpreview' 
 				) 
 			),
 			'itemVisiblity' => array(
@@ -206,6 +271,15 @@
 				'simple_grid_field9',
 				'simple_grid_field10',
 				'simple_grid_field11' 
+			),
+			'details_preview' => array( 
+				'details_preview',
+				'details_preview1',
+				'details_preview2',
+				'details_preview3',
+				'details_preview4',
+				'details_preview5',
+				'details_preview6' 
 			) 
 		),
 		'cellMaps' => array(
@@ -403,12 +477,39 @@
 						'fixedAtServer' => false,
 						'fixedAtClient' => false 
 					),
+					'cell_dpreview' => array(
+						'cols' => array( 
+							0,
+							1,
+							2,
+							3,
+							4,
+							5 
+						),
+						'rows' => array( 
+							2 
+						),
+						'tags' => array( 
+							 
+						),
+						'items' => array( 
+							'details_preview',
+							'details_preview1',
+							'details_preview2',
+							'details_preview3',
+							'details_preview4',
+							'details_preview5',
+							'details_preview6' 
+						),
+						'fixedAtServer' => true,
+						'fixedAtClient' => false 
+					),
 					'footcell_field' => array(
 						'cols' => array( 
 							0 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -424,7 +525,7 @@
 							1 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -440,7 +541,7 @@
 							2 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -456,7 +557,7 @@
 							3 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -472,7 +573,7 @@
 							4 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -488,7 +589,7 @@
 							5 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -501,7 +602,7 @@
 					) 
 				),
 				'width' => 6,
-				'height' => 3 
+				'height' => 4 
 			) 
 		) 
 	),
@@ -700,6 +801,15 @@
 					) 
 				),
 				array(
+					'cells' => array( 
+						array(
+							'cell' => 'cell_dpreview',
+							'colspan' => 6 
+						) 
+					),
+					'section' => 'body' 
+				),
+				array(
 					'section' => 'foot',
 					'cells' => array( 
 						array(
@@ -855,6 +965,18 @@
 					'items' => array( 
 						 
 					) 
+				),
+				'cell_dpreview' => array(
+					'model' => 'cell_dpreview',
+					'items' => array( 
+						'details_preview',
+						'details_preview1',
+						'details_preview2',
+						'details_preview3',
+						'details_preview4',
+						'details_preview5',
+						'details_preview6' 
+					) 
 				) 
 			),
 			'deferredItems' => array( 
@@ -920,6 +1042,62 @@
 		'simple_grid_field11' => array(
 			'type' => 'grid_field_label',
 			'field' => 'phone_work' 
+		),
+		'details_preview' => array(
+			'type' => 'details_preview',
+			'table' => 3204,
+			'items' => array( 
+				 
+			),
+			'popup' => false 
+		),
+		'details_preview1' => array(
+			'type' => 'details_preview',
+			'table' => 3247,
+			'items' => array( 
+				 
+			),
+			'popup' => false 
+		),
+		'details_preview2' => array(
+			'type' => 'details_preview',
+			'table' => 3327,
+			'items' => array( 
+				 
+			),
+			'popup' => false 
+		),
+		'details_preview3' => array(
+			'type' => 'details_preview',
+			'table' => 3373,
+			'items' => array( 
+				 
+			),
+			'popup' => false 
+		),
+		'details_preview4' => array(
+			'type' => 'details_preview',
+			'table' => 3425,
+			'items' => array( 
+				 
+			),
+			'popup' => false 
+		),
+		'details_preview5' => array(
+			'type' => 'details_preview',
+			'table' => 3465,
+			'items' => array( 
+				 
+			),
+			'popup' => false 
+		),
+		'details_preview6' => array(
+			'type' => 'details_preview',
+			'table' => 3499,
+			'items' => array( 
+				 
+			),
+			'popup' => false 
 		) 
 	),
 	'dbProps' => array(

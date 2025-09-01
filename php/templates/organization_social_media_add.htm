@@ -114,17 +114,19 @@
 	data-signal-error-for="org_id{$id}" {$required_attr_org_id}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="org_id" data-fieldname="org_id" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_org_id}">
-		{BEGIN org_id_label}{$label organization_social_media org_id }{END org_id_label}
+	<label class="r-edit-label control-label {$org_id_label_class}" for="{$labelfor_org_id}">
+		{BEGIN org_id_label}
+			{$org_id_forward_control}
+			{$label organization_social_media org_id }			{END org_id_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$org_id_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_social_media org_id } >
+		<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_social_media org_id } >
 		<div class="text-muted" >
 		{$tooltip organization_social_media org_id }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END org_id_fieldblock}
@@ -136,17 +138,19 @@
 	data-signal-error-for="platform{$id}" {$required_attr_platform}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="platform" data-fieldname="platform" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_platform}">
-		{BEGIN platform_label}{$label organization_social_media platform }{END platform_label}
+	<label class="r-edit-label control-label {$platform_label_class}" for="{$labelfor_platform}">
+		{BEGIN platform_label}
+			{$platform_forward_control}
+			{$label organization_social_media platform }			{END platform_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$platform_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="platform" {$tooltipAttr organization_social_media platform } >
+		<div class="r-edit-tooltip" data-helpfor="platform" {$tooltipAttr organization_social_media platform } >
 		<div class="text-muted" >
 		{$tooltip organization_social_media platform }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END platform_fieldblock}
@@ -158,17 +162,19 @@
 	data-signal-error-for="handle_name{$id}" {$required_attr_handle_name}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="handle_name" data-fieldname="handle_name" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_handle_name}">
-		{BEGIN handle_name_label}{$label organization_social_media handle_name }{END handle_name_label}
+	<label class="r-edit-label control-label {$handle_name_label_class}" for="{$labelfor_handle_name}">
+		{BEGIN handle_name_label}
+			{$handle_name_forward_control}
+			{$label organization_social_media handle_name }			{END handle_name_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$handle_name_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="handle_name" {$tooltipAttr organization_social_media handle_name } >
+		<div class="r-edit-tooltip" data-helpfor="handle_name" {$tooltipAttr organization_social_media handle_name } >
 		<div class="text-muted" >
 		{$tooltip organization_social_media handle_name }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END handle_name_fieldblock}
@@ -180,17 +186,19 @@
 	data-signal-error-for="website{$id}" {$required_attr_website}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="website" data-fieldname="website" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_website}">
-		{BEGIN website_label}{$label organization_social_media website }{END website_label}
+	<label class="r-edit-label control-label {$website_label_class}" for="{$labelfor_website}">
+		{BEGIN website_label}
+			{$website_forward_control}
+			{$label organization_social_media website }			{END website_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$website_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="website" {$tooltipAttr organization_social_media website } >
+		<div class="r-edit-tooltip" data-helpfor="website" {$tooltipAttr organization_social_media website } >
 		<div class="text-muted" >
 		{$tooltip organization_social_media website }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END website_fieldblock}
@@ -202,17 +210,19 @@
 	data-signal-error-for="mobile_app{$id}" {$required_attr_mobile_app}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="mobile_app" data-fieldname="mobile_app" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_mobile_app}">
-		{BEGIN mobile_app_label}{$label organization_social_media mobile_app }{END mobile_app_label}
+	<label class="r-edit-label control-label {$mobile_app_label_class}" for="{$labelfor_mobile_app}">
+		{BEGIN mobile_app_label}
+			{$mobile_app_forward_control}
+			{$label organization_social_media mobile_app }			{END mobile_app_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$mobile_app_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="mobile_app" {$tooltipAttr organization_social_media mobile_app } >
+		<div class="r-edit-tooltip" data-helpfor="mobile_app" {$tooltipAttr organization_social_media mobile_app } >
 		<div class="text-muted" >
 		{$tooltip organization_social_media mobile_app }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END mobile_app_fieldblock}
@@ -242,11 +252,13 @@
 							{mlang_message SAVE}			</a>
 </span>
 	 
-		<span data-itemtype="add_reset" data-itemid="add_reset" {$item_add_reset} data-pageid="{$pageid}" data-small data-button-item>
+		{BEGIN reset_button}
+<span data-itemtype="add_reset" data-itemid="add_reset" {$item_add_reset} data-pageid="{$pageid}" data-small data-button-item>
 	<a type="button" title="" class="btn btn-default   
 	" id="resetButton{$id}" >
 							{mlang_message RESET}			</a>
 </span>
+{END reset_button}
 	 
 		{BEGIN back_button}
 <span data-itemtype="add_back_list" data-itemid="add_back_list" {$item_add_back_list} data-pageid="{$pageid}" data-small data-button-item>

@@ -36,7 +36,7 @@
 				'group' => false,
 				'linkType' => 0,
 				'items' => null,
-				'table' => 'organization_bank_signatory',
+				'table' => 'organization_branch',
 				'page' => 'list' 
 			),
 			'welcome_item3' => array(
@@ -44,7 +44,7 @@
 				'group' => false,
 				'linkType' => 0,
 				'items' => null,
-				'table' => 'organization_branch',
+				'table' => 'organization_bank_signatory',
 				'page' => 'list' 
 			),
 			'welcome_item4' => array(
@@ -182,6 +182,12 @@
 			),
 			'logout_link' => array( 
 				'logout_link' 
+			),
+			'userinfo_link' => array( 
+				'userinfo_link' 
+			),
+			'adminarea_link' => array( 
+				'adminarea_link' 
 			) 
 		),
 		'cellMaps' => array(
@@ -358,13 +364,13 @@
 				'type' => 6 
 			),
 			'linkIcon' => array(
-				'glyph' => 'fire' 
+				'glyph' => 'hand-right' 
 			),
 			'linkComments' => array(
 				'text' => 'ORGANIZATION description',
 				'type' => 0 
 			),
-			'background' => '#00c2c5',
+			'background' => '#8fbc8b',
 			'linkType' => 0 
 		),
 		'welcome_item1' => array(
@@ -377,35 +383,16 @@
 				'type' => 6 
 			),
 			'linkIcon' => array(
-				'glyph' => 'barcode' 
+				'glyph' => 'camera' 
 			),
 			'linkComments' => array(
 				'text' => 'Organization Bank description',
 				'type' => 0 
 			),
-			'background' => '#7b68ee',
+			'background' => '#5f9ea0',
 			'linkType' => 0 
 		),
 		'welcome_item2' => array(
-			'type' => 'welcome_item',
-			'linkUrl' => '',
-			'linkTable' => 'organization_bank_signatory',
-			'linkPage' => 'list',
-			'linkText' => array(
-				'table' => 'organization_bank_signatory',
-				'type' => 6 
-			),
-			'linkIcon' => array(
-				'glyph' => 'send' 
-			),
-			'linkComments' => array(
-				'text' => 'Organization Bank Signatory description',
-				'type' => 0 
-			),
-			'background' => '#e67349',
-			'linkType' => 0 
-		),
-		'welcome_item3' => array(
 			'type' => 'welcome_item',
 			'linkUrl' => '',
 			'linkTable' => 'organization_branch',
@@ -415,13 +402,32 @@
 				'type' => 6 
 			),
 			'linkIcon' => array(
-				'glyph' => 'send' 
+				'glyph' => 'barcode' 
 			),
 			'linkComments' => array(
 				'text' => 'Organization Branch description',
 				'type' => 0 
 			),
-			'background' => '#db7093',
+			'background' => '#4682b4',
+			'linkType' => 0 
+		),
+		'welcome_item3' => array(
+			'type' => 'welcome_item',
+			'linkUrl' => '',
+			'linkTable' => 'organization_bank_signatory',
+			'linkPage' => 'list',
+			'linkText' => array(
+				'table' => 'organization_bank_signatory',
+				'type' => 6 
+			),
+			'linkIcon' => array(
+				'glyph' => 'camera' 
+			),
+			'linkComments' => array(
+				'text' => 'Organization Bank Signatory description',
+				'type' => 0 
+			),
+			'background' => '#00c2c5',
 			'linkType' => 0 
 		),
 		'welcome_item4' => array(
@@ -434,13 +440,13 @@
 				'type' => 6 
 			),
 			'linkIcon' => array(
-				'glyph' => 'fire' 
+				'glyph' => 'heart-empty' 
 			),
 			'linkComments' => array(
 				'text' => 'Organization Contact description',
 				'type' => 0 
 			),
-			'background' => '#9acd32',
+			'background' => '#bc8f8f',
 			'linkType' => 0 
 		),
 		'welcome_item5' => array(
@@ -453,9 +459,9 @@
 				'type' => 6 
 			),
 			'linkIcon' => array(
-				'glyph' => 'hand-right' 
+				'glyph' => 'flash' 
 			),
-			'background' => '#e8926f',
+			'background' => '#4682b4',
 			'linkType' => 0 
 		),
 		'welcome_item6' => array(
@@ -468,9 +474,9 @@
 				'type' => 6 
 			),
 			'linkIcon' => array(
-				'glyph' => 'heart-empty' 
+				'glyph' => 'camera' 
 			),
-			'background' => '#9acd32',
+			'background' => '#edca00',
 			'linkType' => 0 
 		),
 		'welcome_item7' => array(
@@ -483,9 +489,9 @@
 				'type' => 6 
 			),
 			'linkIcon' => array(
-				'glyph' => 'send' 
+				'glyph' => 'shopping-cart' 
 			),
-			'background' => '#d2691e',
+			'background' => '#9acd32',
 			'linkType' => 0 
 		),
 		'welcome_item8' => array(
@@ -498,15 +504,17 @@
 				'type' => 6 
 			),
 			'linkIcon' => array(
-				'glyph' => 'briefcase' 
+				'glyph' => 'earphone' 
 			),
-			'background' => '#6493ea',
+			'background' => '#5f9ea0',
 			'linkType' => 0 
 		),
 		'username_button' => array(
 			'type' => 'username_button',
 			'items' => array( 
-				'logout_link' 
+				'userinfo_link',
+				'logout_link',
+				'adminarea_link' 
 			) 
 		),
 		'loginform_login' => array(
@@ -515,6 +523,12 @@
 		),
 		'logout_link' => array(
 			'type' => 'logout_link' 
+		),
+		'userinfo_link' => array(
+			'type' => 'userinfo_link' 
+		),
+		'adminarea_link' => array(
+			'type' => 'adminarea_link' 
 		) 
 	),
 	'dbProps' => array(

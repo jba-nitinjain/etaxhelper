@@ -25,6 +25,7 @@ require_once( getabspath( 'classes/searchclause.php' ) );
 require_once( getabspath( 'classes/sql.php') );
 require_once( getabspath( 'classes/audit.php' ) );
 require_once( getabspath( 'connections/dbfunctions_legacy.php' ) );
+require_once( getabspath( 'classes/controls/ViewControl.php' ) );
 
 //	events
 require_once( getabspath( 'usercode/globalevents.php' ) );
@@ -43,7 +44,7 @@ require_once( getabspath( 'include/locale.php' ) );
 
 
 //E_STRICT has become a part of E_ALL since php 5.4 only
-error_reporting( (E_ALL | E_STRICT) & ~E_STRICT & ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
+error_reporting( (E_ALL ) &  ~E_NOTICE & ~E_DEPRECATED & ~E_WARNING);
 set_error_handler( 'runner_error_handler' );
 
 require_once( getabspath( 'include/legacy.php' ) );

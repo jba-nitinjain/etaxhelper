@@ -103,9 +103,9 @@ class ListPage_Simple extends ListPage
 				$dm = RunnerPage::deviceClassToMacro( $d );
 				if( getMediaType() == 0 && $dm == 0 ||
 					( getMediaType() == 2 || getMediaType() == 1 ) &&  $dm == 2  ) {
-					foreach( $fields as $f )
-					{
-						$this->hideField( $f );
+					foreach( $fields as $gf ) {
+						$fieldName = $this->pSet->getFieldByGoodFieldName( $gf );
+						$this->hideField( $fieldName );
 					}
 				}
 			}

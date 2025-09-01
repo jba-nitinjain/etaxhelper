@@ -12,6 +12,7 @@ require_once("include/dbcommon.php");
 require_once('include/xtempl.php');
 require_once('classes/viewpage.php');
 require_once("classes/searchclause.php");
+require_once('classes/view_calendar.php');
 
 add_nocache_headers();
 
@@ -39,6 +40,7 @@ $params["mode"] = $pageMode;
 $params["pageType"] = PAGE_VIEW;
 $params["pageName"] = postvalue("page");
 $params["tName"] = $strTableName;
+$params["action"] = postvalue("a");
 
 $params["masterTable"] = postvalue("mastertable");
 if( $params["masterTable"] )
@@ -64,7 +66,13 @@ if( $pageMode == VIEW_POPUP )
 
 $params["pdfBackgroundImage"] = postvalue("pdfBackgroundImage");
 
-$pageObject = new ViewPage($params);
+
+if( $params['pageName'] == CALENDAR_VIEW_PAGE ) {
+	$pageObject = new ViewCalendarPage( $params );
+} else {
+	$pageObject = new ViewPage( $params );
+}
+
 $pageObject->init();
 
 $pageObject->process();

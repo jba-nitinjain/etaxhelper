@@ -97,12 +97,19 @@ class ConnectionManager extends ConnectionManager_Base
 
 			case "db2":
 				include_once getabspath("connections/DB2Connection.php");
-				return new DB2Connection( $data );
+				if( function_exists( 'db2_connect') ) {
+					return new DB2Connection( $data );
+				}
+				include_once getabspath("connections/ODBCConnection.php");
+				return new ODBCConnection( $data );
 
 			case "informix":
-				include_once getabspath("connections/InformixConnection.php");
-				return new InformixConnection( $data );
-
+				if( function_exists( 'ifx_connect') ) {
+					include_once getabspath("connections/InformixConnection.php");
+					return new InformixConnection( $data );
+				}
+				include_once getabspath("connections/ODBCConnection.php");
+				return new ODBCConnection( $data );
 			case "sqlite":
 				include_once getabspath("connections/SQLite3Connection.php");
 				return new SQLite3Connection( $data );

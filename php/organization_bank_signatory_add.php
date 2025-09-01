@@ -9,6 +9,8 @@ require_once("include/dbcommon.php");
 require_once("classes/searchclause.php");
 require_once('include/xtempl.php');
 require_once('classes/addpage.php');
+require_once('classes/add_calendar.php');
+require_once('classes/add_gantt.php');
 
 add_nocache_headers();
 
@@ -99,7 +101,15 @@ if( $pageMode == ADD_ONTHEFLY || ( $pageMode == ADD_INLINE || $pageMode == ADD_P
 	}		
 }
 
-$pageObject = new AddPage($params);
+if( $params['pageName'] == CALENDAR_ADD_PAGE ) {
+	$pageObject = new AddCalendarPage( $params );
+} else if( postvalue( 'gantt' ) ) {
+	$params['parentValue'] = postvalue( 'parent' );
+	$pageObject = new AddGanttPage( $params );
+} else {
+	$pageObject = new AddPage( $params );
+
+}
 $pageObject->init();
 
 $pageObject->process();	

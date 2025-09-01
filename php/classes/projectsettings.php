@@ -256,8 +256,8 @@ class ProjectSettings
 	function getPageTypeByFieldEditFormat($field, $editFormat )
 	{
 		$editFormats = $this->getTableValue( "fields", $field, "editFormats" );
-		foreach( $editFormats as $pageType => $editFormat ) {
-			if( $editFormat['format'] == $editFormat ) {
+		foreach( $editFormats as $pageType => $ef ) {
+			if( $ef['format'] == $editFormat ) {
 				return $pageType;
 			}
 		}
@@ -325,13 +325,20 @@ class ProjectSettings
 
 	public function getEffectiveViewFormat( $field ) {
 		
-		if( !@$this->_tableData['fields'][ $field ]['separateEditViewFormats'] ) {
-			return 'view';
-		}
 		$viewFormats = &$this->_tableData['fields'][ $field ]['viewFormats'];
 		if( !is_array( $viewFormats ) || !$viewFormats ) {
 			return null;
 		}
+
+		if( !@$this->_tableData['fields'][ $field ]['separateEditViewFormats'] ) {
+			if( @$viewFormats['view'] ) {
+				return 'view';
+			}
+			if( $this->getEntityType() == titREPORT ) {
+				return 'report';
+			}
+		}
+
 		$effectiveView = $this->getEffectiveViewPage( $field );
 		if( array_key_exists( $effectiveView, $viewFormats ) ) {
 			return $effectiveView;
@@ -627,6 +634,13 @@ class ProjectSettings
 		return $events->defaultValue( $field, $pageType );
 	}
 
+	function getSearchDefaultValue( $field ) {
+		if( !$this->isSeparate( $field ) ) {
+			return '';
+		}
+		return $this->getDefaultValue( $field );
+	}
+
 	function isAutoUpdatable( $field ) {
 		$events = getEventObject( $this );
 		$pageType = $this->getEffectiveEditFormat( $field );
@@ -701,9 +715,9 @@ class ProjectSettings
 		$fields = array();
 		foreach( $this->getFieldsList() as $field ) {
 			$stp = $this->fileStorageProvider( $field );
-			if( $stp === stpGOOGLEDRIVE
-				|| $stp === stpDROPBOX
-				|| $stp === stpONEDRIVE ) {
+			if( $stp == stpGOOGLEDRIVE
+				|| $stp == stpDROPBOX
+				|| $stp == stpONEDRIVE ) {
 
 				$fields[] = $field;
 			}
@@ -1182,6 +1196,10 @@ class ProjectSettings
 		return $this->getFieldValue( $field, 'edit', 'lookupAllowAdd' );
 	}
 
+	function isAllowToEdit( $field ) {
+		return $this->getFieldValue( $field, 'edit', 'lookupAllowEdit' );
+	}
+
 	public static function encryptSettings( $connId ) {
 		$ret = ProjectSettings::getProjectValue( 'connEncryptInfo', $connId  );
 		if( !$ret ) {
@@ -1208,10 +1226,15 @@ class ProjectSettings
 	}
 
 	function isFreeInput( $field ) {
-		return $this->getFieldValue( $field, 'edit', 'lookupFreeInput' );
+		return $this->lookupControlType( $field ) == LCT_AJAX 
+			&& $this->getDisplayField( $field ) == $this->getLinkField( $field )
+			&& $this->getFieldValue( $field, 'edit', 'lookupFreeInput' );
 	}
 
 	function getMapData( $field ) {
+		if( $this->getViewFormat( $field ) != FORMAT_MAP ) {
+			return array();
+		}
 		$mapData = array(
 			'width' => $this->getFieldValue( $field, 'view', 'mapWidth' ),
 			'height' => $this->getFieldValue( $field, 'view', 'mapHeight' ),
@@ -1243,7 +1266,7 @@ class ProjectSettings
 
 	function getViewAsTimeFormatData( $field ) {
 		return array(
-			"showSeconds" => false,
+			"showSeconds" => $this->getFieldValue( $field, 'view', 'timeShowSeconds' ),
 			"showDaysInTotals" => false,
 			"timeFormat" => $this->getFieldValue( $field, 'view', 'timeFormat' )
 		);
@@ -1653,6 +1676,12 @@ class ProjectSettings
 		return $this->getFieldValue( $field, 'sqlExpression' );
 	}
 
+	/**
+	 * For Meetings business template only
+	 */
+	function setFullFieldName( $field, $value ) {
+		$this->_tableData['fields'][ $field ][ 'sqlExpression' ] = $value;
+	}
 
 	/**
 	 * Is field marked as required
@@ -1730,6 +1759,30 @@ class ProjectSettings
 		return $this->_dashboardElemPSet[ $table ]->getFieldValue( $dfield[0]["field"], $path1, $path2, $path3, $path4 );
 	}
 
+	public static function & getFieldObj( $table, $field ) {
+		global $runnerTableSettings;
+		return $runnerTableSettings[ $table ][ 'fields' ][ $field ];
+	}
+
+	public static function & getFieldEditFormat( $table, $field, $pageType = 'edit' ) {
+		$fieldObj = & ProjectSettings::getFieldObj( $table, $field );
+		if( !array_key_exists( $pageType, $fieldObj['editFormats'] ) ) {
+			$pageTypes = array_keys( $fieldObj['editFormats'] );
+			$pageType = $pageTypes[0];
+		}
+		return $fieldObj['editFormats'][ $pageType ];
+	}
+
+	public static function & getFieldViewFormat( $table, $field, $pageType = 'view' ) {
+		$fieldObj = & ProjectSettings::getFieldObj( $table, $field );
+		if( !array_key_exists( $pageType, $fieldObj['viewFormats'] ) ) {
+			$pageTypes = array_keys( $fieldObj['viewFormats'] );
+			$pageType = $pageTypes[0];
+		}
+		return $fieldObj['viewFormats'][ $pageType ];
+	}
+
+	
 	/**
 	 * Special values for $path1
 	 * "view" -> effective view format value
@@ -1766,6 +1819,14 @@ class ProjectSettings
 			return ProjectSettings::_getTableDefault( $path );
 		}
 		return $value;
+	}
+
+	public function getCalendarValue( $name ) { 
+		return $this->getTableValue( 'calendarSettings', $name );
+	}
+
+	public function getGanttValue( $name ) { 
+		return $this->getTableValue( 'ganttSettings', $name );
 	}
 
 	public function getTableValue( $path1, $path2 = null, $path3 = null, $path4 = null ) {
@@ -2471,7 +2532,7 @@ class ProjectSettings
 		else
 			$path = getabspath($this->getUploadFolder($field, $fileData));
 		
-		if( ProjectSettings::ext() == "php ") {
+		if( ProjectSettings::ext() == "php") {
 			if(strlen($path) && substr($path,strlen($path)-1) != "/")
 				$path.="/";
 		} else {
@@ -2493,7 +2554,7 @@ class ProjectSettings
 		return $queryObj;
 	}
 
-	function getListOfFieldsByExprType($needaggregate)
+	function getListOfFieldsByExprType( $needaggregate )
 	{
 		$query = &$this->getSQLQuery();
 		if( !$query ) {
@@ -2501,10 +2562,10 @@ class ProjectSettings
 		}
 		$fields = $this->getFieldsList();
 		$out = array();
-		foreach($fields as $idx=>$f)
-		{
-			$aggr = $query->IsAggrFuncField($idx);
-			if($needaggregate && $aggr || !$needaggregate && !$aggr)
+		foreach( $fields as $f ) {
+			$idx = $this->getFieldIndex( $f ) - 1;
+			$aggr = $query->IsAggrFuncField( $idx ) ;
+			if( $needaggregate && $aggr || !$needaggregate && !$aggr)
 				$out[] = $f;
 		}
 		return $out;
@@ -2532,7 +2593,14 @@ class ProjectSettings
 
 	function getChartRefreshTime()
 	{
-		return $this->getTableValue( 'chartSettings', 'chartRefreshTime' );
+		return $this->chartRefresh()
+			? $this->getTableValue( 'chartSettings', 'chartRefreshTime' )
+			: 0;
+	}
+
+	function chartRefresh()
+	{
+		return $this->getTableValue( 'chartSettings', 'chartRefresh' );
 	}
 
 	function getChartSettings()
@@ -2684,15 +2752,18 @@ class ProjectSettings
 
 
 	function getFilterStepType( $field ) {
-		return $this->getFieldValue( $field, 'filter', 'sliderStepType' );
+		// #17488 p.2 ( string -> number)
+		return (int)$this->getFieldValue( $field, 'filter', 'sliderStepType' );
 	}
 
 	function getFilterStepValue( $field ) {
-		return $this->getFieldValue( $field, 'filter', 'sliderStepValue' );
+		// #17488 p.2 ( string -> number)
+		return (float)$this->getFieldValue( $field, 'filter', 'sliderStepValue' );
 	}
 
 	function getFilterKnobsType( $field ) {
-		return $this->getFieldValue( $field, 'filter', 'sliderKnobs' );
+		// #17488 p.2 ( string -> number)
+		return (int)$this->getFieldValue( $field, 'filter', 'sliderKnobs' );
 	}
 
 	function isFilterApplyBtnSet( $field ) {
@@ -2815,8 +2886,8 @@ class ProjectSettings
 	{
 		$hGoodFields = array();
 		$hFields = $this->getHiddenFields($device);
-		foreach ( $hFields as $field => $isShow ) {
-			$hGoodFields[GoodFieldName($field)] = $isShow;
+		foreach ( $hFields as $field ) {
+			$hGoodFields[] = GoodFieldName( $field );
 		}
 
 		return $hGoodFields;
@@ -2837,52 +2908,6 @@ class ProjectSettings
 		return false;
 	}
 
-
-	/**
-	 * Build CSS media clause for given device code.
-	 * Thanks to mobile device vendors, there are plenty of weird heuristics here, take it easy.
-	 */
-	static function getDeviceMediaClause($device)
-	{
-		if( $device == DESKTOP )
-		{
-			// width >= 1281
-
-			//	Desktop. We don't care about prehistoric VGA displays
-			return "@media (min-device-width: 1281px)";
-		}
-		else if( $device == TABLET_10_IN )	//	10" tablets
-		{
-			// width >= 768 and height == 1024 ( iPad )
-			// or width between 1025 and 1280 and height is less than 1023
-			// or the same with width and height interchanged
-
-			// All iPads including mini go here, because there is no way to tell full-sized iPad from mini.
-			return "@media (device-width: 768px) and (device-height: 1024px)".
-
-			// The rest of contemporary 10" devices supposedly go here
-				" , (min-device-width: 1025px) and (max-device-width: 1280px) and (max-device-height: 1023px) , (min-device-height: 1025px) and (max-device-height: 1280px) and (max-device-width: 1023px)";
-		}
-		else if( $device == TABLET_7_IN )
-		{
-			// width between 401 and 1024 and height between 401 and 800
-			// or the same with width and height interchanged
-
-			return "@media (min-device-height: 401px) and (max-device-height: 800px) and (min-device-width: 401px) and (max-device-width: 1024px) , (min-device-height: 401px) and (min-device-width: 401px) and (max-device-height: 1024px) and (max-device-width: 800px)";
-		}
-
-		else if( $device == SMARTPHONE_LANDSCAPE )
-		{
-			// landscape mode and width or height no more than 400
-			return "@media (orientation: landscape) and (max-device-height: 400px), (orientation: landscape) and (max-device-width: 400px)";
-		}
-
-		else if( $device == SMARTPHONE_PORTRAIT )
-		{
-			// potrait mode and width or height no more than 400
-			return "@media (orientation: portrait) and (max-device-height: 400px), (orientation: portrait) and (max-device-width: 400px)";
-		}
-	}
 
 	/**
 	 * @return Mixed
@@ -3177,11 +3202,18 @@ class ProjectSettings
 
 	function getMultipleImgMode( $field )
 	{
+		$editFormat = $this->getEditFormat( $field );
+		if( $editFormat == EDIT_FORMAT_DATABASE_IMAGE || $editFormat == EDIT_FORMAT_DATABASE_FILE ) {
+			return false;
+		}
 		return $this->getFieldValue( $field, 'view', 'imageMultipleMode' );
 	}
 
 	function getMaxImages( $field )
 	{
+		if( !$this->getMultipleImgMode( $field ) ) {
+			return 1;
+		}
 		return $this->getFieldValue( $field, 'view', 'imageMaxCount' );
 	}
 	function isGalleryEnabled( $field )
@@ -3372,11 +3404,11 @@ class ProjectSettings
 		return $this->getPageOption("page", "hasNotifications");
 	}
 
-	function amazonSecretKey( $field ) {
+	static function amazonSecretKey() {
 		return ProjectSettings::getProjectValue( 'cloudSettings', 'cloudAmazonSecretKey' );
 	}
 
-	function amazonAccessKey( $field ) {
+	static function amazonAccessKey() {
 		return ProjectSettings::getProjectValue( 'cloudSettings', 'cloudAmazonAccessKey' );
 	}
 
@@ -3384,20 +3416,20 @@ class ProjectSettings
 		return $this->getFieldValue( $field, 'amazonPath' );
 	}
 
-	function amazonBucket( $field ) {
+	static function amazonBucket() {
 		return ProjectSettings::getProjectValue( 'cloudSettings', 'cloudAmazonBucket' );
 	}
 
-	function amazonRegion( $field ) {
+	static function amazonRegion() {
 		return ProjectSettings::getProjectValue( 'cloudSettings', 'cloudAmazonRegion' );
 	}
 
 
-	function wasabiSecretKey( $field ) {
+	static function wasabiSecretKey() {
 		return ProjectSettings::getProjectValue( 'cloudSettings', 'cloudWasabiSecretKey' );
 	}
 
-	function wasabiAccessKey( $field ) {
+	static function wasabiAccessKey() {
 		return ProjectSettings::getProjectValue( 'cloudSettings', 'cloudWasabiAccessKey' );
 	}
 
@@ -3405,11 +3437,11 @@ class ProjectSettings
 		return $this->getFieldValue( $field, 'wasabiPath' );
 	}
 
-	function wasabiBucket( $field ) {
+	static function wasabiBucket() {
 		return ProjectSettings::getProjectValue( 'cloudSettings', 'cloudWasabiBucket' );
 	}
 
-	function wasabiRegion( $field ) {
+	static function wasabiRegion() {
 		return ProjectSettings::getProjectValue( 'cloudSettings', 'cloudWasabiRegion' );
 	}
 
@@ -3417,7 +3449,7 @@ class ProjectSettings
 		return $this->getFieldValue( $field, 'oneDrivePath' );
 	}
 
-	function oneDriveDrive( $field ) {
+	static function oneDriveDrive() {
 		return ProjectSettings::getProjectValue( 'cloudSettings', 'cloudOneDriveDrive' );
 	}
 
@@ -3570,15 +3602,26 @@ function findTable( $tableName, $strict = false ) {
 		if( strtoupper( $table['name'] ) == $uTable ) {
 			return $table['name'];
 		}
+		$gTable = GoodFieldName( $table['name'] );
+		if( $uTable == strtoupper( $gTable ) ) {
+			return $table['name'];
+		}
 	}
 
-	$gTable = GetTableByGood( $tableName );
-	if( $gTable ) {
-		return $gTable;
+	$found = GetTableByShort( $tableName );
+	if( $found ) {
+		return $found;
 	}
 
-	return GetTableURL( $tableName );
+	foreach( ProjectSettings::getProjectTables() as $table ) {
+		if( strtoupper( $table['shortName'] ) == $uTable ) {
+			return $table['name'];
+		}
+	}
+
+	return "";
 }
+
 
 //	return table short name
 function GetTableURL( $tableName )
@@ -3641,6 +3684,13 @@ function GetTableByGood( $goodTableName ) {
 		return $runnerProjectSettings['tablesByGood'][ $goodTableName ];
 	}
 	return "";
+}
+
+/**
+ * Legacy, used in some business templates (News)
+ */
+function getSecurityOption( $option ) {
+	return ProjectSettings::getSecurityValue( $option );
 }
 
 require_once( getabspath('settings/defaults.php') );

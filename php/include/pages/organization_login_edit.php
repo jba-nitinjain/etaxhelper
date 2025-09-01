@@ -1,5 +1,13 @@
 <?php
 			$optionsArray = array(
+	'master' => array(
+		'ORGANIZATION' => array(
+			'preview' => false 
+		),
+		'organization_social_media' => array(
+			'preview' => false 
+		) 
+	),
 	'captcha' => array(
 		'captcha' => false 
 	),

@@ -23,6 +23,18 @@ $runnerDbTableInfo['organization'] = array(
 			'size' => 0,
 			'scale' => 0,
 			'typeName' => 'enum(\'Proprietorship\',\'Partnership\',\'Private Limited\',\'Public Limited\',\'LLP\',\'NGO\',\'Cooperative\',\'Government\',\'Individual\',\'Other\')',
+			'enumValues' => array( 
+				'Proprietorship',
+				'Partnership',
+				'Private Limited',
+				'Public Limited',
+				'LLP',
+				'NGO',
+				'Cooperative',
+				'Government',
+				'Individual',
+				'Other' 
+			),
 			'nullable' => true,
 			'autoinc' => false,
 			'defaultValueSQL' => null,

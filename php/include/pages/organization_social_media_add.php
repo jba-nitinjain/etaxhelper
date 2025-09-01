@@ -1,5 +1,16 @@
 <?php
 			$optionsArray = array(
+	'details' => array(
+		'organization_login' => array(
+			'displayPreview' => 2,
+			'previewPageId' => '' 
+		) 
+	),
+	'master' => array(
+		'ORGANIZATION' => array(
+			'preview' => false 
+		) 
+	),
 	'captcha' => array(
 		'captcha' => false 
 	),

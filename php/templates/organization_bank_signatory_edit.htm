@@ -109,17 +109,19 @@
 	data-signal-error-for="bank_id{$id}" {$required_attr_bank_id}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="bank_id" data-fieldname="bank_id" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_bank_id}">
-		{BEGIN bank_id_label}{$label organization_bank_signatory bank_id }{END bank_id_label}
+	<label class="r-edit-label control-label {$bank_id_label_class}" for="{$labelfor_bank_id}">
+		{BEGIN bank_id_label}
+			{$bank_id_forward_control}
+			{$label organization_bank_signatory bank_id }			{END bank_id_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$bank_id_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="bank_id" {$tooltipAttr organization_bank_signatory bank_id } >
+		<div class="r-edit-tooltip" data-helpfor="bank_id" {$tooltipAttr organization_bank_signatory bank_id } >
 		<div class="text-muted" >
 		{$tooltip organization_bank_signatory bank_id }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END bank_id_fieldblock}
@@ -131,17 +133,19 @@
 	data-signal-error-for="NAME{$id}" {$required_attr_NAME}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="NAME" data-fieldname="NAME" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_NAME}">
-		{BEGIN NAME_label}{$label organization_bank_signatory NAME }{END NAME_label}
+	<label class="r-edit-label control-label {$NAME_label_class}" for="{$labelfor_NAME}">
+		{BEGIN NAME_label}
+			{$NAME_forward_control}
+			{$label organization_bank_signatory NAME }			{END NAME_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$NAME_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="NAME" {$tooltipAttr organization_bank_signatory NAME } >
+		<div class="r-edit-tooltip" data-helpfor="NAME" {$tooltipAttr organization_bank_signatory NAME } >
 		<div class="text-muted" >
 		{$tooltip organization_bank_signatory NAME }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END NAME_fieldblock}
@@ -153,17 +157,19 @@
 	data-signal-error-for="designation{$id}" {$required_attr_designation}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="designation" data-fieldname="designation" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_designation}">
-		{BEGIN designation_label}{$label organization_bank_signatory designation }{END designation_label}
+	<label class="r-edit-label control-label {$designation_label_class}" for="{$labelfor_designation}">
+		{BEGIN designation_label}
+			{$designation_forward_control}
+			{$label organization_bank_signatory designation }			{END designation_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$designation_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="designation" {$tooltipAttr organization_bank_signatory designation } >
+		<div class="r-edit-tooltip" data-helpfor="designation" {$tooltipAttr organization_bank_signatory designation } >
 		<div class="text-muted" >
 		{$tooltip organization_bank_signatory designation }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END designation_fieldblock}
@@ -175,17 +181,19 @@
 	data-signal-error-for="email{$id}" {$required_attr_email}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="email" data-fieldname="email" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_email}">
-		{BEGIN email_label}{$label organization_bank_signatory email }{END email_label}
+	<label class="r-edit-label control-label {$email_label_class}" for="{$labelfor_email}">
+		{BEGIN email_label}
+			{$email_forward_control}
+			{$label organization_bank_signatory email }			{END email_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$email_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="email" {$tooltipAttr organization_bank_signatory email } >
+		<div class="r-edit-tooltip" data-helpfor="email" {$tooltipAttr organization_bank_signatory email } >
 		<div class="text-muted" >
 		{$tooltip organization_bank_signatory email }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END email_fieldblock}
@@ -197,17 +205,19 @@
 	data-signal-error-for="phone{$id}" {$required_attr_phone}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="phone" data-fieldname="phone" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_phone}">
-		{BEGIN phone_label}{$label organization_bank_signatory phone }{END phone_label}
+	<label class="r-edit-label control-label {$phone_label_class}" for="{$labelfor_phone}">
+		{BEGIN phone_label}
+			{$phone_forward_control}
+			{$label organization_bank_signatory phone }			{END phone_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$phone_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="phone" {$tooltipAttr organization_bank_signatory phone } >
+		<div class="r-edit-tooltip" data-helpfor="phone" {$tooltipAttr organization_bank_signatory phone } >
 		<div class="text-muted" >
 		{$tooltip organization_bank_signatory phone }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END phone_fieldblock}
@@ -267,12 +277,14 @@
 												<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu">
-								<li data-itemtype="edit_reset" data-itemid="edit_reset" {$item_edit_reset} data-pageid="{$pageid}" data-small >
+							{BEGIN reset_button}
+	<li data-itemtype="edit_reset" data-itemid="edit_reset" {$item_edit_reset} data-pageid="{$pageid}" data-small >
 				<a  {$resetbutton_attrs}  title="" >
 				
 		{mlang_message RESET}		
 		</a>
 	</li>
+{END reset_button}
 							{BEGIN view_page_button}
 	<li data-itemtype="edit_view" data-itemid="edit_view" {$item_edit_view} data-pageid="{$pageid}" data-small >
 				<a  href="organization_bank_signatory_view.php?{$editlink}" {$view_page_button_attrs}  title="" >

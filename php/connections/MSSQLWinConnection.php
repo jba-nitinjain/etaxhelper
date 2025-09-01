@@ -60,8 +60,9 @@ class MSSQLWinConnection extends Connection
 		global $cCodePage;
 
 		$connStrings = array();
-		if( $_SESSION["MSSQLConnString"] )
-			$connStrings[] = $_SESSION["SQLConnString"];
+		$savedString = $this->readConnString();
+		if( $savedString )
+			$connStrings[] = $savedString;
 
 		$connStrings[] = $this->ODBCString;
 		$providers = array( "MSOLEDBSQL", "SQLOLEDB", "SQLNCLI" );
@@ -92,7 +93,7 @@ class MSSQLWinConnection extends Connection
 				if( $d < $m && $m < $y )
 					$this->mssql_dmy = "dmy";
 
-				$_SESSION["MSSQLConnString"] = $connStr;
+				$this->saveConnString( $connStr );
 				$this->conn->CommandTimeout = 120;
 				return $this->conn;
 			}

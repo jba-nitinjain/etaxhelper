@@ -216,6 +216,9 @@ class RegisterPage extends RunnerPage
 			$this->xt->assign("supertop_block", true);
 			$this->pageData["buttons"] = array_merge( $this->pageData["buttons"], $this->pSet->buttons() );
 			foreach( $this->pSet->buttons() as $b ) {
+				if( !$b ) {
+					continue;
+				}
 				$this->AddJSFile( "usercode/button_".$b.".js" );
 			}
 		}
@@ -555,7 +558,18 @@ class RegisterPage extends RunnerPage
 			if ( $firstElementId )
 				$this->xt->assign("labelfor_" . goodFieldName($fName), $firstElementId);
 
+			if( $this->pSet->getEditFormat( $fName ) == EDIT_FORMAT_CHECKBOX ) {
+				$parameters[ "xt" ] = $this->xt;
+				$parameters[ "clearVar" ] = $gfName . "_forward_control";
+			}
 			$this->xt->assign_function($gfName."_editcontrol", "xt_buildeditcontrol", $parameters );
+			if( $this->pSet->getEditFormat( $fName ) == EDIT_FORMAT_CHECKBOX ) {
+				$parameters[ "xt" ] = $this->xt;
+				$parameters[ "clearVar" ] = $gfName . "_editcontrol";
+				$this->xt->assign_function( $gfName . "_forward_control", "xt_buildforwardcontrol", $parameters );
+				
+				$this->xt->assign( $gfName . '_label_class' , 'r-checkbox-label' );
+			}
 
 			$preload = $this->fillPreload($fName, $regFields, $this->regValues);
 			if( $preload !== false)

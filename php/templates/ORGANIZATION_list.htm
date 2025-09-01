@@ -418,6 +418,14 @@
 		</a>
 	</li>
 {END exportselected_link}
+							{BEGIN deleteselected_link}
+	<li data-itemtype="delete_selected" data-itemid="delete_selected" {$item_delete_selected} data-pageid="{$pageid}" data-small >
+				<a  href="#" {$deleteselectedlink_attrs} {$deleteselectedlink_span}  title="" >
+				
+		{mlang_message DELETE_SELECTED}		
+		</a>
+	</li>
+{END deleteselected_link}
 							<li role="separator" class="divider"></li>							{BEGIN searchPanelTopButtons}
 	<li data-itemtype="show_search_panel" data-itemid="show_search_panel" {$item_show_search_panel} data-pageid="{$pageid}" data-small >
 				<a  id="showOptPanel{$id}"  title="" >
@@ -474,6 +482,14 @@
 						{END userbutton_icon}{$userbutton_image}			{$mlp_push}{$mlparam username var username}{$mltext %username%}{$mlp_pop}			<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu">
+							{BEGIN userinfo_link}
+	<li data-itemtype="userinfo_link" data-itemid="userinfo_link" {$item_userinfo_link} data-pageid="{$pageid}" data-small >
+				<a  href="userinfo.php"  title="" >
+				
+		{mlang_message USERINFO}		
+		</a>
+	</li>
+{END userinfo_link}
 							{BEGIN logoutbutton}
 	<li data-itemtype="logout_link" data-itemid="logout_link" {$item_logout_link} data-pageid="{$pageid}" data-small >
 				<a  href="#" {$logoutlink_attrs}  title="" >
@@ -482,6 +498,14 @@
 		</a>
 	</li>
 {END logoutbutton}
+							{BEGIN adminarea_link}
+	<li data-itemtype="adminarea_link" data-itemid="adminarea_link" {$item_adminarea_link} data-pageid="{$pageid}" data-small >
+				<a  href="admin_rights_list.php"  title="" >
+				
+		{mlang_message AA_ADMINAREA}		
+		</a>
+	</li>
+{END adminarea_link}
 					</ul>
 	</span>
 </span>
@@ -507,7 +531,7 @@
 			 
 				<div 
 	data-cellId="above-grid_c1" data-pageid="{$pageid}"	{$cell_above-grid_c1}
-	class=" r-ori-vert			col-md-6
+	class="			col-md-6
 	
 ">
 		{BEGIN firstAboveGridCell}
@@ -519,6 +543,14 @@
 							{mlang_message ADD_NEW}			</a>
 </span>
 {END add_link}
+	 
+		{BEGIN deleteselected_link}
+<span data-itemtype="delete" data-itemid="delete" {$item_delete} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-default   
+	" {$deleteselectedlink_attrs} {$deleteselectedlink_span} disabled >
+							{mlang_message DELETE}			</a>
+</span>
+{END deleteselected_link}
 			{END firstAboveGridCell}	
 	</div>			 
 				<div 
@@ -578,6 +610,71 @@
 		</div>
 	</div>
 	</div>
+				 
+					</li>
+											<li class="divider" role="separator"></li>
+																				 
+				 
+					<li class="container-fluid 
+										">
+									{BEGIN print_details}
+<div>
+	<label for="printDetailsToggler{$id}">
+		<input type="checkbox" id="printDetailsToggler{$id}">
+		{mlang_message PPANEL_DETAILS}	</label>
+	<div  id="printdetailstables{$id}" style="display:none;">
+											{BEGIN print_details_organization_bank}
+			<div>
+				<label for="printDetailsorganization_bank{$id}">
+					<input type="checkbox" value="organization_bank" id="printDetailsorganization_bank{$id}" checked>
+					{$caption organization_bank }				</label>
+			</div>
+			{END print_details_organization_bank}
+														{BEGIN print_details_organization_branch}
+			<div>
+				<label for="printDetailsorganization_branch{$id}">
+					<input type="checkbox" value="organization_branch" id="printDetailsorganization_branch{$id}" checked>
+					{$caption organization_branch }				</label>
+			</div>
+			{END print_details_organization_branch}
+														{BEGIN print_details_organization_contact}
+			<div>
+				<label for="printDetailsorganization_contact{$id}">
+					<input type="checkbox" value="organization_contact" id="printDetailsorganization_contact{$id}" checked>
+					{$caption organization_contact }				</label>
+			</div>
+			{END print_details_organization_contact}
+														{BEGIN print_details_organization_director}
+			<div>
+				<label for="printDetailsorganization_director{$id}">
+					<input type="checkbox" value="organization_director" id="printDetailsorganization_director{$id}" checked>
+					{$caption organization_director }				</label>
+			</div>
+			{END print_details_organization_director}
+														{BEGIN print_details_organization_login}
+			<div>
+				<label for="printDetailsorganization_login{$id}">
+					<input type="checkbox" value="organization_login" id="printDetailsorganization_login{$id}" checked>
+					{$caption organization_login }				</label>
+			</div>
+			{END print_details_organization_login}
+														{BEGIN print_details_organization_registration}
+			<div>
+				<label for="printDetailsorganization_registration{$id}">
+					<input type="checkbox" value="organization_registration" id="printDetailsorganization_registration{$id}" checked>
+					{$caption organization_registration }				</label>
+			</div>
+			{END print_details_organization_registration}
+														{BEGIN print_details_organization_social_media}
+			<div>
+				<label for="printDetailsorganization_social_media{$id}">
+					<input type="checkbox" value="organization_social_media" id="printDetailsorganization_social_media{$id}" checked>
+					{$caption organization_social_media }				</label>
+			</div>
+			{END print_details_organization_social_media}
+						</div>
+</div>
+{END print_details}
 				 
 					</li>
 											<li class="divider" role="separator"></li>
@@ -645,12 +742,12 @@
 </style>
 <table data-location="grid" id="form_grid_{$pageid}" data-makeup="leftbar" {$form_grid} data-pageid="{$pageid}" class=" table table-striped table-bordered r-horizontal-grid  r-flexgrid rnr-b-grid rnr-gridtable"
 	cellpadding="0"
-	data-body-height="1"
+	data-body-height="2"
 >
 						<thead>
 			{BEGIN grid_header}
 			
-																									<tr {$rowattrs} {$row_grid_0} class="{$rowclass}
+																														<tr {$rowattrs} {$row_grid_0} class="{$rowclass}
 									{$gridHeader_class}
 					
 								r-gridrow
@@ -693,6 +790,21 @@
 	
 	</th>
 	{END cellblock_grid_headcell_checkbox}
+									{BEGIN cellblock_grid_headcell_details}
+	<th
+	
+	{$cell_grid_headcell_details}
+	{$recordattrs}
+	class="
+		 r-ori-vert			"
+
+	
+	data-cellId="grid_headcell_details" data-pageid="{$pageid}" data-record-id="{$recId}"	
+	>
+
+	
+	</th>
+	{END cellblock_grid_headcell_details}
 									{BEGIN cellblock_grid_headcell_field}
 	<th
 	
@@ -898,13 +1010,13 @@
 	</th>
 	{END cellblock_grid_headcell_field5}
 							</tr>
-															
+																				
 					{END grid_header}
 			</thead>
 															<tbody>
 					{BEGIN grid_row}
 							
-																														<tr {$rowattrs} {$row_grid_1} class="{$rowclass}
+																																			<tr {$rowattrs} {$row_grid_1} class="{$rowclass}
 				
 								r-gridrow
 							">
@@ -970,6 +1082,167 @@
 	
 	</td>
 	{END cellblock_grid_cell_checkbox}
+									{BEGIN cellblock_grid_cell_details}
+	<td
+	
+	{$cell_grid_cell_details}
+	{$recordattrs}
+	class="
+					"
+
+	
+	data-cellId="grid_cell_details" data-pageid="{$pageid}" data-record-id="{$recId}" data-page="ORGANIZATION_list"		data-control-cell
+	
+	>
+
+	 
+		{BEGIN dtables_link}
+	<a 
+		data-itemtype="grid_alldetails_link" data-itemid="grid_alldetails_link" {$item_grid_alldetails_link} data-pageid="{$pageid}" data-record-id="{$recId}" 
+		{$dtables_link_attrs} 
+		class="{$dtables_link_class}" 
+		title="{mlang_message SHOW_DETAILS}"
+				
+	>
+					<span class="glyphicon glyphicon-th-list"></span>
+					</a>
+{END dtables_link}
+	 
+		
+		
+	{BEGIN organization_bank_dtable_link}
+	<span data-itemtype="grid_details_link" data-itemid="grid_details_link" {$item_grid_details_link} data-pageid="{$pageid}" data-record-id="{$recId}">
+	<a  {$organization_bank_link_attrs} data-short-details="organization_bank"
+		class="{$organization_bank_dlink_class}" 
+		title="{$caption organization_bank }"			>
+								
+									{BEGIN organization_bank_childcount}
+				<span class="details-badge badge organization_bank_badge" {$organization_bank_childnumber_attr}>
+					{$organization_bank_childnumber}				
+				</span>
+				{END organization_bank_childcount}
+						</a>
+	</span>
+	{END organization_bank_dtable_link}
+
+
+	 
+		
+		
+	{BEGIN organization_branch_dtable_link}
+	<span data-itemtype="grid_details_link" data-itemid="grid_details_link1" {$item_grid_details_link1} data-pageid="{$pageid}" data-record-id="{$recId}">
+	<a  {$organization_branch_link_attrs} data-short-details="organization_branch"
+		class="{$organization_branch_dlink_class}" 
+		title="{$caption organization_branch }"			>
+								
+									{BEGIN organization_branch_childcount}
+				<span class="details-badge badge organization_branch_badge" {$organization_branch_childnumber_attr}>
+					{$organization_branch_childnumber}				
+				</span>
+				{END organization_branch_childcount}
+						</a>
+	</span>
+	{END organization_branch_dtable_link}
+
+
+	 
+		
+		
+	{BEGIN organization_contact_dtable_link}
+	<span data-itemtype="grid_details_link" data-itemid="grid_details_link2" {$item_grid_details_link2} data-pageid="{$pageid}" data-record-id="{$recId}">
+	<a  {$organization_contact_link_attrs} data-short-details="organization_contact"
+		class="{$organization_contact_dlink_class}" 
+		title="{$caption organization_contact }"			>
+								
+									{BEGIN organization_contact_childcount}
+				<span class="details-badge badge organization_contact_badge" {$organization_contact_childnumber_attr}>
+					{$organization_contact_childnumber}				
+				</span>
+				{END organization_contact_childcount}
+						</a>
+	</span>
+	{END organization_contact_dtable_link}
+
+
+	 
+		
+		
+	{BEGIN organization_director_dtable_link}
+	<span data-itemtype="grid_details_link" data-itemid="grid_details_link3" {$item_grid_details_link3} data-pageid="{$pageid}" data-record-id="{$recId}">
+	<a  {$organization_director_link_attrs} data-short-details="organization_director"
+		class="{$organization_director_dlink_class}" 
+		title="{$caption organization_director }"			>
+								
+									{BEGIN organization_director_childcount}
+				<span class="details-badge badge organization_director_badge" {$organization_director_childnumber_attr}>
+					{$organization_director_childnumber}				
+				</span>
+				{END organization_director_childcount}
+						</a>
+	</span>
+	{END organization_director_dtable_link}
+
+
+	 
+		
+		
+	{BEGIN organization_login_dtable_link}
+	<span data-itemtype="grid_details_link" data-itemid="grid_details_link4" {$item_grid_details_link4} data-pageid="{$pageid}" data-record-id="{$recId}">
+	<a  {$organization_login_link_attrs} data-short-details="organization_login"
+		class="{$organization_login_dlink_class}" 
+		title="{$caption organization_login }"			>
+								
+									{BEGIN organization_login_childcount}
+				<span class="details-badge badge organization_login_badge" {$organization_login_childnumber_attr}>
+					{$organization_login_childnumber}				
+				</span>
+				{END organization_login_childcount}
+						</a>
+	</span>
+	{END organization_login_dtable_link}
+
+
+	 
+		
+		
+	{BEGIN organization_registration_dtable_link}
+	<span data-itemtype="grid_details_link" data-itemid="grid_details_link5" {$item_grid_details_link5} data-pageid="{$pageid}" data-record-id="{$recId}">
+	<a  {$organization_registration_link_attrs} data-short-details="organization_registration"
+		class="{$organization_registration_dlink_class}" 
+		title="{$caption organization_registration }"			>
+								
+									{BEGIN organization_registration_childcount}
+				<span class="details-badge badge organization_registration_badge" {$organization_registration_childnumber_attr}>
+					{$organization_registration_childnumber}				
+				</span>
+				{END organization_registration_childcount}
+						</a>
+	</span>
+	{END organization_registration_dtable_link}
+
+
+	 
+		
+		
+	{BEGIN organization_social_media_dtable_link}
+	<span data-itemtype="grid_details_link" data-itemid="grid_details_link6" {$item_grid_details_link6} data-pageid="{$pageid}" data-record-id="{$recId}">
+	<a  {$organization_social_media_link_attrs} data-short-details="organization_social_media"
+		class="{$organization_social_media_dlink_class}" 
+		title="{$caption organization_social_media }"			>
+								
+									{BEGIN organization_social_media_childcount}
+				<span class="details-badge badge organization_social_media_badge" {$organization_social_media_childnumber_attr}>
+					{$organization_social_media_childnumber}				
+				</span>
+				{END organization_social_media_childcount}
+						</a>
+	</span>
+	{END organization_social_media_dtable_link}
+
+
+	
+	</td>
+	{END cellblock_grid_cell_details}
 									{BEGIN cellblock_grid_cell_field}
 	<td
 	
@@ -1097,12 +1370,58 @@
 	</td>
 	{END cellblock_grid_cell_field5}
 							</tr>
+											<tr {$rowattrs} {$row_grid_2} class="{$rowclass}
+				
+							">
+									{BEGIN cellblock_grid_cell_dpreview}
+	<td
+	
+	{$cell_grid_cell_dpreview}
+	{$recordattrs}
+	class="
+					"
+
+	
+	data-cellId="grid_cell_dpreview" data-pageid="{$pageid}" data-record-id="{$recId}"	
+	>
+
+	 
+									<div data-itemtype="details_preview" data-itemid="details_preview" {$item_details_preview} data-pageid="{$pageid}" data-record-id="{$recId}" 
+	data-orders="organization_bank,organization_branch,organization_contact,organization_director,organization_login,organization_registration,organization_social_media"
+			data-details-organization_bank			data-details-organization_branch			data-details-organization_contact			data-details-organization_director			data-details-organization_login			data-details-organization_registration			data-details-organization_social_media	>
+		<span data-details-inside data-short-table="organization_bank">
+			</span>
+		<span data-details-inside data-short-table="organization_branch">
+			</span>
+		<span data-details-inside data-short-table="organization_contact">
+			</span>
+		<span data-details-inside data-short-table="organization_director">
+			</span>
+		<span data-details-inside data-short-table="organization_login">
+			</span>
+		<span data-details-inside data-short-table="organization_registration">
+			</span>
+		<span data-details-inside data-short-table="organization_social_media">
+			</span>
+		<div data-details-preview>
+	</div>
+</div>
+	 
+			 
+			 
+			 
+			 
+			 
+			
+	</td>
+	{END cellblock_grid_cell_dpreview}
+							</tr>
 										
 											{END grid_row}
 					</tbody>
 													<tfoot>
 			
-																																			<tr {$rowattrs} {$row_grid_2} class="{$rowclass}
+																																													<tr {$rowattrs} {$row_grid_3} class="{$rowclass}
 									{$gridFooter_class}
 					
 								r-gridrow
@@ -1137,6 +1456,21 @@
 	
 	</td>
 	{END cellblock_grid_footcell_checkbox}
+									{BEGIN cellblock_grid_footcell_details}
+	<td
+	
+	{$cell_grid_footcell_details}
+	{$recordattrs}
+	class="
+		 r-ori-vert			"
+
+	
+	data-cellId="grid_footcell_details" data-pageid="{$pageid}" data-record-id="{$recId}"	
+	>
+
+	
+	</td>
+	{END cellblock_grid_footcell_details}
 									{BEGIN cellblock_grid_footcell_field}
 	<td
 	

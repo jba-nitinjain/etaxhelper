@@ -195,7 +195,12 @@ class OrderClause
 			}
 		}
 		
-		$this->_cachedFields = array_merge($groupByRet, $ret);
+		foreach( $groupByRet as $o ) {
+			$this->_cachedFields[] = $o;
+		}
+		foreach( $ret as $o ) {
+			$this->_cachedFields[] = $o;
+		}
 
 		return $this->_cachedFields;
 	}

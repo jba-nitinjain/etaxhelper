@@ -44,15 +44,19 @@ class ViewTimeField extends ViewControl
 	 * an array with following elements: 0=> hours, 1=> minutes, 2=> second
 	 */
 	protected function getTimeArray( &$data ) {
-		if( !$data[ $this->field ] ) {
+		return ViewTimeField::splitStringValue( $this->fieldType, $data[ $this->field ] );
+	}
+
+	public static function splitStringValue( $fieldType, $value ) {
+		if( !$value ) {
 			return array();
 		}
-		if( IsDateFieldType( $this->fieldType ) ) {
-			$date = db2time( $data[ $this->field ] );
+		if( IsDateFieldType( $fieldType ) ) {
+			$date = db2time( $value );
 			return array( $date[3], $date[4], $date[5] );
 		}
 		
-		$time = parsenumbers( $data[ $this->field ] );
+		$time = parsenumbers( $value );
 		if( !$time )
 			return array();
 		
@@ -67,6 +71,7 @@ class ViewTimeField extends ViewControl
 
 		return $time;
 	}
+
 	
 	/**
 	 * Get duration string

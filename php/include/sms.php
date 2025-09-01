@@ -1,7 +1,10 @@
 <?php 
 function runner_sms($number, $message, $parameters = array())
 {
-	global $twilioSID, $twilioAuth, $twilioNumber;
+	
+	$twilioSID = ProjectSettings::getProjectValue( 'smsSettings', 'twilioSID' );
+	$twilioAuth = ProjectSettings::getProjectValue( 'smsSettings', 'twilioAuth' );
+	$twilioNumber = ProjectSettings::getProjectValue( 'smsSettings', 'twilioNumber' );
 
 	if ( !isset($parameters["To"]) )
 		$parameters["To"] = $number;

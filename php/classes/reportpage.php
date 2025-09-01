@@ -1,4 +1,6 @@
 <?php
+require_once( getabspath( "classes/runnerpage.php" ) );
+
 class ReportPage extends RunnerPage
 {
 

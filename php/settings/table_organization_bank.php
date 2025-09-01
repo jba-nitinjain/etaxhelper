@@ -7,12 +7,6 @@ $runnerTableSettings['organization_bank'] = array(
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -25,33 +19,49 @@ $runnerTableSettings['organization_bank'] = array(
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
+		'masterlist' => array( 
+			'masterlist' 
+		),
+		'masterprint' => array( 
+			'masterprint' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'pageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'defaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'afterEditDetails' => 'organization_bank',
 	'afterAddDetail' => 'organization_bank',
-	'detailsBadgeColor' => '7b68ee',
+	'detailsBadgeColor' => '5f9ea0',
 	'sql' => 'SELECT
 	bank_id,
 	org_id,
@@ -83,6 +93,7 @@ FROM
 			'index' => 1,
 			'type' => 20,
 			'autoinc' => true,
+			'sqlExpression' => 'bank_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -92,7 +103,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank' 
 		),
 		'org_id' => array(
 			'name' => 'org_id',
@@ -100,6 +112,7 @@ FROM
 			'strField' => 'org_id',
 			'index' => 2,
 			'type' => 20,
+			'sqlExpression' => 'org_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -107,15 +120,22 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 2,
+					'lookupTable' => 'ORGANIZATION',
+					'lookupTableConnection' => 'conn',
+					'lookupLinkField' => 'org_id',
+					'lookupDisplayField' => 'org_type' 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank' 
 		),
 		'bank_name' => array(
 			'name' => 'bank_name',
 			'goodName' => 'bank_name',
 			'strField' => 'bank_name',
 			'index' => 3,
+			'sqlExpression' => 'bank_name',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -125,13 +145,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank' 
 		),
 		'branch_name' => array(
 			'name' => 'branch_name',
 			'goodName' => 'branch_name',
 			'strField' => 'branch_name',
 			'index' => 4,
+			'sqlExpression' => 'branch_name',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -141,13 +163,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank' 
 		),
 		'account_no' => array(
 			'name' => 'account_no',
 			'goodName' => 'account_no',
 			'strField' => 'account_no',
 			'index' => 5,
+			'sqlExpression' => 'account_no',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -157,13 +181,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank' 
 		),
 		'ifsc_code' => array(
 			'name' => 'ifsc_code',
 			'goodName' => 'ifsc_code',
 			'strField' => 'ifsc_code',
 			'index' => 6,
+			'sqlExpression' => 'ifsc_code',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -173,13 +199,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank' 
 		),
 		'swift_code' => array(
 			'name' => 'swift_code',
 			'goodName' => 'swift_code',
 			'strField' => 'swift_code',
 			'index' => 7,
+			'sqlExpression' => 'swift_code',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -189,13 +217,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank' 
 		),
 		'account_type' => array(
 			'name' => 'account_type',
 			'goodName' => 'account_type',
 			'strField' => 'account_type',
 			'index' => 8,
+			'sqlExpression' => 'account_type',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -205,7 +235,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank' 
 		),
 		'mode_of_operation' => array(
 			'name' => 'mode_of_operation',
@@ -213,6 +244,7 @@ FROM
 			'strField' => 'mode_of_operation',
 			'index' => 9,
 			'type' => 129,
+			'sqlExpression' => 'mode_of_operation',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -220,10 +252,33 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 0,
+					'lookupValues' => array( 
+						'Singly',
+						'Jointly',
+						'Any two jointly',
+						'Either or survivor',
+						'Other' 
+					) 
 				) 
+			),
+			'tableName' => 'organization_bank' 
+		) 
+	),
+	'masterTables' => array( 
+		array(
+			'table' => 'ORGANIZATION',
+			'detailsKeys' => array( 
+				'org_id' 
+			),
+			'masterKeys' => array( 
+				'org_id' 
 			) 
 		) 
+	),
+	'detailsTables' => array( 
+		'organization_bank_signatory' 
 	),
 	'query' => array(
 		'sql' => 'SELECT
@@ -247,9 +302,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'bank_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank',
+					'name' => 'bank_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'bank_id' 
@@ -260,9 +317,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'org_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank',
+					'name' => 'org_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'org_id' 
@@ -273,9 +332,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'bank_name',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank',
+					'name' => 'bank_name' 
 				),
 				'encrypted' => false,
 				'columnName' => 'bank_name' 
@@ -286,9 +347,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'branch_name',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank',
+					'name' => 'branch_name' 
 				),
 				'encrypted' => false,
 				'columnName' => 'branch_name' 
@@ -299,9 +362,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'account_no',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank',
+					'name' => 'account_no' 
 				),
 				'encrypted' => false,
 				'columnName' => 'account_no' 
@@ -312,9 +377,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'ifsc_code',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank',
+					'name' => 'ifsc_code' 
 				),
 				'encrypted' => false,
 				'columnName' => 'ifsc_code' 
@@ -325,9 +392,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'swift_code',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank',
+					'name' => 'swift_code' 
 				),
 				'encrypted' => false,
 				'columnName' => 'swift_code' 
@@ -338,9 +407,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'account_type',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank',
+					'name' => 'account_type' 
 				),
 				'encrypted' => false,
 				'columnName' => 'account_type' 
@@ -351,9 +422,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'mode_of_operation',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank',
+					'name' => 'mode_of_operation' 
 				),
 				'encrypted' => false,
 				'columnName' => 'mode_of_operation' 
@@ -369,7 +442,15 @@ FROM
 					'parsed' => true,
 					'type' => 'SQLTable',
 					'columns' => array( 
-						 
+						'bank_id',
+						'org_id',
+						'bank_name',
+						'branch_name',
+						'account_no',
+						'ifsc_code',
+						'swift_code',
+						'account_type',
+						'mode_of_operation' 
 					),
 					'name' => 'organization_bank' 
 				),
@@ -508,12 +589,6 @@ FROM
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -526,28 +601,44 @@ FROM
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
+		'masterlist' => array( 
+			'masterlist' 
+		),
+		'masterprint' => array( 
+			'masterprint' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'originalPageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'originalDefaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'searchSettings' => array(
@@ -607,6 +698,16 @@ FROM
 	),
 	'dataSourceOperations' => array(
 		 
+	),
+	'calendarSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
+	),
+	'ganttSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
 	) 
 );
 

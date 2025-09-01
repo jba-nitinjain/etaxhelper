@@ -1,6 +1,6 @@
 <?php
 
-//require_once(getabspath("include/sms.php"));
+include_once( getabspath( "include/sms.php" ) );
 
 /**
  * That function  copies all elements from associative array to object, as object properties with same names
@@ -10,7 +10,7 @@
  * @param link $argsArr
  * @intellisense
  */
-function RunnerApply (&$obj, &$argsArr)
+function RunnerApply(&$obj, &$argsArr)
 {
 	foreach ($argsArr as $key=>$var)
 		setObjectProperty($obj,$key,$argsArr[$key]);
@@ -1264,39 +1264,6 @@ function splitvalues($str)
 	return $arr;
 }
 
-/**
- *
- */
-/*
-function GetLookupFieldsIndexes($pSet, $field)
-{
-	$lookupTable = $pSet->getLookupTable($field);
-	$lookupType = $pSet->getLookupType($field);
-	$displayFieldName = $pSet->getDisplayField($field);
-	$linkFieldName = $pSet->getLinkField($field);
-	$linkAndDisplaySame = $linkFieldName == $displayFieldName;
-	if($lookupType == LT_QUERY)
-	{
-		$lookupPSet = new ProjectSettings($lookupTable);
-		$linkFieldIndex = $lookupPSet->getFieldIndex($linkFieldName) - 1;
-		if($linkAndDisplaySame)
-			$displayFieldIndex = $linkFieldIndex;
-		else
-		{
-			if($pSet->getCustomDisplay($field))
-				$displayFieldIndex = $lookupPSet->getCustomExpressionIndex($pSet->_table, $field);
-			else
-				$displayFieldIndex = $lookupPSet->getFieldIndex($displayFieldName) - 1;
-		}
-	}
-	else
-	{
-		$linkFieldIndex = 0;
-		$displayFieldIndex = $linkAndDisplaySame ? 0 : 1;
-	}
-	return array("linkFieldIndex" => $linkFieldIndex, "displayFieldIndex" => $displayFieldIndex);
-}
-*/
 //////////////////////////////////////////////////////////////////////////////
 /**
  * Get locale, am, pm for field edit as time
@@ -1547,17 +1514,12 @@ function GetAuditObject( $table = "" )
 /**
  * @intellisense
  */
-function GetLockingObject($table="")
+function GetLockingObject( $table )
 {
 	if( !ProjectSettings::getSecurityValue( 'auditAndLocking', 'enableLocking' ) ) {
 		return null;
 	}
 
-	if(!$table)
-	{
-		global $strTableName;
-		$table = $strTableName;
-	}
 	$settings = new ProjectSettings($table);
 	if ($settings->lockingEnabled())
 	{
@@ -3117,15 +3079,16 @@ function xt_pagetitlelabel($params)
 
 function _pagetitlelabel($params)
 {
-	global $pageObject;
+	$pageObject = $params[ 'pageObj' ];
 
 	$record = isset($params["record"]) ? $params["record"] : null;
 	$settings = isset($params["settings"]) ? $params["settings"] : null;
 
-	if( isset($params["custom2"]) )
+	if( isset($params["custom2"]) ) {
 		return $pageObject->getPageTitle( $params["custom2"], GetTableByGood( $params["custom1"] ), $record, $settings );
-	else
-	return $pageObject->getPageTitle( $params["custom1"], "", $record, $settings );
+	} else {
+		return $pageObject->getPageTitle( $params["custom1"], "", $record, $settings );
+	}
 }
 
 function xt_label($params)
@@ -3181,9 +3144,52 @@ function xt_jscaption($params)
 }
 
 
+function xt_buildforwardcontrol(&$params) {
+	$clearVar = $params["clearVar"];
+	$xt = $params["xt"];
+
+	$xt->assign( $clearVar, false );
+	if( !$params["additionalCtrlParams"] ) {
+		$params["additionalCtrlParams"] = array();
+	}
+	$params["additionalCtrlParams"][ 'inLabel' ] = true;
+	$params["clearVar"] = '';
+	
+	return xt_buildeditcontrol( $params );
+
+}
+
+function xt_forwardViewControl(&$params) {
+	$clearVar = $params["clearVar"];
+	$xt = $params["xt"];
+	$xt->assign( $clearVar, false );
+	
+	echo $params[ 'value' ];
+
+}
+
+function xt_buildviewcontrol(&$params) {
+	$clearVar = $params["clearVar"];
+	$xt = $params["xt"];
+	if( $clearVar ) {
+		$xt->assign( $clearVar, false );
+	}
+	echo $params[ 'value' ];
+}
+
+
+
 //	BuildEditControl wrapper
 function xt_buildeditcontrol(&$params)
 {
+	$clearVar = $params["clearVar"];
+	$xt = $params["xt"];
+	if( $clearVar ) {
+		$xt->assign( $clearVar, false );
+	}
+
+	
+	
 	$pageObj = $params["pageObj"];
 	$data = $pageObj->getFieldControlsData();
 
@@ -3280,7 +3286,7 @@ function prepareLookupWhere( $field, $pSet ) {
 	if( $pSet->isLookupWhereCode( $field ) )
 		return $where;
 
-	return DB::PrepareSQL( $pSet->getLookupWhere( $field ) );
+	return DB::PrepareSQL( $where );
 }
 
 function verifyRecaptchaResponse( $response ) {
@@ -4038,6 +4044,19 @@ function storageDelete( $key ) {
 	}
 }
 
+function storageKeys() {
+	if( !inRestApi() ) {
+		// array_keys might not work with .NET sessions
+		$ret = array();
+		foreach( $_SESSION as $key => $value ) {
+			$ret[] = $key;
+		}
+		return $ret;
+	} else {
+		global $restStorage;
+		return array_keys( $restStorage );
+	}
+}
 
 function storageExists( $key ) {
 	if( !inRestApi() ) {
@@ -4295,8 +4314,9 @@ function findArrayInArray( $arr, $valueArr ) {
  */
 function originalTableField( $field, $pSet ) {
 	
-	//	Field.tableName is not being filled currently
+/*	//	Field.tableName is not being filled currently
 	return true;
+*/	
 
 	$entityType = $pSet->getEntityType();
 	if( $entityType != titTABLE && $entityType != titVIEW ) {
@@ -4405,6 +4425,46 @@ function getDropboxConnection() {
 	return new RestConnection( $connData );
 }
 
+function getCloudProvider( $type, $path ) {
+	return createStorageObject( $type, array( "path" => $path ) );
+}
+
+function createStorageObject( $providerType, $additionalParams ) {
+	$params = array();
+	if( $providerType == stpDISK) {
+		$params = array_merge( $params, $additionalParams );
+		return new DiskFileSystem( $params );
+	}
+	if( $providerType == stpAMAZON) {
+		$params["accessKey"] = ProjectSettings::amazonAccessKey();
+		$params["secretKey"] = ProjectSettings::amazonSecretKey();
+		$params["bucket"] = ProjectSettings::amazonBucket();
+		$params["region"] = ProjectSettings::amazonRegion();
+		$params = array_merge( $params, $additionalParams );
+		return new S3FileSystem( $params );
+	}
+	if( $providerType == stpGOOGLEDRIVE) {
+		$params = array_merge( $params, $additionalParams );
+		return new GoogleDriveFileSystem( $params );
+	}
+	if( $providerType == stpONEDRIVE ) {
+		$params["driveId"] = ProjectSettings::oneDriveDrive();
+		$params = array_merge( $params, $additionalParams );
+		return new OneDriveFileSystem( $params );
+	}
+	if( $providerType == stpDROPBOX ) {
+		$params = array_merge( $params, $additionalParams );
+		return new DropboxFileSystem( $params );
+	}
+	if( $providerType == stpWASABI ) {
+		$params["accessKey"] = ProjectSettings::wasabiAccessKey();
+		$params["secretKey"] = ProjectSettings::wasabiSecretKey();
+		$params["bucket"] = ProjectSettings::wasabiBucket();
+		$params["region"] = ProjectSettings::wasabiRegion();
+		$params = array_merge( $params, $additionalParams );
+		return new WasabiFileSystem( $params );
+	}
+}
 
 function getStorageProvider( $pSet, $field ) {
 	$providerType = $pSet->fileStorageProvider( $field );
@@ -4412,37 +4472,20 @@ function getStorageProvider( $pSet, $field ) {
 	if( $providerType == stpDISK) {
 		$params["absolutePath"] = $pSet->isAbsolute( $field );
 		$params["path"] = $pSet->getUploadFolder( $field );
-		return new DiskFileSystem( $params );
 	}
-	if( $providerType == stpAMAZON) {
-		$params["accessKey"] = $pSet->amazonAccessKey( $field );
-		$params["secretKey"] = $pSet->amazonSecretKey( $field );
-		$params["bucket"] = $pSet->amazonBucket( $field );
-		$params["region"] = $pSet->amazonRegion( $field );
+	else if( $providerType == stpAMAZON) {
 		$params["path"] = $pSet->amazonPath( $field );
-		return new S3FileSystem( $params );
 	}
-	if( $providerType == stpGOOGLEDRIVE) {
+	else if( $providerType == stpGOOGLEDRIVE) {
 		$params["folder"] = $pSet->googleDriveFolder( $field );
-		return new GoogleDriveFileSystem( $params );
-	}
-	if( $providerType == stpONEDRIVE ) {
+	} else if( $providerType == stpONEDRIVE ) {
 		$params["path"] = $pSet->oneDrivePath( $field );
-		$params["driveId"] = $pSet->oneDriveDrive( $field );
-		return new OneDriveFileSystem( $params );
-	}
-	if( $providerType == stpDROPBOX ) {
+	} else if( $providerType == stpDROPBOX ) {
 		$params["path"] = $pSet->dropboxPath( $field );
-		return new DropboxFileSystem( $params );
-	}
-	if( $providerType == stpWASABI ) {
-		$params["accessKey"] = $pSet->wasabiAccessKey( $field );
-		$params["secretKey"] = $pSet->wasabiSecretKey( $field );
-		$params["bucket"] = $pSet->wasabiBucket( $field );
-		$params["region"] = $pSet->wasabiRegion( $field );
+	} else if( $providerType == stpWASABI ) {
 		$params["path"] = $pSet->wasabiPath( $field );
-		return new WasabiFileSystem( $params );
 	}
+	return createStorageObject( $providerType, $params );
 }
 
 /**
@@ -4461,7 +4504,7 @@ function getNotificationSettings() {
 	return ProjectSettings::getProjectValue("notifications");
 }
 
-function createNotification( &$params ) {
+function createNotification( $params ) {
 	require_once( getabspath( "classes/notifications.php" ) );
 	$noti = new RunnerNotifications( getNotificationSettings() );
 	return $noti->create( $params );
@@ -4625,6 +4668,9 @@ function getChartParams($params) {
 		'&ctype=' . $params["ctype"] .
 		'&showDetails=' . $showDetails .
 		'&' . $params["stateLink"];
+
+	$chartParams['stateParams'] = $params["stateParams"];
+	
 
 	if( isset( $params["dash"] ) && $params["dash"] )
 	{
@@ -4874,14 +4920,18 @@ function verifyAjaxSnippet( $eventId, $field, $pSet ) {
 	if( array_search( $field, $fields ) === false && array_search( $field, $searchFields ) === false ) {
 		return false;
 	}
-	$editEvent = $pageType === 'edit' || $pageType === 'add' || $pageType === 'search';
+	$editEvent = $pageType === 'edit' || $pageType === 'add' || $pageType === 'search' || $pageType === 'register' || $pageType === 'login' || $pageType === 'userinfo';
 	if( $pSet->fieldHasEvent( $eventId, $field, $editEvent ) ) {
 		return true;
 	}
 	//	inline add/edit
 	$inlieAddFields = $pSet->getInlineAddFields();
 	$inlieEditFields = $pSet->getInlineEditFields();
-	if( $pageType == 'list' && array_search( $field, $inlieEditFields ) !== false || array_search( $field, $inlieAddFields ) !== false ) {
+	if( $pageType == 'list' && ( 
+			array_search( $field, $inlieEditFields ) !== false ||
+			array_search( $field, $inlieAddFields ) !== false  ||
+			array_search( $field, $searchFields ) !== false 
+			) ) {
 		if( $pSet->fieldHasEvent( $eventId, $field, true ) ) {
 			return true;
 		}
@@ -4907,9 +4957,13 @@ function runnerGetRestConnectionInfo( $id ) {
 	return $runnerRestConnections[ $id ];
 }
 
-function runnerRestConnectionIdByName( $name ) {
+function runnerRestConnectionIdByName( $name = null ) {
 	global $runnerRestConnections;
 	foreach( $runnerRestConnections as $rest ) {
+		if( !$name ) {
+			//	return first available REST connection if $name not provided
+			return $rest[ 'id' ];
+		}
 		if( $rest[ 'name' ] == $name ) {
 			return $rest[ 'id' ];
 		}
@@ -4956,5 +5010,17 @@ function isAdminPage( $pageType ) {
 	return $pageType == PAGE_ADMIN_RIGHTS || $pageType == PAGE_ADMIN_MEMBERS || $pageType == PAGE_ADMIN_ADMEMBERS;
 }
 
+/**
+ * @param String bgColor - 6 characters hex color representation
+ * @return Boolean - true when text color should be black, false otherwise. 
+ *  
+ */
+function fgColorBlack( $bgColor ) {
+	$color = hexdec( str_pad( $bgColor, 6, '0', STR_PAD_RIGHT ));
+	$red = ( $color & 0xff0000 ) >> 16;
+	$green = ( $color & 0xff00 ) >> 8;
+	$blue = $color & 0xff;
+	return $red * 0.299 + $green * 0.587 + $blue * 0.114 > 186;
+}
 
 ?>

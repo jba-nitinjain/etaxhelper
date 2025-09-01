@@ -769,7 +769,7 @@ class EditControl
 		$value = $data[ $fName ];
 		if( $this->format !== EDIT_FORMAT_READONLY ) {
 			if( IsFloatType( $this->type ) && !is_null( $value ) ) {
-				if( $htmlType == "number" ) {
+				if( strtolower( $htmlType ) == "number" ) {
 					//	no thousand delimiters, only dot as decimal delimiter
 					$value = formatNumberForHTML5( $value );
 				} else {

@@ -530,9 +530,13 @@ class EditSelectedPage extends EditPage
 		$checkbox = "<input type=checkbox class=\"bs-updselbox\" id=updsel_"
 			.$gf.$this->id." data-field=\"".runner_htmlspecialchars( $field ) ."\">";
 		
-		$label = array();
-		$label["begin"] = $checkbox;		
-		$this->xt->assign($gf."_label", $label );
+		
+		$label = $this->xt->getVar( $gf."_label" );
+		if( !is_array( $label ) ) {
+			$label = array( 'begin' => '' );
+		}
+		$label["begin"] = $checkbox . $label["begin"];	
+		$this->xt->assign( $gf."_label", $label );
 		
 		if( $this->pSet->isRequired( $field ) || $required ) {
 			$this->xt->assign( "required_attr_".GoodFieldName( $field  ), 'data-required="true"' );

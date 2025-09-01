@@ -109,17 +109,19 @@
 	data-signal-error-for="org_id{$id}" {$required_attr_org_id}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="org_id" data-fieldname="org_id" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_org_id}">
-		{BEGIN org_id_label}{$label organization_login org_id }{END org_id_label}
+	<label class="r-edit-label control-label {$org_id_label_class}" for="{$labelfor_org_id}">
+		{BEGIN org_id_label}
+			{$org_id_forward_control}
+			{$label organization_login org_id }			{END org_id_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$org_id_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_login org_id } >
+		<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_login org_id } >
 		<div class="text-muted" >
 		{$tooltip organization_login org_id }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END org_id_fieldblock}
@@ -131,17 +133,19 @@
 	data-signal-error-for="related_social_id{$id}" {$required_attr_related_social_id}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="related_social_id" data-fieldname="related_social_id" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_related_social_id}">
-		{BEGIN related_social_id_label}{$label organization_login related_social_id }{END related_social_id_label}
+	<label class="r-edit-label control-label {$related_social_id_label_class}" for="{$labelfor_related_social_id}">
+		{BEGIN related_social_id_label}
+			{$related_social_id_forward_control}
+			{$label organization_login related_social_id }			{END related_social_id_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$related_social_id_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="related_social_id" {$tooltipAttr organization_login related_social_id } >
+		<div class="r-edit-tooltip" data-helpfor="related_social_id" {$tooltipAttr organization_login related_social_id } >
 		<div class="text-muted" >
 		{$tooltip organization_login related_social_id }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END related_social_id_fieldblock}
@@ -153,17 +157,19 @@
 	data-signal-error-for="website{$id}" {$required_attr_website}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="website" data-fieldname="website" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_website}">
-		{BEGIN website_label}{$label organization_login website }{END website_label}
+	<label class="r-edit-label control-label {$website_label_class}" for="{$labelfor_website}">
+		{BEGIN website_label}
+			{$website_forward_control}
+			{$label organization_login website }			{END website_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$website_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="website" {$tooltipAttr organization_login website } >
+		<div class="r-edit-tooltip" data-helpfor="website" {$tooltipAttr organization_login website } >
 		<div class="text-muted" >
 		{$tooltip organization_login website }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END website_fieldblock}
@@ -175,17 +181,19 @@
 	data-signal-error-for="user_id{$id}" {$required_attr_user_id}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="user_id" data-fieldname="user_id" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_user_id}">
-		{BEGIN user_id_label}{$label organization_login user_id }{END user_id_label}
+	<label class="r-edit-label control-label {$user_id_label_class}" for="{$labelfor_user_id}">
+		{BEGIN user_id_label}
+			{$user_id_forward_control}
+			{$label organization_login user_id }			{END user_id_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$user_id_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="user_id" {$tooltipAttr organization_login user_id } >
+		<div class="r-edit-tooltip" data-helpfor="user_id" {$tooltipAttr organization_login user_id } >
 		<div class="text-muted" >
 		{$tooltip organization_login user_id }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END user_id_fieldblock}
@@ -197,17 +205,19 @@
 	data-signal-error-for="PASSWORD{$id}" {$required_attr_PASSWORD}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="PASSWORD" data-fieldname="PASSWORD" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_PASSWORD}">
-		{BEGIN PASSWORD_label}{$label organization_login PASSWORD }{END PASSWORD_label}
+	<label class="r-edit-label control-label {$PASSWORD_label_class}" for="{$labelfor_PASSWORD}">
+		{BEGIN PASSWORD_label}
+			{$PASSWORD_forward_control}
+			{$label organization_login PASSWORD }			{END PASSWORD_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$PASSWORD_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="PASSWORD" {$tooltipAttr organization_login PASSWORD } >
+		<div class="r-edit-tooltip" data-helpfor="PASSWORD" {$tooltipAttr organization_login PASSWORD } >
 		<div class="text-muted" >
 		{$tooltip organization_login PASSWORD }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END PASSWORD_fieldblock}
@@ -219,17 +229,19 @@
 	data-signal-error-for="notes{$id}" {$required_attr_notes}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field5" {$item_integrated_edit_field5} data-pageid="{$pageid}" data-field="notes" data-fieldname="notes" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_notes}">
-		{BEGIN notes_label}{$label organization_login notes }{END notes_label}
+	<label class="r-edit-label control-label {$notes_label_class}" for="{$labelfor_notes}">
+		{BEGIN notes_label}
+			{$notes_forward_control}
+			{$label organization_login notes }			{END notes_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$notes_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="notes" {$tooltipAttr organization_login notes } >
+		<div class="r-edit-tooltip" data-helpfor="notes" {$tooltipAttr organization_login notes } >
 		<div class="text-muted" >
 		{$tooltip organization_login notes }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END notes_fieldblock}
@@ -241,17 +253,19 @@
 	data-signal-error-for="last_updated{$id}" {$required_attr_last_updated}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field6" {$item_integrated_edit_field6} data-pageid="{$pageid}" data-field="last_updated" data-fieldname="last_updated" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_last_updated}">
-		{BEGIN last_updated_label}{$label organization_login last_updated }{END last_updated_label}
+	<label class="r-edit-label control-label {$last_updated_label_class}" for="{$labelfor_last_updated}">
+		{BEGIN last_updated_label}
+			{$last_updated_forward_control}
+			{$label organization_login last_updated }			{END last_updated_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$last_updated_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="last_updated" {$tooltipAttr organization_login last_updated } >
+		<div class="r-edit-tooltip" data-helpfor="last_updated" {$tooltipAttr organization_login last_updated } >
 		<div class="text-muted" >
 		{$tooltip organization_login last_updated }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END last_updated_fieldblock}
@@ -311,12 +325,14 @@
 												<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu">
-								<li data-itemtype="edit_reset" data-itemid="edit_reset" {$item_edit_reset} data-pageid="{$pageid}" data-small >
+							{BEGIN reset_button}
+	<li data-itemtype="edit_reset" data-itemid="edit_reset" {$item_edit_reset} data-pageid="{$pageid}" data-small >
 				<a  {$resetbutton_attrs}  title="" >
 				
 		{mlang_message RESET}		
 		</a>
 	</li>
+{END reset_button}
 							{BEGIN view_page_button}
 	<li data-itemtype="edit_view" data-itemid="edit_view" {$item_edit_view} data-pageid="{$pageid}" data-small >
 				<a  href="organization_login_view.php?{$editlink}" {$view_page_button_attrs}  title="" >

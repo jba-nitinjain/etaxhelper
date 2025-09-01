@@ -3,15 +3,21 @@ global $runnerDbTables;
 $runnerDbTables = array( 
 	array(
 		'connId' => 'conn',
-		'table' => 'organization_bank',
+		'table' => 'uggroups',
 		'schema' => '',
-		'filename' => 'organization_bank' 
+		'filename' => 'uggroups' 
 	),
 	array(
 		'connId' => 'conn',
-		'table' => 'organization_bank_signatory',
+		'table' => 'ugrights',
 		'schema' => '',
-		'filename' => 'organization_bank_signatory' 
+		'filename' => 'ugrights' 
+	),
+	array(
+		'connId' => 'conn',
+		'table' => 'ugmembers',
+		'schema' => '',
+		'filename' => 'ugmembers' 
 	),
 	array(
 		'connId' => 'conn',
@@ -21,21 +27,15 @@ $runnerDbTables = array(
 	),
 	array(
 		'connId' => 'conn',
-		'table' => 'organization_social_media',
+		'table' => 'users',
 		'schema' => '',
-		'filename' => 'organization_social_media' 
+		'filename' => 'users' 
 	),
 	array(
 		'connId' => 'conn',
-		'table' => 'organization_director',
+		'table' => 'organization_bank',
 		'schema' => '',
-		'filename' => 'organization_director' 
-	),
-	array(
-		'connId' => 'conn',
-		'table' => 'organization_login',
-		'schema' => '',
-		'filename' => 'organization_login' 
+		'filename' => 'organization_bank' 
 	),
 	array(
 		'connId' => 'conn',
@@ -45,15 +45,39 @@ $runnerDbTables = array(
 	),
 	array(
 		'connId' => 'conn',
+		'table' => 'organization_bank_signatory',
+		'schema' => '',
+		'filename' => 'organization_bank_signatory' 
+	),
+	array(
+		'connId' => 'conn',
 		'table' => 'organization_contact',
 		'schema' => '',
 		'filename' => 'organization_contact' 
 	),
 	array(
 		'connId' => 'conn',
+		'table' => 'organization_director',
+		'schema' => '',
+		'filename' => 'organization_director' 
+	),
+	array(
+		'connId' => 'conn',
 		'table' => 'organization_registration',
 		'schema' => '',
 		'filename' => 'organization_registration' 
+	),
+	array(
+		'connId' => 'conn',
+		'table' => 'organization_social_media',
+		'schema' => '',
+		'filename' => 'organization_social_media' 
+	),
+	array(
+		'connId' => 'conn',
+		'table' => 'organization_login',
+		'schema' => '',
+		'filename' => 'organization_login' 
 	) 
 );
 ?>

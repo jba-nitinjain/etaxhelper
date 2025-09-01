@@ -4,15 +4,29 @@ $runnerDbTableInfo['organization_login'] = array(
 	'type' => 0,
 	'foreignKeys' => array( 
 		array(
-			'name' => '`fk_login_org`',
+			'name' => 'fk_login_org',
+			'refTable' => 'ORGANIZATION',
+			'refSchema' => '',
+			'del_rule' => 1,
+			'upd_rule' => 4,
 			'columns' => array( 
-				 
+				array(
+					'column' => 'org_id',
+					'ref_column' => 'org_id' 
+				) 
 			) 
 		),
 		array(
-			'name' => '`fk_login_social`',
+			'name' => 'fk_login_social',
+			'refTable' => 'organization_social_media',
+			'refSchema' => '',
+			'del_rule' => 2,
+			'upd_rule' => 4,
 			'columns' => array( 
-				 
+				array(
+					'column' => 'related_social_id',
+					'ref_column' => 'social_id' 
+				) 
 			) 
 		) 
 	),

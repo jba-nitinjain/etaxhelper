@@ -90,6 +90,7 @@ class DataSource {
 		$op == dsopLESS ||
 		$op == dsopEQUAL ||
 		$op == dsopEMPTY ||
+		$op == dsopNULL ||
 		$op == dsopIN ||
 		$op == dsopCONTAIN ||
 		$op == dsopSTART ||
@@ -218,6 +219,9 @@ class DataSource {
 		}
 		if( $op == dsopEMPTY ) {
 			return $fieldValue === '' || $fieldValue === null;
+		}
+		if( $op == dsopNULL ) {
+			return is_null( $fieldValue );
 		}
 		$value = $condition->operands[1]->value;
 		$value1 = "";
@@ -738,7 +742,7 @@ class DataSource {
 			if( !$source ) {
 				continue;
 			}
-			$ret[ $source ] = $f;
+			$ret[ $f ] = $source;
 		}
 		return $ret;
 	}

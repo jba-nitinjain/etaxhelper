@@ -516,33 +516,33 @@ class ListPage extends RunnerPage
 			if( $this->searchClauseObj->isSearchFunctionalityActivated() )
 			{
 				// if search used serialize clause object
-				$_SESSION[$this->sessionPrefix.'_advsearch'] = serialize($this->searchClauseObj);
+				storageSet( $this->sessionPrefix.'_advsearch', serialize($this->searchClauseObj) );
 			}
 			else
 			{
 				// Unset session for search if search not used
-				unset($_SESSION[$this->sessionPrefix.'_advsearch']);
+				storageDelete( $this->sessionPrefix.'_advsearch' );
 			}
 
 			// Unset session for filters if filters  not activated
 			if(!$this->searchClauseObj->filtersActivated)
-				unset($_SESSION[$this->sessionPrefix.'_filters']);
+				storageDelete( $this->sessionPrefix.'_filters' );
 		}
 		else
 		{
-			unset($_SESSION[$this->sessionPrefix.'_advsearch']);
-			unset($_SESSION[$this->sessionPrefix.'_filters']);
+			storageDelete( $this->sessionPrefix.'_advsearch' );
+			storageDelete( $this->sessionPrefix.'_filters' );
 		}
 
 
 		//set session goto
 		if( $this->requestGoto )
-			$_SESSION[$this->sessionPrefix."_pagenumber"]= $this->requestGoto;
+			storageSet( $this->sessionPrefix."_pagenumber", $this->requestGoto );
 
 
 
 		//	page number
-		$this->myPage =(integer) $_SESSION[$this->sessionPrefix."_pagenumber"];
+		$this->myPage =(integer) storageGet( $this->sessionPrefix."_pagenumber" );
 		if(! $this->myPage)
 			$this->myPage = 1;
 
@@ -2125,9 +2125,6 @@ class ListPage extends RunnerPage
 		//	prepare maps
 		loadMaps( $this->pSet );
 
-		// build column hiding CSS
-		$this->buildMobileCssRules();
-
 		//Sorting fields
 		$this->buildOrderParams();
 
@@ -2461,46 +2458,6 @@ class ListPage extends RunnerPage
 	}
 
 	/**
-	 * Build CSS rules to hide particular columnns on specific screen sizes
-	 */
-	protected function buildMobileCssRules()
-	{
-		if( $this->pSet->isAllowShowHideFields() )
-			return;
-		$cssBlocks = array();
-		$columnsToHide = $this->getColumnsToHide();
-
-		$devices = array(  SMARTPHONE_PORTRAIT, DESKTOP );
-
-		//	build CSS code
-		foreach( $this->listFields as $f )
-		{
-			$gFieldName = GoodFieldName( $f['fName'] );
-			$fieldMentioned = false;
-			$field = $f['fName'];
-			foreach( $devices as $d )
-			{
-				if( in_array($gFieldName, $columnsToHide[ $d ]) )
-				{
-					$this->hiddenColumnClasses[$gFieldName] = "column".GoodFieldName( $field );
-					$cssBlocks[$d] .= "." . $this->hiddenColumnClasses[$gFieldName] . ":not([data-forced-visible-column]) { display: none !important;; }\n";
-					$fieldMentioned = true;
-				}
-			}
-		}
-
-		$this->mobile_css_rules = "";
-		foreach( $devices as $d )
-		{
-			if($cssBlocks[$d])
-			{
-				$this->mobile_css_rules .= ProjectSettings::getDeviceMediaClause($d)."\n{\n".$cssBlocks[$d]."\n}\n";
-			}
-		}
-
-	}
-
-	/**
 	 * Get indices of the not list page's blob fields
 	 * @return Array
 	 */
@@ -2635,7 +2592,7 @@ class ListPage extends RunnerPage
 			else
 				$paramsLogger = new paramsLogger( $table, $paramType );
 
-			if( $paramType == SHFIELDS_PARAMS_TYPE )
+			if( $paramType == NEWSHFIELDS_PARAMS_TYPE )
 			{
 				$macroDeviceClass = RunnerPage::deviceClassToMacro( postvalue("deviceClass") );
 				$ps = new ProjectSettings($table);

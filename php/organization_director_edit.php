@@ -91,9 +91,25 @@ if(( $pageMode == EDIT_POPUP || $pageMode == EDIT_INLINE ) && postvalue("dashTNa
 	$params["dashPage"] = postvalue("dashPage");
 }
 
+if( $pageMode == EDIT_ONTHEFLY ) {
+	//table where lookup is set
+	$params["lookupTable"] = postvalue("table");
+	//field with lookup is set
+	$params["lookupField"] = postvalue("field");
+	 //the ptype od the page where lookup is set
+	$params["lookupPageType"] = postvalue("pageType");
+	
+	if( postvalue('parentsExist') ) {
+		//the parent controls values data
+		$params["parentCtrlsData"] = runner_json_decode( postvalue("parentCtrlsData") );
+	}
+}
+
+
 $params["forSpreadsheetGrid"] = postvalue("spreadsheetGrid");
 $params["hostPageName"] = postvalue("hostPageName");
 $params["listPage"] = postvalue("listPage");
+$params["gantt"] = postvalue("gantt");
 
 $pageObject = EditPage::EditPageFactory($params);
 

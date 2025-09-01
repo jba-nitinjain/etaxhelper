@@ -115,6 +115,9 @@ class UserInfoPage extends EditPage {
 
 	protected function prepareTwoFactorData() {
 		$twofData = $this->loadTwofData();
+		if( !$twofData ) {
+			return;
+		}
 		$this->pageData["twoFactorData"] = $twofData->serialize();
 		$this->pageData["twoFactorSettings"] = Security::twoFactorSettings();
 

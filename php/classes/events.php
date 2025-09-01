@@ -64,7 +64,9 @@ class GlobalEventsBase extends eventsBase
 		// create new button object for get record data
 		$params["keys"] = (array)runner_json_decode(postvalue('keys'));
 		$params["isManyKeys"] = postvalue('isManyKeys');
-		$params["location"] = postvalue('location');
+		if( !$params["location"] ) {
+			$params["location"] = postvalue('location');
+		}
 	
 		$button = new Button($params);
 	

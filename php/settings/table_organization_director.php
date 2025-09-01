@@ -7,12 +7,6 @@ $runnerTableSettings['organization_director'] = array(
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -25,33 +19,39 @@ $runnerTableSettings['organization_director'] = array(
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'pageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'defaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'afterEditDetails' => 'organization_director',
 	'afterAddDetail' => 'organization_director',
-	'detailsBadgeColor' => 'e8926f',
+	'detailsBadgeColor' => '4682b4',
 	'sql' => 'SELECT
 	director_id,
 	org_id,
@@ -86,6 +86,7 @@ FROM
 			'index' => 1,
 			'type' => 20,
 			'autoinc' => true,
+			'sqlExpression' => 'director_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -95,7 +96,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'org_id' => array(
 			'name' => 'org_id',
@@ -103,6 +105,7 @@ FROM
 			'strField' => 'org_id',
 			'index' => 2,
 			'type' => 20,
+			'sqlExpression' => 'org_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -110,15 +113,22 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 2,
+					'lookupTable' => 'ORGANIZATION',
+					'lookupTableConnection' => 'conn',
+					'lookupLinkField' => 'org_id',
+					'lookupDisplayField' => 'org_type' 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'NAME' => array(
 			'name' => 'NAME',
 			'goodName' => 'NAME',
 			'strField' => 'NAME',
 			'index' => 3,
+			'sqlExpression' => 'NAME',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -128,13 +138,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'designation' => array(
 			'name' => 'designation',
 			'goodName' => 'designation',
 			'strField' => 'designation',
 			'index' => 4,
+			'sqlExpression' => 'designation',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -144,13 +156,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'email' => array(
 			'name' => 'email',
 			'goodName' => 'email',
 			'strField' => 'email',
 			'index' => 5,
+			'sqlExpression' => 'email',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -160,13 +174,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'phone' => array(
 			'name' => 'phone',
 			'goodName' => 'phone',
 			'strField' => 'phone',
 			'index' => 6,
+			'sqlExpression' => 'phone',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -176,13 +192,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'din_number' => array(
 			'name' => 'din_number',
 			'goodName' => 'din_number',
 			'strField' => 'din_number',
 			'index' => 7,
+			'sqlExpression' => 'din_number',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -192,7 +210,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'dob' => array(
 			'name' => 'dob',
@@ -200,6 +219,7 @@ FROM
 			'strField' => 'dob',
 			'index' => 8,
 			'type' => 7,
+			'sqlExpression' => 'dob',
 			'viewFormats' => array(
 				'view' => array(
 					'format' => 'Short Date' 
@@ -207,15 +227,18 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					'format' => 'Date' 
+					'format' => 'Date',
+					'dateEditType' => 11 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'city' => array(
 			'name' => 'city',
 			'goodName' => 'city',
 			'strField' => 'city',
 			'index' => 9,
+			'sqlExpression' => 'city',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -225,13 +248,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'pin' => array(
 			'name' => 'pin',
 			'goodName' => 'pin',
 			'strField' => 'pin',
 			'index' => 10,
+			'sqlExpression' => 'pin',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -241,13 +266,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'country' => array(
 			'name' => 'country',
 			'goodName' => 'country',
 			'strField' => 'country',
 			'index' => 11,
+			'sqlExpression' => 'country',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -257,7 +284,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_director' 
 		),
 		'date_of_appointment' => array(
 			'name' => 'date_of_appointment',
@@ -265,6 +293,7 @@ FROM
 			'strField' => 'date_of_appointment',
 			'index' => 12,
 			'type' => 7,
+			'sqlExpression' => 'date_of_appointment',
 			'viewFormats' => array(
 				'view' => array(
 					'format' => 'Short Date' 
@@ -272,8 +301,21 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					'format' => 'Date' 
+					'format' => 'Date',
+					'dateEditType' => 11 
 				) 
+			),
+			'tableName' => 'organization_director' 
+		) 
+	),
+	'masterTables' => array( 
+		array(
+			'table' => 'ORGANIZATION',
+			'detailsKeys' => array( 
+				'org_id' 
+			),
+			'masterKeys' => array( 
+				'org_id' 
 			) 
 		) 
 	),
@@ -302,9 +344,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'director_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'director_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'director_id' 
@@ -315,9 +359,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'org_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'org_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'org_id' 
@@ -328,9 +374,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'NAME',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'NAME' 
 				),
 				'encrypted' => false,
 				'columnName' => 'NAME' 
@@ -341,9 +389,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'designation',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'designation' 
 				),
 				'encrypted' => false,
 				'columnName' => 'designation' 
@@ -354,9 +404,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'email',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'email' 
 				),
 				'encrypted' => false,
 				'columnName' => 'email' 
@@ -367,9 +419,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'phone',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'phone' 
 				),
 				'encrypted' => false,
 				'columnName' => 'phone' 
@@ -380,9 +434,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'din_number',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'din_number' 
 				),
 				'encrypted' => false,
 				'columnName' => 'din_number' 
@@ -393,9 +449,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'dob',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'dob' 
 				),
 				'encrypted' => false,
 				'columnName' => 'dob' 
@@ -406,9 +464,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'city',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'city' 
 				),
 				'encrypted' => false,
 				'columnName' => 'city' 
@@ -419,9 +479,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'pin',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'pin' 
 				),
 				'encrypted' => false,
 				'columnName' => 'pin' 
@@ -432,9 +494,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'country',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'country' 
 				),
 				'encrypted' => false,
 				'columnName' => 'country' 
@@ -445,9 +509,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'date_of_appointment',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_director',
+					'name' => 'date_of_appointment' 
 				),
 				'encrypted' => false,
 				'columnName' => 'date_of_appointment' 
@@ -463,7 +529,18 @@ FROM
 					'parsed' => true,
 					'type' => 'SQLTable',
 					'columns' => array( 
-						 
+						'director_id',
+						'org_id',
+						'NAME',
+						'designation',
+						'email',
+						'phone',
+						'din_number',
+						'dob',
+						'city',
+						'pin',
+						'country',
+						'date_of_appointment' 
 					),
 					'name' => 'organization_director' 
 				),
@@ -626,12 +703,6 @@ FROM
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -644,28 +715,34 @@ FROM
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'originalPageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'originalDefaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'searchSettings' => array(
@@ -731,6 +808,16 @@ FROM
 	),
 	'dataSourceOperations' => array(
 		 
+	),
+	'calendarSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
+	),
+	'ganttSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
 	) 
 );
 

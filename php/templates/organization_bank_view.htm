@@ -97,17 +97,15 @@
 	data-signal-error-for="bank_id{$id}" {$required_attr_bank_id}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="bank_id" data-fieldname="bank_id" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_bank_id}">
-		{BEGIN bank_id_label}{$label organization_bank bank_id }{END bank_id_label}
+	<label class="r-edit-label control-label {$bank_id_label_class}" for="{$labelfor_bank_id}">
+		{BEGIN bank_id_label}
+			{$bank_id_forward_control}
+			{$label organization_bank bank_id }			{END bank_id_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$bank_id_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="bank_id" {$tooltipAttr organization_bank bank_id } >
-		<div class="text-muted" >
-		{$tooltip organization_bank bank_id }		</div>
 	</div>
-</div>
 
 
 {END bank_id_fieldblock}
@@ -119,17 +117,15 @@
 	data-signal-error-for="org_id{$id}" {$required_attr_org_id}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="org_id" data-fieldname="org_id" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_org_id}">
-		{BEGIN org_id_label}{$label organization_bank org_id }{END org_id_label}
+	<label class="r-edit-label control-label {$org_id_label_class}" for="{$labelfor_org_id}">
+		{BEGIN org_id_label}
+			{$org_id_forward_control}
+			{$label organization_bank org_id }			{END org_id_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$org_id_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_bank org_id } >
-		<div class="text-muted" >
-		{$tooltip organization_bank org_id }		</div>
 	</div>
-</div>
 
 
 {END org_id_fieldblock}
@@ -141,17 +137,15 @@
 	data-signal-error-for="bank_name{$id}" {$required_attr_bank_name}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="bank_name" data-fieldname="bank_name" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_bank_name}">
-		{BEGIN bank_name_label}{$label organization_bank bank_name }{END bank_name_label}
+	<label class="r-edit-label control-label {$bank_name_label_class}" for="{$labelfor_bank_name}">
+		{BEGIN bank_name_label}
+			{$bank_name_forward_control}
+			{$label organization_bank bank_name }			{END bank_name_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$bank_name_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="bank_name" {$tooltipAttr organization_bank bank_name } >
-		<div class="text-muted" >
-		{$tooltip organization_bank bank_name }		</div>
 	</div>
-</div>
 
 
 {END bank_name_fieldblock}
@@ -163,17 +157,15 @@
 	data-signal-error-for="branch_name{$id}" {$required_attr_branch_name}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="branch_name" data-fieldname="branch_name" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_branch_name}">
-		{BEGIN branch_name_label}{$label organization_bank branch_name }{END branch_name_label}
+	<label class="r-edit-label control-label {$branch_name_label_class}" for="{$labelfor_branch_name}">
+		{BEGIN branch_name_label}
+			{$branch_name_forward_control}
+			{$label organization_bank branch_name }			{END branch_name_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$branch_name_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="branch_name" {$tooltipAttr organization_bank branch_name } >
-		<div class="text-muted" >
-		{$tooltip organization_bank branch_name }		</div>
 	</div>
-</div>
 
 
 {END branch_name_fieldblock}
@@ -185,17 +177,15 @@
 	data-signal-error-for="account_no{$id}" {$required_attr_account_no}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="account_no" data-fieldname="account_no" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_account_no}">
-		{BEGIN account_no_label}{$label organization_bank account_no }{END account_no_label}
+	<label class="r-edit-label control-label {$account_no_label_class}" for="{$labelfor_account_no}">
+		{BEGIN account_no_label}
+			{$account_no_forward_control}
+			{$label organization_bank account_no }			{END account_no_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$account_no_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="account_no" {$tooltipAttr organization_bank account_no } >
-		<div class="text-muted" >
-		{$tooltip organization_bank account_no }		</div>
 	</div>
-</div>
 
 
 {END account_no_fieldblock}
@@ -207,17 +197,15 @@
 	data-signal-error-for="ifsc_code{$id}" {$required_attr_ifsc_code}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field5" {$item_integrated_edit_field5} data-pageid="{$pageid}" data-field="ifsc_code" data-fieldname="ifsc_code" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_ifsc_code}">
-		{BEGIN ifsc_code_label}{$label organization_bank ifsc_code }{END ifsc_code_label}
+	<label class="r-edit-label control-label {$ifsc_code_label_class}" for="{$labelfor_ifsc_code}">
+		{BEGIN ifsc_code_label}
+			{$ifsc_code_forward_control}
+			{$label organization_bank ifsc_code }			{END ifsc_code_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$ifsc_code_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="ifsc_code" {$tooltipAttr organization_bank ifsc_code } >
-		<div class="text-muted" >
-		{$tooltip organization_bank ifsc_code }		</div>
 	</div>
-</div>
 
 
 {END ifsc_code_fieldblock}
@@ -229,17 +217,15 @@
 	data-signal-error-for="swift_code{$id}" {$required_attr_swift_code}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field6" {$item_integrated_edit_field6} data-pageid="{$pageid}" data-field="swift_code" data-fieldname="swift_code" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_swift_code}">
-		{BEGIN swift_code_label}{$label organization_bank swift_code }{END swift_code_label}
+	<label class="r-edit-label control-label {$swift_code_label_class}" for="{$labelfor_swift_code}">
+		{BEGIN swift_code_label}
+			{$swift_code_forward_control}
+			{$label organization_bank swift_code }			{END swift_code_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$swift_code_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="swift_code" {$tooltipAttr organization_bank swift_code } >
-		<div class="text-muted" >
-		{$tooltip organization_bank swift_code }		</div>
 	</div>
-</div>
 
 
 {END swift_code_fieldblock}
@@ -251,17 +237,15 @@
 	data-signal-error-for="account_type{$id}" {$required_attr_account_type}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field7" {$item_integrated_edit_field7} data-pageid="{$pageid}" data-field="account_type" data-fieldname="account_type" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_account_type}">
-		{BEGIN account_type_label}{$label organization_bank account_type }{END account_type_label}
+	<label class="r-edit-label control-label {$account_type_label_class}" for="{$labelfor_account_type}">
+		{BEGIN account_type_label}
+			{$account_type_forward_control}
+			{$label organization_bank account_type }			{END account_type_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$account_type_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="account_type" {$tooltipAttr organization_bank account_type } >
-		<div class="text-muted" >
-		{$tooltip organization_bank account_type }		</div>
 	</div>
-</div>
 
 
 {END account_type_fieldblock}
@@ -273,17 +257,15 @@
 	data-signal-error-for="mode_of_operation{$id}" {$required_attr_mode_of_operation}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field8" {$item_integrated_edit_field8} data-pageid="{$pageid}" data-field="mode_of_operation" data-fieldname="mode_of_operation" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_mode_of_operation}">
-		{BEGIN mode_of_operation_label}{$label organization_bank mode_of_operation }{END mode_of_operation_label}
+	<label class="r-edit-label control-label {$mode_of_operation_label_class}" for="{$labelfor_mode_of_operation}">
+		{BEGIN mode_of_operation_label}
+			{$mode_of_operation_forward_control}
+			{$label organization_bank mode_of_operation }			{END mode_of_operation_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$mode_of_operation_value}	</div>
-	<div class="r-edit-tooltip" data-helpfor="mode_of_operation" {$tooltipAttr organization_bank mode_of_operation } >
-		<div class="text-muted" >
-		{$tooltip organization_bank mode_of_operation }		</div>
 	</div>
-</div>
 
 
 {END mode_of_operation_fieldblock}

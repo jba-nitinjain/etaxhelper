@@ -8,8 +8,13 @@ $loginKeyFields = @ProjectSettings::getProjectValue( 'userTableKeys' );
 $cLoginTable = @Security::loginTable();
 $cUserNameField = @Security::usernameField();
 $cUserGroupField = @Security::groupIdField();
+$cPasswordField = @Security::passwordField();
+$cDisplayNameField = @Security::fullnameField();
+$cUserpicField = @Security::userpicField();
 
 $projectBuildKey = ProjectSettings::getProjectValue('projectBuild');
 $wizardBuildKey = ProjectSettings::getProjectValue('wizardBuild');
+
+$projectLanguage = ProjectSettings::ext();
 
 ?>

@@ -94,33 +94,5 @@ class ViewDatabaseImageField extends ViewImageDownloadField
 		return mlang_message('LONG_BINARY');
 	}
 
-	/**
-	 * Get the width and height setting for small thumbnails
-	 * wrapping in a style attribute
-	 * @param String imageSrc
-	 * @param Boolean hasThumbnail
-	 * @return String
-	 */
-	protected function getSmallThumbnailStyle( $imageSrc = false, $hasThumbnail = true )
-	{
-		$styles = array();
-
-		if( $imageSrc )
-		{
-			//	this is required to avoid the corrupting of the tag by the html2xhtml function in html2ps library
-			$imageSrc = str_replace( "=", "&#61;", $imageSrc );
-			$styles[] = ' background-image: url('.$imageSrc.');';
-			if( !$hasThumbnail )
-				$styles[] = ' background-size: '. $this->thumbWidth.'px '.$this->thumbHeight.'px ;';
-		}
-
-		if( $this->thumbWidth )
-			$styles[] = ' width: '.$this->thumbWidth.'px;';
-
-		if( $this->thumbHeight )
-			$styles[] = ' height: '.$this->thumbHeight.'px';
-
-		return ' style="'. implode( '' , $styles ) .'"';
-	}
 }
 ?>

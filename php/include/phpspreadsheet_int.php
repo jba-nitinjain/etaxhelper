@@ -32,7 +32,8 @@ function ExportExcelInit($arrdata,$arrwidth) {
 		$colLetter = Coordinate::stringFromColumnIndex($col);
 		$objASheet = $objPHPExcel->getActiveSheet();
 		$objDim = $objASheet->getColumnDimension($colLetter);
-		$objDim->setWidth($arrwidth[$field]);
+//		$objDim->setWidth($arrwidth[$field]);
+		$objDim->setAutoSize(true);
 		$col++;
 	}
 
@@ -79,11 +80,13 @@ function ExportExcelRecord( $arrdata, $datatype, $numberRow, $objPHPExcel, $page
 			if($rowDim->getRowHeight() < $height)
 				$rowDim->setRowHeight($height);
 			
+			/*
 			$colDimSh = $objASheet->getColumnDimension($colLetter);
 			$colDimSh->setAutoSize(false);
 			
 			if($colDim->getWidth() < $width)
 				$colDim->setWidth($width);			
+			*/
 		}
 		elseif($datatype[$field] == "file")
 		{
@@ -128,11 +131,13 @@ function ExportExcelRecord( $arrdata, $datatype, $numberRow, $objPHPExcel, $page
 				if($rowDim->getRowHeight() < $height)
 					$rowDim->setRowHeight($height);
 				
+				/*
 				$colDimSh = $objASheet->getColumnDimension($colLetter);
 				$colDimSh->setAutoSize(false);
 				
 				if($colDim->getWidth() < $width)
 					$colDim->setWidth($width);
+				*/
 			}
 		} else {
 			$data = StringHelper::ConvertEncoding($data, 'UTF-8', $cCharset);

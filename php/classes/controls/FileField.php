@@ -113,7 +113,7 @@ class FileField extends EditControl
             <td class="size"><span class="text-muted" dir="LTR">{%=o.formatFileSize(file.size)%}</span></td>
             <td colspan=2 class="error"><span class="text-danger rnr-error">'
 			.mlang_message('ERROR')
-			.' {%=locale.fileupload.errors[file.error] || file.error%}</span></td>
+			.' {%=window.locale && window.locale.fileupload && window.locale.fileupload.errors[file.error] || file.error%}</span></td>
         {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
                 <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery" download="{%=file.name%}"
@@ -150,8 +150,8 @@ class FileField extends EditControl
 			<td class="size"><span class="text-muted">{%=o.formatFileSize(file.size)%}</span></td>
             <td class="error" colspan="2"><span class="text-danger rnr-error">'
 			.mlang_message('ERROR')
-			.' {%=locale.fileupload.errors[file.error] || file.error%}</span></td>
-        {% } else if (o.files.valid && !i) { %}
+			.' {%=window.locale && window.locale.fileupload && window.locale.fileupload.errors[file.error] || file.error%}</span></td>
+        {% } else if (!i) { %}
 			<td class="name"><span>{%=file.name%}</span></td>
 			<td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
             <td>

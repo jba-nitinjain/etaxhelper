@@ -561,7 +561,7 @@ class FilterIntervalDateSlider extends FilterIntervalSlider
 		$this->minValue = $data['sliderMin'];
 		$this->maxValue = $data['sliderMax'];
 		
-		if( ProjectSettings::ext() == "php ") {
+		if( ProjectSettings::ext() == "php") {
 			$timeZone = date_default_timezone_get(); 
 			date_default_timezone_set('UTC');
 		}
@@ -594,7 +594,7 @@ class FilterIntervalDateSlider extends FilterIntervalSlider
 				$this->maxKnobValue = $data['sliderMax'];	
 		}
 		
-		if( ProjectSettings::ext() == "php ") {	
+		if( ProjectSettings::ext() == "php") {	
 			date_default_timezone_set($timeZone); 
 		}
 		return $this->getSliderHTML();
@@ -710,7 +710,7 @@ class FilterIntervalDateSlider extends FilterIntervalSlider
 	protected function getBaseContolsMapParams() 
 	{
 		$ctrlsMap = parent::getBaseContolsMapParams();
-		if( ProjectSettings::ext() == "php ") {	
+		if( ProjectSettings::ext() == "php") {	
 			$timeZone = date_default_timezone_get(); 
 			date_default_timezone_set('UTC');		
 		}
@@ -744,7 +744,7 @@ class FilterIntervalDateSlider extends FilterIntervalSlider
 			if( $this->knobsType != FS_MIN_ONLY )
 				$ctrlsMap['maxKnobValue'] = $this->getRoundedDate( $this->maxKnobFormatValue, false, true );
 		}	
-		if( ProjectSettings::ext() == "php ") {
+		if( ProjectSettings::ext() == "php") {
 			date_default_timezone_set( $timeZone );
 		}
 		

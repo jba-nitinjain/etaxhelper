@@ -1135,7 +1135,19 @@ class LoginPage extends RunnerPage
 			$parameters["value"] = $defvalues[ $fName ];
 			$parameters["pageObj"] = $this;
 
-			$this->xt->assign_function( GoodFieldName( $fName )."_editcontrol", "xt_buildeditcontrol", $parameters );
+			$gf = GoodFieldName( $fName );
+			if( $this->pSet->getEditFormat( $fName ) == EDIT_FORMAT_CHECKBOX ) {
+				$parameters[ "xt" ] = $this->xt;
+				$parameters[ "clearVar" ] = $gf . "_forward_control";
+			}
+			$this->xt->assign_function( $gf . "_editcontrol", "xt_buildeditcontrol", $parameters );
+			if( $this->pSet->getEditFormat( $fName ) == EDIT_FORMAT_CHECKBOX ) {
+				$parameters[ "xt" ] = $this->xt;
+				$parameters[ "clearVar" ] = $gf . "_editcontrol";
+				$this->xt->assign_function( $gf . "_forward_control", "xt_buildforwardcontrol", $parameters );
+				
+				$this->xt->assign( $gf . '_label_class' , 'r-checkbox-label' );
+			}
 
 			if( $this->pSet->isUseRTE( $fName ) )
 				$_SESSION[ $this->sessionPrefix."_".$fName."_rte" ] = $defvalues[ $fName ];

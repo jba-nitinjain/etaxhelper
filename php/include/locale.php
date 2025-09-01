@@ -126,4 +126,17 @@ $locale_info = array(
 	'LOCALE_SCONSOLEFALLBACKNAME' => 'en-US',
 	'LOCALE_SLANGDISPLAYNAME' => 'English' 
 );
+
+$languages_data = array(
+	'English' => array(
+		'filename' => 'English.lng',
+		'name' => 'English',
+		'lcid' => 1033,
+		'codepage' => 65001,
+		'charset' => 'Windows-1252',
+		'nativeName' => 'English',
+		'languageCode' => 'en' 
+	) 
+);
+
 ?>

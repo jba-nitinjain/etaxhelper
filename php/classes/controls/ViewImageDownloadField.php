@@ -261,58 +261,6 @@ class ViewImageDownloadField extends ViewFileField
 	}
 
 	/**
-	 * Get the width and height setting for small thumbnails
-	 * wrapping in a style attribute
-	 * @param String imageSrc (optional)
-	 * @param Boolean hasThumbnail (optional)
-	 * @return String
-	 */
-	protected function getSmallThumbnailStyle( $imageSrc = false, $hasThumbnail = true )
-	{
-		$styles = array();
-
-		if( $imageSrc )
-		{
-			//	this is required to avoid the corrupting of the tag by the html2xhtml function in html2ps library
-			$imageSrc = str_replace( "=", "&#61;", $imageSrc );
-
-			$styles[] = ' background-image: url('.$imageSrc.');';
-		}
-
-		if( $this->thumbWidth )
-			$styles[] = ' width: '.$this->thumbWidth.'px;';
-
-		if( $this->thumbHeight )
-			$styles[] = ' height: '.$this->thumbHeight.'px';
-
-		return ' style="'. implode( '' , $styles ) .'"';
-	}
-
-	/**
-	 * Get the width and height styles set for big thumbnails
-	 * (the 'Sets of thumbnails with preview' option)
-	 * @param Boolean widthAutoSet	(optional)
-	 * @return String
-	 */
-	protected function getBigThumbnailSizeStyles( $widthAutoSet = false )
-	{
-		$bigThumbnailSizeStyle = "";
-		$bigThumbnailHeight = $this->imageHeight;
-		$bigThumbnailWidth = $this->imageWidth;
-
-		if( $bigThumbnailWidth )
-			$bigThumbnailSizeStyle.= ' width: '.$bigThumbnailWidth.'px;';
-
-		if($bigThumbnailHeight)
-			$bigThumbnailSizeStyle.= ' height: '.$bigThumbnailHeight.'px;';
-
-		if( !$bigThumbnailWidth && $bigThumbnailHeight && $widthAutoSet )
-			$bigThumbnailSizeStyle.= ' width: '. floor( 4 * $bigThumbnailHeight / 3 ).'px;';
-
-		return $bigThumbnailSizeStyle;
-	}
-
-	/**
 	 * Check for need to load the javascript files
 	 * @return boolean
 	 */

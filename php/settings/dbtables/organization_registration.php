@@ -4,9 +4,16 @@ $runnerDbTableInfo['organization_registration'] = array(
 	'type' => 0,
 	'foreignKeys' => array( 
 		array(
-			'name' => '`fk_reg_org`',
+			'name' => 'fk_reg_org',
+			'refTable' => 'ORGANIZATION',
+			'refSchema' => '',
+			'del_rule' => 1,
+			'upd_rule' => 4,
 			'columns' => array( 
-				 
+				array(
+					'column' => 'org_id',
+					'ref_column' => 'org_id' 
+				) 
 			) 
 		) 
 	),

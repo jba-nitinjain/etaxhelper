@@ -7,12 +7,6 @@ $runnerTableSettings['organization_registration'] = array(
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -25,33 +19,39 @@ $runnerTableSettings['organization_registration'] = array(
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'pageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'defaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'afterEditDetails' => 'organization_registration',
 	'afterAddDetail' => 'organization_registration',
-	'detailsBadgeColor' => 'd2691e',
+	'detailsBadgeColor' => '9acd32',
 	'sql' => 'SELECT
 	reg_id,
 	org_id,
@@ -80,6 +80,7 @@ FROM
 			'index' => 1,
 			'type' => 20,
 			'autoinc' => true,
+			'sqlExpression' => 'reg_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -89,7 +90,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_registration' 
 		),
 		'org_id' => array(
 			'name' => 'org_id',
@@ -97,6 +99,7 @@ FROM
 			'strField' => 'org_id',
 			'index' => 2,
 			'type' => 20,
+			'sqlExpression' => 'org_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -104,15 +107,22 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 2,
+					'lookupTable' => 'ORGANIZATION',
+					'lookupTableConnection' => 'conn',
+					'lookupLinkField' => 'org_id',
+					'lookupDisplayField' => 'org_type' 
 				) 
-			) 
+			),
+			'tableName' => 'organization_registration' 
 		),
 		'reg_type' => array(
 			'name' => 'reg_type',
 			'goodName' => 'reg_type',
 			'strField' => 'reg_type',
 			'index' => 3,
+			'sqlExpression' => 'reg_type',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -122,13 +132,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_registration' 
 		),
 		'reg_number' => array(
 			'name' => 'reg_number',
 			'goodName' => 'reg_number',
 			'strField' => 'reg_number',
 			'index' => 4,
+			'sqlExpression' => 'reg_number',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -138,7 +150,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_registration' 
 		),
 		'valid_from' => array(
 			'name' => 'valid_from',
@@ -146,6 +159,7 @@ FROM
 			'strField' => 'valid_from',
 			'index' => 5,
 			'type' => 7,
+			'sqlExpression' => 'valid_from',
 			'viewFormats' => array(
 				'view' => array(
 					'format' => 'Short Date' 
@@ -153,9 +167,11 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					'format' => 'Date' 
+					'format' => 'Date',
+					'dateEditType' => 11 
 				) 
-			) 
+			),
+			'tableName' => 'organization_registration' 
 		),
 		'valid_to' => array(
 			'name' => 'valid_to',
@@ -163,6 +179,7 @@ FROM
 			'strField' => 'valid_to',
 			'index' => 6,
 			'type' => 7,
+			'sqlExpression' => 'valid_to',
 			'viewFormats' => array(
 				'view' => array(
 					'format' => 'Short Date' 
@@ -170,8 +187,21 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					'format' => 'Date' 
+					'format' => 'Date',
+					'dateEditType' => 11 
 				) 
+			),
+			'tableName' => 'organization_registration' 
+		) 
+	),
+	'masterTables' => array( 
+		array(
+			'table' => 'ORGANIZATION',
+			'detailsKeys' => array( 
+				'org_id' 
+			),
+			'masterKeys' => array( 
+				'org_id' 
 			) 
 		) 
 	),
@@ -194,9 +224,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'reg_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_registration',
+					'name' => 'reg_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'reg_id' 
@@ -207,9 +239,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'org_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_registration',
+					'name' => 'org_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'org_id' 
@@ -220,9 +254,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'reg_type',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_registration',
+					'name' => 'reg_type' 
 				),
 				'encrypted' => false,
 				'columnName' => 'reg_type' 
@@ -233,9 +269,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'reg_number',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_registration',
+					'name' => 'reg_number' 
 				),
 				'encrypted' => false,
 				'columnName' => 'reg_number' 
@@ -246,9 +284,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'valid_from',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_registration',
+					'name' => 'valid_from' 
 				),
 				'encrypted' => false,
 				'columnName' => 'valid_from' 
@@ -259,9 +299,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'valid_to',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_registration',
+					'name' => 'valid_to' 
 				),
 				'encrypted' => false,
 				'columnName' => 'valid_to' 
@@ -277,7 +319,12 @@ FROM
 					'parsed' => true,
 					'type' => 'SQLTable',
 					'columns' => array( 
-						 
+						'reg_id',
+						'org_id',
+						'reg_type',
+						'reg_number',
+						'valid_from',
+						'valid_to' 
 					),
 					'name' => 'organization_registration' 
 				),
@@ -392,12 +439,6 @@ FROM
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -410,28 +451,34 @@ FROM
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'originalPageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'originalDefaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'searchSettings' => array(
@@ -485,6 +532,16 @@ FROM
 	),
 	'dataSourceOperations' => array(
 		 
+	),
+	'calendarSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
+	),
+	'ganttSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
 	) 
 );
 

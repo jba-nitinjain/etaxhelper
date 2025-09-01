@@ -3,6 +3,11 @@
 	'pdf' => array(
 		'pdfView' => false 
 	),
+	'master' => array(
+		'ORGANIZATION' => array(
+			'preview' => false 
+		) 
+	),
 	'fields' => array(
 		'gridFields' => array( 
 			'contact_id',

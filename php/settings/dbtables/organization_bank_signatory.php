@@ -4,9 +4,16 @@ $runnerDbTableInfo['organization_bank_signatory'] = array(
 	'type' => 0,
 	'foreignKeys' => array( 
 		array(
-			'name' => '`fk_signatory_bank`',
+			'name' => 'fk_signatory_bank',
+			'refTable' => 'organization_bank',
+			'refSchema' => '',
+			'del_rule' => 1,
+			'upd_rule' => 4,
 			'columns' => array( 
-				 
+				array(
+					'column' => 'bank_id',
+					'ref_column' => 'bank_id' 
+				) 
 			) 
 		) 
 	),

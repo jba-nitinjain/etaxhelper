@@ -73,8 +73,8 @@ $runnerProjectDefaults = array(
 				'__meta__' => 0,
 				'__object__' => array(
 					'lifeTime' => 15,
-					'sessionName' => '3p4HSfMkOjDKeN8sMMGb',
-					'JWTSecret' => 'DRjuCvcGx0P2n7jsujmO' 
+					'sessionName' => 'DfLRwfk4t6xMZW3pHJ9r',
+					'JWTSecret' => 'G3ThHblXaNiQsEgNoy8Y' 
 				) 
 			),
 			'registration' => array(
@@ -225,6 +225,30 @@ $runnerProjectDefaults = array(
 			'embed' => true,
 			'provider' => 0,
 			'apikey' => '' 
+		) 
+	),
+	'smsSettings' => array(
+		'__meta__' => 0,
+		'__object__' => array(
+			'smsProvider' => 4,
+			'iBusername' => '',
+			'iBpassword' => '',
+			'iBsender' => '',
+			'essUsername' => '',
+			'essPassword' => '',
+			'essSender' => '',
+			'gwApiToken' => '',
+			'gwSender' => '',
+			'mbAuth' => '',
+			'mbSender' => '',
+			'twilioSID' => '',
+			'twilioAuth' => '',
+			'twilioNumber' => '',
+			'phoneField' => '',
+			'counryCode' => '+1',
+			'wauUsername' => '',
+			'wauPassword' => '',
+			'wauSender' => '' 
 		) 
 	) 
 );
@@ -416,6 +440,7 @@ $runnerTableDefaults = array(
 					'lookupOrderByDesc' => false,
 					'lookupUnique' => false,
 					'lookupAllowAdd' => false,
+					'lookupAllowEdit' => false,
 					'lookupControlType' => 0,
 					'lookupHorizontal' => false,
 					'lookupWhere' => '',
@@ -424,6 +449,7 @@ $runnerTableDefaults = array(
 					'lookupFreeInput' => false,
 					'lookupListPage' => '',
 					'lookupAddPage' => '',
+					'lookupEditPage' => '',
 					'lookupDependent' => false,
 					'lookupDependentFields' => array(
 						'__meta__' => 2,
@@ -556,6 +582,7 @@ $runnerTableDefaults = array(
 	'query' => null,
 	'hasEvents' => false,
 	'hasJsEvents' => false,
+	'galleryMode' => 2,
 	'searchSettings' => array(
 		'__meta__' => 0,
 		'__object__' => array(

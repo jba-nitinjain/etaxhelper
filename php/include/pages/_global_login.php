@@ -402,7 +402,7 @@
 		'fullSize' => false,
 		'image' => array(
 			'source' => 0,
-			'image' => 'rocket-launch-2-publicdomainvectors.org.png' 
+			'image' => 'student-workplace-publicdomainvectors.org.png' 
 		) 
 	),
 	'imageBgColor' => '#f2f2f2',

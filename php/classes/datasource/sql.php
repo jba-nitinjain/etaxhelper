@@ -84,12 +84,13 @@ class DataSourceSQL extends DataSource {
 			}
 
 			if( !$this->opDescriptors[ $op ]["skipOrder"] ) {
-				$this->reorderResult( $dc, $res );
+				$res = $this->reorderResult( $dc, $res );
 			}
 		}
-		if( $res->randomAccess() )
+		if( $res->randomAccess() ) {
 			$dc->_cache["listData"] = $res;
 			$dc->_cache["listDataPos"] = $res->position();
+		}
 		return $res;
 	}
 
@@ -121,7 +122,6 @@ class DataSourceSQL extends DataSource {
 					$ret = ArrayResult::createFromResult( $ret );
 					$dc->_cache["listData"] = $ret;
 					$dc->_cache["listDataPos"] = 0;
-
 				}
 				//	apply totals
 				return $ret->count();

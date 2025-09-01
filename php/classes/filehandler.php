@@ -91,6 +91,45 @@ class RunnerFileHandler {
 
 		return $file;
 	}
+	
+	public function resetTo( $defaultValue ) {
+		$userFilesArray = runner_json_decode( $defaultValue );
+		$names = array();
+		
+		if( is_array( $userFilesArray ) ) {
+			foreach( $userFilesArray as $userFile ) {
+				if( !isset( $userFile["name"] ) ) {
+					continue;
+				}
+				
+				$fileData = $this->getFormData( $userFile["name"] );
+				if( $fileData ) {
+					$names[] = $userFile["name"];
+					$fileData["deleted"] = false;
+					$this->setFormData( $userFile["name"], $fileData );
+				}
+			}
+		}
+		
+		$formData = $_SESSION[ "mupload_".$this->formStamp ];
+		
+		if( !$formData ) {
+			return true;
+		}
+		
+		$filesToDelete = array();
+		foreach( $formData as $fName => $fileArray ) {
+			if( !in_array( $fName, $names ) ) {
+				$filesToDelete[] = $fName;
+			}
+		}
+		
+		foreach( $filesToDelete as $fileName ) {
+			$this->delete( $fileName );
+		}
+		
+		return true;
+	}
 
 	/**
 	 * @return Boolean
@@ -122,7 +161,7 @@ class RunnerFileHandler {
 	 * @param Array $uploadedFiles - array of standardized uploaded file descriptors
 	 * @return nothing Sends result to output
 	 */
-	public function acceptUpload( $uploadedFiles ) {
+	public function acceptUpload( $uploadedFiles, $wrapWithFiles = false ) {
         $result = array();
 		foreach ($uploadedFiles as $index => $uploadedFile) {
             $file = $this->acceptUploadedFile( $uploadedFile );
@@ -132,11 +171,15 @@ class RunnerFileHandler {
 				$fileData["deleted"] = false;
 				$fileData["fromDB"] = false;
 				$this->setFormData( $file['usrName'], $fileData );
-			} 				
+			}
 			$result[] = $this->returnFileDescriptor( $file );
-
-        }
-        header('Vary: Accept');
+		}
+		
+		if( $wrapWithFiles ) {
+			$result = array("files" => $result);
+		}
+		
+		 header('Vary: Accept');
 		header('Content-type: application/json');
 		echo runner_json_encode( $result );
 	}
@@ -403,9 +446,16 @@ class RunnerFileHandler {
 	 * @param Array $keys - key field values to find the record in the database.
 	 */
 	public function showFile( $filename, $thumbnail, $icon, $outputAsAttachment, $useHttpRange, $keys ) {
-		if($filename == "")
+		if($filename == "" && !$this->databaseFile() ) {
     		return;
+		}
 		$fileData = $this->getFileInfo( $filename, $thumbnail, $keys );
+
+		if( $thumbnail && $fileData && $fileData["thumbnail"] ) {
+			$fileData["name"] = $fileData["thumbnail"];
+			$fileData["size"] = $fileData["thumbnail_size"];
+			$fileData["type"] = $fileData["thumbnail_type"];
+		}
 
 		if( $fileData && !$this->databaseFile() ) {
 			//	read file info from the filesystem
@@ -414,6 +464,9 @@ class RunnerFileHandler {
 			if( !$fsFile && $fs->lastError() ) {
 				showError( $fs->lastError() );
 				return;
+			}
+			if( $fsFile ) {
+				$fileData["size"] = $fsFile["size"];
 			}
 		}
 		
@@ -428,12 +481,6 @@ class RunnerFileHandler {
 			} else {
 				return;
 			}
-		}
-
-		if( $thumbnail && $fileData["thumbnail"] ) {
-			$fileData["name"] = $fileData["thumbnail"];
-			$fileData["size"] = $fileData["thumbnail_size"];
-			$fileData["type"] = $fileData["thumbnail_type"];
 		}
 
 		if( $icon ) {
@@ -758,6 +805,7 @@ class RunnerFileHandler {
 		} else {
 			$result["error"] = $file["error"];
 		}
+		
 		header('Vary: Accept');
 		header('Content-type: application/json');
 		echo runner_json_encode( $result );

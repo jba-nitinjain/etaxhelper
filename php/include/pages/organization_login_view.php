@@ -3,6 +3,14 @@
 	'pdf' => array(
 		'pdfView' => false 
 	),
+	'master' => array(
+		'ORGANIZATION' => array(
+			'preview' => false 
+		),
+		'organization_social_media' => array(
+			'preview' => false 
+		) 
+	),
 	'fields' => array(
 		'gridFields' => array( 
 			'login_id',

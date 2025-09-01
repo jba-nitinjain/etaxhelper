@@ -8,31 +8,29 @@ class RunnerCiphererES
 	var $SSLMethod = null;
 	var $mcryptModule = null;
 	var $max_key_size = null;
-	var $useSSL = false;
 
 	function openSSL_exist()
 	{
-		//return false; // uncomment for test without openssl
 		return function_exists('openssl_encrypt');
 	}
 
 	function mcrypt_exist()
 	{
-		//return false; // uncomment for test without mycript
 		return function_exists('mcrypt_module_open');
+	}
+
+	function useOpenSSL() {
+		return $this->openSSL_exist();
 	}
 
 	function __construct($key) 
 	{
 		if ( !$this->openSSL_exist() && !$this->mcrypt_exist() )
 		{
-			if ( version_compare(phpversion(), '7.1', '>=') )
-				throw new Exception("Install OpenSSL extension");
-			else 
-				throw new Exception("Install OpenSSL or Mcrypt extension");
+			throw new Exception("Install 'openssl' PHP extension");
 		}
 
-		if ( !$this->openSSL_exist() )
+		if ( !$this->useOpenSSL() )
 		{
 			$this->mcryptModule = mcrypt_module_open($this->mcript_algorithm, '', MCRYPT_MODE_CBC, '');			
 		}
@@ -52,7 +50,7 @@ class RunnerCiphererES
 		$result = '';
 		if ( $source != '' )
 		{
-			if ( $this->openSSL_exist() )			
+			if ( $this->useOpenSSL() )			
 			{
 				if (strlen($source) % $this->max_key_size)
 				{
@@ -82,7 +80,7 @@ class RunnerCiphererES
 		
 		$result = '';
 
-		if ( $this->openSSL_exist() )
+		if ( $this->useOpenSSL() )
 		{			
 			$result = openssl_decrypt(hex2bin($source), $this->SSLMethod, $this->key, OPENSSL_RAW_DATA | OPENSSL_NO_PADDING, $this->INITIALISATION_VECTOR);
 		}

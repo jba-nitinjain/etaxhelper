@@ -174,21 +174,7 @@ class SQLFieldListItem extends SQLEntity
 	}
 	function getAlias()
 	{
-		if(isset($this->alias) && !isset($this->expression->name))
-		{
-			return $this->alias;
-		}
-		elseif(isset($this->expression->name))
-		{
-			if(isset($this->alias) && $this->alias!="")
-			{
-				return $this->alias;
-			}
-			else
-			{
-				return $this->expression->name;
-			}
-		}
+		return $this->columnName;
 	}
 }
 
@@ -313,19 +299,19 @@ class SQLFunctionCall extends SQLEntity
 		$ret = '';
 		switch($this->functionType)
 		{
-			case 'SQLF_AVG':
+			case SQLF_AVG:
 				$ret .= ' AVG';
 				break;
-			case 'SQLF_SUM':
+			case SQLF_SUM:
 				$ret .= ' SUM';
 				break;
-			case 'SQLF_MIN':
+			case SQLF_MIN:
 				$ret .= ' MIN';
 				break;
-			case 'SQLF_MAX':
+			case SQLF_MAX:
 				$ret .= ' MAX';
 				break;
-			case 'SQLF_COUNT':
+			case SQLF_COUNT:
 				$ret .= ' COUNT';
 				break;
 			default:
@@ -343,11 +329,11 @@ class SQLFunctionCall extends SQLEntity
 	{
 		switch($this->functionType)
 		{
-			case 'SQLF_AVG':
-			case 'SQLF_SUM':
-			case 'SQLF_MIN':
-			case 'SQLF_MAX':
-			case 'SQLF_COUNT':
+			case SQLF_AVG:
+			case SQLF_SUM:
+			case SQLF_MIN:
+			case SQLF_MAX:
+			case SQLF_COUNT:
 			return true;
 		}
 		if( strtolower( $this->functionName ) == "group_concat" )
@@ -1074,7 +1060,6 @@ class SQLQuery extends SQLEntity
 		
 		$myobj = new SQLFieldListItem($myproto);
 		$this->fieldList[] = $myobj;
-		$this->updateProto();
 	}
 	
 	function replaceField($_field, $_newfield, $_newalias = "")
@@ -1105,7 +1090,6 @@ class SQLQuery extends SQLEntity
 			$myobj = new SQLFieldListItem($myproto);
 			$this->fieldList[$_field] = $myobj;
 		}
-		$this->updateProto();
 	}
 	
 	function deleteField($_field)
@@ -1127,7 +1111,6 @@ class SQLQuery extends SQLEntity
 			array_splice($fieldlist, $_field,1);
 			$this->fieldList = $fieldlist;
 		}
-		$this->updateProto();
 	}
 
 	/**

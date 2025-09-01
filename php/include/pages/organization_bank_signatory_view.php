@@ -3,6 +3,11 @@
 	'pdf' => array(
 		'pdfView' => false 
 	),
+	'master' => array(
+		'organization_bank' => array(
+			'preview' => false 
+		) 
+	),
 	'fields' => array(
 		'gridFields' => array( 
 			'signatory_id',

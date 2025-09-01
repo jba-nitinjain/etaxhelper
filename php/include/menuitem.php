@@ -528,7 +528,8 @@ class MenuItem
 			$attrs["href"] = $this->href;
 			$attrs["value"] = $this->href;
 			if( $this->linkToAnotherApp ) {
-				$attrs["href"] = "external.php?url=".rawurlencode( $this->href );
+				$externalLink = ProjectSettings::ext() == 'php' ? 'external.php' : 'external';
+				$attrs["href"] = $externalLink . "?url=".rawurlencode( $this->href );
 			}
 		}
 		return $attrs;

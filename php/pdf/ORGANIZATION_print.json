@@ -92,10 +92,13 @@ pdfDocument = {
 													{BEGIN row_grid_1}
 							"%",
 							{END row_grid_1}
-													{END grid_row}
 																								{BEGIN row_grid_2}
 							"%",
 							{END row_grid_2}
+													{END grid_row}
+																								{BEGIN row_grid_3}
+							"%",
+							{END row_grid_3}
 															],
 							
 				body: [
@@ -569,12 +572,114 @@ pdfDocument = {
 {END cellblock_grid_cell_field5}
 											],
 				{END row_grid_1}
+						{BEGIN row_grid_2}
+				[
+																{BEGIN cellblock_grid_cell_dpreview}
+{
+	cellId: 'cell_dpreview',
+	col:0,
+	row:0,
+				style: 'bodycell',
+		
+		
+	//	dynamic colspan/rowspan
+
+					{BEGIN colspan_grid_cell_dpreview}
+			colSpan: {$colspan_grid_cell_dpreview},
+			{END colspan_grid_cell_dpreview}
+		
+		
+	
+			
+	
+			"stack": [
+		
+				
+			 {BEGIN details_organization_bank}
+			{$displayDetailTable_organization_bank }
+		{END details_organization_bank},
+				
+				
+			 {BEGIN details_organization_branch}
+			{$displayDetailTable_organization_branch }
+		{END details_organization_branch},
+				
+				
+			 {BEGIN details_organization_contact}
+			{$displayDetailTable_organization_contact }
+		{END details_organization_contact},
+				
+				
+			 {BEGIN details_organization_director}
+			{$displayDetailTable_organization_director }
+		{END details_organization_director},
+				
+				
+			 {BEGIN details_organization_login}
+			{$displayDetailTable_organization_login }
+		{END details_organization_login},
+				
+				
+			 {BEGIN details_organization_registration}
+			{$displayDetailTable_organization_registration }
+		{END details_organization_registration},
+				
+				
+			 {BEGIN details_organization_social_media}
+			{$displayDetailTable_organization_social_media }
+		{END details_organization_social_media},
+				
+		  ],
+  "border": [ true, true, true, true ],
+              "alignment": 'left',
+     
+      
+      },
+
+{END cellblock_grid_cell_dpreview}
+																		{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  1,
+				text: '',
+				compensateColspan: true
+			},
+														{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  2,
+				text: '',
+				compensateColspan: true
+			},
+														{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  3,
+				text: '',
+				compensateColspan: true
+			},
+														{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  4,
+				text: '',
+				compensateColspan: true
+			},
+														{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  5,
+				text: '',
+				compensateColspan: true
+			},
+							],
+				{END row_grid_2}
 		
 		{END grid_record}
 	{END grid_row}
 			
 					
-				{BEGIN row_grid_2}
+				{BEGIN row_grid_3}
 				[
 																{BEGIN cellblock_grid_footcell_field}
 {
@@ -733,7 +838,7 @@ pdfDocument = {
 
 {END cellblock_grid_footcell_field5}
 											],
-				{END row_grid_2}
+				{END row_grid_3}
 		
 				
 									]

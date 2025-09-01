@@ -3,6 +3,16 @@
 	'pdf' => array(
 		'pdfView' => false 
 	),
+	'details' => array(
+		'organization_login' => array(
+			'displayPreview' => 1 
+		) 
+	),
+	'master' => array(
+		'ORGANIZATION' => array(
+			'preview' => true 
+		) 
+	),
 	'totals' => array(
 		'social_id' => array(
 			'totalsType' => '' 
@@ -78,14 +88,17 @@
 		'formItems' => array(
 			'formItems' => array(
 				'above-grid' => array( 
-					'print_pages' 
+					'print_pages',
+					'grid_inline_cancel',
+					'inline_add' 
 				),
 				'below-grid' => array( 
 					 
 				),
 				'top' => array( 
 					'print_header',
-					'print_subheader' 
+					'print_subheader',
+					'master_info' 
 				),
 				'grid' => array( 
 					'simple_grid_field6',
@@ -99,12 +112,15 @@
 					'simple_grid_field10',
 					'simple_grid_field4',
 					'simple_grid_field11',
-					'simple_grid_field5' 
+					'simple_grid_field5',
+					'details_preview' 
 				) 
 			),
 			'formXtTags' => array(
 				'above-grid' => array( 
-					'print_pages' 
+					'print_pages',
+					'inline_cancel',
+					'inlineadd_link' 
 				),
 				'below-grid' => array( 
 					 
@@ -112,8 +128,11 @@
 			),
 			'itemForms' => array(
 				'print_pages' => 'above-grid',
+				'grid_inline_cancel' => 'above-grid',
+				'inline_add' => 'above-grid',
 				'print_header' => 'top',
 				'print_subheader' => 'top',
+				'master_info' => 'top',
 				'simple_grid_field6' => 'grid',
 				'simple_grid_field' => 'grid',
 				'simple_grid_field7' => 'grid',
@@ -125,7 +144,8 @@
 				'simple_grid_field10' => 'grid',
 				'simple_grid_field4' => 'grid',
 				'simple_grid_field11' => 'grid',
-				'simple_grid_field5' => 'grid' 
+				'simple_grid_field5' => 'grid',
+				'details_preview' => 'grid' 
 			),
 			'itemLocations' => array(
 				'simple_grid_field6' => array(
@@ -175,6 +195,10 @@
 				'simple_grid_field5' => array(
 					'location' => 'grid',
 					'cellId' => 'cell_field5' 
+				),
+				'details_preview' => array(
+					'location' => 'grid',
+					'cellId' => 'cell_dpreview' 
 				) 
 			),
 			'itemVisiblity' => array(
@@ -191,6 +215,9 @@
 			'print_pages' => array( 
 				'print_pages' 
 			),
+			'master_info' => array( 
+				'master_info' 
+			),
 			'grid_field' => array( 
 				'simple_grid_field',
 				'simple_grid_field1',
@@ -206,6 +233,15 @@
 				'simple_grid_field9',
 				'simple_grid_field10',
 				'simple_grid_field11' 
+			),
+			'details_preview' => array( 
+				'details_preview' 
+			),
+			'inline_add' => array( 
+				'inline_add' 
+			),
+			'grid_inline_cancel' => array( 
+				'grid_inline_cancel' 
 			) 
 		),
 		'cellMaps' => array(
@@ -403,12 +439,33 @@
 						'fixedAtServer' => false,
 						'fixedAtClient' => false 
 					),
+					'cell_dpreview' => array(
+						'cols' => array( 
+							0,
+							1,
+							2,
+							3,
+							4,
+							5 
+						),
+						'rows' => array( 
+							2 
+						),
+						'tags' => array( 
+							 
+						),
+						'items' => array( 
+							'details_preview' 
+						),
+						'fixedAtServer' => true,
+						'fixedAtClient' => false 
+					),
 					'footcell_field' => array(
 						'cols' => array( 
 							0 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -424,7 +481,7 @@
 							1 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -440,7 +497,7 @@
 							2 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -456,7 +513,7 @@
 							3 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -472,7 +529,7 @@
 							4 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -488,7 +545,7 @@
 							5 
 						),
 						'rows' => array( 
-							2 
+							3 
 						),
 						'tags' => array( 
 							 
@@ -501,7 +558,7 @@
 					) 
 				),
 				'width' => 6,
-				'height' => 3 
+				'height' => 4 
 			) 
 		) 
 	),
@@ -590,7 +647,9 @@
 				'c1' => array(
 					'model' => 'c1',
 					'items' => array( 
-						'print_pages' 
+						'print_pages',
+						'grid_inline_cancel',
+						'inline_add' 
 					) 
 				) 
 			),
@@ -634,6 +693,14 @@
 						) 
 					),
 					'section' => '' 
+				),
+				array(
+					'cells' => array( 
+						array(
+							'cell' => 'c4' 
+						) 
+					),
+					'section' => '' 
 				) 
 			),
 			'cells' => array(
@@ -642,6 +709,12 @@
 					'items' => array( 
 						'print_header',
 						'print_subheader' 
+					) 
+				),
+				'c4' => array(
+					'model' => 'c4',
+					'items' => array( 
+						'master_info' 
 					) 
 				) 
 			),
@@ -698,6 +771,15 @@
 							'cell' => 'cell_field5' 
 						) 
 					) 
+				),
+				array(
+					'cells' => array( 
+						array(
+							'cell' => 'cell_dpreview',
+							'colspan' => 6 
+						) 
+					),
+					'section' => 'body' 
 				),
 				array(
 					'section' => 'foot',
@@ -855,6 +937,12 @@
 					'items' => array( 
 						 
 					) 
+				),
+				'cell_dpreview' => array(
+					'model' => 'cell_dpreview',
+					'items' => array( 
+						'details_preview' 
+					) 
 				) 
 			),
 			'deferredItems' => array( 
@@ -872,6 +960,12 @@
 		),
 		'print_pages' => array(
 			'type' => 'print_pages' 
+		),
+		'master_info' => array(
+			'type' => 'master_info',
+			'tables' => array(
+				'3171' => 'true' 
+			) 
 		),
 		'simple_grid_field' => array(
 			'field' => 'social_id',
@@ -920,6 +1014,21 @@
 		'simple_grid_field11' => array(
 			'type' => 'grid_field_label',
 			'field' => 'mobile_app' 
+		),
+		'details_preview' => array(
+			'type' => 'details_preview',
+			'table' => 3425,
+			'items' => array( 
+				 
+			),
+			'popup' => false 
+		),
+		'inline_add' => array(
+			'type' => 'inline_add',
+			'detailsOnly' => true 
+		),
+		'grid_inline_cancel' => array(
+			'type' => 'grid_inline_cancel' 
 		) 
 	),
 	'dbProps' => array(

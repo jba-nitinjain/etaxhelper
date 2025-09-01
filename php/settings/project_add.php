@@ -19,6 +19,12 @@ $runnerProjectSettings['searchSuggestsNumber'] = 10;
 $runnerProjectSettings['mapMarkerCount'] = 50;
 
 /**
+ * The number of values displayed in Lookup - textbox with AJAX
+ */
+$runnerProjectSettings['lookupSuggestsNumber'] = 20;
+
+
+/**
  * Numeric code length in two factor authentication
  */
 $runnerProjectSettings['smsCodeLength'] = 6;

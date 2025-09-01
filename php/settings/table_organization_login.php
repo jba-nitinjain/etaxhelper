@@ -7,12 +7,6 @@ $runnerTableSettings['organization_login'] = array(
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -25,33 +19,39 @@ $runnerTableSettings['organization_login'] = array(
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'pageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'defaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'afterEditDetails' => 'organization_login',
 	'afterAddDetail' => 'organization_login',
-	'detailsBadgeColor' => '9acd32',
+	'detailsBadgeColor' => 'edca00',
 	'sql' => 'SELECT
 	login_id,
 	org_id,
@@ -82,6 +82,7 @@ FROM
 			'index' => 1,
 			'type' => 20,
 			'autoinc' => true,
+			'sqlExpression' => 'login_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -91,7 +92,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_login' 
 		),
 		'org_id' => array(
 			'name' => 'org_id',
@@ -99,6 +101,7 @@ FROM
 			'strField' => 'org_id',
 			'index' => 2,
 			'type' => 20,
+			'sqlExpression' => 'org_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -106,9 +109,15 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 2,
+					'lookupTable' => 'ORGANIZATION',
+					'lookupTableConnection' => 'conn',
+					'lookupLinkField' => 'org_id',
+					'lookupDisplayField' => 'org_type' 
 				) 
-			) 
+			),
+			'tableName' => 'organization_login' 
 		),
 		'related_social_id' => array(
 			'name' => 'related_social_id',
@@ -116,6 +125,7 @@ FROM
 			'strField' => 'related_social_id',
 			'index' => 3,
 			'type' => 20,
+			'sqlExpression' => 'related_social_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -123,15 +133,22 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 2,
+					'lookupTable' => 'organization_social_media',
+					'lookupTableConnection' => 'conn',
+					'lookupLinkField' => 'social_id',
+					'lookupDisplayField' => 'platform' 
 				) 
-			) 
+			),
+			'tableName' => 'organization_login' 
 		),
 		'website' => array(
 			'name' => 'website',
 			'goodName' => 'website',
 			'strField' => 'website',
 			'index' => 4,
+			'sqlExpression' => 'website',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -141,13 +158,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_login' 
 		),
 		'user_id' => array(
 			'name' => 'user_id',
 			'goodName' => 'user_id',
 			'strField' => 'user_id',
 			'index' => 5,
+			'sqlExpression' => 'user_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -157,13 +176,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_login' 
 		),
 		'PASSWORD' => array(
 			'name' => 'PASSWORD',
 			'goodName' => 'PASSWORD',
 			'strField' => 'PASSWORD',
 			'index' => 6,
+			'sqlExpression' => 'PASSWORD',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -173,13 +194,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_login' 
 		),
 		'notes' => array(
 			'name' => 'notes',
 			'goodName' => 'notes',
 			'strField' => 'notes',
 			'index' => 7,
+			'sqlExpression' => 'notes',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -189,7 +212,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_login' 
 		),
 		'last_updated' => array(
 			'name' => 'last_updated',
@@ -197,6 +221,7 @@ FROM
 			'strField' => 'last_updated',
 			'index' => 8,
 			'type' => 135,
+			'sqlExpression' => 'last_updated',
 			'viewFormats' => array(
 				'view' => array(
 					'format' => 'Short Date' 
@@ -204,8 +229,30 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					'format' => 'Date' 
+					'format' => 'Date',
+					'dateEditType' => 11 
 				) 
+			),
+			'tableName' => 'organization_login' 
+		) 
+	),
+	'masterTables' => array( 
+		array(
+			'table' => 'ORGANIZATION',
+			'detailsKeys' => array( 
+				'org_id' 
+			),
+			'masterKeys' => array( 
+				'org_id' 
+			) 
+		),
+		array(
+			'table' => 'organization_social_media',
+			'detailsKeys' => array( 
+				'related_social_id' 
+			),
+			'masterKeys' => array( 
+				'social_id' 
 			) 
 		) 
 	),
@@ -230,9 +277,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'login_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_login',
+					'name' => 'login_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'login_id' 
@@ -243,9 +292,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'org_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_login',
+					'name' => 'org_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'org_id' 
@@ -256,9 +307,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'related_social_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_login',
+					'name' => 'related_social_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'related_social_id' 
@@ -269,9 +322,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'website',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_login',
+					'name' => 'website' 
 				),
 				'encrypted' => false,
 				'columnName' => 'website' 
@@ -282,9 +337,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'user_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_login',
+					'name' => 'user_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'user_id' 
@@ -295,9 +352,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'PASSWORD',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_login',
+					'name' => 'PASSWORD' 
 				),
 				'encrypted' => false,
 				'columnName' => 'PASSWORD' 
@@ -308,9 +367,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'notes',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_login',
+					'name' => 'notes' 
 				),
 				'encrypted' => false,
 				'columnName' => 'notes' 
@@ -321,9 +382,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'last_updated',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_login',
+					'name' => 'last_updated' 
 				),
 				'encrypted' => false,
 				'columnName' => 'last_updated' 
@@ -339,7 +402,14 @@ FROM
 					'parsed' => true,
 					'type' => 'SQLTable',
 					'columns' => array( 
-						 
+						'login_id',
+						'org_id',
+						'related_social_id',
+						'website',
+						'user_id',
+						'PASSWORD',
+						'notes',
+						'last_updated' 
 					),
 					'name' => 'organization_login' 
 				),
@@ -470,12 +540,6 @@ FROM
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -488,28 +552,34 @@ FROM
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'originalPageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'originalDefaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'searchSettings' => array(
@@ -567,6 +637,16 @@ FROM
 	),
 	'dataSourceOperations' => array(
 		 
+	),
+	'calendarSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
+	),
+	'ganttSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
 	) 
 );
 

@@ -48,7 +48,7 @@ if( !$userpicMode ) {
 	}
 
 	$requestAction = $_REQUEST['_action'];
-	$showField = $requestAction == "POST" || postvalue("fkey") || $requestAction == "DELETE";
+	$showField = $requestAction == "POST" || postvalue("fkey") || $requestAction == "DELETE" || $requestAction == "RESET";
 	if( !Security::userHasFieldPermissions( $table, $field, $pageType, $pageName, $showField ) ) {
 		exit(0);
 	}
@@ -72,7 +72,14 @@ if( $requestAction == "DELETE" || $requestAction == "POST" ) {
 	header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
 }
+
+
 switch ($requestAction) {
+	case 'RESET':
+		$fileHandler = new RunnerFileHandler( $field, $pSet, postvalue("formStamp") );
+		$fileHandler->resetTo( postvalue("defaultValue") );
+		echo runner_json_encode( true );
+		break;
     case 'DELETE':
     	$fileHandler = new RunnerFileHandler( $field, $pSet, postvalue("formStamp") );
 		$success = $fileHandler->delete( postvalue("fileName") );
@@ -84,7 +91,7 @@ switch ($requestAction) {
 		if( $fileHandler->directUpload() ) {
 			$fileHandler->prepareDirectUpload( runner_json_decode( postvalue("file") )  );
 		} else {
-			$fileHandler->acceptUpload( uploadFiles( "files" ) );
+			$fileHandler->acceptUpload( uploadFiles( "files" ), true );
 		}
     	break;
 	case 'GET':

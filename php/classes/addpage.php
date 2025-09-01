@@ -302,18 +302,19 @@ class AddPage extends RunnerPage
 		} else {
 			$aaData = array();
 		}
+		
 		if( isset($aaData[ $this->afterAdd_id ]) && $aaData[ $this->afterAdd_id ] )
 		{
 			$data = $aaData[ $this->afterAdd_id ];
 			$this->keys = $data['keys'];
 			$this->newRecordData = $data['avalues'];
+			
+			//	this should be done before the event call in case there is exit() in the event code
+			unset( $aaData[ $this->afterAdd_id ] );
+			if( $this->eventsObject->exists("AfterAdd") ) {
+				$this->eventsObject->AfterAdd( $data['avalues'], $data['keys'], $data['inlineadd'], $this );
+			}
 		}
-		if( $this->eventsObject->exists("AfterAdd") && isset($aaData[ $this->afterAdd_id ]) && $aaData[ $this->afterAdd_id ] )
-		{
-			$this->eventsObject->AfterAdd( $data['avalues'], $data['keys'], $data['inlineadd'], $this );
-
-		}
-		unset( $aaData[ $this->afterAdd_id ] );
 
 		foreach( $aaData as $k => $v)
 		{
@@ -802,7 +803,7 @@ class AddPage extends RunnerPage
 
 		if( $this->mode == ADD_ONTHEFLY )
 		{
-			$lokupData = $this->getLookupData();
+			$lokupData = $this->getLookupData( $this->lookupTable, $this->lookupField, $this->lookupPageType, $this->newRecordData );
 			$returnJSON['linkValue'] = $lokupData['linkValue'];
 			$returnJSON['displayValue'] = $lokupData['displayValue'];
 			$returnJSON['vals'] = $lokupData['vals'];
@@ -920,7 +921,7 @@ class AddPage extends RunnerPage
 			// add link and display value if list page is lookup with search
 			if( $this->forListPageLookup )
 			{
-				$linkAndDispVals = $this->getLookupData();
+				$linkAndDispVals = $this->getLookupData( $this->lookupTable, $this->lookupField, $this->lookupPageType, $this->newRecordData );
 				$returnJSON['linkValue'] = $linkAndDispVals['linkValue'];
 				$returnJSON['displayValue'] = $linkAndDispVals['displayValue'];
 			}
@@ -1352,16 +1353,8 @@ class AddPage extends RunnerPage
 	{
 		$controlFields = $this->addFields;
 
-		if( $this->mode == ADD_INLINE ) { //#9069
-			$controlFields = $this->removeHiddenColumnsFromInlineFields( 
-				$controlFields, 
-				$this->screenWidth, 
-				$this->screenHeight, 
-				$this->orientation 
-			);
-		}
-
 		foreach( $controlFields as $fName ) {
+			$gf = GoodFieldName( $fName );
 			if( $this->detailsKeyField( $fName ) ) {
 				// to the ReadOnly control show the detail key control's value
 				$this->readOnlyFields[ $fName ] = $this->showDBValue( $fName, $this->defvalues );
@@ -1372,7 +1365,20 @@ class AddPage extends RunnerPage
 				$this->xt->assign( "labelfor_" . GoodFieldName( $fName ), $firstElementId );
 			
 			$parameters = $this->getEditContolParams( $fName, $this->id, $this->defvalues );
-			$this->xt->assign_function( GoodFieldName( $fName )."_editcontrol", "xt_buildeditcontrol", $parameters );
+			if( $this->pSet->getEditFormat( $fName ) == EDIT_FORMAT_CHECKBOX ) {
+				$parameters[ "xt" ] = $this->xt;
+				$parameters[ "clearVar" ] = $gf . "_forward_control";
+			}
+			$this->xt->assign_function( $gf . "_editcontrol", "xt_buildeditcontrol", $parameters );
+
+			if( $this->pSet->getEditFormat( $fName ) == EDIT_FORMAT_CHECKBOX ) {
+				$parameters[ "xt" ] = $this->xt;
+				$parameters[ "clearVar" ] = $gf . "_editcontrol";
+				$this->xt->assign_function( $gf . "_forward_control", "xt_buildforwardcontrol", $parameters );
+				
+				$this->xt->assign( $gf . '_label_class' , 'r-checkbox-label' );
+			}
+
 
 			$controls = $this->getContolMapData( $fName, $this->id, $this->defvalues, $controlFields );	
 			if ( in_array( $fName, $this->errorFields ) )
@@ -1615,77 +1621,6 @@ class AddPage extends RunnerPage
 	protected function getExtraAjaxPageParams()
 	{
 		return $this->getSaveStatusJSON();
-	}
-
-	/**
-	 * Return link and display field values after Add on the fly
-	 * @return array or false
-	 * 	"link" => <link field value>
-	 *  "display" => <display field value>
-	 */
-	protected function getNewLookupValues( $lookupPSet )
-	{
-		$linkFieldName = $lookupPSet->getLinkField( $this->lookupField );
-		$dispFieldName = $lookupPSet->getDisplayField( $this->lookupField );
-		if( $this->keys ) {
-			$dc = new DsCommand();
-			$dc->keys = $this->keys;
-
-			if( $lookupPSet->getCustomDisplay( $this->lookupField ) ) {
-				$customField = new DsFieldData( $dispFieldName, generateAlias(), "" );
-				$dispFieldName = $customField->alias;
-				$dc->extraColumns[] = $customField;
-			}
-			$data = $this->cipherer->DecryptFetchedArray( $this->dataSource->getSingle( $dc )->fetchAssoc() );
-		}
-		if( !$data ) {
-			$data = $this->newRecordData;
-		}
-		return array(
-			"link" => $data[ $linkFieldName ],
-			"display" => $data[ $dispFieldName ]
-		);
-	}
-
-	/**
-	 * Get lookup data from a record added
-	 * in 'add value On the Fly' mode
-	 * or in Inline Add mode on List page with search.
-	 * @return Array
-	 */
-	public function getLookupData() {
-		// get Project Settings object for $this->lookupTable
-		$lookupPSet = $this->pSet->getLookupMainTableSettings( $this->lookupTable, $this->lookupField, $this->lookupPageType );
-		if( !$lookupPSet )
-			return array();
-
-		$lvals = $this->getNewLookupValues( $lookupPSet );
-		if( !$lvals )
-			return array();
-
-		$linkField = $lookupPSet->getLinkField( $this->lookupField );
-		$dispfield = $lookupPSet->getDisplayField( $this->lookupField );
-
-		$respData = array(
-			$linkField => $lvals["link"],
-			$dispfield => $lvals["display"]
-		);
-
-		// format DATE or TIME value
-		if(  in_array( $lookupPSet->getViewFormat( $this->lookupField ), array(FORMAT_DATE_SHORT, FORMAT_DATE_LONG, FORMAT_DATE_TIME) ) ) {
-			$viewContainer = new ViewControlsContainer( $lookupPSet, PAGE_LIST, null );
-
-			$ctrlData = array();
-			$ctrlData[ $this->lookupField ] = $respData[ $linkField ];
-
-			$respData[ $dispfield ] = $viewContainer->getControl( $this->lookupField )->getTextValue( $ctrlData );
-		}
-
-		return array(
-			'linkValue' => $respData[ $linkField ],
-			'displayValue' => $respData[ $dispfield ],
-			'vals' => $respData
-		);
 	}
 
 	/**

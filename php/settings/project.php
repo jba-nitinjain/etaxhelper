@@ -4,71 +4,91 @@ $runnerProjectSettings = array(
 	'restAPIReturnEncodedBinary' => true,
 	'restAPIAcceptEncodedBinary' => true,
 	'restAPIAuthType' => 'basic',
+	'section508Compat' => true,
 	'menuIds' => array( 
-		'main' 
+		'main',
+		'adminarea' 
 	),
 	'tablesAdvSecurity' => array(
 		'ORGANIZATION' => array(
-			'table' => 238 
+			'table' => 3171 
 		),
 		'organization_bank' => array(
-			'table' => 271 
-		),
-		'organization_bank_signatory' => array(
-			'table' => 313 
+			'table' => 3204 
 		),
 		'organization_branch' => array(
-			'table' => 346 
+			'table' => 3247 
+		),
+		'organization_bank_signatory' => array(
+			'table' => 3293 
 		),
 		'organization_contact' => array(
-			'table' => 391 
+			'table' => 3327 
 		),
 		'organization_director' => array(
-			'table' => 436 
+			'table' => 3373 
 		),
 		'organization_login' => array(
-			'table' => 487 
+			'table' => 3425 
 		),
 		'organization_registration' => array(
-			'table' => 526 
+			'table' => 3465 
 		),
 		'organization_social_media' => array(
-			'table' => 559 
+			'table' => 3499 
+		),
+		'users' => array(
+			'table' => 3550 
+		),
+		'admin_users' => array(
+			'table' => 3579 
 		) 
+	),
+	'userTableKeys' => array( 
+		'ID' 
 	),
 	'phpSpreadsheet' => false,
 	'ext' => 'php',
 	'security' => array(
 		'projectName' => '',
-		'loginDataSource' => '',
+		'loginDataSource' => 'users',
 		'loginForm' => 0,
-		'dynamicPermissions' => false,
+		'dynamicPermissions' => true,
 		'dpTablePrefix' => '',
-		'dpTableConnId' => '',
+		'dpTableConnId' => 'conn',
 		'providers' => array( 
 			array(
-				'type' => '%hardcoded',
-				'name' => 'hardcoded',
+				'type' => '%db',
+				'name' => 'db',
 				'active' => true,
 				'label' => array(
-					'text' => 'Hardcoded',
+					'text' => 'Database',
 					'type' => 0 
 				),
-				'code' => '00',
-				'username' => 'admin',
-				'password' => 'etaxhelper@123' 
+				'code' => '01',
+				'table' => array(
+					'connId' => 'conn',
+					'table' => 'users' 
+				),
+				'usernameField' => 'username',
+				'passwordField' => 'password',
+				'emailField' => 'email',
+				'extUserIdField' => 'ext_security_id',
+				'fullnameField' => 'fullname',
+				'userpicField' => '',
+				'userGroupField' => 'username' 
 			) 
 		),
 		'enabled' => true,
-		'advancedSecurityAvailable' => false,
-		'userGroupsAvailable' => false,
-		'hardcodedLogin' => true,
-		'defaultProviderCode' => '00',
+		'advancedSecurityAvailable' => true,
+		'userGroupsAvailable' => true,
+		'hardcodedLogin' => false,
+		'defaultProviderCode' => '01',
 		'adOnlyLogin' => false,
 		'sessionControl' => array(
 			'lifeTime' => 15,
-			'sessionName' => 'LxAL6gweZ107t9FkpHjk',
-			'JWTSecret' => 'IRwLpQqerw3mBkZlXLq1' 
+			'sessionName' => 'YQnk6p4eO4byfDHEOqes',
+			'JWTSecret' => 'Qy0YZsU4To2QkQrtRKuS' 
 		),
 		'registration' => array(
 			'remindMethod' => 0,
@@ -135,27 +155,111 @@ $runnerProjectSettings = array(
 		),
 		'staticPermissions' => array(
 			'groups' => array(
-				 
+				'<Default>' => array(
+					'permissions' => array(
+						'ORGANIZATION' => array(
+							'mask' => 'ADESPI',
+							'table' => 'ORGANIZATION',
+							'restrictedPages' => array(
+								 
+							) 
+						),
+						'organization_bank' => array(
+							'mask' => 'ADESPI',
+							'table' => 'organization_bank',
+							'restrictedPages' => array(
+								 
+							) 
+						),
+						'organization_branch' => array(
+							'mask' => 'ADESPI',
+							'table' => 'organization_branch',
+							'restrictedPages' => array(
+								 
+							) 
+						),
+						'organization_bank_signatory' => array(
+							'mask' => 'ADESPI',
+							'table' => 'organization_bank_signatory',
+							'restrictedPages' => array(
+								 
+							) 
+						),
+						'organization_contact' => array(
+							'mask' => 'ADESPI',
+							'table' => 'organization_contact',
+							'restrictedPages' => array(
+								 
+							) 
+						),
+						'organization_director' => array(
+							'mask' => 'ADESPI',
+							'table' => 'organization_director',
+							'restrictedPages' => array(
+								 
+							) 
+						),
+						'organization_login' => array(
+							'mask' => 'ADESPI',
+							'table' => 'organization_login',
+							'restrictedPages' => array(
+								 
+							) 
+						),
+						'organization_registration' => array(
+							'mask' => 'ADESPI',
+							'table' => 'organization_registration',
+							'restrictedPages' => array(
+								 
+							) 
+						),
+						'organization_social_media' => array(
+							'mask' => 'ADESPI',
+							'table' => 'organization_social_media',
+							'restrictedPages' => array(
+								 
+							) 
+						),
+						'<global>' => array(
+							'mask' => 'ADESPI',
+							'table' => '<global>',
+							'restrictedPages' => array(
+								 
+							) 
+						) 
+					),
+					'admin' => false,
+					'username' => '<Default>' 
+				) 
 			) 
 		),
-		'hardcodedProvider' => array(
-			'type' => '%hardcoded',
-			'name' => 'hardcoded',
+		'dbProvider' => array(
+			'type' => '%db',
+			'name' => 'db',
 			'active' => true,
 			'label' => array(
-				'text' => 'Hardcoded',
+				'text' => 'Database',
 				'type' => 0 
 			),
-			'code' => '00',
-			'username' => 'admin',
-			'password' => 'etaxhelper@123' 
+			'code' => '01',
+			'table' => array(
+				'connId' => 'conn',
+				'table' => 'users' 
+			),
+			'usernameField' => 'username',
+			'passwordField' => 'password',
+			'emailField' => 'email',
+			'extUserIdField' => 'ext_security_id',
+			'fullnameField' => 'fullname',
+			'userpicField' => '',
+			'userGroupField' => 'username' 
 		),
 		'adAdminGroups' => array( 
 			 
 		),
 		'showUserSource' => false,
 		'dbProviderCodes' => array( 
-			 
+			'01' 
 		) 
 	),
 	'notifications' => array(
@@ -167,7 +271,7 @@ $runnerProjectSettings = array(
 	),
 	'allTables' => array(
 		'ORGANIZATION' => array(
-			'gid' => 238,
+			'gid' => 3171,
 			'name' => 'ORGANIZATION',
 			'shortName' => 'ORGANIZATION',
 			'type' => 0,
@@ -175,11 +279,11 @@ $runnerProjectSettings = array(
 				'English' => 'ORGANIZATION' 
 			),
 			'connId' => 'conn',
-			'color' => '00c2c5',
+			'color' => '8fbc8b',
 			'originalTable' => 'ORGANIZATION' 
 		),
 		'organization_bank' => array(
-			'gid' => 271,
+			'gid' => 3204,
 			'name' => 'organization_bank',
 			'shortName' => 'organization_bank',
 			'type' => 0,
@@ -187,23 +291,11 @@ $runnerProjectSettings = array(
 				'English' => 'Organization Bank' 
 			),
 			'connId' => 'conn',
-			'color' => '7b68ee',
+			'color' => '5f9ea0',
 			'originalTable' => 'organization_bank' 
 		),
-		'organization_bank_signatory' => array(
-			'gid' => 313,
-			'name' => 'organization_bank_signatory',
-			'shortName' => 'organization_bank_signatory',
-			'type' => 0,
-			'caption' => array(
-				'English' => 'Organization Bank Signatory' 
-			),
-			'connId' => 'conn',
-			'color' => 'e67349',
-			'originalTable' => 'organization_bank_signatory' 
-		),
 		'organization_branch' => array(
-			'gid' => 346,
+			'gid' => 3247,
 			'name' => 'organization_branch',
 			'shortName' => 'organization_branch',
 			'type' => 0,
@@ -211,11 +303,23 @@ $runnerProjectSettings = array(
 				'English' => 'Organization Branch' 
 			),
 			'connId' => 'conn',
-			'color' => 'db7093',
+			'color' => '4682b4',
 			'originalTable' => 'organization_branch' 
 		),
+		'organization_bank_signatory' => array(
+			'gid' => 3293,
+			'name' => 'organization_bank_signatory',
+			'shortName' => 'organization_bank_signatory',
+			'type' => 0,
+			'caption' => array(
+				'English' => 'Organization Bank Signatory' 
+			),
+			'connId' => 'conn',
+			'color' => '00c2c5',
+			'originalTable' => 'organization_bank_signatory' 
+		),
 		'organization_contact' => array(
-			'gid' => 391,
+			'gid' => 3327,
 			'name' => 'organization_contact',
 			'shortName' => 'organization_contact',
 			'type' => 0,
@@ -223,11 +327,11 @@ $runnerProjectSettings = array(
 				'English' => 'Organization Contact' 
 			),
 			'connId' => 'conn',
-			'color' => '9acd32',
+			'color' => 'bc8f8f',
 			'originalTable' => 'organization_contact' 
 		),
 		'organization_director' => array(
-			'gid' => 436,
+			'gid' => 3373,
 			'name' => 'organization_director',
 			'shortName' => 'organization_director',
 			'type' => 0,
@@ -235,11 +339,11 @@ $runnerProjectSettings = array(
 				'English' => 'Organization Director' 
 			),
 			'connId' => 'conn',
-			'color' => 'e8926f',
+			'color' => '4682b4',
 			'originalTable' => 'organization_director' 
 		),
 		'organization_login' => array(
-			'gid' => 487,
+			'gid' => 3425,
 			'name' => 'organization_login',
 			'shortName' => 'organization_login',
 			'type' => 0,
@@ -247,11 +351,11 @@ $runnerProjectSettings = array(
 				'English' => 'Organization Login' 
 			),
 			'connId' => 'conn',
-			'color' => '9acd32',
+			'color' => 'edca00',
 			'originalTable' => 'organization_login' 
 		),
 		'organization_registration' => array(
-			'gid' => 526,
+			'gid' => 3465,
 			'name' => 'organization_registration',
 			'shortName' => 'organization_registration',
 			'type' => 0,
@@ -259,11 +363,11 @@ $runnerProjectSettings = array(
 				'English' => 'Organization Registration' 
 			),
 			'connId' => 'conn',
-			'color' => 'd2691e',
+			'color' => '9acd32',
 			'originalTable' => 'organization_registration' 
 		),
 		'organization_social_media' => array(
-			'gid' => 559,
+			'gid' => 3499,
 			'name' => 'organization_social_media',
 			'shortName' => 'organization_social_media',
 			'type' => 0,
@@ -271,31 +375,59 @@ $runnerProjectSettings = array(
 				'English' => 'Organization Social Media' 
 			),
 			'connId' => 'conn',
-			'color' => '6493ea',
+			'color' => '5f9ea0',
 			'originalTable' => 'organization_social_media' 
+		),
+		'users' => array(
+			'gid' => 3550,
+			'name' => 'users',
+			'shortName' => 'users',
+			'type' => 0,
+			'caption' => array(
+				'English' => 'Users' 
+			),
+			'connId' => 'conn',
+			'color' => 'e07878',
+			'originalTable' => 'users' 
+		),
+		'admin_users' => array(
+			'gid' => 3579,
+			'name' => 'admin_users',
+			'shortName' => 'admin_users',
+			'type' => 1,
+			'caption' => array(
+				'English' => 'Admin Users' 
+			),
+			'connId' => 'conn',
+			'color' => 'e8926f',
+			'originalTable' => 'users' 
 		) 
 	),
 	'tablesByShort' => array(
 		'ORGANIZATION' => 'ORGANIZATION',
 		'organization_bank' => 'organization_bank',
-		'organization_bank_signatory' => 'organization_bank_signatory',
 		'organization_branch' => 'organization_branch',
+		'organization_bank_signatory' => 'organization_bank_signatory',
 		'organization_contact' => 'organization_contact',
 		'organization_director' => 'organization_director',
 		'organization_login' => 'organization_login',
 		'organization_registration' => 'organization_registration',
-		'organization_social_media' => 'organization_social_media' 
+		'organization_social_media' => 'organization_social_media',
+		'users' => 'users',
+		'admin_users' => 'admin_users' 
 	),
 	'tablesByGood' => array(
 		'ORGANIZATION' => 'ORGANIZATION',
 		'organization_bank' => 'organization_bank',
-		'organization_bank_signatory' => 'organization_bank_signatory',
 		'organization_branch' => 'organization_branch',
+		'organization_bank_signatory' => 'organization_bank_signatory',
 		'organization_contact' => 'organization_contact',
 		'organization_director' => 'organization_director',
 		'organization_login' => 'organization_login',
 		'organization_registration' => 'organization_registration',
-		'organization_social_media' => 'organization_social_media' 
+		'organization_social_media' => 'organization_social_media',
+		'users' => 'users',
+		'admin_users' => 'admin_users' 
 	),
 	'events' => array( 
 		 
@@ -317,8 +449,8 @@ $runnerProjectSettings = array(
 	'codepage' => 65001,
 	'defaultConnID' => 'conn',
 	'wrConnectionID' => '',
-	'wizardBuild' => '42453',
-	'projectBuild' => 'WW4lN7abpgbH',
+	'wizardBuild' => '43729',
+	'projectBuild' => 'Ug6WIENAlchY',
 	'projectTheme' => 'default',
 	'projectSize' => 'normal',
 	'customErrorMsg' => array(
@@ -354,6 +486,27 @@ $runnerProjectSettings = array(
 	),
 	'rtlLanguages' => array(
 		'English' => false 
+	),
+	'smsSettings' => array(
+		'smsProvider' => 4,
+		'iBusername' => '',
+		'iBpassword' => '',
+		'iBsender' => '',
+		'essUsername' => '',
+		'essPassword' => '',
+		'essSender' => '',
+		'gwApiToken' => '',
+		'gwSender' => '',
+		'mbAuth' => '',
+		'mbSender' => '',
+		'twilioSID' => '',
+		'twilioAuth' => '',
+		'twilioNumber' => '',
+		'phoneField' => '',
+		'counryCode' => '+1',
+		'wauUsername' => '',
+		'wauPassword' => '',
+		'wauSender' => '' 
 	) 
 );
 

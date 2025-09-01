@@ -190,6 +190,7 @@ class ChartPage extends RunnerPage
 	public function prepareDetailsForEditViewPage()
 	{
 		$this->addButtonHandlers();
+		$this->AddJSFile( 'usercode/pageevents_' . GLOBAL_PAGES_SHORT . '.js' );
 		
 		$this->xt->assign("body", $this->body);
 		$this->xt->assign("chart_block", true);
@@ -207,7 +208,7 @@ class ChartPage extends RunnerPage
 		return $returnJSON;
 	}
 	
-	public function beforeShowChart()
+	public function beforeShowEvent()
 	{
 		if( $this->eventsObject->exists("BeforeShowChart") )
 			$this->eventsObject->BeforeShowChart($this->xt, $this->templatefile, $this);	
@@ -215,7 +216,7 @@ class ChartPage extends RunnerPage
 	
 	public function showPage()
 	{
-		$this->beforeShowChart();
+		$this->beforeShowEvent();
 	
 		if( $this->mode == CHART_DETAILS || $this->mode == CHART_DASHBOARD || $this->mode == CHART_DASHDETAILS )
 		{
@@ -335,7 +336,8 @@ class ChartPage extends RunnerPage
 			"id" => $this->id,
 			// it shows if chart show details
 			"chartPreview" => $this->mode !== CHART_SIMPLE && $this->mode != CHART_DASHBOARD,
-			"stateLink" => $this->getStateUrlParams()
+			"stateLink" => $this->getStateUrlParams(),
+			"stateParams" => $this->getStateParams()
 		);
 		
 		if( $this->dashTName && $this->mode == CHART_DASHBOARD )

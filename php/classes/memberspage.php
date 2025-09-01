@@ -227,11 +227,11 @@ class MembersPage extends ListPage_Simple
 			);
 		}
 		
-		$this->xt->assign("displayuserheadersort_attrs", "id=\"displayNameSort\" href=\"#\"");
-		$this->xt->assign("emailuserheadersort_attrs", "id=\"EmailSort\" href=\"#\"");
-		$this->xt->assign("usernameheadersort_attrs", "id=\"userNameSort\" href=\"#\"");
+		$this->xt->assign("displayuserheadersort_attrs", "id=\"displayNameSort\" ");
+		$this->xt->assign("emailuserheadersort_attrs", "id=\"EmailSort\" ");
+		$this->xt->assign("usernameheadersort_attrs", "id=\"userNameSort\" ");
 		$this->xt->assign("choosecolumnsbutton_attrs", "id=\"chooseColumnsButton\" href=\"#\"");
-		$this->xt->assign("sourceuserheadersort_attrs", "id=\"SourceSort\" href=\"#\"");
+		$this->xt->assign("sourceuserheadersort_attrs", "id=\"SourceSort\" ");
 		
 		$this->xt->assign("displayuserheadertdbox_attrs", "id=\"tdboxDisplayName\"");
 		$this->xt->assign("displayuserheadertdsort_attrs", "id=\"tdsortDisplayName\"");

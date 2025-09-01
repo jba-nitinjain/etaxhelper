@@ -183,10 +183,10 @@ class RestConnection {
 			$request->addBasicAuthorization( $this->username, $this->password );
 		}
 		else if( $this->authType === "api" ) { //	API key
-			if( $this->keyLocation == 1 ) {
+			if( $this->keyLocation == rklHEADER ) {
 				$request->headers[ $this->keyParameter ] = $this->apiKey;
 			}
-			else if( $this->keyLocation == 0 ){
+			else if( $this->keyLocation == rklURL ){
 				$request->urlParams[ $this->keyParameter ] = $this->apiKey;
 			}
 			else {

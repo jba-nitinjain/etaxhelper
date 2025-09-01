@@ -18,7 +18,7 @@ class ViewCheckboxField extends ViewControl
 
 	public function showDBValue(&$data, $keylink, $html = true )
 	{		
-		$result = "<img src=\"";
+		$result = '<img class="r-checkbox-image" src="';
 		$imgSrc = "images/check_";
 			
 		$imgSrc.= $this->getTrueCondition($data) ? "yes" : "no";

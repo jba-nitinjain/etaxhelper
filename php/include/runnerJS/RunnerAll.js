@@ -464,20 +464,20 @@ Runner.util.Observable = Runner.extend( Runner.emptyFn, {
 Runner.anychartLicense = 'xlinesoft-9faa5dd-332123fd';
  
 // register new namespace
-Runner.namespace('Runner.util');
+Runner.namespace( 'Runner.util' );
 
 
-Runner.util.getHiddenDimensions = function( $elem ) {
+Runner.util.getHiddenDimensions = function ( $elem ) {
 	var position, cloned = false;
 
-	if ( $elem.is(":hidden") ) {
+	if ( $elem.is( ":hidden" ) ) {
 		$elem = $elem.clone()
-			.css({
+			.css( {
 				display: "inline-block",
 				position: "absolute",
 				visibility: "hidden"
-			})
-			.appendTo( $elem.closest(":visible") );
+			} )
+			.appendTo( $elem.closest( ":visible" ) );
 		cloned = true;
 	}
 
@@ -495,14 +495,14 @@ Runner.util.getHiddenDimensions = function( $elem ) {
 	return position;
 };
 
-Runner.util.getChildDisplayedElems = function( elem ) {
+Runner.util.getChildDisplayedElems = function ( elem ) {
 	var foundElems = [];
 
-	$.each( elem.children() , function( i, item ) {
-		if ( $(item).css("display") != "none" ) {
-			foundElems.push(item);
+	$.each( elem.children(), function ( i, item ) {
+		if ( $( item ).css( "display" ) != "none" ) {
+			foundElems.push( item );
 		}
-	});
+	} );
 
 	return foundElems;
 };
@@ -510,24 +510,24 @@ Runner.util.getChildDisplayedElems = function( elem ) {
 /**
  *
  */
-Runner.util.dropPositionSet = function( $dropButton ) {
+Runner.util.dropPositionSet = function ( $dropButton ) {
 
 	$dropButton.parent()
-		.on("shown.bs.dropdown", function() {
-			var $el = $(this),
-				$ul = $el.children(".dropdown-menu"),
-				$button = $el.children(".dropdown-toggle"),
+		.on( "shown.bs.dropdown", function () {
+			var $el = $( this ),
+				$ul = $el.children( ".dropdown-menu" ),
+				$button = $el.children( ".dropdown-toggle" ),
 				ulOffset = $ul.offset(),
-				spaceUp = ulOffset.top - $button.height() - $ul.height() - $(window).scrollTop(),
-				spaceDown = $(window).scrollTop() + $(window).height() - ulOffset.top - $ul.height();
+				spaceUp = ulOffset.top - $button.height() - $ul.height() - $( window ).scrollTop(),
+				spaceDown = $( window ).scrollTop() + $( window ).height() - ulOffset.top - $ul.height();
 
-			if ( spaceDown < 0 && (spaceUp >= 0 || spaceUp > spaceDown) ) {
-				$el.addClass("dropup");
+			if ( spaceDown < 0 && ( spaceUp >= 0 || spaceUp > spaceDown ) ) {
+				$el.addClass( "dropup" );
 			}
-		})
-		.on("hidden.bs.dropdown", function() {
-			$(this).removeClass("dropup");
-		});
+		} )
+		.on( "hidden.bs.dropdown", function () {
+			$( this ).removeClass( "dropup" );
+		} );
 };
 
 
@@ -538,20 +538,20 @@ Runner.util.dropPositionSet = function( $dropButton ) {
  * @param {Object} scope (optional) The default scope of that timeout
  * @param {Array} args (optional) The default Array of arguments
  */
-Runner.util.DelayedTask = function(fn, scope, args) {
+Runner.util.DelayedTask = function ( fn, scope, args ) {
 	var id = null,
 		delay, time;
 
-	var call = function() {
+	var call = function () {
 		var now = new Date().getTime();
-		if (now - time >= delay) {
-			clearInterval(id);
+		if ( now - time >= delay ) {
+			clearInterval( id );
 			id = null;
-			fn.apply(scope, args || []);
+			fn.apply( scope, args || [] );
 		}
 	};
 
-	this.started = function() {
+	this.started = function () {
 		return id != null;
 	}
 
@@ -562,8 +562,8 @@ Runner.util.DelayedTask = function(fn, scope, args) {
 	 * @param {Object} newScope (optional) Overrides scope passed to constructor
 	 * @param {Array} newArgs (optional) Overrides args passed to constructor
 	 */
-	this.delay = function(newDelay, newFn, newScope, newArgs) {
-		if (id /*&& delay != newDelay */) {
+	this.delay = function ( newDelay, newFn, newScope, newArgs ) {
+		if ( id /*&& delay != newDelay */ ) {
 			this.cancel();
 		}
 		delay = newDelay;
@@ -571,17 +571,17 @@ Runner.util.DelayedTask = function(fn, scope, args) {
 		fn = newFn || fn;
 		scope = newScope || scope;
 		args = newArgs || args;
-		if (!id) {
-			id = setInterval(call, delay);
+		if ( !id ) {
+			id = setInterval( call, delay );
 		}
 	};
 
 	/**
 	 * Cancel the last queued timeout
 	 */
-	this.cancel = function() {
-		if (id) {
-			clearInterval(id);
+	this.cancel = function () {
+		if ( id ) {
+			clearInterval( id );
 			id = null;
 		}
 	};
@@ -591,7 +591,7 @@ Runner.util.DelayedTask = function(fn, scope, args) {
  * 	Returns current device class basing on the screen dimensions
  *	@returns {Number} one of the constants from DESKTOP to SMARTPHONE_PORTRAIT
  */
-Runner.util.getDeviceClass = function() {
+Runner.util.getDeviceClass = function () {
 	return window.screen.width >= 768
 		? Runner.pages.constants.DESKTOP
 		: Runner.pages.constants.SMARTPHONE_PORTRAIT;
@@ -601,7 +601,7 @@ Runner.util.getDeviceClass = function() {
  * 	Returns current device "macro class" which is DESKTOP or TABLET or PHONE
  *	@returns {Number} 0 - DESKTOP, 1 - TABLET, 2 - PHONE
  */
-Runner.util.getDeviceMacroClass = function() {
+Runner.util.getDeviceMacroClass = function () {
 	var c = Runner.util.getDeviceClass();
 
 	if ( c == Runner.pages.constants.SMARTPHONE_LANDSCAPE || Runner.pages.constants.SMARTPHONE_PORTRAIT ) {
@@ -645,14 +645,14 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 	 * when all the session's JS files are loaded
 	 * @type {array}
 	 */
-	loadedSes:[],
+	loadedSes: [],
 
-	constructor: function( cfg ) {
-		Runner.util.ScriptLoader.superclass.constructor.call(this, cfg);
+	constructor: function ( cfg ) {
+		Runner.util.ScriptLoader.superclass.constructor.call( this, cfg );
 
 		this.addEvents();
 
-		this.onFilesLoaded( function() {
+		this.onFilesLoaded( function () {
 			if ( Runner.pages ) {
 				Runner.pages.PageManager.initPages();
 			}
@@ -664,14 +664,14 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 	 * @param {array} files
 	 * @param any param except first is added to requirements array
 	 */
-	addJS: function( files ) {
+	addJS: function ( files ) {
 		var isAdded, i, j;
 		// loop through all files to add
-		for (i = 0; i < files.length; i++) {
+		for ( i = 0; i < files.length; i++ ) {
 			isAdded = false;
 
 			// check if such file was added before
-			for (j = 0; j < this.jsFiles.length; j++) {
+			for ( j = 0; j < this.jsFiles.length; j++ ) {
 				if ( this.jsFiles[j].name == files[i] ) {
 					isAdded = true;
 					break;
@@ -680,13 +680,13 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 			// add only new files
 			if ( !isAdded ) {
 				// add files to array of file names
-				this.jsFiles.push({
+				this.jsFiles.push( {
 					name: files[i],
 					isLoaded: false,
 					// add requirements, all passed arguments, except first
-					requirements: Array.prototype.slice.call(arguments, 1),
+					requirements: Array.prototype.slice.call( arguments, 1 ),
 					session: parseInt( this.session )
-				});
+				} );
 			}
 		}
 	},
@@ -696,19 +696,19 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 	 * @param {string} url
 	 * @return {string} url
 	 */
-	cssProxy: (function() {
-		return function(url) {
+	cssProxy: ( function () {
+		return function ( url ) {
 			return url;
 		}
-	})(),
+	} )(),
 
 	/**
 	 * Check if the css file with a particular name is loaded
 	 * @param {string} fileName
 	 * @return {boolean}
 	 */
-	isCSSfileLoaded: function( fileName ) {
-		for (var i = 0; i < this.cssFiles.length; i++) {
+	isCSSfileLoaded: function ( fileName ) {
+		for ( var i = 0; i < this.cssFiles.length; i++ ) {
 			if ( this.cssFiles[i].name == fileName && this.cssFiles[i].isLoaded ) {
 				return true;
 			}
@@ -716,89 +716,89 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 		return false;
 	},
 
-	isSystemCSSFile: function( filePath ) {
-		return filePath.indexOf("/pages/") === -1
-			&& filePath.indexOf("/custom/") === -1;
+	isSystemCSSFile: function ( filePath ) {
+		return filePath.indexOf( "/pages/" ) === -1
+			&& filePath.indexOf( "/custom/" ) === -1;
 	},
 
 	/**
 	 * Method for load CSS files
 	 * @param files {array}
 	 */
-	loadCSS: function( files ) {
+	loadCSS: function ( files ) {
 		var _self = this;
 
 		if ( !files ) {
 			return;
 		}
 
-		files = typeof files === "string" ? [ files ] : files;
+		files = typeof files === "string" ? [files] : files;
 
-		jQuery.each( files, function(i, file) {
+		jQuery.each( files, function ( i, file ) {
 			if ( !file ) {
 				return;
 			}
 			file = _self.cssProxy( file );
 
-			file = _self.cssFilePath(file);
+			file = _self.cssFilePath( file );
 
 			// return if file is already added and loaded
 			if ( _self.isCSSfileLoaded( file ) ) {
 				return;
 			}
 
-			_self.cssFiles.push({
+			_self.cssFiles.push( {
 				name: file,
 				isLoaded: true
-			})
+			} )
 
 			var existInHead = false,
 				head, css, filePath;
 
-			$('head link[rel="stylesheet"]').each( function(index, element) {
-				if ( $(element).attr('href') == file ) {
+			$( 'head link[rel="stylesheet"]' ).each( function ( index, element ) {
+				if ( $( element ).attr( 'href' ) == file ) {
 					existInHead = true;
 					return false;
 				}
-			});
+			} );
 
 			// load file
 			if ( !existInHead ) {
-				head = $(document).find('head')[0];
+				head = $( document ).find( 'head' )[0];
 
 				if ( Runner.settings.project.ext == "aspx" ) {
 					filePath = Runner.getFullResourcePath( _self.cssFilePath( files[i] ) );
 				} else {
-					filePath = _self.cssFilePath(files[i]);
+					filePath = _self.cssFilePath( files[i] );
 				}
 
-				css = document.createElement('link');
-				css.setAttribute('rel', 'stylesheet');
-				css.setAttribute('type', 'text/css');
-				css.setAttribute('href', filePath);
-				head.appendChild(css);
+				css = document.createElement( 'link' );
+				css.setAttribute( 'rel', 'stylesheet' );
+				css.setAttribute( 'type', 'text/css' );
+				css.setAttribute( 'href', filePath );
+				head.appendChild( css );
 			}
-		});
+		} );
 	},
 
-	cssFilePath: function(file) {
-		if ( file.indexOf("style.css") !== -1) {
+	cssFilePath: function ( file ) {
+		if ( file.indexOf( "style.css" ) !== -1 ) {
 			return file + "?" + settings.global.wizardBuildKey + "&" + settings.global.projectBuildKey;
-		} else if ( this.isSystemCSSFile(file) ) {
+		} else if ( this.isSystemCSSFile( file ) ) {
 			return file + "?" + settings.global.wizardBuildKey;
 		} else {
 			return file + "?" + settings.global.projectBuildKey;
 		}
 	},
 
-	load: function() {
+	load: function () {
 		if ( this.jsFiles.length == 0 ) {
 			this.fireEvent( 'filesLoaded' + this.session );
 		}
 
 		this.session = this.session + 1;
 
-		for (var i = 0; i < this.jsFiles.length; i++) {
+		for ( var i = 0; i < this.jsFiles.length; i++ ) {
 			this.loadJS( i );
 		}
 	},
@@ -810,7 +810,7 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 	 * @method
 	 * @private
 	 */
-	loadJS: function( idx ) {
+	loadJS: function ( idx ) {
 		// return if no file obj for this file
 		if ( !this.jsFiles[idx] ) {
 			return false;
@@ -833,14 +833,14 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 		this.jsFiles[idx].isStarted = true;
 
 		var self = this,
-			js = document.createElement('script'),
+			js = document.createElement( 'script' ),
 			// a definition of such a function is the way to invoke Runner custom code when the external js file is loaded
-			initFuncName = this.jsFiles[idx].name.replace('.js', '').replace(/[\/\\.\-]/g, "_").replace(/^_+/,'') + '_init',
-			postLoadFunction = function() {
+			initFuncName = this.jsFiles[idx].name.replace( '.js', '' ).replace( /[\/\\.\-]/g, "_" ).replace( /^_+/, '' ) + '_init',
+			postLoadFunction = function () {
 				var tl = true;
 
-				if ( typeof Runner[ initFuncName ] === "function" ) {
-					tl = Runner[ initFuncName ].call(self, idx);
+				if ( typeof Runner[initFuncName] === "function" ) {
+					tl = Runner[initFuncName].call( self, idx );
 				}
 
 				if ( tl !== false ) {
@@ -848,10 +848,10 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 				}
 			};
 
-		js.setAttribute('type', 'text/javascript');
+		js.setAttribute( 'type', 'text/javascript' );
 
 		if ( Runner.isIE ) {
-			js.onreadystatechange = function() {
+			js.onreadystatechange = function () {
 				if ( js.readyState == 'complete' || js.readyState == 'loaded' ) {
 					postLoadFunction();
 				}
@@ -860,17 +860,17 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 			js.onload = postLoadFunction;
 		}
 
-		var addKey = "?" + ( this.isSystemJSFile( this.jsFiles[ idx ].name ) ?
+		var addKey = "?" + ( this.isSystemJSFile( this.jsFiles[idx].name ) ?
 			settings.global.wizardBuildKey :
 			settings.global.projectBuildKey );
 
-		js.setAttribute( 'src', this.jsFiles[ idx ].name + addKey );
-		document.getElementsByTagName('HEAD')[0].appendChild( js );
+		js.setAttribute( 'src', this.jsFiles[idx].name + addKey );
+		document.getElementsByTagName( 'HEAD' )[0].appendChild( js );
 		return true;
 	},
 
-	isSystemJSFile: function( filePath ) {
-		return filePath.indexOf("usercode") === -1;
+	isSystemJSFile: function ( filePath ) {
+		return filePath.indexOf( "usercode" ) === -1;
 	},
 
 	/**
@@ -878,11 +878,11 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 	 * @param {object} fileObj
 	 * @return {Boolean}
 	 */
-	checkReq: function( fileObj ) {
+	checkReq: function ( fileObj ) {
 		// loop through all files
-		for (var i = 0; i < fileObj.requirements.length; i++) {
+		for ( var i = 0; i < fileObj.requirements.length; i++ ) {
 			// loop through all req
-			for (var j = 0; j < this.jsFiles.length; j++) {
+			for ( var j = 0; j < this.jsFiles.length; j++ ) {
 				// if req cotains loaded file, than try to load it
 				if ( fileObj.requirements[i] == this.jsFiles[j].name && !this.jsFiles[j].isLoaded ) {
 					return false;
@@ -898,14 +898,14 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 	 * @param {session} session
 	 * @method
 	 */
-	postLoad: function( idx, session ) {
+	postLoad: function ( idx, session ) {
 		var loadedAll = true;
-		if (idx !== undefined) {
+		if ( idx !== undefined ) {
 			this.jsFiles[idx].isLoaded = true;
-			this.loadDependent(idx);
+			this.loadDependent( idx );
 			var session = this.jsFiles[idx].session;
 		}
-		for (var i = 0; i < this.jsFiles.length; i++) {
+		for ( var i = 0; i < this.jsFiles.length; i++ ) {
 			if ( !this.jsFiles[i].isLoaded ) {
 				loadedAll = false;
 				break;
@@ -913,15 +913,15 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 		}
 		if ( loadedAll ) {
 			var self = this;
-			if ( $.inArray(session, this.loadedSes) == -1 ) {
-				window.setTimeout( function() {
+			if ( $.inArray( session, this.loadedSes ) == -1 ) {
+				window.setTimeout( function () {
 					self.fireEvent( 'filesLoaded' + session );
 				}, 0 );
 
 				this.loadedSes.push( session );
 			}
 			if ( idx !== undefined ) {
-				for (var i = 0; i < this.session; i++ ) {
+				for ( var i = 0; i < this.session; i++ ) {
 					this.postLoad( undefined, i );
 				}
 			}
@@ -933,27 +933,27 @@ Runner.util.ScriptLoader = Runner.extend( Runner.util.Observable, {
 	 * @param {function} callback
 	 * @param {object} scope
 	 */
-	onFilesLoaded: function( callback, scope ) {
-		this.on('filesLoaded' + this.session, callback, scope, { single: true });
+	onFilesLoaded: function ( callback, scope ) {
+		this.on( 'filesLoaded' + this.session, callback, scope, { single: true } );
 	},
 
 	/**
 	 * Call load for files, which are dependent to file with index = idx
 	 * @param {number} idx
 	 */
-	loadDependent: function( idx ) {
+	loadDependent: function ( idx ) {
 		// loop through all files
-		for (var i = 0; i < this.jsFiles.length; i++) {
+		for ( var i = 0; i < this.jsFiles.length; i++ ) {
 			// loop through all req
-			for (var j = 0; j < this.jsFiles[i].requirements.length; j++) {
+			for ( var j = 0; j < this.jsFiles[i].requirements.length; j++ ) {
 				// if req cotains loaded file, than try to load it
 				if ( i != idx && this.jsFiles[i].requirements[j] == this.jsFiles[idx].name ) {
-					this.loadJS(i);
+					this.loadJS( i );
 				}
 			}
 		}
 	}
-});
+} );
 
 Runner.util.ScriptLoader = new Runner.util.ScriptLoader();
 
@@ -971,17 +971,17 @@ Runner.Charts = {
 	 * Create chart object and save it to the local storage or page object
 	 * @param {object} chartParams
 	 */
-	createChart: function( chartParams ) {
+	createChart: function ( chartParams ) {
 		if ( typeof anychart === "undefined" ) {
 			return;
 		}
 
-		var modifyChartHandler = this.chartModifyHandlers[ chartParams.chartName ];
+		var modifyChartHandler = this.chartModifyHandlers[chartParams.chartName];
 
 		anychart.graphics.useAbsoluteReferences( false );
 		anychart.licenseKey( Runner.anychartLicense );
 
-		$.get( chartParams.xmlFile, function( data ) {
+		$.get( chartParams.xmlFile, function ( data ) {
 			var chart, gwidth, i, pageObj, hHeight, fHeight;
 
 			if ( chartParams.pageId !== undefined ) {
@@ -992,16 +992,16 @@ Runner.Charts = {
 				if ( pageObj ) {
 					pageObj.showPageMessageWithErrorText( data.noDataMessage );
 				} else if ( chartParams.pageId !== undefined ) {
-					Runner.util.ScriptLoader.onFilesLoaded( function() {
+					Runner.util.ScriptLoader.onFilesLoaded( function () {
 						pageObj = Runner.pages.PageManager.getById( chartParams.pageId );
 
 						pageObj.showPageMessageWithErrorText( data.noDataMessage );
 						pageObj.asyncInitCall();
-					});
+					} );
 				}
 
 				if ( chartParams.refreshTime ) {
-					setTimeout( function() {
+					setTimeout( function () {
 						pageObj && pageObj.hideElement( "message" );
 						Runner.Charts.createChart( chartParams );
 					}, chartParams.refreshTime * 1000 );
@@ -1011,46 +1011,46 @@ Runner.Charts = {
 			}
 
 			if ( data.gauge ) {
-				$('<div id="' + chartParams.containerId + '_header"></div>')
+				$( '<div id="' + chartParams.containerId + '_header"></div>' )
 					.html( data.header )
-					.css("text-align", "center")
+					.css( "text-align", "center" )
 					.appendTo( $( "#" + chartParams.containerId ) );
 
-				$('<div id="' + chartParams.containerId + '_footer"></div>')
+				$( '<div id="' + chartParams.containerId + '_footer"></div>' )
 					.html( data.footer )
-					.css({
+					.css( {
 						"text-align": "center",
 						"clear": "both"
-					})
+					} )
 					.appendTo( $( "#" + chartParams.containerId ) );
 
-				hHeight = $("#" + chartParams.containerId + "_header").height();
-				fHeight = $("#" + chartParams.containerId + "_footer").height();
-				for ( i = 0; i < data.gauge.length; i++) {
-					var $gCont = $('<div id="' + chartParams.containerId + 'g' + i + '"></div>')
-						.css({
+				hHeight = $( "#" + chartParams.containerId + "_header" ).height();
+				fHeight = $( "#" + chartParams.containerId + "_footer" ).height();
+				for ( i = 0; i < data.gauge.length; i++ ) {
+					var $gCont = $( '<div id="' + chartParams.containerId + 'g' + i + '"></div>' )
+						.css( {
 							width: "100%",
 							height: "100%", // may have a text value - 100px, 5cm, 33% etc
 							"float": "left",
 							"margin-right": "15px"
-						})
+						} )
 						.insertAfter( $( "#" + chartParams.containerId + "_header" ) );
 
-					$gCont.css("height", "-=" + (hHeight + fHeight) + "px");
-					$gCont.css("width", ($gCont.width() / data.gauge.length) + "px")
-						.css("width", "-=15px");
+					$gCont.css( "height", "-=" + ( hHeight + fHeight ) + "px" );
+					$gCont.css( "width", ( $gCont.width() / data.gauge.length ) + "px" )
+						.css( "width", "-=15px" );
 
 					Runner.Charts.setupChart( data.gauge[i], {
-							height: $gCont.height(),
-							refreshTime: chartParams.refreshTime,
-							pageId: chartParams.pageId,
-							containerId: chartParams.containerId + 'g' + i,
-							width: $gCont.width(),
-							chartName: chartParams.chartName,
-							seriaNum: i,
-							chartType: 'Gauge'
-						},
-					modifyChartHandler );
+						height: $gCont.height(),
+						refreshTime: chartParams.refreshTime,
+						pageId: chartParams.pageId,
+						containerId: chartParams.containerId + 'g' + i,
+						width: $gCont.width(),
+						chartName: chartParams.chartName,
+						seriaNum: i,
+						chartType: 'Gauge'
+					},
+						modifyChartHandler );
 				}
 				return;
 			}
@@ -1062,15 +1062,15 @@ Runner.Charts = {
 			}
 
 			// event listener
-			chart.listen("pointClick", function( event ) {
+			chart.listen( "pointClick", function ( event ) {
 				var clickData = data.chart.singleSeries ? data.chart.clickData : data.chart.series && data.chart.series[0].clickData;
 
-				if ( !clickData || clickData[ event.pointIndex ] === null || isNaN( event.pointIndex ) ) {
+				if ( !clickData || clickData[event.pointIndex] === null || isNaN( event.pointIndex ) ) {
 					return;
 				}
 
-				if ( clickData[ event.pointIndex ].url ) {
-					location.href = clickData[ event.pointIndex ].url;
+				if ( clickData[event.pointIndex].url ) {
+					location.href = clickData[event.pointIndex].url;
 					return;
 				}
 
@@ -1080,9 +1080,9 @@ Runner.Charts = {
 				}
 
 				if ( pageObj.handleChartClick ) {
-					pageObj.handleChartClick( clickData[ event.pointIndex ] );
+					pageObj.handleChartClick( clickData[event.pointIndex] );
 				}
-			});
+			} );
 
 		}, 'json' );
 	},
@@ -1092,7 +1092,7 @@ Runner.Charts = {
 	 * @param {object} chartParams
 	 * @param {function} modifyChartHandler
 	 */
-	setupChart: function( data, chartParams, modifyChartHandler ) {
+	setupChart: function ( data, chartParams, modifyChartHandler ) {
 		if ( typeof anychart === "undefined" ) {
 			return;
 		}
@@ -1103,37 +1103,37 @@ Runner.Charts = {
 		// setup custom context menu	
 		chart
 			.contextMenu()
-			.itemsProvider( function() {
+			.itemsProvider( function () {
 				return {
 					'item1': {
 						'text': Runner.lang.constants.EXPORT_TO_PDF || 'Export to PDF',
-						'action': function() {
+						'action': function () {
 							chart.saveAsPdf();
 						}
 					},
 					'item2': {
 						'text': Runner.lang.constants.EXPORT_TO_CSV || 'Export to CSV',
-						'action': function() {
+						'action': function () {
 							chart.saveAsCsv();
 						}
 					},
 					'item3': {
 						'text': Runner.lang.constants.SAVE_AS_PNG || 'Save as PNG',
-						'action': function() {
+						'action': function () {
 							chart.saveAsPng();
 						}
 					},
 					'item4': {
 						'text': Runner.lang.constants.PRINT || 'Print',
-						'action': function() {
+						'action': function () {
 							chart.print();
 						}
 					},
 				}
-			});		
-			
-//		chart.width = chartParams.width;
-//		chart.height = chartParams.height;
+			} );
+
+		//		chart.width = chartParams.width;
+		//		chart.height = chartParams.height;
 		chart.wMode = 'opaque';
 		chart.id = 'chart_' + chartParams.chartName;
 		if ( data.gauge ) {
@@ -1160,7 +1160,7 @@ Runner.Charts = {
 
 		if ( chartParams.refreshTime ) {
 			chartParams.singleSeries = data.chart && data.chart.singleSeries;
-			chart.reloadIntervalId = setInterval( function() {
+			chart.reloadIntervalId = setInterval( function () {
 				Runner.Charts.updateChart( chart, chartParams, data.chart || data.gauge );
 			}, chartParams.refreshTime * 1000 );
 		}
@@ -1172,8 +1172,8 @@ Runner.Charts = {
 	 * @param {object} chart
 	 * @param {object} chartParams
 	 */
-	updateChart: function( chart, chartParams, currentChartData ) {
-		var	pageObj = Runner.pages.PageManager.getById( chartParams.pageId ),
+	updateChart: function ( chart, chartParams, currentChartData ) {
+		var pageObj = Runner.pages.PageManager.getById( chartParams.pageId ),
 			params = {
 				action: 'refresh',
 				rndval: Math.random(),
@@ -1182,15 +1182,16 @@ Runner.Charts = {
 				pageId: chartParams.pageId
 			};
 
+		params = Object.assign( params, chartParams.stateParams || {} );
 		if ( chartParams.dashChart ) {
 			params.dashChart = chartParams.dashChart;
 			params.dashTName = chartParams.dashTName;
 			params.dashPage = chartParams.dashPage;
 			params.dashElementName = chartParams.dashElementName;
 		}
-		
-		$.post.trackingUserActivity = false;		
-		$.post( Runner.getPageUrl("dchartdata"), params, function( json ) {
+
+		$.post.trackingUserActivity = false;
+		$.post( Runner.getPageUrl( "dchartdata" ), params, function ( json ) {
 			var i, masterData,
 				seriesData = JSON.parse( json ),
 				firstMasterData = null,
@@ -1202,18 +1203,19 @@ Runner.Charts = {
 			}
 
 			if ( chartParams.chartType === "Gauge" || chartParams.singleSeries ) {
-				chart.data( anychart.data.set( seriesData[ chartParams.seriaNum || 0 ].data ) );
+				var seriesNumber = seriesData.length - (chartParams.seriaNum || 0) - 1;
+				chart.data( anychart.data.set( seriesData[ seriesNumber ].data ) );
 				if ( chartParams.chartType === "Gauge" ) {
 					chart.label()
-						.text( seriesData[ chartParams.seriaNum || 0 ].labelText );
+						.text( seriesData[ seriesNumber ].labelText );
 				} else {
 					currentChartData.clickData = seriesData[0].clickData;
 				}
 			} else {
 				//chart.removeAllSeries();
-				for (i = 0; i < seriesData.length; i++) {
+				for ( i = 0; i < seriesData.length; i++ ) {
 					//chart.addSeries( seriesData[i].data );
-					chart.getSeriesAt(i).data( seriesData[i].data );
+					chart.getSeriesAt( i ).data( seriesData[i].data );
 				}
 				currentChartData.series[0].clickData = seriesData[0].clickData;
 			}
@@ -1226,8 +1228,8 @@ Runner.Charts = {
 			}
 
 			if ( chartParams.dashChart && seriesData.length > 1 ) {
-				for (i = 0; i < seriesData.length; i += 2) {
-					masterData = seriesData[i + 1].clickData;
+				for ( i = 0; i < seriesData.length; ++i ) {
+					masterData = seriesData[i].clickData;
 					firstMasterData = firstMasterData || masterData;
 
 					if ( pageObj.checkIfMasterKeysUpdated( masterData ) ) {
@@ -1237,7 +1239,7 @@ Runner.Charts = {
 
 				pageObj.refreshDChartData( firstMasterData, masterKeysUpdated );
 			}
-		});
+		} );
 	}
 };
 
@@ -1297,7 +1299,7 @@ Runner.Charts.chartModifyHandlers['##@t.strShortTableName##'] = function(chart, 
 	z
 	------------------------
  */
-Runner.Async = function() {
+Runner.Async = function () {
 	/**
 	 * The asynchronous loops data storage
 	 * @type {array}
@@ -1310,31 +1312,31 @@ Runner.Async = function() {
 	 * @param {array | function} _collection
 	 * @param {function} _handler
 	 */
-	this.loop = function( _collection, _handler ) {
+	this.loop = function ( _collection, _handler ) {
 		var stackHead;
 
 		//	only one parameter passed
 		if ( typeof _handler === "undefined" ) {
 			_handler = _collection;
-			_collection = [ null ];
+			_collection = [null];
 		}
 
-//		if ( !_collection.length ) {
-//			return;
-//		}
+		//		if ( !_collection.length ) {
+		//			return;
+		//		}
 
 		if ( !this.stack.length ) {
-			this.stack.push({
+			this.stack.push( {
 				buffer: []
-			});
+			} );
 		}
 
-		stackHead = this.stack[ this.stack.length - 1 ];
-		stackHead.buffer.push({
+		stackHead = this.stack[this.stack.length - 1];
+		stackHead.buffer.push( {
 			collection: _collection,
 			index: 0,
 			handler: _handler
-		});
+		} );
 
 		setTimeout( this.processFunc, 0 );
 	}
@@ -1345,7 +1347,7 @@ Runner.Async = function() {
 	 * Set the priotity to new loops added during
 	 * the loop handler execution
 	 */
-	this.processFunc = $.proxy( function() {
+	this.processFunc = $.proxy( function () {
 		var stackHead, element, bufLength, handlerResult,
 			stackLength = this.stack.length;
 
@@ -1353,28 +1355,28 @@ Runner.Async = function() {
 			return;
 		}
 
-		stackHead = this.stack[ stackLength - 1 ];
+		stackHead = this.stack[stackLength - 1];
 		// an element containig handler data
 		element = stackHead.buffer[0];
 
 		if ( element.index < element.collection.length ) {
 
 			bufLength = stackHead.buffer.length;
-			handlerResult = element.handler.call( null, element.index, element.collection[ element.index ] );
+			handlerResult = element.handler.call( null, element.index, element.collection[element.index] );
 
 			if ( stackHead.buffer.length > bufLength ) {
 				//	new tasks were added during the step execution
 				//	move them to the stack head
-				this.stack.push({
+				this.stack.push( {
 					buffer: stackHead.buffer.splice( bufLength, stackHead.buffer.length - bufLength )
-				});
+				} );
 			}
 		}
 
 		element.index++;
 		if ( element.index >= element.collection.length && this.stack.length == stackLength || handlerResult === false ) {
 			// there is no elements left in the loop collection
-			stackHead.buffer.splice(0, 1);
+			stackHead.buffer.splice( 0, 1 );
 
 			if ( !stackHead.buffer.length ) {
 				this.stack.splice( stackLength - 1, 1 );
@@ -1398,16 +1400,16 @@ Runner.Hash = {
 	 * get hash vars
 	 * @return {object}
 	 */
-	get: function() {
+	get: function () {
 		var vars = {},
 			hash, splitter, hashes, pos, i;
 
 		if ( !this.oldbrowser() ) {
-			pos = window.location.href.indexOf('?');
-			hashes = (pos != -1) ? decodeURIComponent( window.location.href.substr(pos + 1) ) : '';
+			pos = window.location.href.indexOf( '?' );
+			hashes = ( pos != -1 ) ? decodeURIComponent( window.location.href.substr( pos + 1 ) ) : '';
 			splitter = '&';
 		} else {
-			hashes = decodeURIComponent( window.location.hash.substr(1) );
+			hashes = decodeURIComponent( window.location.hash.substr( 1 ) );
 			splitter = '/';
 		}
 
@@ -1417,13 +1419,13 @@ Runner.Hash = {
 
 		hashes = hashes.split( splitter );
 
-		for (i in hashes) {
-			if ( hashes.hasOwnProperty(i) ) {
-				hash = hashes[i].split('=');
+		for ( i in hashes ) {
+			if ( hashes.hasOwnProperty( i ) ) {
+				hash = hashes[i].split( '=' );
 				if ( typeof hash[1] === 'undefined' ) {
 					vars['anchor'] = hash[0];
 				} else {
-					vars[ hash[0] ] = hash[1];
+					vars[hash[0]] = hash[1];
 				}
 			}
 		}
@@ -1435,21 +1437,21 @@ Runner.Hash = {
 	 * @param {object} vars
 	 * @param {boolean} isReplace
 	 */
-	set: function( vars, isReplace ) {
+	set: function ( vars, isReplace ) {
 		var hash = '', i;
 
 		for ( i in vars ) {
-			if ( vars.hasOwnProperty(i) ) {
-				hash += '&' + i + '=' + vars[ i ];
+			if ( vars.hasOwnProperty( i ) ) {
+				hash += '&' + i + '=' + vars[i];
 			}
 		}
 
 		if ( hash ) {
-			hash = '?' + hash.substr(1);
+			hash = '?' + hash.substr( 1 );
 		}
 
 		if ( this.oldbrowser() ) {
-			window.location.hash = hash ;
+			window.location.hash = hash;
 			return;
 		}
 
@@ -1464,7 +1466,7 @@ Runner.Hash = {
 	 * for window back/forward button click
 	 * @param {function} callback
 	 */
-	changeUrlHandler: function( callback ) {
+	changeUrlHandler: function ( callback ) {
 		var urlParams = Runner.Hash.get(),
 			newUrl = "", i;
 
@@ -1487,12 +1489,12 @@ Runner.Hash = {
 
 		for ( i in urlParams ) {
 			if ( urlParams.hasOwnProperty( i ) ) {
-				newUrl += '&' + i + '=' + urlParams[ i ];
+				newUrl += '&' + i + '=' + urlParams[i];
 			}
 		}
 
 		if ( newUrl ) {
-			newUrl = '?' + newUrl.substr(1);
+			newUrl = '?' + newUrl.substr( 1 );
 		}
 
 		callback( newUrl );
@@ -1502,18 +1504,18 @@ Runner.Hash = {
 	 * for window back/forward button click
 	 * @param {function} listnerCallBack
 	 */
-	changeUrlListener: function( listnerCallBack ) {
+	changeUrlListener: function ( listnerCallBack ) {
 		var self = this;
 
 		if ( !this.oldbrowser() ) {
-			$(window).on("popstate", function() {
+			$( window ).on( "popstate", function () {
 				self.changeUrlHandler( listnerCallBack );
-			});
+			} );
 		} else if ( window.addEventListener ) {
-			window.addEventListener("hashchange", function() {
+			window.addEventListener( "hashchange", function () {
 				//console.log("OLD BROWSER!");
 				self.changeUrlHandler( listnerCallBack );
-			});
+			} );
 		}
 	},
 
@@ -1522,10 +1524,10 @@ Runner.Hash = {
 	 * @param {string} key
 	 * @param {string} val
 	 */
-	add: function( key, val ) {
+	add: function ( key, val ) {
 		var hash = this.get() || {};
 
-		hash[ key ] = val;
+		hash[key] = val;
 		this.set( hash );
 	},
 
@@ -1533,10 +1535,10 @@ Runner.Hash = {
 	 * remove simple key from hash
 	 * @param {string} key
 	 */
-	remove: function( key ) {
+	remove: function ( key ) {
 		var hash = this.get();
 		if ( hash ) {
-			delete hash[ key ];
+			delete hash[key];
 			this.set( hash );
 		}
 	},
@@ -1544,7 +1546,7 @@ Runner.Hash = {
 	/**
 	 * clear hash
 	 */
-	clear: function() {
+	clear: function () {
 		this.set( {}, true );
 	},
 
@@ -1552,7 +1554,7 @@ Runner.Hash = {
 	 * Check for support history api
 	 * @return {boolean}
 	 */
-	oldbrowser: function() {
+	oldbrowser: function () {
 		return !window.history || !history.pushState;
 	}
 };
@@ -1565,7 +1567,7 @@ Runner.Hash = {
  * @return {boolean}
  */
 
-Runner.arraysEqual = function( arr1, arr2, typeInsensitive ) {
+Runner.arraysEqual = function ( arr1, arr2, typeInsensitive ) {
 	if ( arr1.length !== arr2.length ) {
 		return false;
 	}
@@ -1583,8 +1585,8 @@ Runner.arraysEqual = function( arr1, arr2, typeInsensitive ) {
  * @param {object} model
  * @return {object}
  */
-Runner.normalizeClickActionSettings = function( model ) {
-	var normalizeSubmodel = function( submodel ) {
+Runner.normalizeClickActionSettings = function ( model ) {
+	var normalizeSubmodel = function ( submodel ) {
 		submodel = submodel || {};
 		submodel.action = submodel.action || "noaction";
 		submodel.openData = submodel.openData || {};
@@ -1595,15 +1597,15 @@ Runner.normalizeClickActionSettings = function( model ) {
 	}
 
 	if ( !model || typeof model !== "object" ) { //if ( !(model instanceof Object) ) {
-		 model = {};
+		model = {};
 		//return Runner.normalizeClickActionSettings( {} );
 	}
 
-	model.row = normalizeSubmodel ( model.row );
+	model.row = normalizeSubmodel( model.row );
 	model.fields = model.fields || {};
 
-	for ( var f in model.fields) {
-		model.fields[ f ] = normalizeSubmodel( model.fields[ f ] );
+	for ( var f in model.fields ) {
+		model.fields[f] = normalizeSubmodel( model.fields[f] );
 	}
 
 	return model;
@@ -1615,130 +1617,130 @@ Runner.normalizeClickActionSettings = function( model ) {
  * @param {mixed}
  * @return {string}
  */
-Runner.md5 = ( function() {
-	function md5cycle(x, k) {
+Runner.md5 = ( function () {
+	function md5cycle( x, k ) {
 		var a = x[0], b = x[1], c = x[2], d = x[3];
 
-		a = ff(a, b, c, d, k[0], 7, -680876936);
-		d = ff(d, a, b, c, k[1], 12, -389564586);
-		c = ff(c, d, a, b, k[2], 17,  606105819);
-		b = ff(b, c, d, a, k[3], 22, -1044525330);
-		a = ff(a, b, c, d, k[4], 7, -176418897);
-		d = ff(d, a, b, c, k[5], 12,  1200080426);
-		c = ff(c, d, a, b, k[6], 17, -1473231341);
-		b = ff(b, c, d, a, k[7], 22, -45705983);
-		a = ff(a, b, c, d, k[8], 7,  1770035416);
-		d = ff(d, a, b, c, k[9], 12, -1958414417);
-		c = ff(c, d, a, b, k[10], 17, -42063);
-		b = ff(b, c, d, a, k[11], 22, -1990404162);
-		a = ff(a, b, c, d, k[12], 7,  1804603682);
-		d = ff(d, a, b, c, k[13], 12, -40341101);
-		c = ff(c, d, a, b, k[14], 17, -1502002290);
-		b = ff(b, c, d, a, k[15], 22,  1236535329);
+		a = ff( a, b, c, d, k[0], 7, -680876936 );
+		d = ff( d, a, b, c, k[1], 12, -389564586 );
+		c = ff( c, d, a, b, k[2], 17, 606105819 );
+		b = ff( b, c, d, a, k[3], 22, -1044525330 );
+		a = ff( a, b, c, d, k[4], 7, -176418897 );
+		d = ff( d, a, b, c, k[5], 12, 1200080426 );
+		c = ff( c, d, a, b, k[6], 17, -1473231341 );
+		b = ff( b, c, d, a, k[7], 22, -45705983 );
+		a = ff( a, b, c, d, k[8], 7, 1770035416 );
+		d = ff( d, a, b, c, k[9], 12, -1958414417 );
+		c = ff( c, d, a, b, k[10], 17, -42063 );
+		b = ff( b, c, d, a, k[11], 22, -1990404162 );
+		a = ff( a, b, c, d, k[12], 7, 1804603682 );
+		d = ff( d, a, b, c, k[13], 12, -40341101 );
+		c = ff( c, d, a, b, k[14], 17, -1502002290 );
+		b = ff( b, c, d, a, k[15], 22, 1236535329 );
 
-		a = gg(a, b, c, d, k[1], 5, -165796510);
-		d = gg(d, a, b, c, k[6], 9, -1069501632);
-		c = gg(c, d, a, b, k[11], 14,  643717713);
-		b = gg(b, c, d, a, k[0], 20, -373897302);
-		a = gg(a, b, c, d, k[5], 5, -701558691);
-		d = gg(d, a, b, c, k[10], 9,  38016083);
-		c = gg(c, d, a, b, k[15], 14, -660478335);
-		b = gg(b, c, d, a, k[4], 20, -405537848);
-		a = gg(a, b, c, d, k[9], 5,  568446438);
-		d = gg(d, a, b, c, k[14], 9, -1019803690);
-		c = gg(c, d, a, b, k[3], 14, -187363961);
-		b = gg(b, c, d, a, k[8], 20,  1163531501);
-		a = gg(a, b, c, d, k[13], 5, -1444681467);
-		d = gg(d, a, b, c, k[2], 9, -51403784);
-		c = gg(c, d, a, b, k[7], 14,  1735328473);
-		b = gg(b, c, d, a, k[12], 20, -1926607734);
+		a = gg( a, b, c, d, k[1], 5, -165796510 );
+		d = gg( d, a, b, c, k[6], 9, -1069501632 );
+		c = gg( c, d, a, b, k[11], 14, 643717713 );
+		b = gg( b, c, d, a, k[0], 20, -373897302 );
+		a = gg( a, b, c, d, k[5], 5, -701558691 );
+		d = gg( d, a, b, c, k[10], 9, 38016083 );
+		c = gg( c, d, a, b, k[15], 14, -660478335 );
+		b = gg( b, c, d, a, k[4], 20, -405537848 );
+		a = gg( a, b, c, d, k[9], 5, 568446438 );
+		d = gg( d, a, b, c, k[14], 9, -1019803690 );
+		c = gg( c, d, a, b, k[3], 14, -187363961 );
+		b = gg( b, c, d, a, k[8], 20, 1163531501 );
+		a = gg( a, b, c, d, k[13], 5, -1444681467 );
+		d = gg( d, a, b, c, k[2], 9, -51403784 );
+		c = gg( c, d, a, b, k[7], 14, 1735328473 );
+		b = gg( b, c, d, a, k[12], 20, -1926607734 );
 
-		a = hh(a, b, c, d, k[5], 4, -378558);
-		d = hh(d, a, b, c, k[8], 11, -2022574463);
-		c = hh(c, d, a, b, k[11], 16,  1839030562);
-		b = hh(b, c, d, a, k[14], 23, -35309556);
-		a = hh(a, b, c, d, k[1], 4, -1530992060);
-		d = hh(d, a, b, c, k[4], 11,  1272893353);
-		c = hh(c, d, a, b, k[7], 16, -155497632);
-		b = hh(b, c, d, a, k[10], 23, -1094730640);
-		a = hh(a, b, c, d, k[13], 4,  681279174);
-		d = hh(d, a, b, c, k[0], 11, -358537222);
-		c = hh(c, d, a, b, k[3], 16, -722521979);
-		b = hh(b, c, d, a, k[6], 23,  76029189);
-		a = hh(a, b, c, d, k[9], 4, -640364487);
-		d = hh(d, a, b, c, k[12], 11, -421815835);
-		c = hh(c, d, a, b, k[15], 16,  530742520);
-		b = hh(b, c, d, a, k[2], 23, -995338651);
+		a = hh( a, b, c, d, k[5], 4, -378558 );
+		d = hh( d, a, b, c, k[8], 11, -2022574463 );
+		c = hh( c, d, a, b, k[11], 16, 1839030562 );
+		b = hh( b, c, d, a, k[14], 23, -35309556 );
+		a = hh( a, b, c, d, k[1], 4, -1530992060 );
+		d = hh( d, a, b, c, k[4], 11, 1272893353 );
+		c = hh( c, d, a, b, k[7], 16, -155497632 );
+		b = hh( b, c, d, a, k[10], 23, -1094730640 );
+		a = hh( a, b, c, d, k[13], 4, 681279174 );
+		d = hh( d, a, b, c, k[0], 11, -358537222 );
+		c = hh( c, d, a, b, k[3], 16, -722521979 );
+		b = hh( b, c, d, a, k[6], 23, 76029189 );
+		a = hh( a, b, c, d, k[9], 4, -640364487 );
+		d = hh( d, a, b, c, k[12], 11, -421815835 );
+		c = hh( c, d, a, b, k[15], 16, 530742520 );
+		b = hh( b, c, d, a, k[2], 23, -995338651 );
 
-		a = ii(a, b, c, d, k[0], 6, -198630844);
-		d = ii(d, a, b, c, k[7], 10,  1126891415);
-		c = ii(c, d, a, b, k[14], 15, -1416354905);
-		b = ii(b, c, d, a, k[5], 21, -57434055);
-		a = ii(a, b, c, d, k[12], 6,  1700485571);
-		d = ii(d, a, b, c, k[3], 10, -1894986606);
-		c = ii(c, d, a, b, k[10], 15, -1051523);
-		b = ii(b, c, d, a, k[1], 21, -2054922799);
-		a = ii(a, b, c, d, k[8], 6,  1873313359);
-		d = ii(d, a, b, c, k[15], 10, -30611744);
-		c = ii(c, d, a, b, k[6], 15, -1560198380);
-		b = ii(b, c, d, a, k[13], 21,  1309151649);
-		a = ii(a, b, c, d, k[4], 6, -145523070);
-		d = ii(d, a, b, c, k[11], 10, -1120210379);
-		c = ii(c, d, a, b, k[2], 15,  718787259);
-		b = ii(b, c, d, a, k[9], 21, -343485551);
+		a = ii( a, b, c, d, k[0], 6, -198630844 );
+		d = ii( d, a, b, c, k[7], 10, 1126891415 );
+		c = ii( c, d, a, b, k[14], 15, -1416354905 );
+		b = ii( b, c, d, a, k[5], 21, -57434055 );
+		a = ii( a, b, c, d, k[12], 6, 1700485571 );
+		d = ii( d, a, b, c, k[3], 10, -1894986606 );
+		c = ii( c, d, a, b, k[10], 15, -1051523 );
+		b = ii( b, c, d, a, k[1], 21, -2054922799 );
+		a = ii( a, b, c, d, k[8], 6, 1873313359 );
+		d = ii( d, a, b, c, k[15], 10, -30611744 );
+		c = ii( c, d, a, b, k[6], 15, -1560198380 );
+		b = ii( b, c, d, a, k[13], 21, 1309151649 );
+		a = ii( a, b, c, d, k[4], 6, -145523070 );
+		d = ii( d, a, b, c, k[11], 10, -1120210379 );
+		c = ii( c, d, a, b, k[2], 15, 718787259 );
+		b = ii( b, c, d, a, k[9], 21, -343485551 );
 
-		x[0] = add32(a, x[0]);
-		x[1] = add32(b, x[1]);
-		x[2] = add32(c, x[2]);
-		x[3] = add32(d, x[3]);
+		x[0] = add32( a, x[0] );
+		x[1] = add32( b, x[1] );
+		x[2] = add32( c, x[2] );
+		x[3] = add32( d, x[3] );
 	}
 
-	function cmn(q, a, b, x, s, t) {
-		a = add32(add32(a, q), add32(x, t));
-		return add32((a << s) | (a >>> (32 - s)), b);
+	function cmn( q, a, b, x, s, t ) {
+		a = add32( add32( a, q ), add32( x, t ) );
+		return add32( ( a << s ) | ( a >>> ( 32 - s ) ), b );
 	}
 
-	function ff(a, b, c, d, x, s, t) {
-		return cmn((b & c) | ((~b) & d), a, b, x, s, t);
+	function ff( a, b, c, d, x, s, t ) {
+		return cmn( ( b & c ) | ( ( ~b ) & d ), a, b, x, s, t );
 	}
 
-	function gg(a, b, c, d, x, s, t) {
-		return cmn((b & d) | (c & (~d)), a, b, x, s, t);
+	function gg( a, b, c, d, x, s, t ) {
+		return cmn( ( b & d ) | ( c & ( ~d ) ), a, b, x, s, t );
 	}
 
-	function hh(a, b, c, d, x, s, t) {
-		return cmn(b ^ c ^ d, a, b, x, s, t);
+	function hh( a, b, c, d, x, s, t ) {
+		return cmn( b ^ c ^ d, a, b, x, s, t );
 	}
 
-	function ii(a, b, c, d, x, s, t) {
-		return cmn(c ^ (b | (~d)), a, b, x, s, t);
+	function ii( a, b, c, d, x, s, t ) {
+		return cmn( c ^ ( b | ( ~d ) ), a, b, x, s, t );
 	}
 
-	function md51(s) {
+	function md51( s ) {
 		var n = s.length,
-			tail = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0],
+			tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 			state = [1732584193, -271733879, -1732584194, 271733878],
 			i;
 
-		for (i = 64; i <= s.length; i += 64) {
-			md5cycle( state, md5blk( s.substring(i - 64, i) ) );
+		for ( i = 64; i <= s.length; i += 64 ) {
+			md5cycle( state, md5blk( s.substring( i - 64, i ) ) );
 		}
-		s = s.substring(i - 64);
+		s = s.substring( i - 64 );
 
-		for (i = 0; i < s.length; i++) {
-			tail[ i>>2 ] |= s.charCodeAt(i) << ((i%4) << 3);
+		for ( i = 0; i < s.length; i++ ) {
+			tail[i >> 2] |= s.charCodeAt( i ) << ( ( i % 4 ) << 3 );
 		}
-		tail[ i>>2 ] |= 0x80 << ((i%4) << 3);
+		tail[i >> 2] |= 0x80 << ( ( i % 4 ) << 3 );
 
-		if (i > 55) {
-			md5cycle(state, tail);
-			for (i = 0; i < 16; i++) {
+		if ( i > 55 ) {
+			md5cycle( state, tail );
+			for ( i = 0; i < 16; i++ ) {
 				tail[i] = 0;
 			}
 		}
 
 		tail[14] = n * 8;
-		md5cycle(state, tail);
+		md5cycle( state, tail );
 
 		return state;
 	}
@@ -1758,35 +1760,35 @@ Runner.md5 = ( function() {
 	 * providing access to strings as preformed UTF-8
 	 * 8-bit unsigned value arrays.
 	 */
-	function md5blk(s) { /* I figured global was faster.   */
+	function md5blk( s ) { /* I figured global was faster.   */
 		var md5blks = [], i; /* Andy King said do it this way. */
-		for (i = 0; i < 64; i += 4) {
-			md5blks[ i>>2 ] = s.charCodeAt(i)
-			+ (s.charCodeAt(i + 1) << 8)
-			+ (s.charCodeAt(i + 2) << 16)
-			+ (s.charCodeAt(i + 3) << 24);
+		for ( i = 0; i < 64; i += 4 ) {
+			md5blks[i >> 2] = s.charCodeAt( i )
+				+ ( s.charCodeAt( i + 1 ) << 8 )
+				+ ( s.charCodeAt( i + 2 ) << 16 )
+				+ ( s.charCodeAt( i + 3 ) << 24 );
 		}
 		return md5blks;
 	}
 
-	var hex_chr = '0123456789abcdef'.split('');
+	var hex_chr = '0123456789abcdef'.split( '' );
 
-	function rhex(n) {
+	function rhex( n ) {
 		for ( var s = '', j = 0; j < 4; j++ ) {
-			s += hex_chr[(n >> (j * 8 + 4)) & 0x0F] + hex_chr[(n >> (j * 8)) & 0x0F];
+			s += hex_chr[( n >> ( j * 8 + 4 ) ) & 0x0F] + hex_chr[( n >> ( j * 8 ) ) & 0x0F];
 		}
 		return s;
 	}
 
-	function hex(x) {
-		for (var i = 0; i < x.length; i++) {
+	function hex( x ) {
+		for ( var i = 0; i < x.length; i++ ) {
 			x[i] = rhex( x[i] );
 		}
-		return x.join('');
+		return x.join( '' );
 	}
 
-	function md5(s) {
-		return hex( md51(s) );
+	function md5( s ) {
+		return hex( md51( s ) );
 	}
 
 	/* this function is much faster,
@@ -1795,29 +1797,29 @@ Runner.md5 = ( function() {
 	need the idiotic second function,
 	generated by an if clause.  */
 
-	function add32(a, b) {
-		return (a + b) & 0xFFFFFFFF;
+	function add32( a, b ) {
+		return ( a + b ) & 0xFFFFFFFF;
 	}
 
-	if ( md5('hello') != '5d41402abc4b2a76b9719d911017c592' ) {
-		function add32(x, y) {
-			var lsw = (x & 0xFFFF) + (y & 0xFFFF),
-				msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-			return (msw << 16) | (lsw & 0xFFFF);
+	if ( md5( 'hello' ) != '5d41402abc4b2a76b9719d911017c592' ) {
+		function add32( x, y ) {
+			var lsw = ( x & 0xFFFF ) + ( y & 0xFFFF ),
+				msw = ( x >> 16 ) + ( y >> 16 ) + ( lsw >> 16 );
+			return ( msw << 16 ) | ( lsw & 0xFFFF );
 		}
 	}
 
 	return md5;
-} () );
+}() );
 
-Runner.getCustomLabel = function( name ) {
+Runner.getCustomLabel = function ( name ) {
 	return Runner.lang.customlabels[name];
 };
 
 /**
  *	Convert absolute-positioned element to fixed preserving screen coordinates
  */
-Runner.util.absToFixed = function( $e ) {
+Runner.util.absToFixed = function ( $e ) {
 	var offsetParent = null,
 		css = {
 			position: 'fixed',
@@ -1828,19 +1830,19 @@ Runner.util.absToFixed = function( $e ) {
 		parentOffset;
 
 	if ( !Runner.isIE && !Runner.isIE11 ) {
-		$e.parents().each( function( i, p ) {
-			if ( $(p).css('transform') != 'none' ) {
+		$e.parents().each( function ( i, p ) {
+			if ( $( p ).css( 'transform' ) != 'none' ) {
 				offsetParent = p;
 				return false;
 			}
-		});
+		} );
 	}
 
 	if ( offsetParent === null ) {
-		css.top = offset.top - ( $(document.body).scrollTop() || $(window).scrollTop() );  //pageYOffset
-		css.left = offset.left - ( $(window).scrollLeft() || $(document.body).scrollLeft() );
+		css.top = offset.top - ( $( document.body ).scrollTop() || $( window ).scrollTop() );  //pageYOffset
+		css.left = offset.left - ( $( window ).scrollLeft() || $( document.body ).scrollLeft() );
 	} else {
-		parentOffset = $(offsetParent).offset();
+		parentOffset = $( offsetParent ).offset();
 		css.top = offset.top - parentOffset.top;
 		css.left = offset.left - parentOffset.left;
 	}
@@ -1853,54 +1855,54 @@ Runner.util.absToFixed = function( $e ) {
  * @constructor
  * @param {jQuery object} $tabContext
  */
-Runner.Tabs = function( $tabContext ) {
-	var $tabNav = $("ul.nav-tabs", $tabContext),
-		$tabContent = $(".tab-content", $tabContext),
-		preventTabShow = function(e) {
+Runner.Tabs = function ( $tabContext ) {
+	var $tabNav = $( "ul.nav-tabs", $tabContext ),
+		$tabContent = $( ".tab-content", $tabContext ),
+		preventTabShow = function ( e ) {
 			e.preventDefault();
 		};
 
 	/**
 	 * @return {number}
 	 */
-	this.count = function() {
-		return $tabNav.children("li").length;
+	this.count = function () {
+		return $tabNav.children( "li" ).length;
 	};
 
 	/**
 	 * @param {number} n
 	 */
-	this.activate = function( n ) {
-		var $li = $tabNav.children("li").eq( n );
+	this.activate = function ( n ) {
+		var $li = $tabNav.children( "li" ).eq( n );
 
-		if ( $li.is(":visible") && !$li.hasClass("disable") ) {
-			$("a[data-toggle='tab']", $li).tab("show");
+		if ( $li.is( ":visible" ) && !$li.hasClass( "disable" ) ) {
+			$( "a[data-toggle='tab']", $li ).tab( "show" );
 		}
 	};
 
 	/**
 	 * @return {number}
 	 */
-	this.activeIdx = function() {
-		$activeLi = $tabNav.children("li.active");
+	this.activeIdx = function () {
+		$activeLi = $tabNav.children( "li.active" );
 
-		return $tabNav.children("li").index( $activeLi );
+		return $tabNav.children( "li" ).index( $activeLi );
 	};
 
 	/**
 	 * @param {number} n
 	 */
-	this.hide = function( n ) {
+	this.hide = function ( n ) {
 		var $newActiveLi,
-			$liToHide = $tabNav.children("li").eq( n );
+			$liToHide = $tabNav.children( "li" ).eq( n );
 
 		if ( n == this.activeIdx() ) {
-			$newActiveLi = $tabNav.children("li:visible").not(".active", ".disabled");
-			$("a[data-toggle='tab']", $newActiveLi).tab("show");
+			$newActiveLi = $tabNav.children( "li:visible" ).not( ".active", ".disabled" );
+			$( "a[data-toggle='tab']", $newActiveLi ).tab( "show" );
 
-			if ( !$newActiveLi.length )	{
-				this.bodyElement( n ).removeClass("active");
-				$liToHide.removeClass("active");
+			if ( !$newActiveLi.length ) {
+				this.bodyElement( n ).removeClass( "active" );
+				$liToHide.removeClass( "active" );
 			}
 		}
 
@@ -1910,8 +1912,8 @@ Runner.Tabs = function( $tabContext ) {
 	/**
 	 * @param {number} n
 	 */
-	this.show = function( n ) {
-		$tabNav.children("li").eq( n ).show();
+	this.show = function ( n ) {
+		$tabNav.children( "li" ).eq( n ).show();
 		if ( this.activeIdx() === -1 ) {
 			this.activate( n );
 		}
@@ -1920,37 +1922,37 @@ Runner.Tabs = function( $tabContext ) {
 	/**
 	 * @param {number} n
 	 */
-	this.disable = function( n ) {
-		var $li = $tabNav.children("li").eq( n );
+	this.disable = function ( n ) {
+		var $li = $tabNav.children( "li" ).eq( n );
 
-		$li.addClass("disabled");
-		$("a[data-toggle='tab']", $li).on("show.bs.tab", preventTabShow);
+		$li.addClass( "disabled" );
+		$( "a[data-toggle='tab']", $li ).on( "show.bs.tab", preventTabShow );
 	};
 
 	/**
 	 * @param {number} n
 	 */
-	this.enable = function( n ) {
-		var $li = $tabNav.children("li").eq( n );
+	this.enable = function ( n ) {
+		var $li = $tabNav.children( "li" ).eq( n );
 
-		$li.removeClass("disabled");
-		$("a[data-toggle='tab']", $li).off("show.bs.tab", preventTabShow);
+		$li.removeClass( "disabled" );
+		$( "a[data-toggle='tab']", $li ).off( "show.bs.tab", preventTabShow );
 	};
 
 	/**
 	 * @param {number} n
 	 * @return {jQuery object}
- 	 */
-	this.headerElement = function( n ) {
-		return $("a[data-toggle='tab']", $tabNav.children("li").eq( n ));
+	   */
+	this.headerElement = function ( n ) {
+		return $( "a[data-toggle='tab']", $tabNav.children( "li" ).eq( n ) );
 	};
 
 	/**
 	 * @param {number} n
 	 * @return {jQuery object}
- 	 */
-	this.bodyElement = function( n ) {
-		var idSelector = $("a[data-toggle='tab']", $tabNav.children("li").eq( n )).attr("href");
+	   */
+	this.bodyElement = function ( n ) {
+		var idSelector = $( "a[data-toggle='tab']", $tabNav.children( "li" ).eq( n ) ).attr( "href" );
 		return $( idSelector, $tabContent );
 	};
 
@@ -1959,13 +1961,13 @@ Runner.Tabs = function( $tabContext ) {
 	 * @param {string} panelHtml
 	 * @retrn {number}
 	 */
-	this.addTab = function( headerHtml, panelHtml ) {
+	this.addTab = function ( headerHtml, panelHtml ) {
 		var tabIdx = this.count() + 1,
 			tabId = "newTab" + tabIdx,
-			$a = $('<a role="tab" data-toggle="tab" href="#' + tabId + '"></a>').html( headerHtml );
+			$a = $( '<a role="tab" data-toggle="tab" href="#' + tabId + '"></a>' ).html( headerHtml );
 
-		$('<li></li>').append( $a ).appendTo( $tabNav );
-		$('<div id="' + tabId + '" role="tabpanel" class="tab-pane"></div>').html( panelHtml ).appendTo( $tabContent );
+		$( '<li></li>' ).append( $a ).appendTo( $tabNav );
+		$( '<div id="' + tabId + '" role="tabpanel" class="tab-pane"></div>' ).html( panelHtml ).appendTo( $tabContent );
 		$a.tab();
 
 		return tabIdx;
@@ -1974,15 +1976,15 @@ Runner.Tabs = function( $tabContext ) {
 	/**
 	 * @param {number} n
 	 * @return {jQuery object}
- 	 */
-	this.removeTab = function( n ) {
-		var $li = $tabNav.children("li").eq( n ),
-			$content = $tabContent.children("div").eq( n );
+	   */
+	this.removeTab = function ( n ) {
+		var $li = $tabNav.children( "li" ).eq( n ),
+			$content = $tabContent.children( "div" ).eq( n );
 
 		if ( $li.length ) {
 			$li.remove();
 			$content.remove()
-			this.activate(0);
+			this.activate( 0 );
 		}
 	};
 
@@ -1990,8 +1992,8 @@ Runner.Tabs = function( $tabContext ) {
 	 * @param {number} n
 	 * @param {number} m
 	 */
-	this.moveTo = function( n, m ) {
-		var $liToMove = $tabNav.children("li").eq( n );
+	this.moveTo = function ( n, m ) {
+		var $liToMove = $tabNav.children( "li" ).eq( n );
 
 		if ( m == n || !$liToMove.length ) {
 			return;
@@ -2008,9 +2010,9 @@ Runner.Tabs = function( $tabContext ) {
 		}
 
 		if ( n < m ) {
-			$liToMove.insertAfter( $tabNav.children("li").eq( m ) );
+			$liToMove.insertAfter( $tabNav.children( "li" ).eq( m ) );
 		} else {
-			$liToMove.insertBefore( $tabNav.children("li").eq( m ) );
+			$liToMove.insertBefore( $tabNav.children( "li" ).eq( m ) );
 		}
 	};
 };
@@ -2019,33 +2021,33 @@ Runner.Tabs = function( $tabContext ) {
  * @constructor
  * @param {jQuery object} $context
  */
-Runner.Section = function( $context ) {
-	var $toggler = $('[data-toggle="collapse"]', $context),
-		$toggledPanel = $( $toggler.attr("href"), $context );
+Runner.Section = function ( $context ) {
+	var $toggler = $( '[data-toggle="collapse"]', $context ),
+		$toggledPanel = $( $toggler.attr( "href" ), $context );
 
 	/**
 	 * @return {jQuery object}
- 	 */
-	this.headerElement = function() {
-		return $('[data-toggle="collapse"]', $context);
+	   */
+	this.headerElement = function () {
+		return $( '[data-toggle="collapse"]', $context );
 	};
 
 	/**
 	 * @return {jQuery object}
- 	 */
-	this.bodyElement = function() {
-		return $toggledPanel.children(".panel-body");
+	   */
+	this.bodyElement = function () {
+		return $toggledPanel.children( ".panel-body" );
 	};
 
-	this.expand = function() {
-		$toggledPanel.collapse("show")
+	this.expand = function () {
+		$toggledPanel.collapse( "show" )
 	};
 
-	this.collapse = function() {
-		$toggledPanel.collapse("hide");
+	this.collapse = function () {
+		$toggledPanel.collapse( "hide" );
 	};
 
-	this.get = function() {
+	this.get = function () {
 		return $toggledPanel;
 	};
 };
@@ -2053,206 +2055,202 @@ Runner.Section = function( $context ) {
 
 /* Bootstrap Dropdown fork to allow nested dropdowns */
 
-+function ($) {
-  'use strict';
++function ( $ ) {
+	'use strict';
 
-  // DROPDOWN CLASS DEFINITION
-  // =========================
+	// DROPDOWN CLASS DEFINITION
+	// =========================
 
-  var backdrop = '.dropdown-backdrop'
-  var toggle   = '[data-toggle="nested-dropdown"]'
-  var Dropdown = function (element) {
-    $(element).on('click.bs.dropdown', this.toggle)
-  }
-
-  Dropdown.VERSION = '3.3.5'
-
-  function getParent($this) {
-    var selector = $this.attr('data-target')
-
-    if (!selector) {
-      selector = $this.attr('href')
-      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
-    }
-
-    var $parent = selector && $(selector)
-
-    return $parent && $parent.length ? $parent : $this.parent()
-  }
-
-  function clearMenus(e) {
-    if (e && e.which === 3) return
-    $(backdrop).remove()
-    $(toggle).each(function () {
-    var $this         = $(this);
-	var $clickedMenu         = $(e.target).closest(toggle);
-	if ( $this.length == 0 ) {
-		$this = $(this);
-	}
-      var $parent       = getParent($this)
-      var relatedTarget = { relatedTarget: this }
-
-      if (!$parent.hasClass('open')) return;
-
-
-      if (e && e.type == 'click' && /input|textarea/i.test(e.target.tagName) && $.contains($parent[0], e.target)) return
-
-	  //check if $parent is ascendant of e.target, but not its direct parent
-//	  if (e && !$(e.target).parent().is($parent) &&  $parent.has( e.target ).length )
-//			return;
-	if ( $clickedMenu.closest( $parent ).length ) {
-		return;
+	var backdrop = '.dropdown-backdrop'
+	var toggle = '[data-toggle="nested-dropdown"]'
+	var Dropdown = function ( element ) {
+		$( element ).on( 'click.bs.dropdown', this.toggle )
 	}
 
-      $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget))
+	Dropdown.VERSION = '3.3.5'
 
-      if (e.isDefaultPrevented()) return
+	function getParent( $this ) {
+		var selector = $this.attr( 'data-target' )
 
-      $this.attr('aria-expanded', 'false')
-      $parent.removeClass('open').trigger('hidden.bs.dropdown', relatedTarget)
-    })
-  }
+		if ( !selector ) {
+			selector = $this.attr( 'href' )
+			selector = selector && /#[A-Za-z]/.test( selector ) && selector.replace( /.*(?=#[^\s]*$)/, '' ) // strip for ie7
+		}
 
-  Dropdown.prototype.toggle = function (e) {
-    var $this = $(this)
+		var $parent = selector && $( selector )
 
-    if ($this.is('.disabled, :disabled')) return
+		return $parent && $parent.length ? $parent : $this.parent()
+	}
 
-    var $parent  = getParent($this)
-    var isActive = $parent.hasClass('open')
+	function clearMenus( e ) {
+		if ( e && e.which === 3 ) return
+		$( backdrop ).remove()
+		$( toggle ).each( function () {
+			var $this = $( this );
+			var $clickedMenu = $( e.target ).closest( toggle );
+			if ( $this.length == 0 ) {
+				$this = $( this );
+			}
+			var $parent = getParent( $this )
+			var relatedTarget = { relatedTarget: this }
 
-    clearMenus( e )
-
-    if (!isActive) {
-      if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
-        // if mobile we use a backdrop because click events don't delegate
-        $(document.createElement('div'))
-          .addClass('dropdown-backdrop')
-          .insertAfter($(this))
-          .on('click', clearMenus)
-      }
-
-      var relatedTarget = { relatedTarget: this }
-      $parent.trigger(e = $.Event('show.bs.dropdown', relatedTarget))
-
-      if (e.isDefaultPrevented()) return
-
-      $this
-        .trigger('focus')
-        .attr('aria-expanded', 'true')
-
-      $parent
-        .toggleClass('open')
-        .trigger('shown.bs.dropdown', relatedTarget)
-    }
-
-    return false
-  }
-
-  Dropdown.prototype.keydown = function (e) {
-    if (!/(38|40|27|32)/.test(e.which) || /input|textarea/i.test(e.target.tagName)) return
-
-    var $this = $(this)
-
-    e.preventDefault()
-    e.stopPropagation()
-
-    if ($this.is('.disabled, :disabled')) return
-
-    var $parent  = getParent($this)
-    var isActive = $parent.hasClass('open')
-
-    if (!isActive && e.which != 27 || isActive && e.which == 27) {
-      if (e.which == 27) $parent.find(toggle).trigger('focus')
-      return $this.trigger('click')
-    }
-
-    var desc = ' li:not(.disabled):visible a'
-    var $items = $parent.find('.dropdown-menu' + desc)
-
-    if (!$items.length) return
-
-    var index = $items.index(e.target)
-
-    if (e.which == 38 && index > 0)                 index--         // up
-    if (e.which == 40 && index < $items.length - 1) index++         // down
-    if (!~index)                                    index = 0
-
-    $items.eq(index).trigger('focus')
-  }
+			if ( !$parent.hasClass( 'open' ) ) return;
 
 
-  // DROPDOWN PLUGIN DEFINITION
-  // ==========================
+			if ( e && e.type == 'click' && /input|textarea/i.test( e.target.tagName ) && $.contains( $parent[0], e.target ) ) return
 
-  function Plugin(option) {
-    return this.each(function () {
-      var $this = $(this)
-      var data  = $this.data('bs.dropdown')
+			//check if $parent is ascendant of e.target, but not its direct parent
+			//	  if (e && !$(e.target).parent().is($parent) &&  $parent.has( e.target ).length )
+			//			return;
+			if ( $clickedMenu.closest( $parent ).length ) {
+				return;
+			}
 
-      if (!data) $this.data('bs.dropdown', (data = new Dropdown(this)))
-      if (typeof option == 'string') data[option].call($this)
-    })
-  }
+			$parent.trigger( e = $.Event( 'hide.bs.dropdown', relatedTarget ) )
 
-  var old = $.fn.dropdown
+			if ( e.isDefaultPrevented() ) return
 
-  $.fn.dropdown             = Plugin
-  $.fn.dropdown.Constructor = Dropdown
+			$this.attr( 'aria-expanded', 'false' )
+			$parent.removeClass( 'open' ).trigger( 'hidden.bs.dropdown', relatedTarget )
+		} )
+	}
+
+	Dropdown.prototype.toggle = function ( e ) {
+		var $this = $( this )
+
+		if ( $this.is( '.disabled, :disabled' ) ) return
+
+		var $parent = getParent( $this )
+		var isActive = $parent.hasClass( 'open' )
+
+		clearMenus( e )
+
+		if ( !isActive ) {
+			if ( 'ontouchstart' in document.documentElement && !$parent.closest( '.navbar-nav' ).length ) {
+				// if mobile we use a backdrop because click events don't delegate
+				$( document.createElement( 'div' ) )
+					.addClass( 'dropdown-backdrop' )
+					.insertAfter( $( this ) )
+					.on( 'click', clearMenus )
+			}
+
+			var relatedTarget = { relatedTarget: this }
+			$parent.trigger( e = $.Event( 'show.bs.dropdown', relatedTarget ) )
+
+			if ( e.isDefaultPrevented() ) return
+
+			$this
+				.trigger( 'focus' )
+				.attr( 'aria-expanded', 'true' )
+
+			$parent
+				.toggleClass( 'open' )
+				.trigger( 'shown.bs.dropdown', relatedTarget )
+		}
+
+		return false
+	}
+
+	Dropdown.prototype.keydown = function ( e ) {
+		if ( !/(38|40|27|32)/.test( e.which ) || /input|textarea/i.test( e.target.tagName ) ) return
+
+		var $this = $( this )
+
+		e.preventDefault()
+		e.stopPropagation()
+
+		if ( $this.is( '.disabled, :disabled' ) ) return
+
+		var $parent = getParent( $this )
+		var isActive = $parent.hasClass( 'open' )
+
+		if ( !isActive && e.which != 27 || isActive && e.which == 27 ) {
+			if ( e.which == 27 ) $parent.find( toggle ).trigger( 'focus' )
+			return $this.trigger( 'click' )
+		}
+
+		var desc = ' li:not(.disabled):visible a'
+		var $items = $parent.find( '.dropdown-menu' + desc )
+
+		if ( !$items.length ) return
+
+		var index = $items.index( e.target )
+
+		if ( e.which == 38 && index > 0 ) index--         // up
+		if ( e.which == 40 && index < $items.length - 1 ) index++         // down
+		if ( !~index ) index = 0
+
+		$items.eq( index ).trigger( 'focus' )
+	}
 
 
-  // DROPDOWN NO CONFLICT
-  // ====================
+	// DROPDOWN PLUGIN DEFINITION
+	// ==========================
 
-  $.fn.dropdown.noConflict = function () {
-    $.fn.dropdown = old
-    return this
-  }
+	function Plugin( option ) {
+		return this.each( function () {
+			var $this = $( this )
+			var data = $this.data( 'bs.dropdown' )
 
-  Runner.getUrlParams = function() {
-    var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = decodeURIComponent( value );
-    });
-    return vars;
-}
+			if ( !data ) $this.data( 'bs.dropdown', ( data = new Dropdown( this ) ) )
+			if ( typeof option == 'string' ) data[option].call( $this )
+		} )
+	}
+
+	var old = $.fn.dropdown
+
+	$.fn.dropdown = Plugin
+	$.fn.dropdown.Constructor = Dropdown
 
 
-  // APPLY TO STANDARD DROPDOWN ELEMENTS
-  // ===================================
+	// DROPDOWN NO CONFLICT
+	// ====================
 
-  $(document)
-    .on('click.bs.dropdown.data-api', clearMenus)
-    .on('click.bs.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
-    .on('click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle)
-    .on('keydown.bs.dropdown.data-api', toggle, Dropdown.prototype.keydown)
-    .on('keydown.bs.dropdown.data-api', '.dropdown-menu', Dropdown.prototype.keydown)
+	$.fn.dropdown.noConflict = function () {
+		$.fn.dropdown = old
+		return this
+	}
 
-}(jQuery);
+	Runner.getUrlParams = function () {
+		return Object.fromEntries( new URLSearchParams( window.location.href ) );
+	}
 
-Runner.escapeHtml = function( str ) {
+
+	// APPLY TO STANDARD DROPDOWN ELEMENTS
+	// ===================================
+
+	$( document )
+		.on( 'click.bs.dropdown.data-api', clearMenus )
+		.on( 'click.bs.dropdown.data-api', '.dropdown form', function ( e ) { e.stopPropagation() } )
+		.on( 'click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle )
+		.on( 'keydown.bs.dropdown.data-api', toggle, Dropdown.prototype.keydown )
+		.on( 'keydown.bs.dropdown.data-api', '.dropdown-menu', Dropdown.prototype.keydown )
+
+}( jQuery );
+
+Runner.escapeHtml = function ( str ) {
 	if ( str === null || str === undefined ) {
-	  return "";
+		return "";
 	}
 	return str.toString()
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&#039;");
+		.replace( /&/g, "&amp;" )
+		.replace( /</g, "&lt;" )
+		.replace( />/g, "&gt;" )
+		.replace( /"/g, "&quot;" )
+		.replace( /'/g, "&#039;" );
 }
 
 
-Runner.generateId = (function() {
+Runner.generateId = ( function () {
 	var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	return function( length ) {
+	return function ( length ) {
 		var ret = '';
 		for ( var i = 0; i < length; ++i ) {
-			ret += chars.charAt( Math.floor( Math.random() * chars.length) );
+			ret += chars.charAt( Math.floor( Math.random() * chars.length ) );
 		}
 		return ret;
 	}
-})();
+} )();
 
 /**
 * @param {string} message
@@ -2260,66 +2258,66 @@ Runner.generateId = (function() {
 */
 
 Runner.displayGenericAjaxError = function ( message, previewMessage ) {
-   var showDetailedError = Runner.pages.PageSettings.getGlobalData( "showDetailedError" ),
-	   $indicator, $error, $removelink;
+	var showDetailedError = Runner.pages.PageSettings.getGlobalData( "showDetailedError" ),
+		$indicator, $error, $removelink;
 
-   if ( !previewMessage ) {
-	   previewMessage = showDetailedError ? Runner.lang.constants.TEXT_SERVER_ERROR_OCCURRED : Runner.pages.PageSettings.getGlobalData( "customErrorMessage" )
-   }
+	if ( !previewMessage ) {
+		previewMessage = showDetailedError ? Runner.lang.constants.TEXT_SERVER_ERROR_OCCURRED : Runner.pages.PageSettings.getGlobalData( "customErrorMessage" )
+	}
 
-   if ( !previewMessage ) {
-	   return;
-   }
+	if ( !previewMessage ) {
+		return;
+	}
 
-   if ( showDetailedError ) {
-	   $indicator = $( '<div class="rnr-error-indicator">' + previewMessage
-		   + '. <a href=# class="expandlink">' + Runner.lang.constants.TEXT_SEE_DETAILS + '</a></div>' );
-   } else {
-	   $indicator = $( '<div class="rnr-error-indicator">' + previewMessage + '</div>' );
-   }
+	if ( showDetailedError ) {
+		$indicator = $( '<div class="rnr-error-indicator">' + previewMessage
+			+ '. <a href=# class="expandlink">' + Runner.lang.constants.TEXT_SEE_DETAILS + '</a></div>' );
+	} else {
+		$indicator = $( '<div class="rnr-error-indicator">' + previewMessage + '</div>' );
+	}
 
-   $error = $( '<div class="rnr-error-message"></div>' )
-	   .html( message )
-	   .hide()
-	   .appendTo( document.body );
+	$error = $( '<div class="rnr-error-message"></div>' )
+		.html( message )
+		.hide()
+		.appendTo( document.body );
 
-   $removelink = $( '<a class="removelink" href="#">Close</a>' )
-	   .appendTo( $error );
+	$removelink = $( '<a class="removelink" href="#">Close</a>' )
+		.appendTo( $error );
 
-   $indicator.css( {
-	   'margin-left': '-' + $( document.body ).css( "padding-left" ).replace( "px", "" ) + 'px',
-	   'margin-top': '-' + $( document.body ).css( "padding-top" ).replace( "px", "" ) + 'px',
-	   'margin-bottom': ( 1 + parseInt( $( document.body ).css( "padding-top" ).replace( "px", "" ) ) ) + 'px'
-   } )
-	   .prependTo( document.body );
+	$indicator.css( {
+		'margin-left': '-' + $( document.body ).css( "padding-left" ).replace( "px", "" ) + 'px',
+		'margin-top': '-' + $( document.body ).css( "padding-top" ).replace( "px", "" ) + 'px',
+		'margin-bottom': ( 1 + parseInt( $( document.body ).css( "padding-top" ).replace( "px", "" ) ) ) + 'px'
+	} )
+		.prependTo( document.body );
 
-   $removelink.on( 'click', function ( e ) {
-	   $error.remove();
-	   $indicator.remove();
-	   return false;
-   } );
+	$removelink.on( 'click', function ( e ) {
+		$error.remove();
+		$indicator.remove();
+		return false;
+	} );
 
-   $indicator.on( 'click', '.expandlink', function ( e ) {
-	   $error.show();
-	   $indicator.hide();
-	   return false;
-   } );
+	$indicator.on( 'click', '.expandlink', function ( e ) {
+		$error.show();
+		$indicator.hide();
+		return false;
+	} );
 };
 
 
 
 
-Runner.util.generatePassword = function( length ) {
-	var result           = '';
-	var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+Runner.util.generatePassword = function ( length ) {
+	var result = '';
+	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	var charactersLength = characters.length;
 	for ( var i = 0; i < length; i++ ) {
-	   result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		result += characters.charAt( Math.floor( Math.random() * charactersLength ) );
 	}
 	return result;
- };
+};
 
- Runner.monthNames = [
+Runner.monthNames = [
 	Runner.lang.constants.MONTH_JAN,
 	Runner.lang.constants.MONTH_FEB,
 	Runner.lang.constants.MONTH_MAR,
@@ -2332,35 +2330,35 @@ Runner.util.generatePassword = function( length ) {
 	Runner.lang.constants.MONTH_OCT,
 	Runner.lang.constants.MONTH_NOV,
 	Runner.lang.constants.MONTH_DEC
-],	
+],
 
-Runner.dayNames = [
-	Runner.lang.constants.DAY_SU,
-	Runner.lang.constants.DAY_MO,
-	Runner.lang.constants.DAY_TU,
-	Runner.lang.constants.DAY_WE,
-	Runner.lang.constants.DAY_TH,
-	Runner.lang.constants.DAY_FR,
-	Runner.lang.constants.DAY_SA
-];
+	Runner.dayNames = [
+		Runner.lang.constants.DAY_SU,
+		Runner.lang.constants.DAY_MO,
+		Runner.lang.constants.DAY_TU,
+		Runner.lang.constants.DAY_WE,
+		Runner.lang.constants.DAY_TH,
+		Runner.lang.constants.DAY_FR,
+		Runner.lang.constants.DAY_SA
+	];
 
-Runner.setDatePickerLocale = function() {
-	moment.updateLocale('en', {
+Runner.setDatePickerLocale = function () {
+	moment.updateLocale( 'en', {
 		months: Runner.monthNames,
-		monthsShort: Runner.monthNames.map( function( val ) {
-			return val.substr(0, 3);
-		}),
+		monthsShort: Runner.monthNames.map( function ( val ) {
+			return val.substr( 0, 3 );
+		} ),
 		weekdaysMin: Runner.dayNames,
 		week: {
-			dow: ( parseInt( Runner.pages.PageSettings.getGlobalData("locale").startWeekDay ) + 1 ) % 7, // Monday is the first day of the week.	        		
+			dow: ( parseInt( Runner.pages.PageSettings.getGlobalData( "locale" ).startWeekDay ) + 1 ) % 7, // Monday is the first day of the week.	        		
 		},
-		meridiem: function( hour, minute, isLowercase ) {
+		meridiem: function ( hour, minute, isLowercase ) {
 			if ( hour >= 12 ) {
-				return Runner.pages.PageSettings.getGlobalData("locale").timePmLetter;
-			}  
-			return Runner.pages.PageSettings.getGlobalData("locale").timeAmLetter;
+				return Runner.pages.PageSettings.getGlobalData( "locale" ).timePmLetter;
+			}
+			return Runner.pages.PageSettings.getGlobalData( "locale" ).timeAmLetter;
 		}
-	});
+	} );
 };
 
 
@@ -2368,62 +2366,62 @@ Runner.setDatePickerLocale = function() {
  * turn on user activity tracking
  */
 Runner.trackUserActivity = Runner.emptyFn;
-( function(){
+( function () {
 	var sessionControl = window.settings.global && window.settings.global["sessionControl"];
 	if ( sessionControl && sessionControl["forceExpire"] ) {
-		Runner.trackUserActivity = function() {
-			Runner.lastUserActivity = Date.now();	
+		Runner.trackUserActivity = function () {
+			Runner.lastUserActivity = Date.now();
 		};
-		
+
 		// patch jQuery ajax methods to control user activity 
 		var originaljQueryPost = $.post;
-		jQuery.post = $.post = function() {
+		jQuery.post = $.post = function () {
 			$.ajax.trackingUserActivity = $.post.trackingUserActivity;
-			
+
 			var result = originaljQueryPost.apply( this, arguments );
 			$.post.trackingUserActivity = true;
 			return result;
 		};
 		$.post.trackingUserActivity = true;
-		
+
 		var originaljQueryGet = $.get;
-		jQuery.get = $.get = function() {
+		jQuery.get = $.get = function () {
 			$.ajax.trackingUserActivity = $.get.trackingUserActivity;
-			
+
 			var result = originaljQueryGet.apply( this, arguments );
 			$.get.trackingUserActivity = true;
 			return result;
 		};
 		$.get.trackingUserActivity = true;
-		
+
 		var originaljQueryAjax = $.ajax;
-		jQuery.ajax = $.ajax = function() {
+		jQuery.ajax = $.ajax = function () {
 			$.ajax.trackingUserActivity && Runner.trackUserActivity();
-			
+
 			var result = originaljQueryAjax.apply( this, arguments );
 			$.ajax.trackingUserActivity = true;
 			return result;
 		};
-		$.ajax.trackingUserActivity = true;			
+		$.ajax.trackingUserActivity = true;
 	}
-	
-	
+
+
 } )();
 
 /**
  * Returns moment.js-compatibel format string for local date
  * @returns String
  */
- Runner.getDateFormatString = function() {
-	var dateFormat = Runner.pages.PageSettings.getGlobalData("locale").dateFormat;
-	var dateDelimiter = Runner.pages.PageSettings.getGlobalData("locale")["dateDelimiter"];
+Runner.getDateFormatString = function () {
+	var dateFormat = Runner.pages.PageSettings.getGlobalData( "locale" ).dateFormat;
+	var dateDelimiter = Runner.pages.PageSettings.getGlobalData( "locale" )["dateDelimiter"];
 	var dateFormat;
-		
+
 	// get date format
-	switch ( parseInt(dateFormat) ) {
-		case  0: dateFormat = 'MM/DD/YYYY'.replace(/\//g, dateDelimiter); break;
-		case  1: dateFormat = 'DD/MM/YYYY'.replace(/\//g, dateDelimiter); break;
-		case  2: dateFormat = 'YYYY/MM/DD'.replace(/\//g, dateDelimiter); break;
+	switch ( parseInt( dateFormat ) ) {
+		case 0: dateFormat = 'MM/DD/YYYY'.replace( /\//g, dateDelimiter ); break;
+		case 1: dateFormat = 'DD/MM/YYYY'.replace( /\//g, dateDelimiter ); break;
+		case 2: dateFormat = 'YYYY/MM/DD'.replace( /\//g, dateDelimiter ); break;
 		case -1: default: dateFormat = 'dd-mm-yy';
 	}
 
@@ -2434,12 +2432,12 @@ Runner.trackUserActivity = Runner.emptyFn;
  * Returns moment.js-compatibel format string for local time
  * @returns String
  */
-Runner.getTimeFormatString = function( showSeconds, is24hoursFormat ) {
-	var leadingZero = Runner.pages.PageSettings.getGlobalData("locale").leadingZero == "1",
-		timeDelimiter = Runner.pages.PageSettings.getGlobalData("locale").timeDelimiter;
-		
+Runner.getTimeFormatString = function ( showSeconds, is24hoursFormat ) {
+	var leadingZero = Runner.pages.PageSettings.getGlobalData( "locale" ).leadingZero == "1",
+		timeDelimiter = Runner.pages.PageSettings.getGlobalData( "locale" ).timeDelimiter;
+
 	if ( is24hoursFormat === undefined ) {
-		is24hoursFormat = Runner.pages.PageSettings.getGlobalData("locale").is24hoursFormat == "1";
+		is24hoursFormat = Runner.pages.PageSettings.getGlobalData( "locale" ).is24hoursFormat == "1";
 	}
 
 	var timeFormat,
@@ -2450,7 +2448,7 @@ Runner.getTimeFormatString = function( showSeconds, is24hoursFormat ) {
 
 	timeFormat = hour;
 	timeFormat += timeDelimiter + minute;
-	if( showSeconds )
+	if ( showSeconds )
 		timeFormat += timeDelimiter + secound;
 	timeFormat += !is24hoursFormat ? " a" : "";
 
@@ -2460,19 +2458,19 @@ Runner.getTimeFormatString = function( showSeconds, is24hoursFormat ) {
 /**
  *
  */
-Runner.printTimeFromDate = function( dateValue, showSeconds, is24hoursFormat ) {
-	if ( !(dateValue instanceof Date) ) {
+Runner.printTimeFromDate = function ( dateValue, showSeconds, is24hoursFormat ) {
+	if ( !( dateValue instanceof Date ) ) {
 		return "";
 	}
-	
-	var leadingZero = Runner.pages.PageSettings.getGlobalData("locale").leadingZero == "1",
-		timeDelimiter = Runner.pages.PageSettings.getGlobalData("locale").timeDelimiter,
-		timePmLetter = Runner.pages.PageSettings.getGlobalData("locale").timePmLetter
-		timeAmLetter = Runner.pages.PageSettings.getGlobalData("locale").timeAmLetter;
-		
-		
+
+	var leadingZero = Runner.pages.PageSettings.getGlobalData( "locale" ).leadingZero == "1",
+		timeDelimiter = Runner.pages.PageSettings.getGlobalData( "locale" ).timeDelimiter,
+		timePmLetter = Runner.pages.PageSettings.getGlobalData( "locale" ).timePmLetter
+	timeAmLetter = Runner.pages.PageSettings.getGlobalData( "locale" ).timeAmLetter;
+
+
 	if ( is24hoursFormat === undefined ) {
-		is24hoursFormat = Runner.pages.PageSettings.getGlobalData("locale").is24hoursFormat == "1";
+		is24hoursFormat = Runner.pages.PageSettings.getGlobalData( "locale" ).is24hoursFormat == "1";
 	}
 
 	var hours = dateValue.getHours(),
@@ -2481,62 +2479,62 @@ Runner.printTimeFromDate = function( dateValue, showSeconds, is24hoursFormat ) {
 		time,
 		ampm = "";
 
-		if ( !is24hoursFormat ) {
-			ampm = " ";
-			if ( hours > 12 ) {
-				hours = hours - 12;
-				ampm += timePmLetter;
-			} else if ( hours == 12 ) {
-				ampm += timePmLetter;
-			} else if ( hours === 0 ) {
-				hours = 12;
-				ampm += timeAmLetter;
-			} else {
-				ampm += timeAmLetter;
-			}
+	if ( !is24hoursFormat ) {
+		ampm = " ";
+		if ( hours > 12 ) {
+			hours = hours - 12;
+			ampm += timePmLetter;
+		} else if ( hours == 12 ) {
+			ampm += timePmLetter;
+		} else if ( hours === 0 ) {
+			hours = 12;
+			ampm += timeAmLetter;
+		} else {
+			ampm += timeAmLetter;
 		}
+	}
 
-		time = leadingZero && hours < 10 ? '0' + hours : hours;
-		time += timeDelimiter + (  minutes < 10 ? '0' + minutes : minutes );
-		
-		if ( showSeconds ) {
-			time += timeDelimiter + ( seconds < 10 ? '0' + seconds : seconds );
-		}
-		
-		return time + ampm;
+	time = leadingZero && hours < 10 ? '0' + hours : hours;
+	time += timeDelimiter + ( minutes < 10 ? '0' + minutes : minutes );
+
+	if ( showSeconds ) {
+		time += timeDelimiter + ( seconds < 10 ? '0' + seconds : seconds );
+	}
+
+	return time + ampm;
 },
 
-/**
- *
- */
-Runner.util.isInViewport = function( el, horizontally ) {
-	const rect = el.getBoundingClientRect();
-	if ( horizontally ) {
+	/**
+	 *
+	 */
+	Runner.util.isInViewport = function ( el, horizontally ) {
+		const rect = el.getBoundingClientRect();
+		if ( horizontally ) {
+			return (
+				rect.left >= 0 &&
+				rect.right <= ( window.innerWidth || document.documentElement.clientWidth )
+			);
+		}
 		return (
+			rect.top >= 0 &&
 			rect.left >= 0 &&
+			rect.bottom <= ( window.innerHeight || document.documentElement.clientHeight ) &&
 			rect.right <= ( window.innerWidth || document.documentElement.clientWidth )
-		);	
-	}
-	return (
-		rect.top >= 0 &&
-		rect.left >= 0 &&
-		rect.bottom <= ( window.innerHeight || document.documentElement.clientHeight ) &&
-		rect.right <= ( window.innerWidth || document.documentElement.clientWidth )
-	);
-};
+		);
+	};
 
 /**
  *
  */
-Runner.util.isInContainer = function( el, co, horizontally ) {
+Runner.util.isInContainer = function ( el, co, horizontally ) {
 	const rectEl = el.getBoundingClientRect();
 	const rectCo = co.getBoundingClientRect();
 	if ( horizontally ) {
 		return (
 			rectEl.left >= rectCo.left &&
 			rectEl.right <= rectCo.right
-		);	
-	}	
+		);
+	}
 	return (
 		rectEl.top >= rectCo.top &&
 		rectEl.left >= rectCo.left &&
@@ -2550,62 +2548,62 @@ Runner.util.isInContainer = function( el, co, horizontally ) {
  * @param {*} message - text in dialog
  * @param {*} confirmAction 
  */
-Runner.util.swalConfirm = function( message, confirmAction ) {
-    swal( message, {
-            buttons: {
-                cancel: Runner.lang.constants.CANCEL,
-                proceed: {
-                    text: Runner.lang.constants.OK,
-                    value: "ok",
-                }
-            },
-        } )
-        .then( function( value ) {
-            switch ( value ) {
-                case "ok":
-                    confirmAction();
-                    break;
-                default:
-                    break;
-            }
-        });
+Runner.util.swalConfirm = function ( message, confirmAction ) {
+	swal( message, {
+		buttons: {
+			cancel: Runner.lang.constants.CANCEL,
+			proceed: {
+				text: Runner.lang.constants.OK,
+				value: "ok",
+			}
+		},
+	} )
+		.then( function ( value ) {
+			switch ( value ) {
+				case "ok":
+					confirmAction();
+					break;
+				default:
+					break;
+			}
+		} );
 };
 
 /**
  * SweerAlert, SweetAlert2 lazy load
  */
-( function() {
-	window.swal = function() {
+( function () {
+	window.swal = function () {
 		var _args = arguments;
 		Runner.util.ScriptLoader.addJS( [settings.global["webRootPath"] + 'include/sweetalert.min.js'] );
 
-		return new Promise( function( resolve, reject ) {
-			Runner.util.ScriptLoader.onFilesLoaded( function() {
-				swal.apply( undefined , _args ).then( function( value ) {
+		return new Promise( function ( resolve, reject ) {
+			Runner.util.ScriptLoader.onFilesLoaded( function () {
+				swal.apply( undefined, _args ).then( function ( value ) {
 					resolve( value );
-				});
-			});
+				} );
+			} );
 			Runner.util.ScriptLoader.load();
-		});
+		} );
 	};
-	
-	
+
+
 	window.Swal = {
-		fire: function() {
+		fire: function () {
 			var _args = arguments;
 			Runner.util.ScriptLoader.addJS( [settings.global["webRootPath"] + 'include/sweetalert2.all.min.js'] );
-			
-			return new Promise( function( resolve, reject ) {
-				Runner.util.ScriptLoader.onFilesLoaded( function() {
-					Swal.fire.apply( Swal , _args ).then( function( value ) {
+
+			return new Promise( function ( resolve, reject ) {
+				Runner.util.ScriptLoader.onFilesLoaded( function () {
+					Swal.fire.apply( Swal, _args ).then( function ( value ) {
 						resolve( value );
-					});
-				});
+					} );
+				} );
 				Runner.util.ScriptLoader.load();
-			});
+			} );
 		}
 	}
-})();
+} )();
 
 /**
  * fit image to specified max width/height
@@ -2614,10 +2612,10 @@ Runner.util.swalConfirm = function( message, confirmAction ) {
  * @param {string} imageSrc
  * @param {Number} imageSize maximum width or height of the image in pixels
  */
- Runner.util.resizeImage = function( imageSrc, imageSize, blobType, callbackFn ) {
-	 
-	var canvas = document.createElement("canvas");
-	var ctx = canvas.getContext("2d");
+Runner.util.resizeImage = function ( imageSrc, imageSize, blobType, callbackFn ) {
+
+	var canvas = document.createElement( "canvas" );
+	var ctx = canvas.getContext( "2d" );
 	var img = new Image();
 
 	// prevents "Tainted canvases may not be exported" error
@@ -2627,25 +2625,25 @@ Runner.util.swalConfirm = function( message, confirmAction ) {
 		var imgwidth = img.width;
 		var imgheight = img.height;
 
-		if( imgwidth <= imageSize && imgheight <= imageSize ) {
+		if ( imgwidth <= imageSize && imgheight <= imageSize ) {
 			canvas.width = imgwidth;
 			canvas.height = imgheight;
 		} else {
 			var whRatio = imgwidth / imgheight;
-			if( whRatio >= 1 ) {
+			if ( whRatio >= 1 ) {
 				canvas.width = imageSize;
 				canvas.height = canvas.width / whRatio;
 			} else {
 				canvas.height = imageSize;
-				canvas.width = canvas.height / whRatio;
+				canvas.width = canvas.height * whRatio;
 			}
 		}
 
 		ctx.drawImage(
-		  img, 0, 0, imgwidth, imgheight, 0, 0, canvas.width, canvas.height
+			img, 0, 0, imgwidth, imgheight, 0, 0, canvas.width, canvas.height
 		);
 
-		canvas.toBlob( function( blob ) {
+		canvas.toBlob( function ( blob ) {
 			callbackFn( blob );
 		}, blobType );
 
@@ -2658,8 +2656,8 @@ Runner.util.arrayBufferToBase64 = function ( buffer ) {
 	var binary = '';
 	var bytes = new Uint8Array( buffer );
 	var len = bytes.byteLength;
-	for (var i = 0; i < len; i++) {
-		binary += String.fromCharCode( bytes[ i ] );
+	for ( var i = 0; i < len; i++ ) {
+		binary += String.fromCharCode( bytes[i] );
 	}
 	return btoa( binary );
 };
@@ -2669,21 +2667,21 @@ Runner.util.arrayBufferToBase64 = function ( buffer ) {
  * @param {number} number
  * @param {object} settings
  * @return {string}
- */	
-Runner.util.prepareNumberFormatting = function( number, settings ) {
+ */
+Runner.util.prepareNumberFormatting = function ( number, settings ) {
 	var iDigits = settings["decimalDigits"],
-		grouping = settings["grouping"], 
+		grouping = settings["grouping"],
 		ptr, i, outStart, outEnd;
-	
-	number = number.toFixed( iDigits ); 
+
+	number = number.toFixed( iDigits );
 	intPart = number >= 0 ? Math.floor( number ) : Math.floor( -number );
 	fracPart = number >= 0 ? number - intPart : -number - intPart;
-	out = intPart.toFixed(0);
-	
+	out = intPart.toFixed( 0 );
+
 	// add sousand separators to the integer part of the number
 	if ( grouping.length && parseInt( grouping[0], 10 ) ) {
 		ptr = out.toString().length;
-		for (i = 0; i < grouping.length; i++) {
+		for ( i = 0; i < grouping.length; i++ ) {
 			if ( !parseInt( grouping[i], 10 ) ) {
 				i--;
 			}
@@ -2696,10 +2694,10 @@ Runner.util.prepareNumberFormatting = function( number, settings ) {
 			out = outStart + settings["thousandSep"] + outEnd;
 		}
 	}
-	
+
 	// add a decimal separator and the fractional part to the integer part 
 	if ( iDigits > 0 ) {
-		fracPart = ( fracPart * Math.pow(10, iDigits) ).toFixed(0);
+		fracPart = ( fracPart * Math.pow( 10, iDigits ) ).toFixed( 0 );
 		while ( fracPart.length < iDigits ) {
 			fracPart = "0" + fracPart;
 		}
@@ -2713,15 +2711,15 @@ Runner.util.prepareNumberFormatting = function( number, settings ) {
  * @param {number} number
  * @param {object} numberSettings
  */
-Runner.util.getNumberFormatted = function( number, numberSettings ) {
+Runner.util.getNumberFormatted = function ( number, numberSettings ) {
 	var positiveSign = number >= 0,
 		outString = Runner.util.prepareNumberFormatting( number, numberSettings );
-	
+
 	// add the positive/negative signs to the formatted number
-	if ( positiveSign || parseInt(outString, 10) === 0 ) {
+	if ( positiveSign || parseInt( outString, 10 ) === 0 ) {
 		return numberSettings["LOCALE_SPOSITIVESIGN"] + outString;
 	}
-	
+
 	switch ( numberSettings["LOCALE_INEGNUMBER"] ) {
 		case "0":
 			return "(" + outString + ")";
@@ -2743,11 +2741,11 @@ Runner.util.getNumberFormatted = function( number, numberSettings ) {
  * @param {number} number
  * @param {object} currencySettings
  */
-Runner.util.getCurrencyFormatted = function( number, currencySettings ) {
+Runner.util.getCurrencyFormatted = function ( number, currencySettings ) {
 	var positiveSign = number >= 0,
 		outString = Runner.util.prepareNumberFormatting( number, currencySettings );
 
-	if ( positiveSign || parseInt(outString, 10) === 0 ) {
+	if ( positiveSign || parseInt( outString, 10 ) === 0 ) {
 		switch ( currencySettings["LOCALE_ICURRENCY"] ) {
 			case "0":
 				return currencySettings["LOCALE_SCURRENCY"] + outString;
@@ -2760,7 +2758,7 @@ Runner.util.getCurrencyFormatted = function( number, currencySettings ) {
 				return outString;
 		}
 	}
-	
+
 	switch ( currencySettings["LOCALE_INEGCURR"] ) {
 		case "0":
 			return "(" + currencySettings["LOCALE_SCURRENCY"] + outString + ")";
@@ -2799,120 +2797,135 @@ Runner.util.getCurrencyFormatted = function( number, currencySettings ) {
 	}
 };
 
-Runner.util.getTimeForTotal = function( totalVal ) {
+Runner.util.getTimeForTotal = function ( totalVal ) {
 	var s = totalVal % 60;
 	totalVal -= s;
 	totalVal /= 60;
-	
+
 	var m = totalVal % 60;
 	totalVal -= m;
 	totalVal /= 60;
-	
+
 	var h = totalVal % 24;
 	totalVal -= h;
 	totalVal /= 24;
-	
+
 	var d = totalVal;
-	return (d > 0 ? d + 'd ' : '') + (h == 0 ? '00' : h) 
-		+ ':' + (m > 9 ? m : (m == 0 ? '00' : '0' + m)) 
-		+ ':' + (s > 9 ? s : (s == 0 ? '00' : '0' + s));
+	return ( d > 0 ? d + 'd ' : '' ) + ( h == 0 ? '00' : h )
+		+ ':' + ( m > 9 ? m : ( m == 0 ? '00' : '0' + m ) )
+		+ ':' + ( s > 9 ? s : ( s == 0 ? '00' : '0' + s ) );
 };
 
-Runner.util.FieldFilterResizable = function( fieldName, $dropdown, pageObj ) {
+Runner.util.FieldFilterResizable = function ( fieldName, $dropdown, pageObj ) {
 	this.$dropdown = $dropdown;
 	this.$ddmenu = $dropdown.find( ".dropdown-menu" );
-	this.$wrapper = this.$ddmenu.children(".resizable");
+	this.$wrapper = this.$ddmenu.children( ".resizable" );
 
 	this.pageObj = pageObj;
 	this.fieldName = fieldName;
-	
+
 	return this;
 }
 
 
 Runner.util.FieldFilterResizable.prototype = {
-	makeResizable: function() {
+	makeResizable: function () {
 		var self = this;
-		
-		if ( this.$wrapper.is(".ui-resizable") ) {
-			this.$wrapper.resizable("destroy");
+
+		if ( this.$wrapper.is( ".ui-resizable" ) ) {
+			this.$wrapper.resizable( "destroy" );
 		}
-		
-		this.$wrapper.resizable({
-				handles: {
-					'se': this.$wrapper.children(".ui-resizable-se"),
-					'sw': this.$wrapper.children(".ui-resizable-sw")
-				},
-				minWidth: 250,
-				minHeight: 150,
-				resize: function( event, ui ) {
-					//	left and right are only applied to .dropdown-menu
-					self.$wrapper.css( 'left', 0 );
-				},
-				stop: function( event, ui ) {
-					// part of 'prevent dropdown from closing on resize' device
-					setTimeout( function() { 
-						self.$dropdown.off('hide.bs.dropdown'); 
-					}, 500 );
 
-					self.saveFieldFilterSize( [ self.$wrapper.css('width'), self.$wrapper.css('height'), self.$ddmenu.css('left'), self.$ddmenu.css('right') ] );
-				},
-				start: function( event, ui ) {
-					//	prevent dropdown from closing on resize
-					self.$dropdown.on('hide.bs.dropdown', function() { return false } );
+		this.$wrapper.resizable( {
+			handles: {
+				'se': this.$wrapper.children( ".ui-resizable-se" ),
+				'sw': this.$wrapper.children( ".ui-resizable-sw" )
+			},
+			minWidth: 250,
+			minHeight: 150,
+			resize: function ( event, ui ) {
+				//	left and right are only applied to .dropdown-menu
+				self.$wrapper.css( 'left', 0 );
+			},
+			stop: function ( event, ui ) {
+				// part of 'prevent dropdown from closing on resize' device
+				setTimeout( function () {
+					self.$dropdown.off( 'hide.bs.dropdown' );
+				}, 500 );
 
-					//	when dragging the right corner, left side stays intact. Vice versa when dragging the left corner.
-					var se = $(event.currentTarget).is(".ui-resizable-se");
-					var pos = self.$ddmenu.position();
-					var width = self.$ddmenu.width();
-					if( !se ) {
-						self.$ddmenu.css({
-							'left': 'auto',
-							'right': ( self.$dropdown.width() - pos.left - width ) + 'px'
-						});
-					} else {
-						self.$ddmenu.css({
-							'left': ( pos.left ) + 'px',
-							'right': 'auto'
-						});
-					}
+				self.saveFieldFilterSize( [self.$wrapper.css( 'width' ), self.$wrapper.css( 'height' ), self.$ddmenu.css( 'left' ), self.$ddmenu.css( 'right' )] );
+			},
+			start: function ( event, ui ) {
+				//	prevent dropdown from closing on resize
+				self.$dropdown.on( 'hide.bs.dropdown', function () { return false } );
+
+				//	when dragging the right corner, left side stays intact. Vice versa when dragging the left corner.
+				var se = $( event.currentTarget ).is( ".ui-resizable-se" );
+				var pos = self.$ddmenu.position();
+				var width = self.$ddmenu.width();
+				if ( !se ) {
+					self.$ddmenu.css( {
+						'left': 'auto',
+						'right': ( self.$dropdown.width() - pos.left - width ) + 'px'
+					} );
+				} else {
+					self.$ddmenu.css( {
+						'left': ( pos.left ) + 'px',
+						'right': 'auto'
+					} );
 				}
-			});
+			}
+		} );
 	},
-	
-	
-	updateSize: function() {
+
+
+	updateSize: function () {
 		var size = this.getFieldFilterSize();
 		if ( !( size instanceof Array ) || size.length < 4 ) {
 			return;
 		}
-		this.$wrapper.css({ 
+		this.$wrapper.css( {
 			width: size[0],
 			height: size[1]
-		});
-		this.$ddmenu.css({ 
+		} );
+		this.$ddmenu.css( {
 			left: size[2],
 			right: size[3]
-		});
+		} );
 	},
-	
-	saveFieldFilterSize: function( size ) {
+
+	saveFieldFilterSize: function ( size ) {
 		var rff = JSON.parse( localStorage.getItem( "runnerFieldFilter" ) ) || {};
-		rff[ this.pageObj.tName ] = rff[ this.pageObj.tName ] || {}
-		rff[ this.pageObj.tName ][ this.pageObj.pageName ] = rff[ this.pageObj.tName ][ this.pageObj.pageName ] || {};
-		rff[ this.pageObj.tName ][ this.pageObj.pageName ][ this.fieldName ] = size;
-		
+		rff[this.pageObj.tName] = rff[this.pageObj.tName] || {}
+		rff[this.pageObj.tName][this.pageObj.pageName] = rff[this.pageObj.tName][this.pageObj.pageName] || {};
+		rff[this.pageObj.tName][this.pageObj.pageName][this.fieldName] = size;
+
 		localStorage.setItem( "runnerFieldFilter", JSON.stringify( rff ) );
 	},
-	
-	getFieldFilterSize: function() {
+
+	getFieldFilterSize: function () {
 		var rff = JSON.parse( localStorage.getItem( "runnerFieldFilter" ) );
-		return rff && rff[ this.pageObj.tName ] && rff[ this.pageObj.tName ][ this.pageObj.pageName ] 
-			&& rff[ this.pageObj.tName ][ this.pageObj.pageName ][ this.fieldName ];
+		return rff && rff[this.pageObj.tName] && rff[this.pageObj.tName][this.pageObj.pageName]
+			&& rff[this.pageObj.tName][this.pageObj.pageName][this.fieldName];
 	},
 }
 
+Runner.util.timeString = ( dt ) => {
+	const zeroPad = ( n, places) =>  String( n ).padStart( places, '0' );
+	return `${ zeroPad( dt.getFullYear(), 4 ) }-${ zeroPad( dt.getMonth() + 1, 2 )}-${ zeroPad( dt.getDate(), 2 )} ${zeroPad( dt.getHours(), 2)}:${zeroPad( dt.getMinutes(), 2 )}:${zeroPad( dt.getSeconds(), 2 )}`
+}
 
+Runner.util.timeStringUTC = ( dt ) => {
+	const zeroPad = ( n, places) =>  String( n ).padStart( places, '0' );
+	return `${ zeroPad( dt.getUTCFullYear(), 4 ) }-${ zeroPad( dt.getUTCMonth() + 1, 2 )}-${ zeroPad( dt.getUTCDate(), 2 )} ${zeroPad( dt.getUTCHours(), 2)}:${zeroPad( dt.getUTCMinutes(), 2 )}:${zeroPad( dt.getUTCSeconds(), 2 )}`
+}
+
+Runner.util.localDateFromDbString = ( dateString ) => {
+	// dates with time are usually parsed as local, but days only - as UIC.
+	//	add 'Z' to always parse as UTC
+	var utcDate = new Date( dateString + 'Z' );
+	return new Date( utcDate.valueOf() + ( new Date().getTimezoneOffset() ) * 60000 );
+}
  
 /**
  * params:
@@ -6989,6 +7002,12 @@ Runner.validation = {
 			if ( regExpMessageData.type === 0 ) {
 				return regExpMessageData.text;
 			}
+			
+			/* old format, support for some custom code */ 
+			if( regExpMessageData.messageType == 'Text'  ) {
+				return regExpMessageData.message;
+			}
+			
 			return Runner.getCustomLabel( regExpMessageData.label );
 		}
 
@@ -7362,7 +7381,7 @@ Runner.form.Button = Runner.extend( Runner.Event, {
 		Runner.form.Button.superclass.constructor.call(this, cfg);	
 
 		// get button
-		this.elem = $('#' + this.id);
+		this.elem = $( '[data-event=' + this.id + ']' );
 		// create empty button, for correct script work, if button tag not exists 
 		this.elem = this.elem.length ? this.elem : $('<input type="button">'); 
 
@@ -12436,13 +12455,13 @@ Runner.controls.FileField = Runner.extend( Runner.controls.FileControl, {
 		}
 		// if choosed delete
 		if (radioToCheck == "deleteRadio") {
-			this.fileNameElem.css('backgroundColor','gainsboro');
+			//this.fileNameElem.css('backgroundColor','gainsboro');
 			this.fileNameElem[0].disabled=true;
 			return true;
 		// if choosed update or keep
 		}
 		if (radioToCheck == "updateRadio" || radioToCheck == "keepRadio") {
-			this.fileNameElem.css('backgroundColor','white');
+			//this.fileNameElem.css('backgroundColor','white');
 			this.fileNameElem[0].disabled=false;
 			return true;
 		// in other way return false
@@ -12595,18 +12614,35 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
 			+ "&field=" + encodeURIComponent(this.fieldName) 
 			+ "&pageType=" + this.pageType
 			+ "&page=" + this.pageObj.pageName
-			+ "&formStamp=" + $("#formStamp_" + this.goodFieldName + "_" + this.rowId, this.uploadForm).val();
+			+ "&formStamp=" + $("#formStamp_" + this.goodFieldName + "_" + this.rowId, this.uploadForm).val()
+			+ "&newmupload=true";
+			
 		this.uploadForm.fileupload();
+		
+		this.initialFileArray = JSON.parse( this.fileArray.val() );
+		
+		var maxNumberOfFiles = this.maxNumberOfFiles 
+				? this.maxNumberOfFiles - this.initialFileArray.length 
+				: 0;
+		
 		var options = {
 			autoUpload: true,
 			acceptFileTypes: new RegExp(this.acceptFileTypes, "i"),
 			dropZone: this.uploadForm,
-			maxFileSize: this.maxFileSize,
+			maxFileSize: this.maxFileSize * 1024,
 			maxTotalFilesSize: this.maxTotalFilesSize,
-			maxNumberOfFiles: this.maxNumberOfFiles != 0 ? this.maxNumberOfFiles - JSON.parse( this.fileArray.val() ).length 
-					: 0,
-			constMaxNumberOfFiles: this.maxNumberOfFiles
+			maxNumberOfFiles: maxNumberOfFiles || null,
+			pasteZone: this.uploadForm, 
+			messages: {
+				maxNumberOfFiles: maxNumberOfFiles > 1
+					? Runner.lang.constants.ERROR_MAX_NUMBER_OF_FILES_MANY.replace('%s', this.maxNumberOfFiles) 
+					: Runner.lang.constants.ERROR_MAX_NUMBER_OF_FILES_ONE.replace('%s', this.maxNumberOfFiles) ,
+				maxFileSize: Runner.lang.constants.ERROR_MAX_FILE_SIZE.replace('%s', this.maxFileSize),
+				minFileSize: Runner.lang.constants.ERROR_MIN_FILE_SIZE.replace('%s', this.maxFileSize),	
+				acceptFileTypes: Runner.lang.constants.ERROR_ACCEPT_FILE_TYPES,
+			}
 		};
+		
 
 		var submitFn = function( callbackFn, e, data ) {
 			callbackFn();
@@ -12615,20 +12651,23 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
 		// google drive/onedrive - start uploading
 		if( this.fileStorageProvider == 2 || this.fileStorageProvider == 3 || this.fileStorageProvider == 4 ) {
 			submitFn = function( callbackFn, e, data ) {
-				var that = $(this);
+				var fileupload = $(this).data("blueimpFileupload");
+				
 				var fileData = {
 					error: data.files[0].error,
 					name: data.files[0].name,
 					type: data.files[0].type,
 					size: data.files[0].size
 				}
+				
 				var form = data.form && data.form.length 
 					? data.form[0]
-					: that.data('fileupload').options.fileInput.prop('form');
+					: fileupload.options.fileInput.prop('form');
+				
 				$.post( form.action, { file: JSON.stringify( fileData ), _action: "POST" }, function (result) {
 					if( result.error ) {
 						data.files[0].error = result.error;
-						that.data('fileupload')._trigger('fail', e, data);
+						fileupload._trigger('fail', e, data);
 						return;
 					}
 					data.url = result.uploadParams.url;
@@ -12658,7 +12697,7 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
 		//	amazon s3
 		if( this.fileStorageProvider == 1  ) {
 			submitFn = function( callbackFn, e, data ) {
-				var that = $(this);
+				var fileupload = $(this).data("blueimpFileupload");
 				var fileData = {
 					error: data.files[0].error,
 					name: data.files[0].name,
@@ -12667,7 +12706,7 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
 				}
 				var form = data.form && data.form.length 
 					? data.form[0]
-					: that.data('fileupload').options.fileInput.prop('form');
+					: fileupload.options.fileInput.prop('form');
 
 				$.post( form.action, { file: JSON.stringify( fileData ), _action: "POST" }, function (result) {
 					
@@ -12716,6 +12755,18 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
     	
     	this.showDropZone();
 
+		this.uploadForm.on('fileuploadprocessalways', function(e, data) {
+			if ( data.files ) {
+				// show file type image in upload preview
+				data.files.forEach( function( file ) {
+					if ( file.type !== "image/jpeg" ) {
+						var ext = file.name.split('.').pop().toLowerCase();
+						file.preview = $(('<image src="' + control._getFileIcon( ext ) + '" />'))
+					}
+				});
+			}
+		});
+	
     	this.uploadForm.on('fileuploadadded', function(e, data) {
 			control.hideDropZone();
    			if (data.files) {
@@ -12738,7 +12789,7 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
 				// TODO add upload response handling
 
 				if( data.createdFile ) {
-					data.result = [ data.createdFile ];
+					data.result = { files: [ data.createdFile ] };
 				}
 			});
 		}
@@ -12750,21 +12801,43 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
 				fileArray.push(newFile)
 				control.uploadForm.fileupload('setDeleteButtonState', fileArray.length > 0);
 				control.fileArray.val(JSON.stringify(fileArray));
+				
+				if( control.maxNumberOfFiles ) {
+					control.uploadForm.fileupload('setFileInputButtonState', 
+						fileArray.length < control.uploadForm.fileupload("option").maxNumberOfFiles );
+				}
+	
 			} else {
     			control.errorHappened = true;			
 			}
 		}
+		
+		this.uploadForm.on('fileuploadprocessfail', function(e, data) {
+			const that = $(this).data("blueimpFileupload");
+				
+			data.context.replaceWith( that._renderTemplate( that.options.uploadTemplate, data.files )
+				.addClass("processfail") );
+			
+			data.context = that.options.filesContainer.find(".processfail");
+			data.context.data('data', data);
+			data.context.removeClass("processfail");
+
+			that._forceReflow( data.context );
+			that._transition( data.context );
+		});
+		
+		
 		this.uploadForm.on('fileuploaddone', function(e, data) {
     		if (control.filesToUploadCount > 0) {
     			control.filesToUploadCount--;
 			}
     		control.uploadForm.fileupload('setUploadAndCancelButtonState', control.filesToUploadCount > 0);
     		if ( (data.textStatus != 'success' && data.textStatus != 'nocontent'/*s3*/) 
-				|| !data.result || data.result.length == 0) {
+				|| !data.result || !data.result.files || data.result.files.length == 0) {
     			control.errorHappened = true;
     			return;
     		}
-			processSuccessResult( data.result[0] );
+			processSuccessResult( data.result.files[0] );
 			control.clearInvalid();
     	});
     	this.uploadForm.on('fileuploadfail', function(e, data) {
@@ -12792,39 +12865,102 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
 			control.fileArray.val( JSON.stringify( newFileArray ) );
 			control.showDropZone();
 			control.fireEvent('change');
-	    });
-    	
-    	this.uploadForm.fileupload({
-    	    destroy: function( e, data ) {
-				var that = $(this).data('fileupload'), 
-					$button = $(data.context).find('.btn.delete');
-					
-	            if ( !$button.is(":visible") ) {
+		});
+	
+		this.uploadForm.fileupload({
+			destroy: function( e, data ) {
+				var $button = $(data.context).find('.btn.delete');
+				if ( !$button.is(":visible") ) {
+					// to prevent delete request duplication
 					return;
-				}					
-					
+				}
+				
+				const fileupload = $(this).data("blueimpFileupload");
+				
 				data = {
 					context: $button.closest('.template-download'),
-					url: e.data.fileupload.element[0].action,
+					url: fileupload.element[0].action,
 					type: 'POST',
-					dataType: e.data.fileupload.options.dataType,
+					dataType: fileupload.options.dataType,
 					name: $button.attr('data-name'),
 					data: {
 						_action: "DELETE",
 						fileName: $button.attr('data-name')
 					}
 				};
+				
+				$.ajax( data )
+					.done( function() {
+						$(this).remove();
+						fileupload._trigger('destroyed', e, data);
+					})
+					.fail(function () {
+						fileupload._trigger('destroyfailed', e, data);
+					});	
+				
+				if ( control.maxNumberOfFiles ) {
+					control.uploadForm.fileupload('setFileInputButtonState', 
+						control.fileArray.length < control.uploadForm.fileupload("option").maxNumberOfFiles );
 					
-                $.ajax( data );
-                that._adjustMaxNumberOfFiles(1);
-	            that._transition( data.context ).done(
-	                function() {
-	                    $(this).remove();
-	                    that._trigger('destroyed', e, data);
-	                }
-	            );
-            }
-    	});
+					
+					if ( control.initialFileArray ) {
+						 if ( control.initialFileArray.find( function(f) { return f.name === data.name } ) !== undefined ) {
+							control.uploadForm.fileupload("option", {
+								maxNumberOfFiles: control.uploadForm.fileupload("option").maxNumberOfFiles + 1
+							});
+						 }
+					}
+				}
+			
+				fileupload.refreshMaxFilesState();
+				
+				// to prevent delete request duplication
+				data.context.hide();
+			}
+		});
+	},
+
+	_getFileIcon: function( fileExt ) {
+		var fileName = '', 
+			icons = {
+				'7z':'7z',
+				'asf':'asf',
+				'asp':'code',
+				'avi':'mpg',
+				'chm':'chm',
+				'doc':'doc',
+				'docx':'doc',
+				'flv':'flv',
+				'gz':'gz',
+				'html':'html',
+				'mdb':'mdb',
+				'mdbx':'mdb',
+				'mp3':'mp2',
+				'mp4':'mp4',
+				'mpeg':'mpeg',
+				'mpg':'mpg',
+				'mov':'mov',
+				'pdf':'pdf',
+				'php':'code',
+				'pps':'pps',
+				'ppt':'powerpoint',
+				'psd':'psd',
+				'rar':'rar',
+				'rtf':'rtf',
+				'swf':'swf',
+				'tif':'tif',
+				'ttf':'ttf',
+				'txt':'txt',
+				'wav':'wav',
+				'webm':'mpg',
+				'wma':'wma',
+				'wmv':'emv',
+				'xls':'xls',
+				'xlsx':'xls',
+				'zip':'zip'
+			};
+			
+		return 'images/icons/' + ( icons[ fileExt ] ||  'text' ) + '.png';
 	},
 	
 
@@ -12923,17 +13059,24 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
 	
     // Load existing files:
 	reloadFiles: function() {
-		var initialFileArray = JSON.parse( this.fileArray.val() );
-		this.uploadForm.fileupload("option", {
-			maxNumberOfFiles: this.maxNumberOfFiles != 0 ? this.maxNumberOfFiles - initialFileArray.length 
-					: 0
-		});
-    	this.uploadForm.fileupload('option', 'done').call(this.uploadForm, null, {result: initialFileArray});
-		this.uploadForm.fileupload('refreshMaxFilesState');
-    	this.uploadForm.fileupload('setDeleteButtonState', initialFileArray.length > 0);
-    	this.uploadForm.fileupload('setUploadAndCancelButtonState', this.filesToUploadCount > 0);
-    	
-    	return initialFileArray.length;
+		if ( !!this.initialFileArray.length ) {		
+			var dummyEvent = $.Event("done");
+			dummyEvent.isDefaultPrevented = function () { return false; };	
+			
+			this.uploadForm.fileupload('option', 'done')
+				.call(this.uploadForm, dummyEvent, {result: { files: this.initialFileArray } });
+			
+			if ( this.maxNumberOfFiles ) {
+				this.uploadForm.fileupload("option", {
+					maxNumberOfFiles: this.maxNumberOfFiles - this.initialFileArray.length
+				});
+			}
+		}
+		this.uploadForm.fileupload('refreshMaxFilesState');	
+		this.uploadForm.fileupload('setDeleteButtonState', this.initialFileArray.length > 0);
+		this.uploadForm.fileupload('setUploadAndCancelButtonState', this.filesToUploadCount > 0);
+		
+		return this.initialFileArray.length;
 	},
 	
 	/**
@@ -12942,6 +13085,17 @@ Runner.controls.MultiUploadField = Runner.extend( Runner.controls.Control, {
 	 */
 	reset: function( updContext ) {
 		this.setValue(this.defaultValue, true, updContext);
+	
+		var fileupload = this.uploadForm.data("blueimpFileupload");
+		$.ajax({
+			url: fileupload.element[0].action,
+			type: 'POST',
+			data: {
+				_action: "RESET",
+				defaultValue: this.defaultValue,
+			}
+		});
+		
 		this.clearInvalid();
 		this.filesToUploadCount = 0;
 		$('table tbody', this.uploadForm).empty();
@@ -14346,6 +14500,7 @@ Runner.controls.LookupWizard = Runner.extend( Runner.controls.Control, {
 	 * @type {jQuery object}
 	 */
 	addNew: null,
+	editCurrent: null,
 
 	/**
 	 *
@@ -14406,6 +14561,7 @@ Runner.controls.LookupWizard = Runner.extend( Runner.controls.Control, {
 		Runner.controls.LookupWizard.superclass.constructor.call(this, cfg);
 		
 		this.initAddNewLink();
+		this.initEditLink();
 		
 		if ( this.pageType === Runner.pages.constants.PAGE_ADD && !this.isEmpty() ) {
 			this.doAutoCompleteFields();
@@ -14439,18 +14595,30 @@ Runner.controls.LookupWizard = Runner.extend( Runner.controls.Control, {
 	initAddNewLink: function() {
 		var control = this;
 		
-		this.addNew = $("#addnew_" + this.valContId).on("click", function(e) {			
-			var params = control.getPageParams();
+		this.addNew = $("#addnew_" + this.valContId).on("click", function(e) {
+			var params = control.getAddPageParams();
 			control.pageId = Runner.pages.PageManager.openPage( params );
 			return false;
 		});	
+	},
+	
+	initEditLink: function() {
+		var control = this;
+		
+		this.editCurrent = $("#edit_lookup_item_" + this.valContId).on("click", function(e) {
+			var params = control.getEditPageParams();
+			control.pageId = Runner.pages.PageManager.openPage( params );
+			return false;
+		});
+
+		this.updataEditCurrentButton()
 	},
 	
 	/**
 	 * Get the 'add new on the fly' page's params
 	 * @return {object}
 	 */
-	getPageParams: function() {
+	getAddPageParams: function() {
 		var pageParams = {
 				modal: true,
 				lookupCtrl: this,
@@ -14468,7 +14636,7 @@ Runner.controls.LookupWizard = Runner.extend( Runner.controls.Control, {
 					fn: function( respObj, formObj, fieldControls, pageObj ) {
 						if ( respObj.success ) {
 							// displayed value may be formatted
-							this.processNewFlyAdded( respObj.displayValue, respObj.linkValue );
+							this.processNewFlyAdded( respObj.displayValue, respObj.linkValue, respObj.keys );
 							return;
 						} 
 						
@@ -14494,6 +14662,63 @@ Runner.controls.LookupWizard = Runner.extend( Runner.controls.Control, {
 		
 		return pageParams;
 	},
+	
+	/**
+	 * Get the 'add new on the fly' page's params
+	 * @return {object}
+	 */
+	getEditPageParams: function() {
+		var keys = this.getCurrentItemKeys();
+		
+		var pageParams = {
+				modal: true,
+				lookupCtrl: this,
+				tName: this.lookupTable, 
+				pageType: Runner.pages.constants.PAGE_EDIT,
+				keys: keys,
+				baseParams: {
+					page: this.editPageId,
+					parId: this.rowId, 
+					field: this.fieldName, 
+					pageType: Runner.pages.constants.PAGE_EDIT,
+					table: this.shortTableName,
+					editType: Runner.pages.constants.EDIT_ONTHEFLY
+				},
+				afterSave: {
+					fn: function( respObj, formObj, fieldControls, pageObj ) {
+						if ( respObj.success ) {
+							// displayed value may be formatted
+							this.processFlyEdited( respObj.displayValue, respObj.linkValue, respObj.keys );
+							return;
+						} 
+						
+						if ( respObj.message ) {
+							// respObj contains error message
+							pageObj.displayHalfPreparedMessage( respObj.message, true );
+							pageObj.showElement("message");
+						} 
+
+						pageObj.bsWin.animate( {scrollTop: 0} );
+						
+						Runner.delDisabledClass( pageObj.saveButton );
+						return false;
+					},
+					scope: this
+				}
+		};
+		
+		if ( !!this.parentCtrls.length ) {
+			pageParams.baseParams.parentsExist = true;
+			pageParams.baseParams.parentCtrlsData = JSON.stringify( this.getParentControlsData() );
+		}
+		
+		return pageParams;
+	},
+	
+	getCurrentItemKeys: function() {
+		return [];
+	},
+	
 	
 	/**
 	 * Clear links from children to there's parent ctrl	 
@@ -14797,7 +15022,10 @@ Runner.controls.LookupWizard = Runner.extend( Runner.controls.Control, {
 		}
 		
 		this.doAutoCompleteFields( updContext );
-		this.reloadDependentCtrls( updContext, e );						
+		this.reloadDependentCtrls( updContext, e );	
+
+		this.updataEditCurrentButton();
+
 		return false;
 	},
 
@@ -14829,6 +15057,36 @@ Runner.controls.LookupWizard = Runner.extend( Runner.controls.Control, {
 	isEmptyForSearch: function() {
 		return this.isEmpty();
 	},
+
+	updataEditCurrentButton: function() {
+		this.isEditCurrentItemAvailable() &&
+			this.editCurrent.toggleClass( 'hidden-link', !this.isModifyVisible() );
+	},
+
+	hideEditCurrentButton: function() { 
+		this.isEditCurrentItemAvailable() &&
+			this.editCurrent.toggleClass( 'hidden-link', true );
+	},
+
+	/**
+	 * Process the edited 'on the fly' item 
+	 * @param {string} text
+	 * @param {string | number} value
+	 * @param {array} keys
+	 */
+	processFlyEdited: function( text, value, keys ) {
+		this.updateOption( text, value, keys );
+		this.setValue( value, true );
+	},
+	
+	isModifyVisible: function() {
+		// only one option is selected
+		return !this.isEmpty() && !!this.getCurrentItemKeys().length;
+	},
+	 
+	isEditCurrentItemAvailable: function() {
+		return !!this.editCurrent.length;
+	}
 });
 /**
  * Radio control class
@@ -14963,6 +15221,7 @@ Runner.controls.RadioControl = Runner.extend( Runner.controls.LookupWizard, {
 		for (var i = 0; i < this.radioElemsCount; i++) {
 			this.radioElemsArr[i].get(0).disabled = true;
 		}
+		this.hideEditCurrentButton();
 		return true;
 	},
 	/**
@@ -14974,6 +15233,7 @@ Runner.controls.RadioControl = Runner.extend( Runner.controls.LookupWizard, {
 		for (var i = 0; i < this.radioElemsCount; i++) {
 			this.radioElemsArr[i].get(0).disabled = false;
 		}
+		this.updataEditCurrentButton();
 		return true;
 	},	
 
@@ -14995,6 +15255,7 @@ Runner.controls.RadioControl = Runner.extend( Runner.controls.LookupWizard, {
 		}
 		
 		this.reloadDependentCtrls( updContext, e );
+		this.updataEditCurrentButton();
 	},
 	
 	makeReadonly: function() {
@@ -15037,6 +15298,7 @@ Runner.controls.RadioControl = Runner.extend( Runner.controls.LookupWizard, {
 		this.addRadioByArr( vals );
 		// don't need to use ajax reload call
 		this.setValue( selectValue, false );
+		this.updataEditCurrentButton();
 	},
 
 	/**
@@ -15071,11 +15333,11 @@ Runner.controls.RadioControl = Runner.extend( Runner.controls.LookupWizard, {
 	 * @param {string} text
 	 * @param {string} val
 	 */
-	addRadio: function(text, value) {
+	addRadio: function(text, value, keys) {
 		var $radioButton, $radioLabel,
 			delim = '&nbsp;',
 			ind = this.radioElemsArr.length,
-			$divWrapper, $spanWrapper;			
+			$divWrapper, $spanWrapper;
 
 		$divWrapper = $('div[data-lookup-options]', this.spanContElem);
 
@@ -15089,11 +15351,15 @@ Runner.controls.RadioControl = Runner.extend( Runner.controls.LookupWizard, {
 			.attr('type', 'radio')
 			.attr('name', this.radioElemsId)
 			.val( value );
+			
+		if ( keys && this.isEditCurrentItemAvailable() ) {
+			$radioButton.data('keys', keys);
+		}
 		
 		$radioLabel = $('<span>')
 			.attr('id', 'label_' + this.radioElemsId + ind)
 			.addClass('rnr-radio-label')
-			.html( text );	
+			.html( text );
 		
 		$('label', $spanWrapper).append( $radioButton ).append( delim ).append( $radioLabel );
 		
@@ -15111,8 +15377,8 @@ Runner.controls.RadioControl = Runner.extend( Runner.controls.LookupWizard, {
 	 */
 	addRadioByArr: function( radioElemsArr ) {
 		var i;
-		for (i = 0; i < radioElemsArr.length - 1; i = i + 2) {  
-			this.addRadio( radioElemsArr[i+1], radioElemsArr[i] );
+		for (i = 0; i < radioElemsArr.length; i++) {
+			this.addRadio( radioElemsArr[i]["displayValue"], radioElemsArr[i]["linkValue"], radioElemsArr[i]["keys"] );
 		}
 		this.radioElem = $('input[name=' + this.radioElemsNameAttr + ']');
 		// count of elems get from jQuery obj
@@ -15148,9 +15414,10 @@ Runner.controls.RadioControl = Runner.extend( Runner.controls.LookupWizard, {
 	 * Process the new added 'on the fly' item 
 	 * @param {string} text
 	 * @param {string | number} value
+	 * @param {array} keys
 	 */	
-	processNewFlyAdded: function(text, value) {
-		this.addRadio(text, value);
+	processNewFlyAdded: function(text, value, keys) {
+		this.addRadio(text, value, keys);
 		this.setValue(value, true);
 		
 		//reinit Custom Events
@@ -15184,7 +15451,37 @@ Runner.controls.RadioControl = Runner.extend( Runner.controls.LookupWizard, {
 		}
 		
 		return [ cloneElem.val( val ) ];
-	} 	
+	},
+
+	getCurrentItemKeys: function() {
+		var $radioButton = this.radioElemsArr.find( function( $r ) {
+				return $r.is(":checked")
+			});
+
+		if ( $radioButton && this.isEditCurrentItemAvailable() ) {
+			return $radioButton.data('keys') || [];
+		}
+
+		return [];
+	},
+
+	/**
+	 * update lookup option
+	 * @param {string} displayedValue
+	 * @param {string} val
+	 * @param {array} keys
+	 */
+	updateOption: function( displayedValue, val, keys ) {
+		var $radioButton = this.radioElemsArr.find( function( $r ) {
+			return $r.is(":checked")
+		});
+		
+		$radioButton
+			.attr('value', val)
+			.data('keys', keys);
+			
+		$("#label_" + $radioButton.attr("id")).html( displayedValue );
+	},
 });/**
  * Select control class. 
  * @requires Runner.controls.LookupWizard
@@ -15528,11 +15825,15 @@ Runner.controls.DropDownLookup = Runner.extend( Runner.controls.LookupWizard, {
 	 * @param {string} text
 	 * @param {string} val
 	 */
-	addOption: function( text, val ) {
-		$('<option></option>')
+	addOption: function( text, val, keys ) {
+		var $option = $('<option></option>')
 			.attr('value', val)
 			.html( text )
 			.appendTo( this.valueElem );
+			
+		if ( keys && this.isEditCurrentItemAvailable() ) {
+			$option.data('keys', keys);
+		}
 		
 		if ( this.multiSelectionWithTabsEnabled ) {
 			this.valueElem.trigger("chosen:updated");
@@ -15547,9 +15848,9 @@ Runner.controls.DropDownLookup = Runner.extend( Runner.controls.LookupWizard, {
 	 * 		2*i - indexes of values; 2*i+1 - indexes of text. I starts from 0 
 	 * @param {array} optionsArr
 	 */
-	addOptionsArr: function( optionsArr ) {		
-		for (var i = 0; i < optionsArr.length - 1; i = i + 2) { 
-			this.addOption( optionsArr[i + 1], optionsArr[i] );
+	addOptionsArr: function( optionsArr ) {
+		for (var i = 0; i < optionsArr.length; i++) {
+			this.addOption( optionsArr[i]["displayValue"], optionsArr[i]["linkValue"], optionsArr[i]["keys"] );
 		}
 	},
 	
@@ -15560,25 +15861,27 @@ Runner.controls.DropDownLookup = Runner.extend( Runner.controls.LookupWizard, {
 	 */
 	preload: function( vals, selectValue ) {
 		// clear all old options
-		this.removeOptions();	
+		this.removeOptions();
 
 		if ( !this.multiSelectionAllowed ) {
 			// add empty option for non multiselect
-			this.addOption( Runner.lang.constants.PLEASE_SELECT, "" );				
+			this.addOption( Runner.lang.constants.PLEASE_SELECT, "" );
 		}
 
 		// load options
 		this.addOptionsArr( vals );
-		if ( selectValue !== null && selectValue !== '' ) {			
+		if ( selectValue !== null && selectValue !== '' ) {
 			// don't need to use ajax reload call
 			this.setValue( selectValue, false );
+			this.updataEditCurrentButton();
 			return;	
 		}
 		
 		if ( this.optionsDOM.length > 0  && this.mode !== Runner.controls.constants.MODE_SEARCH ) {
-			this.setValue( [ this.optionsDOM[0].value ], false );	
-		}			
-	},	
+			this.setValue( [ this.optionsDOM[0].value ], false );
+			this.updataEditCurrentButton();
+		}
+	},
 	
 	
 	/**
@@ -15634,6 +15937,7 @@ Runner.controls.DropDownLookup = Runner.extend( Runner.controls.LookupWizard, {
 				'disabled': true,
 				'readonly': true
 			});	
+			this.hideEditCurrentButton();
 			return Runner.controls.DropDownLookup.prototype.makeReadonly.call( this );
 		};
 		
@@ -15642,16 +15946,19 @@ Runner.controls.DropDownLookup = Runner.extend( Runner.controls.LookupWizard, {
 				'disabled': false,
 				'readonly': false
 			});
+			this.updataEditCurrentButton();
 			return Runner.controls.DropDownLookup.prototype.makeReadWrite.call( this );			
 		};
 		
 		this.setDisabled = function() {
 			this.simpleSearchBox.prop('disabled', true);
+			this.hideEditCurrentButton();
 			return Runner.controls.DropDownLookup.prototype.setDisabled.call( this );	
 		}; 
 		
 		this.setEnabled = function() {
 			this.simpleSearchBox.prop('disabled', false);
+			this.updataEditCurrentButton();
 			return Runner.controls.DropDownLookup.prototype.setDisabled.call( this );	
 		};
 
@@ -15860,8 +16167,9 @@ Runner.controls.DropDownLookup = Runner.extend( Runner.controls.LookupWizard, {
 	 * Process the new added 'on the fly' item 
 	 * @param {string} text
 	 * @param {string | number} value
+	 * @param {array} keys
 	 */		
-	processNewFlyAdded: function( text, value ) {
+	processNewFlyAdded: function( text, value, keys ) {
 		var values;
 		
 		if ( this.multiSelectionAllowed  ) {
@@ -15871,7 +16179,7 @@ Runner.controls.DropDownLookup = Runner.extend( Runner.controls.LookupWizard, {
 			values = [ value ];
 		}
 		
-		this.addOption( text, value );		
+		this.addOption( text, value, keys );
 		this.setValue( values, true );
 	},
 	
@@ -15934,6 +16242,28 @@ Runner.controls.DropDownLookup = Runner.extend( Runner.controls.LookupWizard, {
 		if ( this.multiSelectionWithTabsEnabled ) {
 			this.valueElem.trigger("chosen:updated");
 		}
+	},
+	
+	getCurrentItemKeys: function() {
+		return this.valueElem.find( 'option:selected' ).eq(0).data('keys') || [];
+	},
+	
+	/**
+	 * Add a new option to the select element
+	 * @param {string} displayedValue
+	 * @param {string} val
+	 * @param {array} keys
+	 */
+	updateOption: function( displayedValue, val, keys ) {
+		this.valueElem.find( 'option:selected' ).eq(0)
+			.html( displayedValue )
+			.attr('value', val)
+			.data('keys', keys);
+	},
+	
+	isModifyVisible: function() {
+		return !this.isEmpty() && this.valueElem.find( 'option:selected' ).length === 1 
+			&& !!this.getCurrentItemKeys().length;
 	}
 });
 /**
@@ -16276,7 +16606,8 @@ Runner.controls.CheckBoxLookup = Runner.extend( Runner.controls.LookupWizard, {
 	setDisabled: function() {
 		for (var i = 0; i < this.checkBoxesArr.length; i++) {
 			this.checkBoxesArr[i].prop('disabled', true);
-		}			
+		}
+		this.hideEditCurrentButton();
 		return true;
 	},
 	
@@ -16287,7 +16618,8 @@ Runner.controls.CheckBoxLookup = Runner.extend( Runner.controls.LookupWizard, {
 	setEnabled: function() {
 		for (var i = 0; i < this.checkBoxesArr.length; i++) {
 			this.checkBoxesArr[i].prop('disabled', false);
-		}			
+		}
+		this.updataEditCurrentButton();
 		return true;
 	},
 	
@@ -16360,20 +16692,20 @@ Runner.controls.CheckBoxLookup = Runner.extend( Runner.controls.LookupWizard, {
 			return;
 		}
 
-		for (var i = 0; i < checkBoxesArr.length - 1; i = i + 2) { 
-			this.addCheckBox( checkBoxesArr[i + 1], checkBoxesArr[i] );
+		for (var i = 0; i < checkBoxesArr.length; i++) { 
+			this.addCheckBox( checkBoxesArr[i]["displayValue"], checkBoxesArr[i]["linkValue"], checkBoxesArr[i]["keys"] );
 		}
 		//reinit Custom Events
 		this.purgeListeners();
 		this.initCustomEvents();
-	},		
+	},
 	
 	/**
 	 * Adds checkbox to ctrl
 	 * @param {string} text
 	 * @param {string} val
 	 */
-	addCheckBox: function( text, value ) {
+	addCheckBox: function( text, value, keys ) {
 		var $checkBox, $boxLabel,
 			delim = '&nbsp;', 
 			ind = this.checkBoxesArr.length,
@@ -16391,6 +16723,10 @@ Runner.controls.CheckBoxLookup = Runner.extend( Runner.controls.LookupWizard, {
 			.attr('type', 'checkbox')
 			.attr('name', this.valContId + '[]')
 			.val(value);
+		
+		if ( keys && this.isEditCurrentItemAvailable() ) {
+			$checkBox.data('keys', keys);
+		}
 
 		$boxLabel = $('<span>')
 			.attr('id', 'data_' + this.valContId + '_' + ind)
@@ -16400,7 +16736,7 @@ Runner.controls.CheckBoxLookup = Runner.extend( Runner.controls.LookupWizard, {
 		$('label', $spanWrapper).append( $checkBox ).append( delim ).append( $boxLabel );
 		
 		this.checkBoxesArr.push( $checkBox );
-		this.checkBoxCount++;		
+		this.checkBoxCount++;
 	},
 	
 	/**
@@ -16415,6 +16751,7 @@ Runner.controls.CheckBoxLookup = Runner.extend( Runner.controls.LookupWizard, {
 		this.addCheckBoxArr( vals );
 		// don't need to use ajax reload call
 		this.setValue( selectValue, false );
+		this.updataEditCurrentButton();
 	},
 	
 	
@@ -16457,6 +16794,7 @@ Runner.controls.CheckBoxLookup = Runner.extend( Runner.controls.LookupWizard, {
 			});	
 			elemChk.before( readonlyElem ).hide();
 		}
+		this.hideEditCurrentButton();
 		return true;
 	},
 	
@@ -16479,6 +16817,7 @@ Runner.controls.CheckBoxLookup = Runner.extend( Runner.controls.LookupWizard, {
 			$('#readonly_' + elId).remove();
 			elemChk.show();
 		}
+		this.updataEditCurrentButton();
 		return true;
 	},
 	
@@ -16537,17 +16876,48 @@ Runner.controls.CheckBoxLookup = Runner.extend( Runner.controls.LookupWizard, {
 	 * @param {string} text
 	 * @param {string | number} value
 	 */	
-	processNewFlyAdded: function( text, value ) {
+	processNewFlyAdded: function( text, value, keys ) {
 		var values = this.getValue();
 		
 		values.push( value );
-		this.addCheckBox( text, value );
+		this.addCheckBox( text, value, keys );
 		this.setValue( values, true );
 
 		//reinit Custom Events
 		this.purgeListeners();
 		this.initCustomEvents();
-	}	
+	},
+	
+	getCurrentItemKeys: function() {
+		var options = this.getCheckedBoxes();
+		if ( options.length === 1 && this.isEditCurrentItemAvailable() ) {
+			return options[0].data('keys') || [];
+		}
+		return [];
+	},
+
+	/**
+	 * Add a new option to the select element
+	 * @param {string} displayedValue
+	 * @param {string} val
+	 * @param {array} keys
+	 */
+	updateOption: function( displayedValue, val, keys ) {
+		var options = this.getCheckedBoxes()
+		if ( options.length === 1 ) {
+			options[0]
+				.attr('value', val)
+				.data('keys', keys);
+			
+			// update label
+			$('#data_' + options[0].attr('id') ).html( displayedValue );
+		}
+	},
+	
+	isModifyVisible: function() {
+		return !this.isEmpty() && this.getCheckedBoxes().length === 1 
+			&& !!this.getCurrentItemKeys().length;
+	},
 });
 /**
  * Base abstract class for lookups with textFields
@@ -16711,7 +17081,7 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 				values.forEach( function( _value ) {
 					this.setLookupValue( _value, triggerEvent, _value, updContext );
 				}, this );
-			} else {	
+			} else {
 				this.setLookupValue( value, triggerEvent, value, updContext );
 			}
 			
@@ -16739,18 +17109,15 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 				return false;
 			}
 
-			var data = respObj.data,
-				i, j;
-
 			if ( updContext && updContext.setForSpreadsheet ) {
 				ctrl.clearTextLookup();
 			}	
-				
-			for (i = 0, j = 0; i < data.length - 1; i = i + 2, j++) {
-				if ( multiselection && $.inArray( data[i], value ) !== -1 || data[i] == value ) {
-					ctrl.setLookupValue( data[i], triggerEvent, data[i + 1], updContext );
+			
+			respObj.data.forEach( function( suggest ) {
+				if ( multiselection && $.inArray( suggest["link"], value ) !== -1 || suggest["link"] == value ) {
+					ctrl.setLookupValue( suggest["link"], triggerEvent, suggest["display"], updContext );
 				}
-			}
+			});
 		});
 	},
 
@@ -16865,6 +17232,8 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 			this.displayElem.prop('disabled', true);
 		}
 
+		this.hideEditCurrentButton();
+
 		return this.displayElem || this.multiSelectionAllowed;
 	},
 
@@ -16880,6 +17249,8 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 		if ( this.displayElem ) {
 			this.displayElem.prop('disabled', false);
 		}
+
+		this.updataEditCurrentButton();
 
 		return this.displayElem || this.multiSelectionAllowed;
 	},
@@ -16978,11 +17349,26 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 	 * @param {string | array} selectValue 	unparsed values of selected options
 	 */
 	preload: function( vals, selectValue ) {
-		for (var i = 0; i < vals.length - 1; i = i + 2) {
-			if ( this.multiSelectionAllowed && $.inArray( vals[i], selectValue ) !== -1 || !this.multiSelectionAllowed && vals[i] === selectValue ) {
-				this.setLookupValue( vals[i], false, vals[i + 1] );
+		for ( var i = 0; i < vals.length; i++ ) {
+			if ( this.multiSelectionAllowed && selectValue.some( s => s == vals[i]["displayValue"] ) ) {
+				this.setLookupValue( vals[i]["displayValue"], false, vals[i]["linkValue"] );
+				
+				if ( vals[i]["keys"] && this.isEditCurrentItemAvailable() ) {
+					this.getMultiselectOption( vals[i]["linkValue"] )
+						.data('keys', vals[i]["keys"]);
+				}
+				
+			} else if ( !this.multiSelectionAllowed && vals[i]["displayValue"] == selectValue ) {
+				this.setLookupValue( vals[i]["displayValue"], false, vals[i]["linkValue"] );
+				
+				if ( vals[i]["keys"] && this.isEditCurrentItemAvailable() ) {
+					this.displayElem
+						.data('keys', vals[i]["keys"]);
+				}
+				break;
 			}
 		}
+		this.updataEditCurrentButton();
 	},
 
 	/**
@@ -17011,12 +17397,40 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 	updateLookupData: function( data, selectedValues, updContext ) {
 		this.clearTextLookup();
 
-		if ( data.length == 2 ) {
-			this.setLookupValue( data[0], selectedValues != data[0], data[1], updContext );
+		if ( data.length == 1 ) {
+			this.setLookupValue( data[0]["displayValue"], selectedValues != data[0]["displayValue"], data[0]["linkValue"], updContext );
 			this.removeClass("highlight");
+			
+			if ( this.multiSelectionAllowed ) {
+				this.valueElem.find( 'option:selected' ).eq(0)
+					.data('keys', data[0]["keys"]);
+			} else {
+				this.displayElem.data('keys', data[0]["keys"]);
+			}
 		} else {
-			this.setValue( selectedValues );
+			if ( this.multiSelectionAllowed && Array.isArray( selectedValues ) && !selectedValues.length ) {
+				this.clearTextLookup();
+			} else {
+				this.setValue( selectedValues );
+		
+				if ( this.isEditCurrentItemAvailable() ) {
+					if ( this.multiSelectionAllowed ) {
+						selectedValues.forEach( function( sv ) {
+							var keys = data.find( function( d ) {
+								return d.displayValue == sv;
+							})?.keys;
+							if ( keys ) {
+								this.getMultiselectOption( sv ).data('keys', keys);
+							}
+						}, this);
+							
+					} else {
+						this.displayElem.data('keys', data[0]["keys"]);
+					}
+				}
+			}
 		}
+		this.updataEditCurrentButton();
 	},
 
 	/**
@@ -17039,6 +17453,8 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 		if ( this.multiSelectionAllowed ) {
 			$('option', this.valueElem).prop('disabled', true);
 		}
+
+		this.hideEditCurrentButton();
 	},
 
 	/**
@@ -17061,6 +17477,8 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 		if ( this.multiSelectionAllowed ) {
 			$('option', this.valueElem).prop('disabled', false);
 		}
+
+		this.updataEditCurrentButton();
 	},
 
 	/**
@@ -17129,6 +17547,10 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 			this.valueElem.trigger("chosen:updated");
 			return;
 		}
+		
+		if ( this.displayElem ) {
+			this.displayElem.data('keys', null);
+		}
 
 		this.setLookupValue( '', false, '' );
 	},
@@ -17194,7 +17616,43 @@ Runner.controls.TextFieldLookup = Runner.extend( Runner.controls.LookupWizard, {
 		this.clearInvalidOnDependences();
 		this.reloadDependentCtrls( updateContext, nullEvent );
 		this.processResolvedEvent( updateContext );
-	}
+	},
+	
+	isModifyVisible: function() {
+		if ( this.multiSelectionAllowed ) {
+			return $('option', this.valueElem).length === 1 && !!this.getCurrentItemKeys().length;
+		}
+		
+		return !this.isEmpty() && !!this.getCurrentItemKeys().length;
+	},
+
+	getCurrentItemKeys: function() {
+		if ( this.multiSelectionAllowed ) {
+			return this.valueElem.find( 'option:selected' ).eq(0).data('keys') || [];
+		} 
+		return this.displayElem.data('keys') || [];
+	},
+	
+	/**
+	 * Add a new option to the select element
+	 * @param {string} displayedValue
+	 * @param {string} val
+	 * @param {array} keys
+	 */
+	updateOption: function( displayedValue, val, keys ) {
+		if ( this.multiSelectionAllowed ) {
+			this.valueElem.find( 'option:selected' ).eq(0)
+				.html( displayedValue )
+				.attr('value', val)
+				.data('keys', keys);
+				
+			this.valueElem.trigger("chosen:updated");
+		} else {
+			this.displayElem.data('keys', keys);
+			this.setLookupValue( val, true, displayedValue );
+		}
+	},
+
 });
 /**
  * Edit box with ajax popup class with suggest div handling
@@ -17219,6 +17677,9 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 	 * @type {array}
 	 */
 	suggestValues: null,
+	
+	
+	suggestKeys: null,
 
 	/**
 	 * Array of lookup vals
@@ -17292,6 +17753,7 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 	constructor: function( cfg ) {
 		this.suggestValues = [];
 		this.lookupValues = [];
+		this.suggestKeys = [];
 
 		Runner.controls.EditBoxLookup.superclass.constructor.call( this, cfg );
 
@@ -17363,13 +17825,33 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 		this.on("input", function(e) {
 			var dispValue = ctrl.getInputValue();
 			if ( this.freeInput && this.multiSelectionAllowed &&  !this.lookupDiv && dispValue.trim() !== "" ) {
-				this.setSuggestValueToControl( dispValue, dispValue );
+				this.setSuggestValueToControl( dispValue, dispValue, null );
 				this.fireEvent("editing");
 			}
 			
 			if ( this.freeInput && !this.multiSelectionAllowed ) {
 				this.fireEvent("editing");
 			}
+
+		
+			var index = this.suggestValues.findIndex( function( suggest ) {
+				return suggest === dispValue;
+			});
+
+			if ( index == -1 ) {
+				if ( !this.multiSelectionAllowed ) {
+					this.displayElem.data('keys', null);
+				} 
+			} else {
+				if ( !this.multiSelectionAllowed ) {
+					this.displayElem.data('keys', this.suggestKeys[ index ]);
+				} else {
+					this.valueElem.find( 'option:selected' ).eq(0)
+						.data('keys', this.suggestKeys[ index ]);
+				}
+			}
+			
+			this.updataEditCurrentButton();	
 		}, { buffer: 1000 } );
 	},
 
@@ -17470,7 +17952,11 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 				break;
 			case 13: //enter
 				if ( this.multiSelectionAllowed ) {
-					this.setSuggestValueToControl( this.lookupValues[ this.cursor ], this.suggestValues[ this.cursor ].replace(/\<(\/b|b)\>/gi, "") );
+					this.setSuggestValueToControl( 
+						this.lookupValues[ this.cursor ], 
+						this.suggestValues[ this.cursor ].replace(/\<(\/b|b)\>/gi, ""),
+						this.suggestKeys[ this.cursor ]
+					);
 				}
 				this.destroyDiv();
 				this.stopEvent(e);
@@ -17605,31 +18091,39 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 				return;
 			}
 
-			var data = respObj.data,
-				dispVal = ctrl.getInputValue(),
+			var dispVal = ctrl.getInputValue(),
 				found = !findLinkValue && ctrl.freeInput,
 				divsArr = [],
-				i, j, eventsFlag;
+				eventsFlag;
 
 			ctrl.suggestValues = [];
 			ctrl.lookupValues = [];
+			ctrl.suggestKeys = [];
 
-			// get suggest and lookup values
-			for (i = 0, j = 0; i < data.length - 1; i = i + 2, j++) {
+
+			respObj.data.forEach( function( suggest, j ) {
 				if ( ctrl.focusState ) {
-					divsArr.push( ctrl.getSuggestContainer( 'suggestDiv' + j, data[ i + 1 ], data[ i ] ) );
+					divsArr.push( ctrl.getSuggestContainer( 
+							'suggestDiv' + j,  
+							suggest["display"], 
+							suggest["link"], 
+							suggest["displayEscaped"], 
+							suggest["keys"] )
+					);
 				}
 
-				ctrl.suggestValues[ j ] = String(data[ i + 1 ]);
-				ctrl.lookupValues[ j ] = data[ i ];
+				suggest["display"] = String( suggest["display"] );
+				ctrl.suggestValues.push( suggest["display"] );
+				ctrl.lookupValues.push(  suggest["link"] );
+				ctrl.suggestKeys.push( suggest["keys"] );
 
 				if ( !found && ctrl.suggestValues[ j ] == dispVal ) {
 					//	trigger events if value changed
-					eventsFlag = ctrl.lookupValues[ j ] !== ctrl.getValue();
-					ctrl.setLookupValue( ctrl.lookupValues[ j ], true, ctrl.suggestValues[ j ] );
+					eventsFlag =  suggest["link"] !== ctrl.getValue();
+					ctrl.setLookupValue(  suggest["link"], true, suggest["display"] );
 					found = true;
 				}
-			}
+			});
 
 			ctrl.setFrame( !found );
 
@@ -17652,14 +18146,15 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 	 * @param {string} containerId
 	 * @param {string} suggestValue
 	 * @param {string} lookupValue
+	 * @param {string} escapedSuggestValue  html-escaped suggest
 	 * @return {jQuery object}
 	 */
-	getSuggestContainer: function( containerId, suggestValue, lookupValue ) {
+	getSuggestContainer: function( containerId, suggestValue, lookupValue, escapedSuggestValue, keys ) {
 		var ctrl = this;
 
 		return $('<div id="' + containerId + '" class="suggest_link"></div>')
 					.css("cursor", "pointer")
-					.html( suggestValue )
+					.html( escapedSuggestValue )
 					.on("mouseover", function() {
 						ctrl.suggestOver( this );
 					})
@@ -17668,7 +18163,7 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 					})
 					.on("click", function() {
 						ctrl.setFrame( false );
-						ctrl.setSuggestValueToControl( lookupValue, suggestValue );
+						ctrl.setSuggestValueToControl( lookupValue, suggestValue, keys );
 						ctrl.destroyDiv();
 					});
 	},
@@ -17794,7 +18289,7 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 			dispValue = this.getInputValue();
 
 		if ( this.freeInput && this.multiSelectionAllowed && ( !this.lookupDiv || !this.lookupDiv.data('hovered') ) && dispValue.trim() !== "" ) {
-			this.setSuggestValueToControl( dispValue, dispValue );
+			this.setSuggestValueToControl( dispValue, dispValue, null );
 		}
 
 		this.focusState = false;
@@ -17909,7 +18404,19 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 
 		if ( this.freeInput && this.multiSelectionAllowed ) {
 			for (var i = 0; i < selectValue.length; i++ ) {
-				this.setLookupValue( selectValue[i], false, selectValue[i] );
+				//this.setLookupValue( selectValue[i], false, selectValue[i] );
+				var v = vals.find( function(v) {
+					return v["displayValue"] === selectValue[i];
+				});
+				if ( v !== undefined ) {
+					this.setLookupValue( v["displayValue"], false,  v["linkValue"] );
+					if ( v["keys"] && this.isEditCurrentItemAvailable() ) {
+						this.getMultiselectOption( v["linkValue"] )
+							.data('keys', v["keys"]);
+					}
+				} else {
+					this.setLookupValue( selectValue[i], false, selectValue[i] );
+				}
 			}
 			return;
 		}
@@ -17962,15 +18469,16 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 	 * @param {string} text
 	 * @param {string | number} value
 	 */
-	processNewFlyAdded: function( text, value ) {
+	processNewFlyAdded: function( text, value, keys ) {
 		if ( !this.suggestValues ) {
 			return;
 		}
 
 		this.suggestValues.push( text );
 		this.lookupValues.push( value );
+		this.suggestKeys.push( keys );
 
-		this.setSuggestValueToControl( value, text );
+		this.setSuggestValueToControl( value, text, keys );
 
 		this.setFrame( false );
 	},
@@ -17979,10 +18487,15 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 	 * Set a selected suggest value to the control
 	 * @param {mixed} linkVal
 	 * @param {mixed} dispVal
+	 * @param {array} keys
 	 */
-	setSuggestValueToControl: function( linkVal, dispVal ) {
+	setSuggestValueToControl: function( linkVal, dispVal, keys ) {
 		if ( !this.multiSelectionAllowed ) {
 			this.setLookupValue( linkVal, true, dispVal );
+			if ( this.displayElem && this.isEditCurrentItemAvailable() ) {
+				this.displayElem.data('keys', keys);
+			}
+			this.updataEditCurrentButton();
 			return;
 		}
 
@@ -17991,6 +18504,12 @@ Runner.controls.EditBoxLookup = Runner.extend( Runner.controls.TextFieldLookup, 
 		if ( !$option.length ) {
 			this.addMultiselectOption( linkVal, dispVal );
 		}
+		
+		if ( this.displayElem && this.isEditCurrentItemAvailable() ) {
+			this.getMultiselectOption( linkVal ).data('keys', keys);
+		}
+		
+		this.updataEditCurrentButton();
 	},
 
 	/**
@@ -18333,7 +18852,12 @@ Runner.controls.ListPageLookup = Runner.extend( Runner.controls.TextFieldLookup,
 			dispVal = this.lookupVals[ valInd ].dispVal;
 
 		if ( !this.multiSelectionAllowed ) {
+			if ( !!this.lookupVals[ valInd ].keys && this.isEditCurrentItemAvailable() ) {
+				this.displayElem.data('keys', this.lookupVals[ valInd ].keys);
+			}
+			
 			this.setLookupValue( linkVal, true, dispVal );
+			this.updataEditCurrentButton();
 			return;
 		}
 
@@ -18346,6 +18870,13 @@ Runner.controls.ListPageLookup = Runner.extend( Runner.controls.TextFieldLookup,
 				$('option', this.valueElem).prop('disabled', true);
 			}
 		}
+		
+		if ( !!this.lookupVals[ valInd ].keys && this.isEditCurrentItemAvailable() ) {
+			this.getMultiselectOption( linkVal )
+				.data('keys', this.lookupVals[ valInd ].keys);
+		}
+
+		this.updataEditCurrentButton();
 	},
 
 	/**
@@ -18354,8 +18885,12 @@ Runner.controls.ListPageLookup = Runner.extend( Runner.controls.TextFieldLookup,
 	 * @param {string} dispVal
 	 * @return {number}			An index of the new added element
 	 */
-	addLookupVal: function( linkVal, dispVal ) {
-		return this.lookupVals.push( {'linkVal': linkVal, 'dispVal': dispVal} ) - 1;
+	addLookupVal: function( linkVal, dispVal, keys ) {
+		return this.lookupVals.push({
+				linkVal: linkVal, 
+				dispVal: dispVal, 
+				keys: keys
+			}) - 1;
 	},
 
 	/**
@@ -18496,7 +19031,7 @@ Runner.controls.ListPageLookup = Runner.extend( Runner.controls.TextFieldLookup,
 						.val('').trigger("change");
 				}
 			});
-	}
+	},
 });
 Runner.namespace('Runner.pages');
 
@@ -18537,6 +19072,8 @@ Runner.pages.constants = {
 	PAGE_USERINFO: "userinfo",
 	
 	PAGE_SESSION_EXPIRED: "session_expired",
+	PAGE_CALENDAR: "calendar",
+	PAGE_GANTT: "gantt",
 	
 	LIST_SIMPLE: 0,
 	LIST_LOOKUP: 1,
@@ -18555,6 +19092,9 @@ Runner.pages.constants = {
 	CHART_DASHBOARD: 2,
 	CHART_DETAILS: 3,
 	CHART_DASHDETAILS: 4,
+
+	CALENDAR_DASHBOARD: 2,
+	GANTT_DASHBOARD: 2,
 
 
 	ADD_SIMPLE: 0,
@@ -18672,6 +19212,8 @@ Runner.pages.constants = {
 	DASHBOARD_DETAILS: 5,
 	DASHBOARD_MAP: 6,
 	DASHBOARD_SNIPPET: 7,
+	DASHBOARD_CALENDAR: 8,
+	DASHBOARD_GANTT: 9,
 
 	
 	/**
@@ -18707,6 +19249,7 @@ Runner.pages.constants = {
 	CRESIZE_PARAMS_TYPE: 2,
 	SHFIELDS_PARAMS_TYPE: 3,
 	FORDER_PARAMS_TYPE: 4,
+	NEWSHFIELDS_PARAMS_TYPE: 5,
 	
 	DESKTOP:1,
 	TABLET_10_IN: 2,
@@ -21403,2158 +21946,6 @@ Runner.util.inlineEditing.InlineEdit = Runner.extend( Runner.util.inlineEditing.
 });
 
 /**
- * The method creates a Filter-control basing on its format
- * @param {object} baseCfg
- * @param {object} searchController		The searchController object reference
- */
-Runner.controls.FilterControlFactory = function( baseCfg, searchController ) {
-	//add to the filter's cfg a reference to the Search Controller object
-	var cfg = {
-		searchController: searchController
-	};
-	
-	cfg = Runner.apply( cfg, baseCfg );
-	
-	switch ( cfg.filterFormat ) {
-		case Runner.controls.constants.FILTER_FORMAT_VALUES_LIST:
-		case Runner.controls.constants.FILTER_FORMAT_INTERVAL_LIST:
-			switch ( cfg.multiSelect ) {
-				case Runner.controls.constants.FILTER_MULTISELECT_NONE:
-				return new Runner.controls.SimpleFilterControl( cfg ); 	
-
-				case Runner.controls.constants.FILTER_MULTISELECT_ON_DEMAND:
-				return new Runner.controls.OnDemandFilterControl( cfg ); 			
-
-				case Runner.controls.constants.FILTER_MULTISELECT_ALWAYS:
-				return new Runner.controls.MultiSelectFilterControl( cfg );
-				
-				default:
-					throw( "Invalid multiselect param(" + cfg.multiSelect + ") for the " + cfg.filterFormat + " format. Cannot create control!" );
-				return;	
-			}
-		
-		case Runner.controls.constants.FILTER_FORMAT_BOOLEAN:
-		return new Runner.controls.SimpleFilterControl( cfg ); 
-		
-		case Runner.controls.constants.FILTER_FORMAT_INTERVAL_SLIDER:
-			if ( cfg.isFieldDateType ) {
-				return new Runner.controls.DateSliderFilterControl( cfg );
-			}
-			if ( cfg.isFieldTimeType ) {
-				return new Runner.controls.TimeSliderFilterControl( cfg );
-			}			
-		return new Runner.controls.SliderFilterControl( cfg ); 
-		
-		default:
-			throw( "Invalid filter control's format = " + cfg.filterFormat + ". Cannot create control!" );
-	}
-}
-
-
-/**
- * The base abstract class for filter controls
- */
-Runner.controls.FilterControl = Runner.extend( Runner.emptyFn, {
-	/**
-	 * It Stores the contol's value for non-multiselect filter contorls 
-	 * @type {String | Number}
-	 */
-	ctrlValue: '',
-	
-	/**
-	 * Filter control field's name	 
-	 * @type {String}
- 	 */
-	fieldName: '',
-	
-	/**
-	 * Filter contorl "good" field's name
-	 * @type {String}
-	 */
-	gfieldName: '',
-	
-	/**
-	 * Filter contorl's format
-	 * @type {String}
-	 */	
-	filterFormat: '',
-	
-	/**
-	 * The number indicating if a contol allows
-	 * multiselection always, "on demand" or never
-	 * @type {number}
-	 */
-	multiSelect: 0,
-	
-	/**
-	 * The indicator if the control's field is filtered
-	 * @type {Boolean}
-	 */
-	filtered: false,
-	
-	/** 
-	 * It stores filtration values 
-	 * for a filtered control
-	 * @type {Array}
-	 */
-	defaultValuesArray: [],
-	
-	/**
-	 * Values to show corresp. to defaultValuesArray prop
-	 * @type {Array}
-	 */
-	defaultShowValues: [],
-	
-	/**
-	 * The name of the Filter panel container's class
-	 * @type {String}
-	 */
-	filterPanelContainerClass: "filterPanelContainer",
-	
-	/**
-	 * The jQuery object representing the Filter panel's div container
-	 * @type {object}
-	 */
-	filterPanelContainer: {},
-
-	/**
-	 * The jQuery object representing the filter control's container
-	 * @type {object}
-	 */
-	filterContainer: {},
-	
-	/**
-	 * The the link to the search Controller intance 
-	 * (that is the same for all filter controls)
-	 * @type {Object} 
-	 */
-	searchController: {},
-
-	/**
-	 * The name of the Filter "Apply" button's class
-	 * @type {String}
-	 */
-	btnApplyClass: "filter-btn-apply",
-
-	/**
-	 * The class of the element toggling control visibility
-	 * @type {String}
-	 */
-	btnExpanderClass: "filter-expander",
-
-	/**
-	 * The class of the element showing whether filter is hidden or displayed
-	 * @type {String}
-	 */
-	btnExpanderIndicatorClass: "filter-indicator",
-
-	/**
-	 * The jQuery object representing the filter control's expander element
-	 * @type {object}
-	 */
-	expanderElem: {},
-	
-	/**
-	 * The name of the filter's hidden values class
-	 * @type {String}
-	 */	
-	hiddenValuesClass: "filter-hidden",
-
-	/**
-	 * The name of the filter's collapsed values class
-	 * @type {String}
-	 */	
-	collapsedValuesClass: "filter-collapsed",
-
-	/**
-	 * The name of the filter value block container's class
-	 * @type {String}
-	 */
-	filterValueBlockContainerClass: "filter-values",
-	
-	/**
-	 * The name of the filter link-value container's class
-	 * @type {String}
-	 */
-	filterLinkClass: "filter-link",
-	
-	/**
-	 * The filter's URL params separator
-	 * @type {String}
-	 */
-	separator: "",
-	
-	/**
-	 * The flag indicating if the filter control is dependent
-	 * @type {Boolean}
-	 */
-	dependent: false,
-	
-	/**
-	 * The flag indicating if the filter control has any dependent filters	
-	 * @type {Boolean}
-	 */	
-	hasDependent: false,
-	
-	/**
-	 * The name of the outermost parent filter
-	 * It's not equal to an empty string for dependent filters only
-	 * @type {String}
-	 */
-	goodOutermostParentName: "",
-
-	/**
-	 * The name of the immediate parent filter
-	 * It's not equal to an empty string for dependent filters only
-	 * @type {String}
-	 */	
-	goodParentName: "",
-	
-	/**
-	 * An array storing the parent filters names 
-	 * for a dependent filter control
-	 * @param {Array}
-	 */
-	parentFilterNames: null,	
-	
-	/**
-	 * @type {string}
-	 */
-	hiddenFilterItemClass: "filter-item-hidden",
-	
-	/**
-	 * @type {boolean}
-	 */
-	baseCtrlButtonsInitialized: false,
-
-	horizontal: false,
-	
-	
-	constructor: function( cfg ) {
-		this.defaultValuesArray = [];
-		
-		Runner.apply( this, cfg );
-		
-		this.filterPanelContainer = $("." + this.filterPanelContainerClass);
-		this.horizontal = this.filterPanelContainer.is( '[data-horizontal]' );
-		this.filterContainer = $(".filter-" + ( this.dependent ? this.goodOutermostParentName : this.gfieldName ) + "-container");
-		this.expanderElem = $("." + this.btnExpanderClass, this.filterContainer);
-		
-		this.init();
-	},
-
-	/**
-	 *
-	 */
-	destructor: function() {
-	},
-	
-	/**
-	 * The stub preventing children objects that don't have 
-	 * any 'init' method from undefined method invocations
-	 */
-	init: Runner.emptyFn,
-	
-	/**
-	 * Add the Apply, 'Clear' and Expander buttons' click event handlers
-	 * to the Filter panel's container.
-	 */
-	initButtons: function() {
-		if ( this.baseCtrlButtonsInitialized ) {
-			return;
-		}
-		
-		this.initBasicButtons();
-		this.initClearButtons();
-		this.initShowMoreButton();
-		
-		this.baseCtrlButtonsInitialized = true;
-	},
-
-	/**
-	 * Initialize the basic filter buttons
-	 * A dependatn control doesn't have its own expander and apply button
-	 */
-	initBasicButtons: function() {	
-		if ( this.dependent ) {
-			return;
-		}
-		
-		var ctrl = this,
-			hiddenValuesClass = this.hiddenValuesClass,
-			hiddenFilterItemClass = this.hiddenFilterItemClass,
-			collapsedValuesClass = this.collapsedValuesClass,
-			btnExpanderIndicatorClass = this.btnExpanderIndicatorClass;	
-
-		// delegate clicks on a particular filter container	
-		this.filterContainer
-			.on('click', '.' + this.btnApplyClass, function(e) {
-				$( this ).data( 'activated', true ); 
-				ctrl.searchController.submitSearch();
-				
-				return false;
-			})
-			.on('click', '.' + this.btnExpanderClass, function(e) {
-				var expander = $( this ),
-					siblings = expander.parent().find('.' + ctrl.filterValueBlockContainerClass + ',.filter-show-more,.filter-field-btn').not('.' + hiddenValuesClass + ',.' + hiddenFilterItemClass),
-					goingToHide = siblings.not('.' + collapsedValuesClass).length !== 0,
-					expanderIndicator = expander.children('.' + btnExpanderIndicatorClass);
-				
-				//set the right 'expand/collapse' sign for the filer
-				ctrl.adjustExpander( goingToHide );
-				//expanderIndicator.html( goingToHide ? '&#x25BC;' : '&#x25B2;' );	
-				
-				//show/hide the filter's content. The last collapsed sibling is actually visible 1px height element due to collapsedValuesClasss styles	
-				siblings.slideToggle( 100 ).promise().done( function() {
-					siblings
-						.css('display', '')
-						.toggleClass( collapsedValuesClass, goingToHide );
-				});
-				
-				return false;
-			});	
-	},
-	
-	/**
-	 * Filters are hidden by the server part
-	 * even not initially collapsed
-	 */
-	updateCollapsedState: function() {
-		var inCollapsedState = this.isCollapsed();
-
-		if ( !this.collapsed && inCollapsedState ) {
-			this.toggleCollapsed( false );
-		} else if ( this.collapsed && !inCollapsedState ) {
-			this.toggleCollapsed( true );
-		}
-	},
-	
-	/**
-	 * Toggle the collapsedValuesClass class
-	 * for a filter's items
-	 * @param {boolean} collapsed
-	 */
-	toggleCollapsed: function( collapsed ) {
-		var $filterItems = this.filterContainer.find('.' + this.filterValueBlockContainerClass + ',.filter-show-more,.filter-field-btn');
-		
-		$filterItems.toggleClass( this.collapsedValuesClass, collapsed );
-	},
-	
-	/**
-	 * Init the 'Clear' buttons
-	 */
-	initClearButtons: function() {
-		if ( !this.filtered ) {
-			return;
-		}
-			
-		var ctrl = this,
-			clearBtnClass = 'filter-clear-' + ( this.dependent ? this.goodOutermostParentName : this.gfieldName );			
-			
-		$('.' + clearBtnClass).on('click', function(e) {
-			ctrl.clearControl();
-			ctrl.clearDependentFilters();		
-			
-			ctrl.searchController.submitSearch();
-			return false;
-		});
-	},
-	
-	/**
-	 * Initialize the 'Show N more' button's functionality
-	 */
-	initShowMoreButton: function() {
-		var ctrl = this;
-		
-		$(".filterShowMore_" + this.gfieldName).on("click", function(e) {
-			var $showMoreElement = $(this).parent();
-	
-			$showMoreElement.siblings("." + ctrl.hiddenFilterItemClass)
-				.removeClass( ctrl.collapsedValuesClass )
-				.removeClass( ctrl.hiddenFilterItemClass );
-				
-			$showMoreElement
-				.removeClass("filter-show-more")
-				.hide();
-			return false;
-		});		
-	},
-	
-	/**
-	 * Clear dependent filters
-	 * @param {Boolean} notMultiSelected
-	 */
-	clearDependentFilters: function( notMultiSelected ) {
-		if ( !this.hasDependent ) {
-			return;
-		}
-		this.searchController.clearDependentFilters( this.dependentFilterNames, notMultiSelected );
-	},
-	
-	/**
-	 * Set the control's value
-	 * @param {String | Number} value
-	 */
-	setValue: function( value ) {
-		this.ctrlValue = value;
-	},
-	
-	/**
-	 * Get the control's value
-	 * @return {String}
-	 */	
-	getValue: function() {
-		return this.ctrlValue;
-	},
-	
-	/**
-	 * Get displayed values string
-	 * @return {String}
-	 */
-	getDisplayedValue: function() {
-		if ( this.defaultShowValues && this.defaultShowValues.length ) {
-			return this.defaultShowValues.join(", ");
-		}
-		
-		return this.getValue();
-	},
-	
-	/**
-	 * Put backslashes in front of every search-syntax character (~,(,))
-	 * @param {String | Number} value
-	 * @param {Boolean} encoded
-	 */ 
-	getPreparedValue: function( value, encoded ) {
-		var prepValue = value; 
-		
-		if ( typeof value === "string" ) {
-			prepValue = this.searchController.searchEscape( value );
-		}
-		if ( encoded && typeof value === "string" ) {
-			return encodeURIComponent( prepValue );
-		}
-		
-		return prepValue;
-	},
-	
-	/**
-	 * Get filter's value ready to use in the field's filtration
-	 * If the encoded param is defined and equal to true 
-	 * It returns the encoded value
-	 * @param {Boolean} encoded
-	 * @return {String}
-	 */
-	getFilterValue: function( encoded ) {
-		var value, prepFName;
-		
-		if ( this.ctrlValue === '' ) {
-			return '';
-		}
-		
-		value = this.getPreparedValue( this.ctrlValue, encoded );
-		
-		prepFName = this.searchController.searchEscape( this.fieldName );
-		prepFName = encoded ? encodeURIComponent( prepFName ) : prepFName;
-				
-		return '(' + prepFName + this.separator + value + ')';
-	},
-
-	/**
-	 * Get filter's encoded value ready to use in the field's filtration
-	 * @return {String}
-	 */
-	getFilterValueEncoded: function() {
-		return this.getFilterValue( true ); 	
-	},
-	
-	/**
-	 * Check if the filter control is visible	
-	 * @return {Boolean}
-	 */	
-	isVisible: function() {
-		return this.filterContainer.is(":visible");
-	},
-	
-	/**
-	 * Check if the filter control is collapsed or not	
-	 * @return {Boolean}
-	 */
-	isCollapsed: function() {
-		if( this.horizontal ) {
-			return false;
-		}
-		var $filterItems = this.expanderElem.siblings().children("li");
-		
-		return !$filterItems.not( "." + this.collapsedValuesClass + ",." + this.hiddenValuesClass + ",." + this.hiddenFilterItemClass ).length;
-	},
-	
-	/**
-	 * Adjust the flter's expander sign basing on the its state (expanded/collapsed).
-	 * @pamam {Boolean} collapsed	
-	 * @return {Boolean}
-	 */
-	adjustExpander: function( collapsed ) {
-		var $expanderIcon = $("." + this.btnExpanderIndicatorClass, this.expanderElem);
-		
-		$expanderIcon.toggleClass( "glyphicon-triangle-bottom", collapsed );
-		$expanderIcon.toggleClass( "glyphicon-triangle-top", !collapsed );
-	},
-	
-	/**
-	 * Clear the filter control's value
-	 * the 'Clear' buttons 'click' handler
-	 */
-	clearControl: function() {
-		this.setValue('');
-	},
-
-	/**
-	 * Set a single value to the filter control
-	 * @param {Mixed}
-	 */
-	updateValue: function( value ) {
-		this.setValue( value );	
-	},
-	
-	/**
-	 * Check if the filter control is dependent
-	 * @return {Boolean}
-	 */
-	isDependent: function() {
-		return this.dependent;
-	},
-	
-	/**
-	 * Check if the filter control is multiselected
-	 * @return {Boolean}
-	 */
-	isMultiSelected: function() {
-		return false;
-	},
-
-	/**
-	 * Prevent dropdown close on click inside 
-	 */
-	initDropdown: function() {
-		var selector = '.' + this.filterPanelContainerClass + ' .dropdown-menu';
-		$( document ).on( 'click', selector, function (e) {
-			e.stopPropagation();
-		});
-	}
-});
-
-
-Runner.controls.SimpleFilterControl = Runner.extend( Runner.controls.FilterControl, {
-	/**
-	 * The link to the Runner.controls.OnDemandFilterControl's base class
-	 * It makes easier to borrow its methods
-	 * @type {Object}
-	 */
-	superclass: {},
-		
-	/**
-	 * The filter values links class name
-	 * @type {String}
-	 */		
-	valueLinkClass: "",
-	
-
-	constructor: function( cfg ) {
-		Runner.controls.SimpleFilterControl.superclass.constructor.call( this, cfg );	
-	},
-	
-	/**
-	 * Set the control's default value and init contol's buttons and links
-	 */
-	init: function() {	
-		this.superclass = Runner.controls.SimpleFilterControl.superclass ;
-		this.valueLinkClass = this.gfieldName + "-filter-value";
-		
-		this.setValue( this.defaultValuesArray.join(', ') );
-		this.initButtons();
-		this.initDropdown();
-	},
-	
-	/**
-	 * Init the control's buttons and links
-	 */
-	initButtons: function() {
-		var ctrl = this,
-			delBtnClass = "delFilterCtrlButt_" + ( this.dependent ? this.goodOutermostParentName : this.gfieldName ) + "_" + this.searchController.id;
-		
-		this.filterPanelContainer.off("click.filters" + this.gfieldName);
-		
-		this.filterPanelContainer
-			.on("click.filters" + this.gfieldName, "." + delBtnClass, function(e) {
-				var $delButton = $(this);
-					valueToDelete = $(this).data('delete').toString(); 
-				
-				ctrl.clearFilterValue( valueToDelete, $delButton.parent(".filter-values") );
-				ctrl.searchController.rememberFilterPanelState();
-				ctrl.searchController.submitSearch();
-				return false;	
-			});
-
-		if ( !this.hasDependent ) {
-			this.filterPanelContainer.on("click.filters" + this.gfieldName, "." + this.filterValueBlockContainerClass + "-" + this.gfieldName, function(e) {
-				var $valueLink = $("." + ctrl.valueLinkClass , this);
-				if ( !$valueLink.length ) {
-					return;
-				}
-				
-				ctrl.ctrlValue = $valueLink.attr("data-filtervalue");
-				
-				ctrl.updateParentFilters( $valueLink.data("parentFiltersValues") );
-				ctrl.clearDependentFilters();	
-				ctrl.searchController.rememberFilterPanelState();						
-				ctrl.searchController.submitSearch();
-
-				return false;
-			})
-			.on("click", "." + this.valueLinkClass, function(e) {		
-				e.preventDefault();
-			});
-		} else {
-			$("." + ctrl.filterValueBlockContainerClass + "-" + ctrl.gfieldName, ctrl.filterContainer).removeClass( ctrl.filterLinkClass );
-			this.filterPanelContainer.on("click", "." + this.valueLinkClass, function(e) {		
-				var $valueLink = $(this);
-				
-				ctrl.ctrlValue = $valueLink.data("filtervalue");
-				ctrl.updateParentFilters( $valueLink.data("parentFiltersValues") );
-				ctrl.clearDependentFilters();	
-				ctrl.searchController.rememberFilterPanelState();						
-				ctrl.searchController.submitSearch();
-				
-				return false;
-			});
-		}
-				
-		//call the base class method
-		this.superclass.initButtons.call( this );	
-	},
-	
-	/**
-	 * Update parent filters' values
-	 * @param {Object} parentFiltersValuesData
-	 */
-	updateParentFilters: function( parentFiltersValuesData ) {
-		if ( !this.dependent ) {
-			return;
-		}
-		this.searchController.updateParentFilters( parentFiltersValuesData );
-	},
-
-	/**
-	 * Delete a particular value from the filter's submit-values
-	 * @param {String} valueToDelete
-	 * @param {jQuery object} $container
-	 */
-	clearFilterValue: function( valueToDelete, $container ) {
-		this.setValue('');
-	},
-}); 
-
-
-Runner.controls.MultiSelectFilterControl = Runner.extend( Runner.controls.FilterControl, {
-	/**
-	 * It stores the array of the filter checkboxes' jQuery objects
-	 * @type {Array}
-	 */
-	checkboxes: [],
-	
-	/**
-	 * The name of the filter checkboxes' class
-	 * @type {String}
-	 */
-	checkboxClass: '',
-	
-	/**
-	 * The link to the Runner.controls.OnDemandFilterControl's base class
-	 * It makes easier to borrow its methods
-	 * @type {Object}
-	 */
-	superclass: {},
-	
-	/**
-	 * The common multiselect checkbox class name
-	 * @type {String}	
-	 */
-	commonCheckboxClass: "multifilter-checkbox",
-	
-	/**
-	 * The parent filter checkbox class name
-	 * @param {String}
-	 */
-	parentCheckboxClass: "",
-	
-	
-	constructor: function( cfg ) {
-		this.checkboxes = [];
-		
-		Runner.controls.MultiSelectFilterControl.superclass.constructor.call( this, cfg );
-	},
-	
-	/**
-	 * Init the checkboxes array with the array of the filter checkboxes' jQuery objects.
-	 * Set the control's default value and init contol's buttons and links. 
-	 */
-	init: function() {
-		this.superclass = Runner.controls.MultiSelectFilterControl.superclass;
-
-		this.applyButton = $( ".filter-apply-" + ( this.dependent ? this.goodOutermostParentName : this.gfieldName) ); 
-		
-		this.checkboxClass = "filter_" + this.gfieldName + "_" + this.searchController.id;
-		this.checkboxes = $("." + this.checkboxClass);	
-		this.selectAllCheckbox = $( ".filter-selectAll-" + ( this.dependent ? this.goodOutermostParentName : this.gfieldName ) );
-		this.parentCheckboxClass = this.dependent ? "filter_" + this.goodParentName + "_" + this.searchController.id : "";
-				
-		this.adjustSelectAllCheckbox();
-		
-		if ( this.filtered && !this.dependent ) {
-			this.setValue( this.defaultValuesArray );
-		}
-		
-		this.initButtons();
-		this.initDropdown();
-	},
-		
-	/**
-	 * Adjust the flter's 'Select/Deselect All' checkbox basing on the filter's checkboxes state.
-	 */	
-	adjustSelectAllCheckbox: function() {
-		var currentState = this.selectAllCheckbox.is(":checked"),
-			allChecked = this.checkboxes.length === this.checkboxes.filter(":checked").length
-		
-		this.selectAllCheckbox.prop("checked", allChecked);
-	},	
-		
-	/**
-	 * Init the control's buttons
-	 */	
-	initButtons: function() {
-		var ctrl = this;
-				
-		this.selectAllCheckbox
-			.on("click", function(e) {
-				e.stopPropagation();
-			})
-			.on("change", function(e) {
-				ctrl.checkboxes.prop("checked", this.checked);
-				ctrl.clearDependentFilters( true );
-				return false;
-			});
-		
-		this.checkboxes
-			.on("click", function(e) {
-				ctrl.adjustSelectAllCheckbox();
-				ctrl.adjustDependentFilters( this );
-				ctrl.adjustInvisibleCheckboxes( this );	
-				e.stopPropagation();
-			})
-			.on("change", function(e) {
-				ctrl.adjustParentFilterCheckbox( this );
-			});
-
-		if ( !this.hasDependent ) {
-			$("." + this.filterValueBlockContainerClass + "-" + this.gfieldName ).on("click", function(e) {
-				var $checkbox = $("." + ctrl.checkboxClass, this),
-					checked = $checkbox.prop("checked"),
-					checkbox;
-				
-				if ( !$checkbox.length || $checkbox.is( e.target ) ) {
-					return;
-				}
-				
-				$checkbox.prop("checked", !checked);
-				
-				checkbox = $checkbox.get(0);
-				ctrl.adjustSelectAllCheckbox();
-				ctrl.adjustDependentFilters( checkbox );
-				ctrl.adjustInvisibleCheckboxes( checkbox );
-				
-				$checkbox.trigger("change");
-			});
-		}
-		
-		//call the base class method
-		this.superclass.initButtons.call( this );	
-	},
-	
-	/**
-	 * Clear check boxes for multiselect dependent controls
-	 * and clear values for not multiselected ones
-	 * @param {DOM element} checkbox
-	 */	
-	adjustDependentFilters: function( checkbox ) {
-		this.clearDependentFilters( true );
-		this.adjustDependentFilterCheckboxes( checkbox );		
-	},
-	
-	/**
-	 * Update dependent filters checkboxes of the corresponding value blocks
-	 * basing on the main filter's current checkbox state
-	 * The method depends on the Filter panel value blocks markup
-	 * @param {DOM element} checkbox
-	 */
-	adjustDependentFilterCheckboxes: function( checkbox ) {
-		if ( !this.hasDependent ) {
-			return;
-		}
-		
-		var $checkbox = $( checkbox ),
-			$filterValueBlock = $checkbox.parents( '.' + this.filterValueBlockContainerClass );
-		
-		$('.' + this.commonCheckboxClass, $filterValueBlock).prop('checked', $checkbox.is(':checked'));
-	},
-	
-	/**
-	 * Update the corresoinding parent filter's checkbox state
-	 * basing on the value blocks's checkboxes state	
-	 * The method depends on the Filter panel value blocks markup	 
-	 * @param {DOM element} checkbox
-	 */
-	adjustParentFilterCheckbox: function( checkbox ) {
-		if ( !this.dependent ) {
-			return;
-		}
-		
-		var $checkbox = $( checkbox ),
-			$parentFilterValueBlock = $checkbox.parents( '.' + this.filterValueBlockContainerClass ).eq(1),
-			checked = $checkbox.is(':checked') || $('.' + this.checkboxClass + ':checked', $parentFilterValueBlock).length > 0;
-
-		
-		$parentFilterValueBlock.find( '.' + this.parentCheckboxClass ).prop('checked', checked)
-			.trigger('change');
-	},	
-	
-	/**
-	 * Update the corresponding checkboxes from invisible parent filters value blocks
-	 * @param {DOM element} checkbox
-	 */
-	adjustInvisibleCheckboxes: function( checkbox ) {
-		if ( !this.dependent ) {
-			return
-		}
-		
-		var $checkbox = $( checkbox ),
-			checkboxValue = $checkbox.val(),
-			parentValues = $checkbox.data('parentFiltersValues'),
-			$similarHiddenBoxes = this.checkboxes.not(':visible').filter( function() {
-				var $box = $(this),
-					hiddenParentValues, pName;
-					
-				if ( $box.val() !== checkboxValue ) {
-					return false;
-				}				
-				
-				hiddenParentValues = $box.data('parentFiltersValues');
-					
-				for ( pName in hiddenParentValues ) {
-					if ( hiddenParentValues[ pName ] !== parentValues[ pName ] ) {
-						return false;
-					}
-				}
-				
-				return true; 
-			});
-			
-		$similarHiddenBoxes.prop('checked', $checkbox.is(':checked'))
-			.trigger('change');	
-	},
-	
-	/**
-	 * Checked the filter's checkboxes having the values contained in the array param
-	 * @param {Array} arr
-	 */
-	setValue: function( arr ) {
-		this.checkboxes.each( function(index, domCheckbox) {
-			var checkbox = $( domCheckbox ),
-				pos = $.inArray( checkbox.val(), arr );
-			
-			if ( pos !== -1 ) {
-				checkbox.prop('checked', true);
-				arr.splice(pos, 1); 
-			} 
-		});
-		
-	},
-	
-	/**
-	 * Get the contorl's value as an array.
-	 * The returned array contains all the cehcked control's cehckboxes' values 
-	 * and some default values that are not represented among the contol's checkboxes
-	 * (to the "filter" operation reversible)
-	 *
-	 * @return {Array} 
-	 */
-	getValue: function() {
-		var arr = [], i,
-			ctrl = this,
-			$checked = $('.' + this.checkboxClass + ':checked'),
-			onDemand = this instanceof Runner.controls.OnDemandFilterControl;
-		
-		if ( this.dependent ) {
-			$checked = $checked.filter(':visible');
-		}
-		
-		if ( this.filtered || this.applyButton.data('activated') || $checked.length !== this.checkboxes.length ) {	
-			$checked.each( function( index, domCheckbox ) {						
-				var $box = $( domCheckbox ),
-					checkData = { 
-						value: $box.val(), 
-					}; 
-				
-				if ( ctrl.dependent ) {
-					var parentFiltersValueData = $box.data('parentFiltersValues'),	
-						parentValues = [];
-					
-					ctrl.parentFilterNames.forEach( function( pfName ) {
-						parentValues.push( parentFiltersValueData[ pfName ].toString().replace('|', '\\|') );
-					});
-					
-					checkData.parentValues = parentValues.join('|');
-				}
-				
-				arr.push( checkData );				
-			});			
-		}
-		
-		return arr;
-	},
-	
-	/**
-	 * Get filter's value ready to use in the field's filtration
-	 * If the encoded param is defined and equal to true 
-	 * It returns the encoded value
-	 * @param {Boolean} encoded
-	 *
-	 * @return {String}
-	 */
-	getFilterValue: function( encoded ) {
-		var arr = this.getValue(),
-			result = ''; 
-		
-		for (i = 0; i < arr.length; i++) {			
-			var value = arr[i].value,
-				parentValues = arr[i].parentValues,
-				prepFName;
-			
-			if ( value === '' ) {
-				continue;
-			}
-			
-			value = this.getPreparedValue( value, encoded );		
-			prepFName = this.searchController.searchEscape( this.fieldName );
-			prepFName = encoded ? encodeURIComponent( prepFName ) : prepFName;
-						
-			result += '(' + prepFName + this.separator + value 
-				+ ( parentValues ? '~~' + parentValues : '' ) + ')';
-		}
-		
-		return result;
-	},	
-	
-	/**
-	 * Clear the filter control's value
-	 */
-	clearControl: function() {			
-		this.checkboxes.prop('checked', false);
-		this.selectAllCheckbox.prop('checked', false);		
-	},
-	
-	/**
-	 * Set a single value to the filter control
-	 * @param {Mixed}
-	 */
-	updateValue: function( value ) {
-		this.checkboxes.prop('checked', false);
-		this.setValue( [value] );	
-	},
-
-	/**
-	 * Check if the filter control is multiselected
-	 * @return {Boolean}
-	 */
-	isMultiSelected: function() {
-		return true;
-	}	
-});
-
-/**
- * The class combaining the SimpleFilterControl and MultiSelectFilterControl functionalities
- */
-Runner.controls.OnDemandFilterControl = Runner.extend( Runner.controls.FilterControl, {
-	/**
-	 * The indicator showing if control in multiselection mode ot not
-	 * (this mode is turning on by clicking on the "Multiselect" button)
-	 * @type {Boolean}
-	 */
-	multiSelection: false,
-	
-	/**
-	 * It stores the array of the filter checkboxes' jQuery objects
-	 * @type {Array}
-	 */
-	checkboxes: [],
-	
-	/**
-	 * The name of the filter checkboxes' class
-	 * @type {String}
-	 */
-	checkboxClass: '',
-		
-	/**
-	 * The name of the Filter "Multiselect" button's class
-	 * @type {String}
-	 */
-	btnMultiselectClass: "",
-	
-	/**
-	 * The caption of the filter's "Apply" button
-	 * @type {String}
-	 */
-	btnApplyCaption: Runner.lang.constants.FILTER_APPLY,
-		
-	/**
-	 * The link to the Runner.controls.OnDemandFilterControl's base class
-	 * It makes easier to borrow its methods
-	 * @type {Object}
-	 */
-	superclass: {},
-
-	/**
-	 * The link to the Runner.controls.MultiSelectFilterControl
-	 * It makes easier to borrow its methods
-	 * @type {Object}
-	 */
-	multiSelectFCtrl: {},
-	
-	/**
-	 * The link to the Runner.controls.SimpleFilterControl
-	 * It makes easier to borrow its methods
-	 * @type {Object}
-	 */
-	simpleFCtrl: {},
-
-	/**
-	 * The class name of the filtered not multiselected filter's values
-	 * @type {String}
-	 */
-	filteredValuesClass: "filter-ready-value",	
-	
-	/**
-	 * The filter values links class name
-	 * @type {String}
-	 */	
-	valueLinkClass: "",
-
-	/**
-	 * The common multiselect checkbox class name
-	 * @type {String}	
-	 */
-	commonCheckboxClass: "multifilter-checkbox",
-	
-	/**
-	 * The parent filter checkbox class name
-	 * @param {String}
-	 */
-	parentCheckboxClass: "",	
-	
-	
-	constructor: function( cfg ) {
-		this.checkboxes = [];
-		
-		Runner.controls.OnDemandFilterControl.superclass.constructor.call( this, cfg );
-	},
-	
-	/**
-	 * Init the checkboxes array with the array of the filter checkboxes' jQuery objects.
-	 * Set the control's default value and init contol's buttons and links. 
-	 */
-	init: function() {	
-		this.superclass = Runner.controls.OnDemandFilterControl.superclass;
-		this.multiSelectFCtrl = Runner.controls.MultiSelectFilterControl.prototype;
-		this.simpleFCtrl = Runner.controls.SimpleFilterControl.prototype; 
-
-		this.btnMultiselectClass = 'filter-' + ( this.dependent ? this.goodOutermostParentName : this.gfieldName ) + '-btn-multiselect';		
-		this.applyButton = $("." + this.btnMultiselectClass);
-		
-		this.checkboxClass = 'filter_' + this.gfieldName + "_" + this.searchController.id;
-		this.checkboxes = $('.' + this.checkboxClass);		
-		this.parentCheckboxClass = this.dependent ? 'filter_' + this.goodParentName + "_" + this.searchController.id : '';
-		this.selectAllCheckbox = $('.filter-selectAll-' + ( this.dependent ? this.goodOutermostParentName : this.gfieldName ));	
-		
-		this.valueLinkClass = this.gfieldName + '-filter-value';
-		
-		this.setValue( this.defaultValuesArray.join(', ') );
-		this.initButtons();
-		this.initDropdown();		
-	},
-	
-	/**
-	 * Adjust the flter's 'Select/Deselect All' checkbox basing on the filter's checkboxes state.
-	 */	
-	adjustSelectAllCheckbox: Runner.controls.MultiSelectFilterControl.prototype.adjustSelectAllCheckbox,
-	
-	/**
-	 * Clear check boxes for multiselect dependent controls
-	 * and clear values for not multiselected ones
-	 * @param {DOM element} checkbox
-	 */	
-	adjustDependentFilters: Runner.controls.MultiSelectFilterControl.prototype.adjustDependentFilters,
-	
-	/**
-	 * Update dependent filters checkboxes of the corresponding value blocks
-	 * basing on the main filter's current checkbox state
-	 * The method depends on the Filter panel blocks markup
-	 * @param {DOM element} checkbox
-	 */
-	adjustDependentFilterCheckboxes: Runner.controls.MultiSelectFilterControl.prototype.adjustDependentFilterCheckboxes,
-
-	/**
-	 * Update the corresoinding parent filter's checkbox state
-	 * basing on the value blocks's checkboxes state	
-	 * The method depends on the Filter panel value blocks markup	 
-	 * @param {DOM element} checkbox
-	 */
-	adjustParentFilterCheckbox: Runner.controls.MultiSelectFilterControl.prototype.adjustParentFilterCheckbox,
-	
-	/**
-	 * A stub for the Runner.controls.OnDemandFilterControl class
-	 */
-	adjustInvisibleCheckboxes: Runner.emptyFn,
-	
-	/**
-	 * Init control's buttons and links
-	 */
-	initButtons: function() {
-		var ctrl = this,
-			anotherApplyButtonExists = !!$(".filter-apply-" + this.gfieldName).not( this.applyButton ).length;
-		
-		if ( this.dependent ) {
-			anotherApplyButtonExists = !!$(".filter-apply-" + this.goodOutermostParentName).not( this.applyButton ).length;
-		}
-		
-		this.applyButton.one("click", function(e) {
-			var $button = $(this);
-
-			if ( anotherApplyButtonExists ) { 
-				$button.hide();
-			}		
-			
-			$button
-				.text( ctrl.btnApplyCaption )
-				.addClass( ctrl.btnApplyClass )
-				.removeClass( ctrl.btnMultiselectClass );			
-						
-			$("." + ctrl.valueLinkClass)
-				.removeClass( ctrl.valueLinkClass )
-				.addClass( "multiSelect-" + ctrl.valueLinkClass )
-				// remove link hrefs
-				.removeAttr('href');
-			
-			$("." + ctrl.filterValueBlockContainerClass + "-" + ctrl.gfieldName, ctrl.filterContainer)
-				.removeClass( ctrl.filterLinkClass );
-			
-			ctrl.checkboxes.show();
-			ctrl.selectAllCheckbox.show();
-			
-			if ( !ctrl.dependent || ctrl.filtered ) {				
-				$("." + ctrl.hiddenValuesClass, ctrl.filterContainer)
-					/*.css("display", "block") // bootstrap filter fix
-					.show()*/
-					.removeClass( ctrl.hiddenValuesClass );
-				
-				$("." + ctrl.filteredValuesClass + ".ondemand", ctrl.filterContainer)
-					.hide()
-					.addClass( ctrl.hiddenValuesClass );
-			}
-			
-			$(".show-more-hidden", ctrl.filterContainer) //temp fix
-				.removeClass("show-more-hidden");
-			
-			if ( ctrl.dependent && !ctrl.searchController.hasFilteredParentFilter( ctrl.parentFilterNames) ) {
-				// hide the 'delete filter' button after switching ti the multiselect mode
-				$(".delFilterCtrlButt_" + ( ctrl.dependent ? ctrl.goodOutermostParentName : ctrl.gfieldName ) + "_" + ctrl.searchController.id).hide();
-			}
-			
-			ctrl.multiSelection = true;
-			return false;
-		});
-
-		//call the SimpleFilterControl's method
-		this.simpleFCtrl.initButtons.call( this );
-		//call the MultiSelectFilterControl's method
-		this.multiSelectFCtrl.initButtons.call( this );		
-	},
-
-	/**
-	 * Update parent filters' values
-	 * @param {Object} parentFiltersValuesData
-	 */
-	updateParentFilters: Runner.controls.SimpleFilterControl.prototype.updateParentFilters,
-	
-	/**
-	 * Get filter's value. 
-	 * If the multiselection is turned on for the "on Demand" control or its field is filtered
-	 * It uses the borrowed method "getFilterValue" from the MultiSelectFilterControl.
-	 * Otherwise it borrows the superclass "getFilterValue" method
-	 *
-	 * @return {String}
-	 */
-	getValue: function() { 
-		if ( this.multiSelection || this.filtered ) {
-					//call the MultiSelectFilterControl's method
-			return this.multiSelectFCtrl.getValue.call( this );
-		}
-				//call the base class method
-		return this.superclass.getValue.call( this );
-	},
-	
-	/**
-	 * Get filter's value ready to use in the field's filtration
-	 * If the multiselection is turned on for the "on Demand" control or its field is filtered
-	 * It uses the borrowed method "getFilterValue" from the MultiSelectFilterControl.
-	 * Otherwise it borrows the superclass "getFilterValue" method
-	 *
-	 * @return {String}
-	 */
-	getFilterValue: function( encoded ) {
-		if ( this.multiSelection || this.filtered ) {
-					//call the MultiSelectFilterControl's method
-			return this.multiSelectFCtrl.getFilterValue.call( this, encoded );
-		}
-				//call the base class method
-		return this.superclass.getFilterValue.call( this, encoded );
-	},
-
-	/**
-	 * Clear the filter control
-	 */
-	clearControl: function() {
-		if ( this.multiSelection || this.filtered ) {
-			this.checkboxes.prop('checked', false);
-			this.selectAllCheckbox.prop('checked', false);
-		} 
-		
-		this.setValue('');
-	},
-	
-	/**
-	 * Delete a particular value from the filter's submit-values
-	 * by unchecking the corresponding checkbox
-	 * @param {Strging} valueToDelete
-	 * @param {jQuery object} $container	 
-	 */
-	clearFilterValue: function( valueToDelete, $container ) {
-		if ( !this.dependent ) {
-			this.checkboxes
-				.filter( function() {	
-					return this.value === valueToDelete;
-				})
-				.prop('checked', false);
-			
-			return;
-		}
-		
-		this.checkboxes
-			.filter( function() {
-				return !!$container.find( this ).length;
-			})
-			.prop('checked', false);
-		
-		if ( this.hasDependent ) {
-			$('.' + this.commonCheckboxClass, $container).prop('checked', false); 			
-		}			
-	},
-	
-	/**
-	 * Set a single value to the filter control
-	 * @param {Mixed}
-	 */
-	updateValue: function( value ) {
-		if ( this.multiSelection ) {
-			this.checkboxes.prop('checked', false);
-			this.setValue( [value] );
-		} 
-		
-		this.setValue( value );
-	},
-	
-	/**
-	 * Check if the filter control is multiselected	
-	 * @return {Boolean}
-	 */
-	isMultiSelected: function() {
-		return this.multiSelection;
-	}
-});
-
-
-/**
-* The Slider Filter control class
-*/
-Runner.controls.SliderFilterControl = Runner.extend( Runner.controls.FilterControl, {
-	/**
-	 * The jQueryUI slider object 
-	 * @type {Object}
-	 */
-	sliderElem: {},
-	
-	/**
-	 * The jQueryUI slider's range param
-	 * It could be assigned with a corresponding key from the config
-	 * @type {Number}
-	 */
-	range: true,
-
-	/**
-	 * The jQueryUI slider's min value
-	 * It could be assigned with a corresponding key from the config
-	 * @type {String|Number}
-	 */	
-	minValue: 0,
-
-	/**
-	 * The jQueryUI slider's max value
-	 * It could be assigned with a corresponding key from the config
-	 * @type {String|Number}
-	 */	
-	maxValue: 0, 
-
-	/**
-	 * The jQueryUI slider's step value
-	 * It could be assigned with a corresponding key from the config
-	 * @type {Number}
-	 */	
-	step: 1,
-
-	/**
-	 * A param setting th slider type 
-	 * ("min", "max", "both")
-	 * @type {Number}
-	 */
-	knobsType: 0,
-	
-	/**
-	 * The rounded max slider's value
-	 * @type {Number}
-	 */
-	roundedMax: 0,
-	
-	/**
-	 * The rounded min slider's value	
-	 * @type {Number}
-	 */	
-	roundedMin: 0,
-	
-	/**
-	 * The rounded max slider knob's value	
-	 * @type {Number}
-	 */		
-	roundedMaxKnobValue: 0,
-	
-	/**
-	 * The rounded min slider knob's value		
-	 * @type {Number}
-	 */		
-	roundedMinKnobValue: 0,	
-	
-	/**
-	 * An indicator showing if the 'Apply' 
-	 * button is added to the filter 
-	 * @type {Boolean}
-	 */
-	useApllyBtn: false,
-
-
-	formatSettings: null,
-	
-	
-	constructor: function( cfg ) {
-		Runner.controls.SliderFilterControl.superclass.constructor.call( this, cfg );
-	},
-
-	/**
-	 * Set default filter's values
-	 */
-	setDefaultValues: function() {
-		this.ctrlValues = [ this.minKnobValue, this.maxKnobValue ];
-	},
-
-	/**
-	 * Get the string representation of the control's value
-	 * @return {String}
-	 */
-	getValue: function() {
-		return this.getCaptionValue( this.ctrlValues[0] ) + " - " + this.getCaptionValue( this.ctrlValues[1] );
-	},
-	
-	/**
-	 * Init the slider control
-	 */
-	init: function() {
-		var jQsliderValues, sliderParams;
-		
-		jQsliderValues= $("#slider_values_" + this.gfieldName);
-		this.jQmax = $(".slider-max", jQsliderValues); 
-		this.jQmin = $(".slider-min", jQsliderValues);	
-	
-		this.setDefaultValues();	
-		this.range = this.getRange();
-		
-		sliderParams = this.getSliderParams();	
-		this.sliderElem = $("#slider_" + this.gfieldName)
-			.slider( sliderParams );
-			
-		this.setPageMaxZIndex();	
-		
-		this.initButtons();			
-	},
-	
-	/**
-	 * A stub
-	 */
-	initShowMoreButton: Runner.emptyFn,
-	
-	/**
-	 * Set the Runner 'z-index' counter not lower that the slider's handle 'z-index' value
-	 */ 
-	setPageMaxZIndex: function() {
-		var handleZIndex = parseInt( $('.ui-slider-handle', this.sliderElem).css('z-index'), 10 );
-		Runner.setZindexMax( handleZIndex );	
-	},
-	
-	/**
-	 * Get the jQuery slider range param
-	 */
-	getRange: function() {
-		if ( this.knobsType === Runner.controls.constants.FILTER_KNOBS_MIN_ONLY ) {
-			return 'max';
-		}		
-		if ( this.knobsType === Runner.controls.constants.FILTER_KNOBS_MAX_ONLY ) {
-			return 'min';
-		}	
-		return true;
-	},
-	
-	/**
-	 * Get jQuery slider params
-	 * @return {object}
-	 */
-	getSliderParams: function() {
-		var filter = this,
-			sliderParams = {
-				range: this.range,
-				min: this.roundedMin,
-				max: this.roundedMax,
-				step: parseFloat( this.step )
-			},
-			typeBasedParams;
-			
-		typeBasedParams = this.getSliderParamsByType( this.range );
-		Runner.apply( sliderParams, typeBasedParams );
-		
-		if ( !this.useApllyBtn ) {	
-			sliderParams.stop = function() {
-				filter.searchController.submitSearch();
-			}			
-		}	
-		return sliderParams;
-	},
-	
-	/**
-	 * Get jQuery slider params basing on the slider's range type
-	 * @param {string | boolean} range
-	 * @return {object}
-	 */
-	getSliderParamsByType: function( range ) {
-		var filter = this;
-		
-		switch ( this.range ) {
-			case 'min':
-			return {
-				value: parseFloat( this.roundedMaxKnobValue ),
-				slide: function( event, ui ) {
-					filter.processMaxValue( ui.value, $(this).slider("option", "min") === ui.value );	
-				}
-			};
-
-			case 'max':
-			return {
-				value: parseFloat( this.roundedMinKnobValue ),
-				slide: function( event, ui ) {
-					filter.processMinValue( ui.value, $(this).slider("option", "max") === ui.value );
-				}
-			};
-
-			default:
-			return {
-				values: [ parseFloat( this.roundedMinKnobValue ), parseFloat( this.roundedMaxKnobValue ) ],	
-				slide: function( event, ui ) {
-					var oldValues = $( this ).slider( "values" ),
-						min = ui.values[ 0 ],
-						max = ui.values[ 1 ],
-						oldMin = oldValues[ 0 ],
-						oldMax = oldValues[ 1 ];
-								
-					if ( min !== oldMin ) {
-						filter.processMinValue( min, min === max );
-						return;			
-					}
-					if ( max !== oldMax ) {			
-						filter.processMaxValue( max, min === max );
-						return;							
-					}
-				}
-			};
-		}		
-	},
-
-	/**
-	 * Set the conttol's min value and caption
-	 * @param {number} min
-	 * @param {boolean} minIsEqualToMax	 
-	 */	
-	processMinValue: function( min, minIsEqualToMax ) {
-		var value = this.getSliderValue( min, true, minIsEqualToMax );
-		
-		this.setMinValue( value );
-		this.setCaptions( value, true );
-	},
-
-	/**
-	 * Set the conttol's max value and caption
-	 * @param {number} max
-	 * @param {boolean} minIsEqualToMax
-	 */	
-	processMaxValue: function( max, minIsEqualToMax ) {
-		var value = this.getSliderValue( max, false, minIsEqualToMax );
-					
-		this.setMaxValue( value );
-		this.setCaptions( value, false );	
-	},
-	
-	/**
-	 * Set the control's captions	
-	 * @param {number} value	
-	 * @param {boolean} isLower
-	 */		
-	setCaptions: function( value, isLower ) {
-		var jQmainCaption = isLower ? this.jQmin : this.jQmax,
-			caption = this.getCaptionValue( value );	
-		
-		jQmainCaption.html( caption );	
-	},
-	
-	/**
-	 * Replace the obtained slider's extreme value with
-	 * the real corresponding database value		
-	 * @param {number} value
-	 * @param {boolean} isLower
-	 * @param {boolean} minIsEqualToMax
-	 * @return {number}
-	 */
-	getSliderValue: function( value, isLower, minIsEqualToMax ) {
-		if ( value === this.roundedMin ) {
-			return parseFloat( this.minValue );
-		}
-		
-		if ( value === this.roundedMax ) { 
-			return parseFloat( this.maxValue )
-		}
-		
-		return value;
-	},
-
-	/**	
-	 * Get the correct slider's caption	
-	 * @param {number} value
-	 * @return {number}
-	 */
-	getCaptionValue: function( value ) {
-		if ( this.viewAsCurrency ) {
-			return Runner.util.getCurrencyFormatted( value, this.formatSettings );
-		}
-		
-		if ( this.viewAsNumber ) {
-			return Runner.util.getNumberFormatted( value, this.formatSettings );
-		}
-		
-		return value;
-	},	
-	
-	/**
-	 * Set the min slider control's value
-	 * @param {number} minValue
-	 */
-	setMinValue: function( minValue ) {
-		this.ctrlValues[0] = minValue;
-	},
-	
-	/**
-	 * Set the max slider control's value
-	 * @param {number} maxValue
-	 */
-	setMaxValue: function( maxValue ) {
-		this.ctrlValues[1] = maxValue;
-	},
-		
-	/**
-	 * Get filter's value ready to use in the field's filtration
-	 * If the encoded param is defined and equal to true 
-	 * It returns the encoded value
-	 * @param {boolean} encoded 
-	 * @return string
-	 */
-	getFilterValue: function( encoded ) {
-		var value, prepFName;
-		
-		if ( this.ctrlValues[0] === undefined && this.ctrlValues[1] === undefined ) {
-			// the slider isn't activated
-			return '';
-		}
-		
-		if ( !this.filtered ) {
-			this.prepareControlValues();
-		}
-		
-		if ( this.knobsAreOnTheLimits() ) {
-			// the knobs are set on the min and max slider's values
-			return '';
-		}
-		
-		value = this.getTypeBasedValue();
-		prepFName = this.searchController.searchEscape( this.fieldName );
-		prepFName = encoded ? encodeURIComponent( prepFName ) : prepFName;
-		
-		return "(" + prepFName + this.separator + value + ")";
-	},
-	
-	/**
-	 * Get the control's value/values to add them 
-	 * to the submit-string 
-	 * @param {boolean} encoded
-	 * @return {string}
-	 */
-	getTypeBasedValue: function( encoded ) {			
-		switch ( this.range ) {
-			case 'min':
-			return this.getPreparedMaxValue( encoded );
-
-			case 'max':
-			return this.getPreparedMinValue( encoded );
-				
-			default:				
-				var valueMin = this.getPreparedMinValue( encoded ),
-					valueMax = this.getPreparedMaxValue( encoded );
-					
-			return valueMin + "~" + valueMax;
-		}
-	},
-
-	/**
-	 * Put backslashes in front of every search-syntax character (~,(,))
-	 * in the slider's min value string
-	 * @param {boolean} encoded
-	 * @return {string}
-	 */		
-	getPreparedMinValue: function( encoded ) {
-		return this.getPreparedValue( this.ctrlValues[0], encoded );
-	},
-
-	/**
-	 * Put backslashes in front of every search-syntax character (~,(,))
-	 * in the slider's max value string
-	 * @param {boolean} encoded
-	 * @return {string}
-	 */		
-	getPreparedMaxValue: function( encoded ) {
-		return this.getPreparedValue( this.ctrlValues[1], encoded );
-	},	
-	
-	/**
-	 * Replace undefined filter's values with corresponding
-	 * slider's min and max values
-	 */	
-	prepareControlValues: function() {
-		if ( this.ctrlValues[0] === undefined ) {
-			this.ctrlValues[0] = this.minValue;
-		}
-		if ( this.ctrlValues[1] === undefined ) {
-			this.ctrlValues[1] = this.maxValue;
-		}
-	},
-	
-	/**
-	 * Check if the slider's min and max knobs are equal to the
-	 * the min and max slider's values respectively
-	 * @return {boolean}
-	 */
-	knobsAreOnTheLimits: function() {
-		return this.ctrlValues[0] === this.minValue && this.ctrlValues[1] === this.maxValue;
-	},
-	
-	/**
-	 * Clear the filter control's values
-	 */
-	clearControl: function() {
-		this.ctrlValues = [];
-	}
-});
-
-/**
- * The Date Slider Filter control class
- */
-Runner.controls.DateSliderFilterControl = Runner.extend( Runner.controls.SliderFilterControl, {
-	/**
-	 * @type {number}
-	 */
-	stepType: Runner.controls.constants.FILTER_STEP_DAY,
-
-	/**
-	 * @type {boolean}
-	 */
-	isFieldDateType: true,
-	
-	/**
-	 * @type {boolean}
-	 */	
-	processWrappers: true,
-	
-	constructor: function( cfg ) {
-		Runner.controls.DateSliderFilterControl.superclass.constructor.call( this, cfg ); 
-	},
-
-	/**
-	 * Set default filter's values
-	 * Elements of the ctrlValues array should have 
-	 * the object (Date) or undefined type
-	 */
-	setDefaultValues: function() {
-		var minKnob = this.minKnobValue,
-			maxKnob = this.maxKnobValue;
-
-		if ( minKnob ) {
-			minKnob = this.parseDateTime( minKnob, /*this.dateFormat*/ 2 );
-		}
-		if ( maxKnob ) {
-			maxKnob = this.parseDateTime( maxKnob, /*this.dateFormat*/ 2 );
-		}
-		this.ctrlValues = [ minKnob, maxKnob ];
-	},
-	
-	/**
-	 * Init the date-slider control
-	 */
-	init: function() {
-		var jQsliderValues= $("#slider_values_" + this.gfieldName);
-		this.jQcaptPrefix = $(".slider-caption-prefix", jQsliderValues);
-		this.jQcaptPostfix = $(".slider-caption-postfix", jQsliderValues);
-	
-		this.dateFormat = Runner.pages.PageSettings.getGlobalData("locale").dateFormat;	
-		this.dateDelimiter = Runner.pages.PageSettings.getGlobalData("locale").dateDelimiter;
-
-		this.minDate = this.parseDateTime( this.minValue, 2 );
-		this.minDateInMs = this.minDate.getTime();
-		this.maxDate = this.parseDateTime( this.maxValue, 2 );
-		this.maxDateInMs = this.maxDate.getTime();
-		
-		if ( this.stepType === Runner.controls.constants.FILTER_STEP_SEC 
-			|| this.stepType === Runner.controls.constants.FILTER_STEP_MIN ) {
-			
-			this.realMaxDate = this.parseDateTime( this.realMaxValue, 2 );
-			this.realMinDate = this.parseDateTime( this.realMinValue, 2 ); 
-		}		
-		
-		Runner.controls.DateSliderFilterControl.superclass.init.call( this );		
-	},
-	
-	/**
-	 * Get date-time formatted string	
-	 */
-	printDateTime: Runner.controls.DateField.prototype.printDateTime,
-
-	/**
-	* Create the Date object from the string representation
-	* basing on the date format
-	*/
-	parseDateTime: Runner.controls.DateField.prototype.parseDateTime,	
-			
-	/**
-	 * Replace the obtained slider's extreme value with
-	 * the corresponding corresponding Date object		
-	 * @param {number} value
-	 * @param {boolean} isLower
-	 * @param {boolean} minIsEqualToMax
-	 * @return {Date object}
-	 */
-	getSliderValue: function( value, isLower, minIsEqualToMax ) {
-		var prepDate = new Date( this.minDateInMs ),
-			year, month, day, unitStep;
-		
-		switch ( this.stepType ) {
-			case Runner.controls.constants.FILTER_STEP_SEC :		
-			case Runner.controls.constants.FILTER_STEP_MIN :	
-				if ( value === this.roundedMax ) {
-					prepDate = this.realMaxDate;
-					break;
-				}	
-				if ( value === this.roundedMin ) {
-					prepDate = this.realMinDate;
-					break;	
-				} 
-				prepDate = new Date( this.minDateInMs + value * 1000 );	
-			break;	
-				
-			case Runner.controls.constants.FILTER_STEP_MONTH :				
-				month = prepDate.getMonth() + value;			
-				prepDate.setMonth( month );
-				
-				if (!isLower) {
-					prepDate.setDate( prepDate.getDate() - 1 );
-				}
-
-				if ( minIsEqualToMax ) {
-					month = prepDate.getMonth();
-					year = prepDate.getFullYear();
-					
-					month = isLower ? month - 1 : month + 2;					
-					day = isLower ? 1 : 0;
-					prepDate = new Date(year, month, day);
-				}			
-			break;			
-		
-			case Runner.controls.constants.FILTER_STEP_YEAR :				
-				month = isLower ? 0 : 11;
-				day = isLower ? 1 : 31
-				
-				if ( value === this.roundedMax ) {
-					year = this.maxDate.getFullYear();
-				} else {				
-					unitStep = parseFloat( this.step ) === 1;
-					year = prepDate.getFullYear() + value;
-					
-					if (!isLower) {
-						year = ( minIsEqualToMax || unitStep ) ? year : year - 1;
-					} else {
-						year = ( minIsEqualToMax && !unitStep ) ? year - 1 : year;
-					}
-				}
-				prepDate = new Date(year, month, day);		
-			break;		
-		
-			default: 
-				prepDate = new Date( this.minDateInMs + value * 1000 );	
-		}
-			
-		return prepDate;
-	},
-	
-	/**
-	 * Set the control's captions	
-	 * @param {Date object} prepDate	
-	 * @param {boolean} isLower
-	 */		
-	setCaptions: function( prepDate, isLower ) {
-		Runner.controls.DateSliderFilterControl.superclass.setCaptions.call( this, prepDate, isLower );
-		
-		if ( this.processWrappers ) {
-			this.setWrapperCaption( isLower, prepDate );
-		}
-	},
-	
-	/**
-	 * Set the captions for the sliders of the
-	 * 'month', 'hours', 'minutes' or 'seconds' 
-	 * step types basing on which knob was moving 
-	 * @param {boolean} isLower
-	 * @param {Date object} date
-	 */	
-	setWrapperCaption: function( isLower, date ) {
-		this.setCaptionsVisibility( isLower, date );
-		
-		if ( !isLower && this.showTime ) {
-			this.jQcaptPostfix.html( this.printTime(date) );
-			return;
-		}
-		if ( isLower && this.stepType === Runner.controls.constants.FILTER_STEP_MONTH ) {
-			this.jQcaptPrefix.html( Runner.monthNames[ date.getMonth() ] );
-		}
-	},
-	
-	/**
-	 * Set the captions vsibility for the sliders of the
-	 * 'month', 'hours', 'minutes' or 'seconds' step types 
-	 * @param {boolean} isLower
-	 * @param {Date object} date 
-	 */	
-	setCaptionsVisibility: function( isLower, date ) {
-		var otherKnobDate = isLower ? ( this.ctrlValues[1] || this.maxDate ) : ( this.ctrlValues[0] || this.minDate ), 
-			visible;
-		
-		if ( this.showTime ) {
-			visible = this.checkDatesEqual( otherKnobDate, date );	
-			this.jQcaptPostfix.toggle( visible );
-		
-			this.jQmax.toggle( !visible );
-			return;	
-		} 
-
-		if ( this.stepType === Runner.controls.constants.FILTER_STEP_MONTH ) {
-			visible = otherKnobDate.getFullYear() === date.getFullYear();			
-			this.jQcaptPrefix.toggle( visible );
-			
-			this.jQmin.toggle( !visible );
-		}
-	},	
-	
-	/**
-	 * Check if two dates passed are equal or not
-	 * disregarding the time values
-	 * @param {Date object} date1 
-	 * @param {Date object} date2 
-	 * @param {Boolean}
-	 */
-	checkDatesEqual: function( date1, date2 ) {
-		return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
-	},
-	
-	/**	
-	 * Get the correct slider's caption
-	 * @param {Date object} date
-	 * @return {string}
-	 */
-	getCaptionValue: function( date ) {
-		if ( this.stepType === Runner.controls.constants.FILTER_STEP_YEAR ) {
-			return date.getFullYear();
-		}
-		
-		if ( this.stepType === Runner.controls.constants.FILTER_STEP_MONTH ) {
-			return Runner.monthNames[ date.getMonth() ] + " " + date.getFullYear();
-		}
-		
-		return this.printDateTime( date, this.dateFormat, true );
-	},	
-	
-	/**
-	 * Put backslashes in front of every search-syntax character (~,(,))
-	 * in the slider's max knob value's string representation
-	 * @param {boolean} encoded
-	 * @return {string}
-	 */
-	getPreparedMaxValue: function( encoded ) {
-		var date = this.ctrlValues[1], 
-			stringValue = this.getStringValueFromDate( date );
-			
-		return Runner.controls.DateSliderFilterControl.superclass.getPreparedValue.call( this, stringValue, encoded );
-		
-	},
-	
-	/**
-	 * Put backslashes in front of every search-syntax character (~,(,))
-	 * in the slider's min knob value's string representation
-	 * @param {boolean} encoded
-	 * @return {string}
-	 */	
-	getPreparedMinValue: function( encoded ) {
-		var date = this.ctrlValues[0],
-			stringValue = this.getStringValueFromDate( date );
-			
-		return Runner.controls.DateSliderFilterControl.superclass.getPreparedValue.call( this, stringValue, encoded );
-	},
-	
-	/**
-	 * Replace undefined filter's values with corresponding
-	 * slider's min and max date values
-	 */	
-	prepareControlValues: function() {
-		var date;
-		
-		if ( this.ctrlValues[0] === undefined || this.ctrlValues[0] === null ) {
-			date = this.realMinDate || this.minDate;
-			if ( this.stepType === Runner.controls.constants.FILTER_STEP_YEAR ) {
-				date = new Date( date.getFullYear(), 0, 1 );
-			}			
-			this.ctrlValues[0] = date;
-		}
-		
-		if ( this.ctrlValues[1] === undefined || this.ctrlValues[1] === null ) {
-			date = this.realMaxDate || this.maxDate;
-			if ( this.stepType === Runner.controls.constants.FILTER_STEP_YEAR ) {
-				date = new Date( date.getFullYear(), 11, 31 );
-			} 				
-			this.ctrlValues[1] = this.maxDate;
-		}
-	},
-
-	/**
-	 * Check if the slider's min and max knobs are equal to the
-	 * the min and max slider's values respectively
-	 * @return {boolean}
-	 */
-	knobsAreOnTheLimits: function() {
-		if ( this.ctrlValues[0].toString() === ( this.realMinDate || this.minDate ).toString() &&
-			 this.ctrlValues[1].toString() === ( this.realMaxDate || this.maxDate ).toString() ) {
-			 
-			return true;
-		}
-		return false;
-	},
-	
-	/**
-	 * Get the db-formatted date/date-time string
-	 * @param {Date object} date
-	 * @return {string}
-	 */
-	getStringValueFromDate: function( date ) {
-		var dateString,
-			day = date.getDate(),
-			month = date.getMonth() + 1,
-			year = date.getFullYear(),
-			hours, minutes, seconds;
-		
-		dateString = year + '-' + month + '-' + day;
-		
-		if ( this.showTime ) {
-			hours = date.getHours();
-			hours = hours < 10 ? '0' + hours : hours;
-			minutes = date.getMinutes();
-			minutes = minutes < 10 ? '0' + minutes : minutes;
-			seconds = date.getSeconds();
-			seconds = seconds < 10 ? '0' + seconds : seconds;
-			
-			dateString += ' ' + hours + ':' + minutes + ':' + seconds;
-		}
-		
-		return dateString;
-	},
-	
-	/**
-	 * Get the formated time string
-	 * Here is the possible time formatch list:
-	 * ("H:mm:ss","HH.mm.ss","HH:mm:ss","HH:mm:ss 'ch'","h::mm::ss tt","h:mm:ss tt","h:mm:ss.tt","hh:mm:ss tt","tt h:mm:ss","tt hh:mm:ss")	
-	 *			 
-	 * @param {Date object} date
-	 * @return {string}
-	 */
-	printTime: function( date ) {
-		var hours = date.getHours(),
-			minutes = date.getMinutes(),
-			seconds = date.getSeconds(),
-			time = this.timeFormat,
-			designator;
-		
-		if ( !this.is24hoursFormat ) {
-			designator = hours >= 12 ? this.designators["pm"] : this.designators["am"];
-			//designators are no added to 'hours' values greater than 23 
-			designator = hours >= 24 ? "" : designator;
-			time = time.replace( "tt", designator );
-			
-			//a correction is not applied to 'hours' values greater than 24 or lesser than 12
-			hours = hours > 12 && hours < 24 ? hours - 12 : hours;
-			hours = hours === 0 ? 12 : hours;
-			
-			hours = this.leadingZero && hours < 10 ? '0' + hours : hours;
-			time = time.replace( this.leadingZero ? "hh" : "h", hours );
-		} else {
-			hours = this.leadingZero && hours < 10 ? '0' + hours : hours;
-			time = time.replace( this.leadingZero ? "HH" : "H", hours );
-		}
-		
-		time = time.replace( "mm", minutes < 10 ? '0' + minutes : minutes );
-		
-		if ( this.showSeconds ) {
-			time = time.replace( "ss", seconds < 10 ? '0' + seconds : seconds );
-		} else {
-			time = time.replace( this.timeDelimiter + "ss", "" );
-		}		
-
-		return time;
-	}
-});
-
-/**
- * The Time Slider Filter control class
- */ 
-Runner.controls.TimeSliderFilterControl = Runner.extend( Runner.controls.DateSliderFilterControl, {
-	/**
-	 * @type {number}
-	 */
-	TimezoneOffsetInHours: 0,
-
-	/**
-	 * @type {boolean}
-	 */
-	isFieldTimeType: true,
-	
-	/**
-	 * @type {number}
-	 */
-	offsetDaytimeHours: 24,
-
-	/**
-	 * @type {boolean}
-	 */	
-	processWrappers: false,	
-	
-	
-	constructor: function( cfg ) {
-		Runner.controls.TimeSliderFilterControl.superclass.constructor.call(this, cfg); 
-	},
-	
-	/**
-	 * Init the time-slider control
-	 */	
-	init: function() {
-		this.TimezoneOffsetInHours = new Date().getTimezoneOffset() / 60;
-		this.offsetDaytimeHours = 24 + this.TimezoneOffsetInHours;	
-		
-		Runner.controls.TimeSliderFilterControl.superclass.init.call( this ); 
-	},	
-	
-	/**
-	 * Get the real hours value for the date passed
-	 * @param {Date object} date
-	 * @return {number}
-	 */	
-	getHoursValue: function( date ) {
-		var dateInHours = date.getTime() / 3600000;
-		
-		// process the case when the hours value could be greater then 24
-		if ( dateInHours < this.offsetDaytimeHours ) {	
-			return date.getHours();
-		}
-		return Math.floor( dateInHours - this.TimezoneOffsetInHours );
-	},	
-	
-	/**
-	 * Get the db-formatted time string
-	 * @param {Date object} date
-	 * @return {string}
-	 */
-	getStringValueFromDate: function( date ) {
-		var hours = this.getHoursValue( date ), 
-			minutes = date.getMinutes(), 
-			seconds = date.getSeconds();
-
-		hours = hours < 10 ? '0' + hours : hours;
-		minutes = minutes < 10 ? '0' + minutes : minutes;
-		seconds = seconds < 10 ? '0' + seconds : seconds;
-		
-		return hours + ':' + minutes + ':' + seconds;
-	}, 	
-	
-	/**	
-	 * Get the correct slider's caption
-	 * @param {Date object} date
-	 * @return {string}
-	 */
-	getCaptionValue: function( date ) {				
-		return this.printTime( date );	
-	}
-});
-/**
  * Runner.pages.Defaults
  * Class wich contains default settings (global, tables, fileds, validation)
  * Insert new settings - only in alphabetical order 
@@ -24401,21 +22792,6 @@ Runner.pages.PageManager = function() {
 			$rightItems.appendTo( $header ).wrap( '<div class="rnr-dbebrick rnr-dberight"></div>' );
 
 			return $header.html();
-
-
-/*
-			var $headerCont = $( headerCont );
-			if ( $headerCont.hasClass('r-form') ) {
-				$header.html( headerCont );
-				var $h2 = $header.find('h2');
-				if ( $h2.length ) {
-					$( iconHtml ).insertBefore( $h2 );
-					return $header;
-				} 
-			} 
-*/			
-				
-			return $header.html( iconHtml + headerCont );
 		},		
 
 		putToDashTabAbove: function(obj) {
@@ -25516,6 +23892,9 @@ Runner.registerFieldEvent = function( gid, before, after ) {
 			ajax = new Runner.form.Button({ id: gid, btnName: gid }),
 			submit = function() {
 				params["table"] = pageObj.tName;
+				if( pageObj.tName !== pageObj.pageTable ) {
+					params["pageTable"] = pageObj.pageTable;
+				}
 				params["field"] = ctrl.fieldName;
 				params.page = pageObj.pageName;
 				
@@ -25607,14 +23986,26 @@ Runner.pages.PageFactory = function( baseCfg ) {
 			if ( cfg.pageMode === Runner.pages.constants.EDIT_DASHBOARD ) { //TODO: change the dash add page's mode constant
 				return new Runner.pages.AddPageDash( cfg );
 			}
+			if( cfg.baseParams?.page == 'add_calendar' ) {
+				return new Runner.pages.AddPageCalendar( cfg );
+			}
 			return new Runner.pages.AddPage( cfg );
 
 		case Runner.pages.constants.PAGE_EDIT:
+			if ( cfg.editType === Runner.pages.constants.EDIT_ONTHEFLY ) {
+				return new Runner.pages.EditPageFly( cfg );
+			}
 			if ( cfg.pageMode === Runner.pages.constants.EDIT_DASHBOARD ) {
 				return new Runner.pages.EditPageDash( cfg );
 			}
 			if ( cfg.pageMode == Runner.pages.constants.EDIT_SELECTED_SIMPLE || cfg.pageMode == Runner.pages.constants.EDIT_SELECTED_POPUP ) {
 				return new Runner.pages.EditSelectedPage( cfg );
+			}
+			if( cfg.baseParams?.page == 'edit_calendar' ) {
+				return new Runner.pages.EditPageCalendar( cfg );
+			}
+			if( cfg.baseParams?.gantt ) {
+				return new Runner.pages.EditPageGantt( cfg );
 			}
 			return new Runner.pages.EditPage( cfg );
 
@@ -25625,6 +24016,12 @@ Runner.pages.PageFactory = function( baseCfg ) {
 			return new Runner.pages.RemindPage( cfg );
 
 		case Runner.pages.constants.PAGE_VIEW:
+			if( cfg.baseParams?.gantt ) {
+				return new Runner.pages.ViewPageGantt( cfg );
+			}
+			if( cfg.baseParams?.page == 'view_calendar' ) {
+				return new Runner.pages.ViewPageCalendar( cfg );
+			}
 			return new Runner.pages.ViewPage( cfg );
 
 		case Runner.pages.constants.PAGE_SEARCH:
@@ -25650,7 +24047,11 @@ Runner.pages.PageFactory = function( baseCfg ) {
 			}
 
 			return new Runner.pages.ChartPage( cfg );
-
+		case Runner.pages.constants.PAGE_CALENDAR:
+			return new Runner.pages.CalendarPage( cfg );
+		case Runner.pages.constants.PAGE_GANTT:
+			return new Runner.pages.GanttPage( cfg );
+		
 		case Runner.pages.constants.PAGE_REGISTER:
 			return new Runner.pages.RegisterPage( cfg );
 
@@ -27495,9 +25896,11 @@ Runner.pages.RunnerPage = Runner.extend( Runner.util.Observable, {
 	getStepFields: function( stepIdx ) {
 		var stepFields = [];
 
+		//	bad code, we shouldn't rely on DOM for this
 		$( "#step_" + stepIdx + "_" + this.id ).find( "[data-fieldname]" )
 			.each( function( idx, el ) {
-				stepFields.push( $( el ).data( "fieldname" ) );
+				//	there might be fully numeric field names
+				stepFields.push( String( $( el ).data( "fieldname" ) ) );
 			} );
 
 		return stepFields;
@@ -27704,7 +26107,7 @@ Runner.pages.RunnerPage = Runner.extend( Runner.util.Observable, {
 
 		if ( $dialog.offset().left + $dialog.width() > $( window ).width() ) {
 			$dialog.css({
-				left: ( $bodyNode.width() - $( window ).width() ) / 2
+				left: Math.max( 0, ( $bodyNode.width() - $( window ).width() ) / 2 )
 			});
 		}
 	},
@@ -29214,6 +27617,63 @@ Runner.pages.RunnerPage = Runner.extend( Runner.util.Observable, {
 				pageObj.setHintText( text );
 			});
 	},
+
+	/**
+	 * Initialize the 'Add new' button
+	 */
+	initAddButton: function() {
+		var pageObj = this;
+		$("[id=addButton" + this.id + "]")
+			.off("click")
+			.on("click", function( e ) { // don't replace 'function' with '=>'. We need 'this' inside
+				var $button = $(this);
+				var pageName = $button.data("page");
+				var inPopup = pageObj.showAddInPopup( $button );
+				pageObj.showAddPage( inPopup, pageName, {
+					popupWidth: $button.data("popupwidth"),
+					popupHeight: $button.data("popupheight"),
+				} );
+				return false;
+			});
+	},
+
+	/**
+	 * 
+	 * @param {boolean} inPopup 
+	 * @param {string} pageName 
+	 * @param {Object} pageParams - popupWidth, popuHeight etc
+	 * @param {Object} baseParams - those added to request payload
+	 */
+	showAddPage: function( inPopup, pageName, pageParams, baseParams ) {
+		if( inPopup ) {
+			var pageParams = this.getAddPopupParams();
+			if ( pageName ) {
+				pageParams.baseParams["page"] = pageName;
+			}
+			Object.assign( pageParams, pageParams || {} );
+			Object.assign( pageParams.baseParams, baseParams || {} );
+
+			this.hideElement('message');
+			Runner.pages.PageManager.openPage( pageParams );
+		} else {
+			var params = this.getStateParams();
+			if ( pageName ) {
+				params["page"] = pageName;
+			}
+			
+			if ( !this.isDefaultPage ) {
+				params["listPage"] = this.pageName;
+			}
+			
+			Object.assign( params, baseParams || {} );
+			window.location.href = Runner.pages.getUrl( this.tName, Runner.pages.constants.PAGE_ADD, "", "", params );
+		}
+	},
+	
+	getAddPopupParams: function() {
+		return Runner.pages.AddPage.prototype.getOpenPageParams.call( this, this.id );
+	},
+
 });
 /**
  * Advanced Search page class
@@ -29236,7 +27696,7 @@ Runner.pages.SearchPage = Runner.extend( Runner.pages.RunnerPage, {
 	constructor: function(cfg) {
 		Runner.pages.SearchPage.superclass.constructor.call( this, cfg );	
 	
-		this.isDashSearchPage = Runner.pages.PageSettings.getTableData( this.tName, "isDashSearchPage" );
+		this.isDashSearchPage = this.pageData.isDashSearchPage;
 		if ( this.dashboard ) {
 			this.warnOnLeaving = false;
 		}
@@ -29674,19 +28134,20 @@ Runner.pages.SearchPage = Runner.extend( Runner.pages.RunnerPage, {
 	 * @return {Object}
 	 */
 	getOpenPageParams: function( keys, rowId, inlineObj, afterCreateHn ) {
-		var hostPage = this, // an open button;s host page
-			inlineObj = inlineObj || this.inlineObjectParams.getInlineObject(),
-			row = inlineObj.getRowById( rowId ),
+		var hostPage = this, // an open button's host page
+			inlineObj = inlineObj || this.inlineObjectParams?.getInlineObject(),
+			row = inlineObj?.getRowById( rowId ),
 			params = {
-				tName: inlineObj.tName, 
+				hostPage,
+				tName: inlineObj?.tName ?? this.tName, 
 				pageType: Runner.pages.constants.PAGE_VIEW, 
 				keys: keys,
 				keyFields: this.keyFields || ( row && row.keyFields ),
 				modal: true,
-				dashGridBased: inlineObj.dashGridBased,
+				dashGridBased: inlineObj?.dashGridBased,
 				baseParams: {
-					parId: inlineObj.id,
-					table: escape( inlineObj.tName )
+					parId: inlineObj?.id,
+					table: inlineObj?.tName,
 				},
 				inlineObjectParams: {
 					getInlineObject: function() {
@@ -29728,7 +28189,7 @@ Runner.pages.SearchPage = Runner.extend( Runner.pages.RunnerPage, {
 			}
 		}
 		
-		if ( inlineObj.dashGridBased && inlineObj.pageObj ) { 
+		if ( inlineObj?.dashGridBased && inlineObj?.pageObj ) { 
 			params.baseParams.dashTName = inlineObj.pageObj.dashboard.tName;
 			params.baseParams.dashPage = inlineObj.pageObj.dashboard.pageName;
 			params.baseParams.dashelement = inlineObj.pageObj.dashElement;
@@ -30387,6 +28848,11 @@ Runner.pages.EditorPage = Runner.extend( Runner.pages.RunnerPage, {
 	 */
 	recordAdded: false,
 
+	/**
+	 * flag to prevent starting multiple redirects
+	 */
+	redirectStarted: false,
+
 
 	/**
 	 * @constructor
@@ -30590,6 +29056,10 @@ Runner.pages.EditorPage = Runner.extend( Runner.pages.RunnerPage, {
 			var params = this.getStateParams();
 			params['afteradd'] = this.afterAddId;
 
+			if( this.redirectStarted ) {
+				return;
+			}
+			this.redirectStarted = true;
 			window.location.href = Runner.pages.getUrl( this.tName, this.pageType, "", "", params );
 			return;
 		}
@@ -30896,7 +29366,7 @@ Runner.pages.EditorPage = Runner.extend( Runner.pages.RunnerPage, {
 	 */
 	getOpenPageParams: function( parId, afterCreateHn ) {
 		var hostListPage = Runner.pages.PageManager.getAt( this.tName, parId || this.baseParams.parId ),
-			inlineObj =	hostListPage.inlineAdd || this.inlineObjectParams.getInlineObject(),
+			inlineObj =	hostListPage.inlineAdd || this.inlineObjectParams?.getInlineObject(),
 			newRowId,
 			pageParams = {
 				tName: this.tName,
@@ -30918,8 +29388,18 @@ Runner.pages.EditorPage = Runner.extend( Runner.pages.RunnerPage, {
 				afterSave: {
 					fn: function( respObj, formObj, fieldControls, addPageObj ) {
 						if ( respObj.success ) {
-							var addedRow = inlineObj.addRowToGrid( respObj, true, newRowId );
-							hostListPage.initNewRowButtons( addedRow );
+							if( inlineObj ) {
+								var addedRow = inlineObj.addRowToGrid( respObj, true, newRowId );
+								hostListPage.initNewRowButtons( addedRow );
+							}
+							if( hostListPage.pageType == 'calendar' ) {
+								//	add new event
+								hostListPage.insertAddedEvent( respObj.event );
+							}
+							if( hostListPage.pageType == 'gantt' ) {
+								//	add new event
+								hostListPage.insertAddedTask( respObj.task );
+							}
 							return;
 						}
 
@@ -30938,6 +29418,12 @@ Runner.pages.EditorPage = Runner.extend( Runner.pages.RunnerPage, {
 
 			};
 
+		if( hostListPage.pageType == 'gantt' ) {
+			pageParams.baseParams['gantt'] = 1;
+		}
+		if( hostListPage.pageType == 'calendar' ) {
+			pageParams.baseParams['page'] = 'add_calendar';
+		}
 		pageParams.baseParams = Runner.apply( pageParams.baseParams, hostListPage.getStateParams() );
 
 		if ( this.dashboard ) {
@@ -31018,6 +29504,8 @@ Runner.pages.EditPage = Runner.extend( Runner.pages.EditorPage, {
 	 * @type {array}
 	 */
 	 dpTablesParams: null,
+
+	 hostPage: null,
 	
 	/**
 	 * @constructor
@@ -31261,23 +29749,24 @@ Runner.pages.EditPage = Runner.extend( Runner.pages.EditorPage, {
 	 * @return {Object}
 	 */	
 	getOpenPageParams: function( keys, rowId, message, inlineObj, afterCreateHn ) {
-		var inlineObj = inlineObj || this.inlineObjectParams.getInlineObject(),
-			row = inlineObj.getRowById( rowId ),
+		var inlineObj = inlineObj || this.inlineObjectParams?.getInlineObject(),
+			row = inlineObj?.getRowById( rowId ),
 			hostPage = this,
 			params = {			
-				tName: inlineObj.tName,
+				tName: inlineObj?.tName ?? this.tName,
+				hostPage: this,
 				pageType: Runner.pages.constants.PAGE_EDIT, 
 				keys: keys,
-				keyFields: this.keyFields || row.keyFields,
+				keyFields: this.keyFields || row?.keyFields,
 				modal: true,
-				dashGridBased: inlineObj.dashGridBased,
+				dashGridBased: inlineObj?.dashGridBased,
 				baseParams: {
-					parId: inlineObj.id,
+					parId: inlineObj?.id,
 					rowId: rowId,
-					table: escape( inlineObj.tName ),
+					table: inlineObj?.tName ?? this.tName,
 					editType: Runner.pages.constants.EDIT_POPUP,
-					spreadsheetGrid: inlineObj.spreadsheet ? 1 : 0,
-					hostPageName: ( inlineObj.pageObj || hostPage ).pageName,
+					spreadsheetGrid: inlineObj?.spreadsheet ? 1 : 0,
+					hostPageName: ( inlineObj?.pageObj || hostPage ).pageName,
 				},
 				inlineObjectParams: {
 					getInlineObject: function() {
@@ -31290,6 +29779,14 @@ Runner.pages.EditPage = Runner.extend( Runner.pages.EditorPage, {
 						if ( respObj.success ) {
 							if ( row ) {
 								this.afterSubmit( row, respObj, editPageObj );
+							}
+							if( hostPage?.pageType == 'calendar' ) {
+								//	update the event
+								hostPage.updateEditedEvent( respObj.oldKeys, respObj.event );
+							}
+							if( hostPage?.pageType == 'gantt' ) {
+								//	update the event
+								hostPage.updateEditedTask( respObj.oldKeys, respObj.task );
 							}
 							return true;
 						}
@@ -31350,7 +29847,7 @@ Runner.pages.EditPage = Runner.extend( Runner.pages.EditorPage, {
 			}		
 		};
 			
-		if ( inlineObj.dashGridBased && inlineObj.pageObj ) { 
+		if ( inlineObj?.dashGridBased && inlineObj?.pageObj ) { 
 			params.baseParams.dashTName = inlineObj.pageObj.dashboard.tName;
 			params.baseParams.dashPage = inlineObj.pageObj.dashboard.pageName;
 			params.baseParams.dashelement = inlineObj.pageObj.dashElement;
@@ -31822,6 +30319,100 @@ Runner.pages.EditPage = Runner.extend( Runner.pages.EditorPage, {
 	messageItemType: function() {
 		return 'edit_message';
 	},
+});Runner.pages.EditPageFly = Runner.extend( Runner.pages.EditorPage, {
+	
+	pageType: Runner.pages.constants.PAGE_EDIT,
+	
+	editType: Runner.pages.constants.EDIT_ONTHEFLY,
+	
+	/**
+	 * The main lookup control
+	 * @type {object}
+	 */
+	lookupCtrl: null,
+	
+	/**
+	 * @constructor
+	 * @param {object} cfg
+	 */	
+	constructor: function( cfg ) {
+		Runner.pages.EditPageFly.superclass.constructor.call(this, cfg);
+		
+		this.keys = cfg.keys || Runner.pages.PageSettings.getTableData(this.tName, 'keys');
+		this.keyFields = cfg.keyFields || Runner.pages.PageSettings.getTableData(this.tName, 'keyFields');
+		
+		this.shortTName = Runner.pages.PageSettings.getShortTName(this.tName);	
+		this.submitUrl += this.getKeysUrlParams();
+
+		if ( this.proxy[ this.shortTName + "_recordUpdated" ] ) {
+			this.recordUpdated = true;
+		}			
+	},	
+
+	/**
+	 * Set 'baseParams' property
+	 */
+	setBaseParams: function() {
+		Runner.pages.EditPage.superclass.setBaseParams.call( this );
+		this.baseParams['a'] = "edited";		
+	},
+	
+	init: function() {
+		Runner.pages.EditPageFly.superclass.init.call( this );
+		this.fireEvent("afterInit", this, this.proxy, this.id);
+	}, 
+	
+	/**
+	 * Initialize the page's buttons
+	 */
+	initButtons: function() {
+		Runner.pages.AddPage.superclass.initButtons.call( this );	
+		
+		var pageObj = this;	
+		$("[id='cancelButton" + this.id + "']").on("click", function(e) {
+			pageObj.close();
+			return false;
+		});
+	},
+	
+	/**
+	 * Assign the "form" property with the new 
+	 * Runner.form.BasicForm object reference.
+	 * Add the form's "successSubmit" event handler	 
+	 */	
+	getForm: function() {
+		if ( this.form ) {
+			return this.form;
+		}
+		
+		Runner.pages.EditPageFly.superclass.getForm.call( this );
+		
+		this.form.on("successSubmit", function( respObj, basicForm, fieldControls ) {
+			var evRes = this.fireEvent("afterSave", respObj, basicForm, fieldControls, this);
+			
+			if ( evRes !== false ) {
+				this.close();
+			}
+		}, this);
+	},
+	
+	messageItemType: function() {
+		return 'edit_message';
+	},
+	
+	/**
+	* Get the keys URL params string
+	* @return {string}
+	*/	
+	getKeysUrlParams: function() {
+		var keysString = "", i;
+		
+		for (i = 0; i < this.keys.length; i++) {
+			this.baseParams["editid" + (i + 1)] = this.keys[i];
+			keysString += "editid" + (i + 1) + "=" + this.keys[i] + '&';
+		}
+		return keysString;
+	},	
 });Runner.pages.EditSelectedPage = Runner.extend( Runner.pages.EditPage, {
 	/**
 	 * ?
@@ -33503,7 +32094,7 @@ Runner.pages.DataPageWithSearch = Runner.extend( Runner.pages.RunnerPage, {
 		}
 		
 		var pageObj = this, 
-			detTables = Runner.pages.PageSettings.getTableData(pageObj.tName, "detailTables"),
+			detTables = pageObj.pageData.detailTables,
 			masterMouseOver = function() {
 				var linkId = $(this).attr('id'),
 					shortTName, 
@@ -33600,7 +32191,7 @@ Runner.pages.DataPageWithSearch = Runner.extend( Runner.pages.RunnerPage, {
 	 */
 	initDetails: function() {
 		var	tName,
-			detTables = Runner.pages.PageSettings.getTableData(this.tName, "detailTables"),
+			detTables = this.pageData.detailTables,
 			linksOnList = Runner.pages.constants.DL_SINGLE;
 
 		if ( linksOnList == Runner.pages.constants.DL_NONE ) {
@@ -33815,51 +32406,6 @@ Runner.pages.ListPageCommon = Runner.extend( Runner.pages.DataPageWithSearch, {
 		Runner.runnerAJAX( Runner.pages.getUrl( this.tName, this.pageType ) + "?" + hash, this.ajaxBaseParams, function( respObj ) {
 			pageObj.pageReloadHn( respObj )
 		});
-	},
-
-	getAddPopupParams: function() {
-		return Runner.pages.AddPage.prototype.getOpenPageParams.call( this, this.id );
-	},
-
-	/**
-	 * Initialize the 'Add new' button
-	 */
-	 initAddButton: function() {
-		var pageObj = this;
-
-		$("[id=addButton" + this.id + "]")
-			.off("click")
-			.on("click", function(e) {
-				var $button = $(this);
-				var pageName = $button.data("page");
-				
-				if ( !pageObj.showAddInPopup( $button ) ) {
-					var params = pageObj.getStateParams();
-					if ( pageName ) {
-						params["page"] = pageName;
-					}
-					
-					if ( !pageObj.isDefaultPage ) {
-						params["listPage"] = pageObj.pageName;
-					}
-					
-					window.location.href = Runner.pages.getUrl( pageObj.tName, Runner.pages.constants.PAGE_ADD, "", "", params );
-					return false;
-				}
-
-				var pageParams = pageObj.getAddPopupParams();
-				if ( pageName ) {
-					pageParams.baseParams["page"] = pageName;
-				}
-				
-				pageParams.popupWidth = $button.data("popupwidth");
-				pageParams.popupHeight = $button.data("popupheight");
-
-				pageObj.hideElement('message');
-				Runner.pages.PageManager.openPage( pageParams );
-				
-				return false;
-			});
 	},
 
 	initForGrid: function() {
@@ -34317,12 +32863,12 @@ Runner.pages.ListPageCommon = Runner.extend( Runner.pages.DataPageWithSearch, {
 		var i, newId, $buttonElem, button;	
 		
 		for (i = 0; i < this.buttonNames.length; i++) {
-			$buttonElem = $("#" + this.buttonNames[i], row.row);
+			$buttonElem = $("[data-event=" + this.buttonNames[i] + ']', row.row);
 			if ( !$buttonElem.length ) {
 				continue;
 			}
 			newId = this.buttonNames[i] + "_" + Runner.genId();
-			$buttonElem.attr('id', newId);
+			$buttonElem.attr('data-event', newId);
 			// create object
 			button = new Runner.form.Button({
 				id: newId,
@@ -34827,9 +33373,12 @@ Runner.pages.ListPageCommon = Runner.extend( Runner.pages.DataPageWithSearch, {
 	
 		if ( method == 'popup' ) {
 			return function() {
+				pageObj.showAddPage( true );
+				/*
 				pageObj.hideElement('message');
 				var pageParams = Runner.pages.AddPage.prototype.getOpenPageParams.call( pageObj, pageObj.id );
 				Runner.pages.PageManager.openPage( pageParams );
+				*/
 				return false;
 			};
 		}
@@ -35461,15 +34010,13 @@ Runner.pages.ListPageFly = Runner.extend( Runner.pages.ListPageCommon, {
 		}, this);
 		
 		this.inlineAdd.on("afterSubmit", function( vals, fields, keys, rowId, newData ) {
-			var	$link = $('tr[id="gridRow' + rowId + '"] a[type="lookupSelect' + this.pageId + '"]').eq(0), 
-				linkValue, newInd;
+			var	$link = $('tr[id="gridRow' + rowId + '"] a[type="lookupSelect' + this.pageId + '"]').eq(0),
+				newInd;
 				
-			//linkValue = vals[ this.lookupCtrl.linkField ] === undefined ? keys[ this.lookupCtrl.linkField ] : vals[ this.lookupCtrl.linkField ];			
-			//newInd = this.lookupCtrl.addLookupVal( linkValue, vals[ this.lookupCtrl.dispFieldAlias ] || vals[ this.lookupCtrl.dispField ] );
-			newInd = this.lookupCtrl.addLookupVal( newData.linkValue, newData.displayValue );
+			newInd = this.lookupCtrl.addLookupVal( newData.linkValue, newData.displayValue, newData.keys );
 			$link.data("ind", newInd);
 
-			this.initLink( $link );			
+			this.initLink( $link );
 		}, this);
 		
 		this.inlineAdd.on("afterInit", function( pageObj, proxy, pageid, row ) {
@@ -35808,7 +34355,7 @@ Runner.pages.ListPage = Runner.extend( Runner.pages.ListPageCommon, {
 		});
 		
 		$panelBlock.find('input').off('click').on('click', function(e) {
-			var hideFields = [".dummyField"],
+			var hideFields = {".dummyField": false },
 				field = $(e.toElement || e.target).data('field'),
 				fieldName = $(e.toElement || e.target).data('fieldname'),
 				show = $(e.toElement || e.target).prop('checked');
@@ -35818,15 +34365,18 @@ Runner.pages.ListPage = Runner.extend( Runner.pages.ListPageCommon, {
 			
 			//	save to the server
 			$panelBlock.find('input').each( function( n, box ) {
+				hideFields[ $(box).data("field") ] = box.checked;
+				/*
 				if ( !box.checked ) {
 					hideFields.push( $(box).data("field") );
 				}
+				*/
 			});
 
 			pageObj.onReoderColumnsStop();
 			
 			$.post( ajaxURL, {
-				saveParam: Runner.pages.constants.SHFIELDS_PARAMS_TYPE, 
+				saveParam: Runner.pages.constants.NEWSHFIELDS_PARAMS_TYPE, 
 				data: JSON.stringify(hideFields),
 				deviceClass: Runner.util.getDeviceClass()
 			});
@@ -36408,7 +34958,7 @@ Runner.pages.ListPage = Runner.extend( Runner.pages.ListPageCommon, {
 				this.dpObjs[ tName ].addRow( newRowData );
 			}
 			
-			detTables = Runner.pages.PageSettings.getTableData(this.tName, "detailTables");
+			detTables = this.pageData.detailTables;
 			
 			for (tName in detTables) {
 				$("#master_" + Runner.pages.PageSettings.getShortTName(tName) + "_" + id).show();
@@ -37118,7 +35668,7 @@ Runner.pages.ListPage = Runner.extend( Runner.pages.ListPageCommon, {
 	setDetailsClickActionHandler: function( table, selector ) {
 		var pageObj = this,
 			dpObj = this.dpObjs ? this.dpObjs[ table ] : null,
-			detTables = Runner.pages.PageSettings.getTableData( this.tName, "detailTables" );
+			detTables = this.pageData.detailTables;
 		
 		if ( this.dashboard ) {
 			return;
@@ -39057,6 +37607,439 @@ Runner.pages.ChartPage = Runner.extend( Runner.pages.DataPageWithSearch, {
 		}
 	},
 });
+/**
+ * The chart page class
+ */
+Runner.pages.CalendarPage = Runner.extend( Runner.pages.DataPageWithSearch, {
+
+	pageType: Runner.pages.constants.PAGE_CALENDAR,
+
+	/**
+	 * Calendar object
+	 */
+	calendar: null,
+	
+	
+	/**
+	 * Double dialog opening prevention
+	 */
+	lastClick: new Date(),
+	clickPause: 500,
+
+
+	/**
+	 * @constructor
+	 * @param {object} cfg 
+	 */
+	constructor: function ( cfg ) {
+		Runner.pages.CalendarPage.superclass.constructor.call( this, cfg );
+	},
+
+	init: function () {
+		Runner.pages.CalendarPage.superclass.init.call( this );
+
+		this.initMaps();
+		this.initAdvSearch();
+		this.initAddButton();
+
+		//	recreate charts when reloading in AJAX mode
+		this.createCharts();
+
+		this.createCalendar();
+		this.fireEvent( 'afterInit', this, this.proxy, this.id );
+	},
+
+	initMaps: function () {
+		if ( this.hasMaps() ) {
+			Runner.globalGmapLoader.onLoad( function () {
+				this.mapManager = new Runner.controls.MapManager( this.controlsMap.gMaps );
+				this.mapManager.init();
+			}, this );
+		}
+	},
+
+	viewLabelToName: {
+	 	year: 'multiMonthYear',
+		month: 'dayGridMonth',
+		week: 'timeGridWeek',
+		list: 'listYear',
+	},
+	viewNameToLabel: {
+	 	multiMonthYear: 'year',
+		dayGridMonth: 'month',
+		timeGridWeek: 'week',
+		listYear: 'list',
+	},
+
+	updateViewparameter: function( type ) {
+		const urlParams = URL.parse( window.location.href );
+		urlParams.searchParams.set( 'view', this.viewNameToLabel[ type ] );
+		history.replaceState({}, "", urlParams.toString() );
+	},
+
+	createCalendar: function () {
+		var calendarEl = $( `[data-calendar${ this.id }]`)[0];
+		const data = this.pageData.calendarData;
+
+		if( data.canAdd ) {
+			calendarEl?.setAttribute('data-can-add', '' );
+		}
+
+		this.calendar = new FullCalendar.Calendar( calendarEl, {
+			/*
+			customButtons: {
+				viewYear: {
+					text: Runner.lang.constants.CCR_YEAR,
+					click: () => this.setView( 'multiMonthYear' )
+				}
+			},
+			*/
+			height: 'auto',
+			viewDidMount: ( arg ) => this.updateViewparameter( arg.view.type ),
+			initialView: this.viewLabelToName[ data.initialView ],
+			events: data.events,
+			dateClick: data.canAdd ? ( info ) => this.addEvent( info ) : null,
+			eventClick: data.canEdit ? ( info ) => this.viewEvent( info ) : null,
+			editable: data.canEdit,
+			eventStartEditable: data.canEdit,
+			eventDurationEditable: data.canEdit && data.hasEndDate,
+			firstDay: data.firstWeekDay,
+			locale: data.locale,
+			headerToolbar: {
+				start: 'title', // will normally be on the left. if RTL, will be on the right
+				center: 'multiMonthYear,dayGridMonth,timeGridWeek,listYear',
+				end: 'today prev,next' // will normally be on the right. if RTL, will be on the left
+			},
+			eventDrop: data.canEdit ? ( { event } ) => this.saveEventDate( event ) : null,
+			eventResize: data.canEdit ? ( { event } ) => this.saveEventDate( event ) : null,
+		} );
+		this.calendar.render();
+	},
+
+	addEvent: function( info ) {
+		if( new Date() - this.lastClick < this.clickPause ) {
+			return;
+		}
+		this.lastClick = new Date();
+		var date = Runner.util.timeString( info.date );
+		if( !this.calendar.view.type?.startsWith( 'timeGrid' ) ) {
+			//	change time to the beginning of the hour
+			newDate = new Date( info.date );
+			newDate.setHours( ( new Date() ).getHours() );
+			date = Runner.util.timeString( newDate ).substring( 0, 13 ) + ':00:00';
+		}
+		this.showAddPage( true, 'add_calendar', null, { date } );
+	},
+
+
+	saveEventDate: function( event ) {
+		var baseParams = {
+			a: 'updateEvent',
+			page: 'edit_calendar'
+		}
+		const keys = event.id.split( '~' );
+		for ( var i = 0; i < keys.length; ++i ) {
+			baseParams["editid" + ( i + 1 )] = keys[i];
+		}
+		baseParams.start = Runner.util.timeString( event.start );
+		baseParams.end = Runner.util.timeString( event.end > event.start ? event.end : event.start );
+		baseParams.allDay = event.allDay ? 1 : 0;
+
+		var url = Runner.getPageUrl( this.shortTName, Runner.pages.constants.PAGE_EDIT );
+		Runner.runnerAJAX( url, baseParams, ( respObj ) => {
+			if ( !respObj.success ) {
+				Runner.displayGenericAjaxError( respObj.error );
+			}
+		});
+	},
+
+	editEvent: function( keys ) {
+		var pageParams = Runner.pages.EditPage.prototype.getOpenPageParams.call( this, keys );
+		pageParams.baseParams["page"] = 'edit_calendar';
+		Runner.pages.PageManager.openPage( pageParams );
+	},
+
+	viewEvent: function( info ) {
+		if( new Date() - this.lastClick < this.clickPause ) {
+			return;
+		}
+		this.lastClick = new Date();
+		var pageParams = Runner.pages.ViewPage.prototype.getOpenPageParams.call( this, info.event.id.split( '~' ) );
+		pageParams.baseParams["page"] = 'view_calendar';
+		Runner.pages.PageManager.openPage( pageParams );
+	},
+
+	showAddInPopup: function( $link ) {
+		return true;
+	},
+
+	insertAddedEvent: function( event ) {
+		if( !event ) {
+			return;
+		}
+		this.calendar.addEvent( event );
+	},
+
+	updateEditedEvent: function( oldKeys, event ) {
+		var eventId = oldKeys.join( '~' );
+		const oldEvent = this.calendar.getEventById( eventId );
+		if( !oldEvent ) {
+			return;
+		}
+		if( !event ) {
+			oldEvent.remove();
+			return;
+		}
+		oldEvent.setStart( event.start );
+		oldEvent.setEnd( event.end );
+		oldEvent.setAllDay( event.allDay );
+		oldEvent.setProp( 'id', event.id );
+		oldEvent.setProp( 'title', event.title );
+		oldEvent.setProp( 'backgroundColor', event.backgroundColor );
+		oldEvent.setProp( 'textColor', event.textColor );
+	},
+
+
+	initDetails: Runner.emptyFn,
+
+	initGridTabs: Runner.emptyFn,
+} );/**
+ * The chart page class
+ */
+Runner.pages.GanttPage = Runner.extend( Runner.pages.DataPageWithSearch, {
+	
+	pageType: Runner.pages.constants.PAGE_GANTT,
+	gantt: null,
+	
+	
+	/**
+	 * @constructor
+	 * @param {object} cfg 
+	 */
+	constructor: function(cfg) {
+		Runner.pages.GanttPage.superclass.constructor.call(this, cfg);
+	},
+	
+	init: function() {
+		Runner.pages.GanttPage.superclass.init.call(this);
+		
+		this.initMaps();
+		this.initAdvSearch();
+		this.initAddButton();
+		
+		//	recreate charts when reloading in AJAX mode
+		this.createCharts();
+		
+		this.createGantt( true );
+		this.fireEvent('afterInit', this, this.proxy, this.id);
+	},
+	
+	initMaps: function() {
+		if ( this.hasMaps() ) {
+			Runner.globalGmapLoader.onLoad( function() {
+				this.mapManager = new Runner.controls.MapManager( this.controlsMap.gMaps ); 
+				this.mapManager.init();
+			}, this );
+		}
+	},
+
+	sortTasks: function () {
+		const oldTasks = this.pageData.ganttData.tasks;
+		
+		let newTasks = oldTasks.filter( t => !t.dependencies || !oldTasks.some( p => p.id == t.dependencies ) );
+
+		const addChildren = ( parentIdx ) => {
+			const parent = newTasks[ parentIdx ];
+			const children = oldTasks.filter( t => t.dependencies == parent.id );
+			newTasks.splice( parentIdx + 1, 0, ...children );
+			//	handle children form the end to keep indices intact
+			for( let childIdx = parentIdx + children.length; childIdx > parentIdx; --childIdx ) {
+				addChildren( childIdx );
+			}
+		}
+		
+		for( let topIdx = newTasks.length - 1; topIdx >= 0; --topIdx ) {
+			addChildren( topIdx );
+		}
+		this.pageData.ganttData.tasks = newTasks;
+	},
+
+	tasks: function() {
+		return this.pageData.ganttData.tasks;
+	},
+
+	/**
+	 * Make sure the child date is on or after parent's date
+	 * Replaces date in place, returns the argument
+	 * @param {*} task 
+	 */
+	fixChildDate: function( task ) {
+		const parent = this.tasks().find( t => t.id == task.dependencies );
+		if( !parent || parent.start <= task.start ) {
+			return task;
+		}
+		const length = task.end.valueOf() - task.start.valueOf();
+		task.start = parent.start;
+		task.end = new Date( task.start.valueOf() + length );
+		return task;
+	},
+
+	fixDates: function( task ) {
+		task.start = Runner.util.localDateFromDbString( task.start );
+		task.end = Runner.util.localDateFromDbString( task.end );
+		return task;
+	},
+
+	createGantt: function( animate ) {
+		var $ganttEl = $( `[data-gantt${ this.id }]`);
+		$ganttEl.empty();
+		$ganttEl.off();
+
+		//	fix task data so it can be displayed properly 
+		this.sortTasks();
+		this.pageData.ganttData.tasks = this.tasks().map( t => this.fixDates( t ) );
+		this.pageData.ganttData.tasks = this.tasks().map( t => this.fixChildDate( t ) );
+
+		var dateChangeDelayers = {};
+		var progressChangeDelayers = {};
+
+		this.gantt = new Gantt( $ganttEl[0], this.pageData.ganttData.tasks, {
+			language: this.pageData.ganttData.language,
+			infinite_padding: false,
+			container_height: this.pageData.ganttData.tasks.length < 6 ? 480 : 'auto',
+			animate: false,
+			readonly_dates: !this.pageData.ganttData.canEdit,
+			readonly_progress: !this.pageData.ganttData.canEditProgress,
+			popup: ( ctx ) => {
+				
+				if( ctx.task.canEdit ) {
+					this.editTask( ctx.task );
+					return false;
+				}
+				if( this.pageData.ganttData.canView ) {
+					this.viewTask( ctx.task );
+					return false;
+				}
+				return '';
+			},
+			on_date_change: ( task, startDate, endDate ) => {
+				
+				const originalTask = this.pageData.ganttData.tasks.find( t => t.id == task.id );
+				if( !originalTask?.canEdit ) {
+					return;
+				}
+				if( originalTask ) {
+					originalTask.start = startDate;
+					originalTask.end = endDate;
+				}
+				
+				var delayer = dateChangeDelayers[ task.id ];
+				if( !delayer ) {
+					delayer = new Runner.util.DelayedTask();
+					dateChangeDelayers[ task.id ] = delayer;
+				}
+				startDate = Runner.util.timeString(  startDate );
+				endDate = Runner.util.timeString( endDate );
+				delayer.delay( 500,  this.saveTask, this, [ task, { startDate, endDate }] );
+			},
+			on_progress_change: ( task, progress ) => {
+				const originalTask = this.pageData.ganttData.tasks.find( t => t.id == task.id );
+				if( !originalTask?.canEdit ) {
+					return;
+				}
+				if( originalTask ) {
+					originalTask.progress = progress;
+				}
+				var delayer = progressChangeDelayers[ task.id ];
+				if( !delayer ) {
+					delayer = new Runner.util.DelayedTask();
+					progressChangeDelayers[ task.id ] = delayer;
+				}
+				delayer.delay( 500, this.saveTask, this, [ task, { progress } ] );
+			},
+		} );	
+	},
+
+	saveTask: function( task, data ) {
+			var baseParams = {
+				a: 'updateTask',
+				gantt: 1,
+			}
+			const keys = task.id.split( '~' );
+			for ( var i = 0; i < keys.length; ++i ) {
+				baseParams["editid" + ( i + 1 )] = keys[i];
+			}
+			Object.assign( baseParams, data );
+
+			var url = Runner.getPageUrl( this.shortTName, Runner.pages.constants.PAGE_EDIT );
+			Runner.runnerAJAX( url, baseParams, ( respObj ) => {
+				if ( respObj.success ) {
+
+				} else {
+					Runner.displayGenericAjaxError( respObj.error );
+				}
+			});
+
+	},
+
+	editTask: function( task ) {
+		var pageParams = Runner.pages.EditPage.prototype.getOpenPageParams.call( this, task.keys );
+		pageParams.baseParams["gantt"] = 1;
+		Runner.pages.PageManager.openPage( pageParams );
+	},
+
+	addChildTask: function( parent ) {
+		var pageParams = Runner.pages.AddPage.prototype.getOpenPageParams.call( this, this.id );
+		pageParams.baseParams["gantt"] = 1;
+		pageParams.baseParams["parent"] = parent;
+		const parentTask = this.tasks().find( t => t.id == parent );
+		if( parentTask ) {
+			pageParams.baseParams["start"] = Runner.util.timeString( parentTask.start );
+		}
+		Runner.pages.PageManager.openPage( pageParams );
+	},
+
+	viewTask: function( task, bar ) {
+		var pageParams = Runner.pages.ViewPage.prototype.getOpenPageParams.call( this, task.keys );
+		pageParams.baseParams["gantt"] = 1;
+		Runner.pages.PageManager.openPage( pageParams );
+	},
+
+	updateEditedTask: function( oldKeys, task ) {
+		var taskId = oldKeys.join( '~' );
+		if( task ) {
+			task = this.fixDates( task );
+			task = this.fixChildDate( task );
+			const oldTask = this.pageData.ganttData.tasks.find( t => t.id === taskId );
+			if( oldTask ) {
+				Object.assign( oldTask, task );
+				this.createGantt();
+			}
+		} else {
+			this.pageData.ganttData.tasks = this.pageData.ganttData.tasks.filter( t => t.id != taskId );
+			this.createGantt();
+		}
+	},
+
+	
+
+	insertAddedTask: function( task ) {
+		if( !task ) {
+			return;
+		}
+		this.pageData.ganttData.tasks.push( task );
+		this.createGantt();
+		
+	},
+
+	showAddInPopup: function( $link ) {
+		return true;
+	},
+	
+	initDetails: Runner.emptyFn,
+
+	initGridTabs: Runner.emptyFn,
+});
 Runner.pages.ReportPageDP = Runner.extend( Runner.pages.ReportPage, {
 	
 	baseParams: null,
@@ -39629,6 +38612,8 @@ Runner.pages.ReportPrintPage = Runner.extend( Runner.pages.PrintPageCommon, {
 	 */
 	dynamicPagesDataByElement: {},
 	
+	dynamicSnippetsData: {},
+	
 	
 	/**
 	 * @constructor
@@ -39697,6 +38682,8 @@ Runner.pages.ReportPrintPage = Runner.extend( Runner.pages.PrintPageCommon, {
 		this.elementTypeInfo[ constants.DASHBOARD_SEARCH ] = {pageType: constants.PAGE_SEARCH, pageRequestMode: "dashsearch", pageMode: constants.SEARCH_DASHBOARD};
 		this.elementTypeInfo[ constants.DASHBOARD_DETAILS ] = {pageType: constants.PAGE_LIST, pageRequestMode: "dashdetails", pageMode: constants.LIST_DASHDETAILS};
 		this.elementTypeInfo[ constants.DASHBOARD_MAP ] = {pageType: constants.PAGE_DASHMAP, pageRequestMode: "dashmap", pageMode: constants.MAP_DASHBOARD};
+		this.elementTypeInfo[ constants.DASHBOARD_CALENDAR ] = {pageType: constants.PAGE_CALENDAR, pageRequestMode: "dashcalendar", pageMode: constants.CALENDAR_DASHBOARD};
+		this.elementTypeInfo[ constants.DASHBOARD_GANTT ] = {pageType: constants.PAGE_GANTT, pageRequestMode: "dashgantt", pageMode: constants.GANTT_DASHBOARD};
 	},
 	
 	
@@ -39832,7 +38819,7 @@ Runner.pages.ReportPrintPage = Runner.extend( Runner.pages.PrintPageCommon, {
 		pageParams.dashAction = action;
 		
 		pageId = Runner.pages.PageManager.openPage( pageParams );
-		this.setDynamicPageData( pageParams.tName, pageParams.pageType, dbelem, pageId );
+		this.setDynamicPageData( dbelem, pageParams.tName, pageParams.pageType, pageId );
 	},
 
 	/**
@@ -39934,10 +38921,9 @@ Runner.pages.ReportPrintPage = Runner.extend( Runner.pages.PrintPageCommon, {
 	 * Add a dashboard dynamic page's data 
 	 * @param {string} tName
 	 * @param {string} pageType
-	 * @param {string} elementName
 	 * @param {number} pageId
 	 */
-	setDynamicPageData: function( tName, pageType, dbelem, pageId ) {
+	setDynamicPageData: function( dbelem, tName, pageType, pageId ) {
 		var elementName = dbelem.elementName;
 		
 		if ( dbelem.type == Runner.pages.constants.DASHBOARD_RECORD ) {	
@@ -40389,6 +39375,16 @@ Runner.pages.ReportPrintPage = Runner.extend( Runner.pages.PrintPageCommon, {
 		return this.getDynamicPageObject( elementName, sub ) || null;
 	},
 	
+	loadCodeSnippet: function( dbelem, updContext ) {
+		this.dynamicSnippetsData[ dbelem.elementName ] = new Runner.DashboardSnippet( dbelem, this );
+	},
+	
+	destructor: function() {
+		Runner.pages.DashboardPage.superclass.destructor.call( this );
+		for( const snippet of this.dynamicSnippetsData ) {
+			snippet.destructor();
+		}
+	}
 });
 	
 Runner.namespace('Runner.Dashboard');	
@@ -40491,7 +39487,10 @@ Runner.Dashboard.Action = Runner.extend( Object, {
 	},
 	
 	applicable: function( dbElem ) {
-		return (( this.initiator != dbElem || this.applyToInitiator( dbElem ) ) &&  this.handlerMap[ dbElem.type ] && this.checkTable( dbElem ) ) ;
+		return (
+			( this.initiator != dbElem || this.applyToInitiator( dbElem ) ) 
+			&&  this.handlerMap[ dbElem.type ] 
+			&& this.checkTable( dbElem ) ) ;
 	},
 	/**
 	 *
@@ -40558,6 +39557,8 @@ Runner.Dashboard.ReloadListAction = Runner.extend( Runner.Dashboard.Action, {
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_LIST ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_CHART ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_REPORT ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 	},
 	
 	/**
@@ -40617,11 +39618,15 @@ Runner.Dashboard.LoadAction = Runner.extend( Runner.Dashboard.Action, {
 		Runner.Dashboard.LoadAction.superclass.constructor.call(this, cfg);
 		
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_LIST ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_MAP ] = this.applySearch;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_CHART ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_REPORT ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_RECORD ] = this.applyRecord;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_SEARCH ] = this.applySearch;
+		
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_SNIPPET ] = this.applySnippet;
 	},
 
 	checkTable: function( dbElem ) {
@@ -40670,6 +39675,10 @@ Runner.Dashboard.LoadAction = Runner.extend( Runner.Dashboard.Action, {
 		}
 		
 		return this.dashboard.loadSingleRecord( dbElem, pageTypes, { updContext: updContext }, this );
+	},
+	
+	applySnippet: function( dbElem, updContext ) {
+		return this.dashboard.loadCodeSnippet( dbElem, updContext );
 	}
 });
 
@@ -40686,6 +39695,8 @@ Runner.Dashboard.MoveAction = Runner.extend( Runner.Dashboard.Action, {
 		Runner.Dashboard.MoveAction.superclass.constructor.call(this, cfg);	
 		
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_LIST ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_MAP ] = this.applyMap;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_CHART ] = this.applyChart;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_RECORD ] = this.applyRecord;
@@ -40781,6 +39792,8 @@ Runner.Dashboard.ChangeTabAction = Runner.extend( Runner.Dashboard.Action, {
 		
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_LIST ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_MAP ] = this.applyMap;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 	},
 	
 	applyToInitiator: function( dbElem ) {
@@ -40832,6 +39845,8 @@ Runner.Dashboard.MoveAdjacentAction = Runner.extend( Runner.Dashboard.Action, {
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_LIST ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_MAP ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_RECORD ] = this.applyRecord;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 	},
 	
 	/**
@@ -40892,6 +39907,8 @@ Runner.Dashboard.MapViewPortChangedAction = Runner.extend( Runner.Dashboard.Acti
 		
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_LIST ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_MAP ] = this.applyMap;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 	},
 	
 	/**
@@ -40950,6 +39967,8 @@ Runner.Dashboard.UpdateRecordAction = Runner.extend( Runner.Dashboard.Action, {
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_MAP ] = this.applyMap;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_RECORD ] = this.applyRecord;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_DETAILS ] = this.applyDetails;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 	},
 
 	applyToInitiator: function( dbElem ) {
@@ -41053,6 +40072,8 @@ Runner.Dashboard.SearchAction = Runner.extend( Runner.Dashboard.Action, {
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_SEARCH ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_REPORT ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_CHART ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 	},
 	
 	applyList: function( dbElem, updContext ) {
@@ -41089,6 +40110,8 @@ Runner.Dashboard.AddRecordAction = Runner.extend( Runner.Dashboard.Action, {
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_LIST ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_MAP ] = this.applyMap;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_RECORD ] = this.applyRecord;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 	},
 
 	applyToInitiator: function( dbElem ) {
@@ -41189,6 +40212,8 @@ Runner.Dashboard.MoveMasterAction = Runner.extend( Runner.Dashboard.Action, {
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_CHART ] = this.applyChart;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_REPORT ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_RECORD ] = this.applyRecord;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;
 	},
 
 	checkTable: function( dbElem ) {
@@ -41291,10 +40316,6 @@ Runner.Dashboard.NoDataAction = Runner.extend( Runner.Dashboard.Action, {
 	constructor: function( cfg ) {
 		Runner.Dashboard.NoDataAction.superclass.constructor.call(this, cfg);	
 		
-		//this.handlerMap[ Runner.pages.constants.DASHBOARD_LIST ] = this.applyList;
-		//this.handlerMap[ Runner.pages.constants.DASHBOARD_MAP ] = this.applyMap;
-		//this.handlerMap[ Runner.pages.constants.DASHBOARD_CHART ] = this.applyList;
-		//this.handlerMap[ Runner.pages.constants.DASHBOARD_REPORT ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_RECORD ] = this.applyRecord;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_DETAILS ] = this.applyDetails;
 	},
@@ -41367,6 +40388,10 @@ Runner.Dashboard.TimerReloadAction = Runner.extend( Runner.Dashboard.Action, {
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_LIST ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_CHART ] = this.applyList;
 		this.handlerMap[ Runner.pages.constants.DASHBOARD_REPORT ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_CALENDAR ] = this.applyList;
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_GANTT ] = this.applyList;		
+		
+		this.handlerMap[ Runner.pages.constants.DASHBOARD_SNIPPET ] = this.applySnippet;
 	},
 
 	applicable: function( dbElem ) {
@@ -41424,9 +40449,58 @@ Runner.Dashboard.TimerReloadAction = Runner.extend( Runner.Dashboard.Action, {
 		}
 		
 		pageObj.reload( {}, { autoReload: true } );
+	},
+	
+	applySnippet: function( dbElem, updContext ) {
+		const snippet = this.dashboard.dynamicSnippetsData[ dbElem.elementName ];
+		if ( snippet ) {
+			snippet.reload();
+		}
 	}
 });
-/**
+
+
+Runner.DashboardSnippet = Runner.extend( Runner.emptyFn, {
+	constructor: function( dbElem, dashboard ) {
+		this.dbElem = dbElem;
+		this.dashboard = dashboard;
+		
+		if ( dbElem.reload ) {
+			this.setReloader();
+		}
+	},
+	
+	setReloader: function() {
+		if ( this.reloadTimerId ) {
+			window.clearTimeout( this.reloadTimerId );
+		}
+		
+		this.reloadTimerId = window.setTimeout( () => {
+			this.dashboard.doTimerReloadAction( this.dbElem.elementName );
+		}, 1000 *  this.dbElem.reload );
+	},
+	
+	reload: function() {
+		Runner.runnerAJAX( Runner.pages.getUrl( this.dashboard.tName, this.dashboard.pageType ), {
+				id: this.dashboard.pageId,
+				page: this.dashboard.pageName,
+				tName: this.dashboard.tName,
+				pageType: this.dashboard.pageType,
+				a: "reloadElement",
+				elementName: this.dbElem.elementName,
+			}, ( resp ) => {
+				$("#dashelement_" + this.dbElem.elementName + this.dashboard.pageId)
+					.html( resp.contentHtml );
+				this.setReloader();
+			});
+	},
+	
+	destructor: function() {
+		if ( this.reloadTimerId ) {
+			window.clearTimeout( this.reloadTimerId );
+		}
+	},
+});/**
  * The basic class for dashboard list or detail list page
  */
 Runner.pages.ListPageDash = Runner.extend( Runner.pages.ListPage, {
@@ -41515,7 +40589,13 @@ Runner.pages.ListPageDash = Runner.extend( Runner.pages.ListPage, {
 		}
 		
 		if ( this.dashboard.getElementByName( this.dashElement ).major && !this.controlsMap.gridRows.length ) {
-			this.dashboard.doNoDataAction( this.dashElement, {detailTables : Runner.pages.PageSettings.getTableData(this.tName, "detailTables")}, this.updContext );
+			this.dashboard.doNoDataAction( 
+				this.dashElement, 
+				{
+					detailTables : this.pageData.detailTables
+				}, 
+				this.updContext 
+			);
 		} else if ( !this.dashAction ) {
 			// sorting, pagination, delete etc
 			if ( !this.selectedId && this.controlsMap.gridRows.length ) {
@@ -41778,7 +40858,7 @@ Runner.pages.ListPageDash = Runner.extend( Runner.pages.ListPage, {
 			this.dashboard.doNoDataAction( 
 				this.dashElement, 
 				{
-					detailTables : Runner.pages.PageSettings.getTableData( this.tName, "detailTables" )
+					detailTables : this.pageData.detailTables
 				}, 
 				this.updContext 
 			);
@@ -42217,7 +41297,7 @@ Runner.pages.ChartPageDash = Runner.extend( Runner.pages.ChartPage, {
 	 * @param {boolean} masterKeysUpdated
 	 */
 	refreshDChartData: function(  firstMasterData, masterKeysUpdated ) {
-		if ( firstMasterData === null ) {
+		if ( !firstMasterData ) {
 			return;
 		}
 			
@@ -43509,7 +42589,15 @@ Runner.pages.MembersPage = Runner.extend( Runner.pages.ListPage, {
 		});
 		
 		// set icon for current link
-		$( $link ).class( "data-icon", this.isSortTypeAscending ? "sortasc" : "sortdesc" );
+		$( '.rnr-orderlink > .glyphicon' ).remove();
+		$( '<span></span>')
+			.insertAfter( $link )
+			.addClass( 'glyphicon' )
+			.addClass( this.isSortTypeAscending
+				? "glyphicon-arrow-up" 
+				: "glyphicon-arrow-down"
+			);
+		//$( $link ).attr( "data-icon", this.isSortTypeAscending ? "sortasc" : "sortdesc" );
 	},
 	
 	/**
@@ -43613,7 +42701,7 @@ Runner.pages.MembersPage = Runner.extend( Runner.pages.ListPage, {
 		var pageObj = this;
 		
 		// click on link sort by user name
-		$( "#userNameSort" ).on( "click", function() {
+		$( "#userNameSort" ).on( "click", function( e ) {
 			pageObj.sort( this, 'userName' );
 			return false;
 		});
@@ -45645,8 +44733,9 @@ Runner.pages.RightsPage = Runner.extend( Runner.pages.ListPage, {
 			args = {
 				modal: true,
 				centered: true,
+				width: 400,
 				headerContent: Runner.lang.constants.AA_COPY_PERMISS_FROM,
-				bodyContent: '<div id=groupCopySelector></div>'
+				bodyContent: '<div class="groupCopySelector" id=groupCopySelector></div>'
 			},
 			afterCreateDialog = function( win ) {
 				var $list = $("#groupCopySelector", win.getContextNode()),
@@ -47578,9 +46667,9 @@ Runner.pages.ImportPage = Runner.extend( Runner.pages.RunnerPage, {
 			ctrlEmail.addValidation('IsEmail');
 			ctrlEmail.addValidation('DenyDuplicated');
 			ctrlEmail.customValidationFailedMessages['DenyDuplicated'] = {
-				text: Runner.lang.constants.INLINE_EMAIL_ALREADY1
+				text: Runner.lang.constants.EMAIL_ALREADY1
 					+ "&nbsp;<i>%value%</i>&nbsp;" 
-					+ Runner.lang.constants.INLINE_EMAIL_ALREADY2,
+					+ Runner.lang.constants.EMAIL_ALREADY2,
 				type: 0
 			}
 		}
@@ -47589,9 +46678,9 @@ Runner.pages.ImportPage = Runner.extend( Runner.pages.RunnerPage, {
 			//ctrlLogin.valueElem.attr('autocomplete', 'off');
 			ctrlLogin.addValidation('DenyDuplicated');
 			ctrlLogin.customValidationFailedMessages['DenyDuplicated'] = {
-				text: Runner.lang.constants.INLINE_USERNAME_EXISTS1
+				text: Runner.lang.constants.USERNAME_EXISTS1
 					+ "&nbsp;<i>%value%</i>&nbsp;" 
-					+ Runner.lang.constants.INLINE_USERNAME_EXISTS2,
+					+ Runner.lang.constants.USERNAME_EXISTS2,
 				type: 0
 			}
 		}
@@ -48268,6 +47357,202 @@ Runner.pages.SessionExpiredPage = Runner.extend( Runner.pages.RunnerPage, {
 		});
 	},
 });
+Runner.pages.AddPageCalendar = Runner.extend( Runner.pages.AddPage, {
+	init: function() {
+		Runner.pages.AddPageCalendar.superclass.init.call( this );
+		this.initCalendarPage();
+	},
+
+	initCalendarPage: function() {
+		//	close window on escape
+		$( this.pageCont ).on( 'keyup', ( e ) => {
+			if( e.keyCode == 27 ) {
+				this.close();
+			}
+		} );
+
+		//	show/hide time on fullday event
+		var calendarSettings = Runner.pages.PageSettings.getTableData(this.tName, 'calendarSettings' );
+		var fullDayField = Runner.getControl( this.pageId, calendarSettings.fullDayField );
+		if( fullDayField ) {
+			fullDayField.on( 'change', () => {
+				if( fullDayField.getValue() ) {
+					this.hideField( calendarSettings.timeField );
+					this.hideField( calendarSettings.endTimeField );
+				} else {
+					this.showField( calendarSettings.timeField );
+					this.showField( calendarSettings.endTimeField );
+				}
+			});
+		}
+
+	}
+	
+});
+Runner.pages.EditPageCalendar = Runner.extend( Runner.pages.EditPage, {
+	hostPage: null,
+
+	init: function() {
+		Runner.pages.EditPageCalendar.superclass.init.call( this );
+		Runner.pages.AddPageCalendar.prototype.initCalendarPage.call( this );
+	},
+
+	
+	initButtons: function () {
+		Runner.pages.EditPageCalendar.superclass.initButtons.call( this );
+
+		// init delete button
+		$( "[id=deleteButton" + this.id + "]" ).on( "click", () => {
+			var baseParams = {
+				a: 'deleteEvent',
+			}
+			for ( var i = 0; i < this.keys.length; ++i ) {
+				baseParams["editid" + ( i + 1 )] = this.keys[i];
+			}
+			baseParams.page = this.pageName;
+			var url = Runner.getPageUrl( this.shortTName, Runner.pages.constants.PAGE_EDIT );
+
+			Runner.runnerAJAX( url, baseParams, ( respObj ) => {
+				if ( respObj.success ) {
+					this.close();
+					this.hostPage.updateEditedEvent( this.keys, null );
+				} else {
+					Runner.displayGenericAjaxError( respObj.error );
+				}
+			});
+		} );
+	}
+
+} );Runner.pages.ViewPageCalendar = Runner.extend( Runner.pages.ViewPage, {
+	hostPage: null,
+
+	init: function() {
+		Runner.pages.ViewPageCalendar.superclass.init.call( this );
+		Runner.pages.AddPageCalendar.prototype.initCalendarPage.call( this );
+		this.pageCont.focus();
+	},
+
+	
+	initButtons: function () {
+		Runner.pages.ViewPageCalendar.superclass.initButtons.call( this );
+
+		// init delete button
+		$( "[id=deleteButton" + this.id + "]" ).on( "click", () => {
+			var baseParams = {
+				a: 'deleteEvent',
+			}
+			for ( var i = 0; i < this.keys.length; ++i ) {
+				baseParams["editid" + ( i + 1 )] = this.keys[i];
+			}
+			baseParams.page = this.pageName;
+			var url = Runner.getPageUrl( this.shortTName, Runner.pages.constants.PAGE_VIEW );
+
+			Runner.runnerAJAX( url, baseParams, ( respObj ) => {
+				if ( respObj.success ) {
+					this.close();
+					this.hostPage.updateEditedEvent( this.keys, null );
+				} else {
+					Runner.displayGenericAjaxError( respObj.error );
+				}
+			});
+		} );
+
+		// init delete button
+		$( "[id=editPageButton" + this.id + "]" ).off('click').on( "click", () => {
+			this.close();
+			this.hostPage.editEvent( this.keys );
+		} );
+
+	}
+
+} );Runner.pages.EditPageGantt = Runner.extend( Runner.pages.EditPage, {
+	hostPage: null,
+
+	init: function() {
+		Runner.pages.EditPageGantt.superclass.init.call( this );
+		Runner.pages.EditPageGantt.prototype.initGanttPage.call( this );
+	},
+
+	initGanttPage: function() {
+		//	close window on escape
+		$( this.pageCont ).on( 'keyup', ( e ) => {
+			if( e.keyCode == 27 ) {
+				this.close();
+			}
+		} );
+	},
+	
+	initGanttButtons: function() {
+		// init delete button
+		$( "[id=deleteButton" + this.id + "]" ).on( "click", () => {
+			var baseParams = {
+				a: 'deleteTask',
+				gantt: 1,
+			}
+			for ( var i = 0; i < this.keys.length; ++i ) {
+				baseParams["editid" + ( i + 1 )] = this.keys[i];
+			}
+			baseParams.page = this.pageName;
+			var url = Runner.getPageUrl( this.shortTName, Runner.pages.constants.PAGE_EDIT );
+
+			Runner.runnerAJAX( url, baseParams, ( respObj ) => {
+				if ( respObj.success ) {
+					this.close();
+					this.hostPage.updateEditedTask( this.keys, null );
+				} else {
+					Runner.displayGenericAjaxError( respObj.error );
+				}
+			});
+		} );
+
+		// add child button
+		$( "[id=addChildButton" + this.id + "]" ).on( "click", () => {
+			this.hostPage.addChildTask( this.keys[0] );
+		} );
+
+	},
+	
+	initButtons: function () {
+		Runner.pages.EditPageCalendar.superclass.initButtons.call( this );
+		this.initGanttButtons();
+	}
+
+} );Runner.pages.ViewPageGantt = Runner.extend( Runner.pages.ViewPage, {
+	hostPage: null,
+
+	init: function() {
+		Runner.pages.ViewPageGantt.superclass.init.call( this );
+		Runner.pages.EditPageGantt.prototype.initGanttPage.call( this );
+		this.pageCont.focus();
+	},
+
+	
+	initButtons: function () {
+		Runner.pages.ViewPageGantt.superclass.initButtons.call( this );
+
+		// init delete button
+		$( "[id=deleteButton" + this.id + "]" ).on( "click", () => {
+			var baseParams = {
+				a: 'deleteEvent',
+			}
+			for ( var i = 0; i < this.keys.length; ++i ) {
+				baseParams["editid" + ( i + 1 )] = this.keys[i];
+			}
+			baseParams.page = this.pageName;
+			var url = Runner.getPageUrl( this.shortTName, Runner.pages.constants.PAGE_EDIT );
+
+			Runner.runnerAJAX( url, baseParams, ( respObj ) => {
+				if ( respObj.success ) {
+					this.close();
+					this.hostPage.updateEditedEvent( this.keys, null );
+				} else {
+					Runner.displayGenericAjaxError( respObj.error );
+				}
+			});
+		} );
+	}
+
+} );
 /**
  * Search form controller. Need for submit form in advanced and panel mode
  */
@@ -48482,6 +47767,8 @@ Runner.search.SearchForm = Runner.extend( Runner.util.Observable, {
 		if ( this.pageType === Runner.pages.constants.PAGE_DREPORT || this.pageType === Runner.pages.constants.PAGE_DCHART ) {
 			tName = "";
 		} else if ( ![
+			Runner.pages.constants.PAGE_GANTT,
+			Runner.pages.constants.PAGE_CALENDAR,
 			Runner.pages.constants.PAGE_REPORT,
 			Runner.pages.constants.PAGE_CHART,
 			Runner.pages.constants.PAGE_PRINT,
@@ -51867,26 +51154,7 @@ Runner.search.SearchFormWithUI = Runner.extend( Runner.search.SearchForm, {
 	 * @type {jQuery object}
 	 */
 	ctrlChooseMenuList: null,
-
-	/**
-	 * Search panel icon switcher text
-	 */
-	showOptText: Runner.lang.constants.SEARCH_SHOW_OPTIONS,
 	
-	/**
-	 * Search panel icon switcher text
-	 */
-	hideOptText: Runner.lang.constants.SEARCH_HIDE_OPTIONS,
-	
-	/**
-	 * Search type combos switcher text
-	 */
-	showComboText: Runner.lang.constants.SHOW_OPTIONS,
-	
-	/**
-	 * Search type combos switcher text
-	 */
-	hideComboText: Runner.lang.constants.HIDE_OPTIONS,
 	
 	/**
 	 * Array of search type combos
@@ -52234,7 +51502,7 @@ Runner.search.SearchFormWithUI = Runner.extend( Runner.search.SearchForm, {
 			selectValue = $select.val();
 			
 			if ( selectValue === 'Empty' || selectValue === 'NOT Empty' ) {
-				this.updateControlSearchOptionsCombo( $select, toggler );			
+				this.updateControlSearchOptionsCombo( $select, toggler );
 				$select.val( selectValue );
 				continue;
 			} 
@@ -52243,9 +51511,14 @@ Runner.search.SearchFormWithUI = Runner.extend( Runner.search.SearchForm, {
 			$select.toggle( toggler );
 		}
 
-		this.showHideSearchOptionsButton.find("a").html( toggler ? this.hideComboText : this.showComboText );
-		this.showHideSearchOptionsButton.find("a").attr('title', toggler ? this.hideComboText : this.showComboText );
-		
+		var buttonText = toggler 
+			? Runner.lang.constants.SEARCH_HIDE_OPTIONS_BUTTON 
+			: Runner.lang.constants.SEARCH_SHOW_OPTIONS_BUTTON;	
+
+		this.showHideSearchOptionsButton.find("a")
+			.attr('title', buttonText )
+			.html( buttonText );
+
 		this.ctrlTypeComboStatus = toggler;	
 	},
 	

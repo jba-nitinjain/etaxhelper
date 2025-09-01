@@ -92,10 +92,13 @@ pdfDocument = {
 													{BEGIN row_grid_1}
 							"%",
 							{END row_grid_1}
-													{END grid_row}
 																								{BEGIN row_grid_2}
 							"%",
 							{END row_grid_2}
+													{END grid_row}
+																								{BEGIN row_grid_3}
+							"%",
+							{END row_grid_3}
 															],
 							
 				body: [
@@ -149,6 +152,33 @@ pdfDocument = {
       },
 
 											],
+						[
+																{
+	cellId: 'c4',
+	col:0,
+	row:0,
+			
+		
+	//	static colspan/rowspan
+		
+			
+			
+	
+			"stack": [
+		
+				
+			{BEGIN mastertable_block}
+			{$showmasterfile}
+		{END mastertable_block},
+				
+		  ],
+  "border": [ false, false, false, false ],
+              "alignment": 'left',
+     
+      
+      },
+
+											],
 		
 		]
 	}
@@ -186,6 +216,12 @@ pdfDocument = {
 		
 				
 			{"text":"{mlang_message PRINT_PAGES}","hidden":"{$item_hide_print_pages}","isHtml":true,"page_indicator":true},
+				
+				
+			{"text":"","hidden":"{$item_hide_grid_inline_cancel}"},
+				
+				
+			{"text":"","hidden":"{$item_hide_inline_add}"},
 				
 		  ],
   "border": [ false, false, false, false ],
@@ -569,12 +605,84 @@ pdfDocument = {
 {END cellblock_grid_cell_field5}
 											],
 				{END row_grid_1}
+						{BEGIN row_grid_2}
+				[
+																{BEGIN cellblock_grid_cell_dpreview}
+{
+	cellId: 'cell_dpreview',
+	col:0,
+	row:0,
+				style: 'bodycell',
+		
+		
+	//	dynamic colspan/rowspan
+
+					{BEGIN colspan_grid_cell_dpreview}
+			colSpan: {$colspan_grid_cell_dpreview},
+			{END colspan_grid_cell_dpreview}
+		
+		
+	
+			
+	
+			"stack": [
+		
+				
+			 {BEGIN details_organization_login}
+			{$displayDetailTable_organization_login }
+		{END details_organization_login},
+				
+		  ],
+  "border": [ true, true, true, true ],
+              "alignment": 'left',
+     
+      
+      },
+
+{END cellblock_grid_cell_dpreview}
+																		{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  1,
+				text: '',
+				compensateColspan: true
+			},
+														{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  2,
+				text: '',
+				compensateColspan: true
+			},
+														{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  3,
+				text: '',
+				compensateColspan: true
+			},
+														{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  4,
+				text: '',
+				compensateColspan: true
+			},
+														{ 
+				cellId: 'cell_dpreview',
+				row:  0,
+				col:  5,
+				text: '',
+				compensateColspan: true
+			},
+							],
+				{END row_grid_2}
 		
 		{END grid_record}
 	{END grid_row}
 			
 					
-				{BEGIN row_grid_2}
+				{BEGIN row_grid_3}
 				[
 																{BEGIN cellblock_grid_footcell_field}
 {
@@ -733,7 +841,7 @@ pdfDocument = {
 
 {END cellblock_grid_footcell_field5}
 											],
-				{END row_grid_2}
+				{END row_grid_3}
 		
 				
 									]

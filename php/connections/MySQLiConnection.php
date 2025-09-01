@@ -64,17 +64,6 @@ class MySQLiConnection extends Connection
 			$this->port = 3306;
 
 		$hosts = array();
-/*
-		//	no need to do this anymore	
-		//	fix IPv6 slow connection issue
-		if( $this->host == "localhost" )
-		{
-			if( @$_SESSION["myqsladdress"] )
-				$hosts[] = @$_SESSION["myqsladdress"];
-			else
-				$hosts[] = "127.0.0.1";
-		}
-*/		
 		$hosts[] = $this->host;
 
 		$flags = 0;
@@ -96,15 +85,12 @@ class MySQLiConnection extends Connection
 			}
 
 			if ($this->conn) {
-				if ($this->host == "localhost")
-					$_SESSION["myqsladdress"] = $h;
 				break;
 			}
 		}
 
 		if (!$this->conn)
 		{
-			unset( $_SESSION["myqsladdress"] );
 			$this->triggerError( mysqli_connect_error() );
 			return null;
 		}

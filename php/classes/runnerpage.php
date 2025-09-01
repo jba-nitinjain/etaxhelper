@@ -825,6 +825,11 @@ class RunnerPage
 		$this->xt->setPage( $this );
 		$this->xt->assign( "pageid", $this->id );
 		$this->xt->assign( "id", $this->id );
+
+		$this->xt->assign_function("pagetitlelabel", "xt_pagetitlelabel", array( 'pageObj' => $this ) );
+		$this->xt->assign_function("jspagetitlelabel","xt_jspagetitlelabel", array( 'pageObj' => $this ) );
+
+
 		$this->setTableConnection();
 
 		if( $this->pageTable == "" ) {
@@ -842,8 +847,12 @@ class RunnerPage
 		$this->pageData["helperFieldItems"] = $this->pSet->allFieldItems();
 		$this->pageData["buttons"] = $this->pSet->buttons();
 		$this->pageData["fieldItems"] = $this->pSet->allFieldItems();
+		$this->pageData['detailTables'] = $this->buildJsDetailsSettings( $this->pSet );
 
 		foreach( $this->pSet->buttons() as $b ) {
+			if( !$b ) {
+				continue;
+			}
 			$this->AddJSFile( "usercode/button_".$b.".js" );
 		}
 		$this->pageData["renderedMediaType"] = getMediaType();
@@ -1396,6 +1405,9 @@ class RunnerPage
 		}
 
 		if( $this->pageType == PAGE_LIST && ($this->mode == LIST_AJAX || $this->mode == LIST_SIMPLE || $this->mode == LIST_LOOKUP)
+			|| $this->pageType == PAGE_DASHBOARD
+			|| $this->pageType == PAGE_CALENDAR && $this->mode == CALENDAR_SIMPLE
+			|| $this->pageType == PAGE_GANTT && $this->mode == GANTT_SIMPLE
 			|| $this->pageType == PAGE_DASHBOARD
 			|| ( $this->pageType == PAGE_REPORT && $this->mode === REPORT_SIMPLE
 			|| $this->pageType == PAGE_CHART && $this->mode == CHART_SIMPLE ) )
@@ -1967,6 +1979,9 @@ class RunnerPage
 		$masterPage->preparePage();
 
 		foreach( $masterPage->pageData["buttons"] as $b ) {
+			if( !$b ) {
+				continue;
+			}
 			$this->AddJSFile( "usercode/button_".$b.".js" );
 		}
 		$this->pageData["buttons"] = array_merge( $this->pageData["buttons"], $masterPage->pageData["buttons"] );
@@ -2378,7 +2393,7 @@ class RunnerPage
 		if( $this->pageType == PAGE_LIST && ( $this->mode === LIST_DETAILS || $this->mode === LIST_LOOKUP )
 			|| ( $this->pageType == PAGE_REPORT && $this->mode != REPORT_SIMPLE || $this->pageType == PAGE_CHART && $this->mode != CHART_SIMPLE ) )
 		{
-			unset( $_SESSION[$this->sessionPrefix."_filters"] );
+			storageDelete( $this->sessionPrefix."_filters" );
 		}
 	}
 
@@ -2391,19 +2406,15 @@ class RunnerPage
 		if( !$sessionPrefix )
 			$sessionPrefix = $this->sessionPrefix;
 
-		$prefixLength =	strlen($sessionPrefix);
+		$prefixLength =	strlen( $sessionPrefix );
 
 		$sess_unset = array();
 
-		foreach($_SESSION as $key => $value)
+		foreach( storageKeys() as $key )
 		{
-			if( substr($key, 0, $prefixLength + 1) == $sessionPrefix."_" && strpos(substr($key, $prefixLength + 1), "_") === false )
-				$sess_unset[] = $key;
-		}
-
-		foreach($sess_unset as $key)
-		{
-			unset( $_SESSION[ $key ] );
+			if( substr($key, 0, $prefixLength + 1) == $sessionPrefix."_" && strpos(substr($key, $prefixLength + 1), "_") === false ) {
+				storageDelete( $key );
+			}
 		}
 	}
 
@@ -2720,7 +2731,7 @@ class RunnerPage
 		}
 
 		$output = array();
-		if( !$this->pSet->isFreeInput($fName) )
+		if( !$this->pSet->isFreeInput($fName) || $this->pSet->isAllowToEdit($fName) )
 		{
 			$parentFiltersData = array();
 			foreach( $parentFNames as $pFName )
@@ -2730,8 +2741,11 @@ class RunnerPage
 
 			$output = $this->getControl($fName)->loadLookupContent( $parentFiltersData, @$vals[ $fName ], $categoryFieldAppear );
 		}
-		else if( isset($vals[ $fName ]) )
-			$output = array(0 => @$vals[ $fName ], 1 => @$vals[ $fName ]);
+		else if( isset($vals[ $fName ]) ) {
+			//	no data from the database needed
+			$output = array();
+			$output[] = array("displayValue" => @$vals[ $fName ], "linkValue" => @$vals[ $fName ], "keys"=> NULL);
+		}
 
 		if( !$output )
 			return false;
@@ -2740,8 +2754,9 @@ class RunnerPage
 		if( strlen($vals[ $fName ]) )
 			$fVal = $vals[ $fName ];
 
-		if( $this->pageType == PAGE_EDIT && $this->pSet->multiSelect($fName) )
+		if( $this->pSet->multiSelect($fName) ) {
 			$fVal = splitLookupValues($fVal);
+		}
 
 		return array("vals" => $output, "fVal" => $fVal);
 	}
@@ -5762,7 +5777,7 @@ class RunnerPage
 		$this->AddCSSFile('libs/js/anychart-font.min.css');
 //		$this->AddJSFile('libs/js/migrationTool.js');
 
-		$chartPageObject->beforeShowChart();
+		$chartPageObject->beforeShowEvent();
 		$this->assignDisplayDetailTableXtVariable( $chartPageObject );
 
 		$this->copyDetailPreviewJSAndCSS( $chartPageObject );
@@ -5836,70 +5851,6 @@ class RunnerPage
 		$this->xt->assign( "details_". $dtPageObject->shortTableName, true );
 		$this->xt->assign_method( "displayDetailTable_". $dtPageObject->shortTableName , $dtPageObject, 'showPageDp', false );
 	}
-
-	/**
-	 * Remove columns hidden on the current device from the inline control fields list
-	 * @param &Array inlineControlFields
-	 * @param Number screenWidth
-	 * @param Number screenHeight
-	 * @param String orientation		The current device orientation identifier
-	 * @return Array
-	 */
-	public function removeHiddenColumnsFromInlineFields( $inlineControlFields, $screenWidth, $screenHeight, $orientation )
-	{
-		//	don't remove inline fields if the user can show them
-		if( $this->showHideFieldsFeatureEnabled() )
-			return $inlineControlFields;
-
-		$devices = array( DESKTOP, TABLET_10_IN, SMARTPHONE_LANDSCAPE, SMARTPHONE_PORTRAIT, TABLET_7_IN );
-		foreach( $devices as $d )
-		{
-			$columnsToHide = $this->pSet->getHiddenFields( $d );
-			if( !$columnsToHide || !$this->isColumnHiddenForDevice( $d, $screenWidth, $screenHeight, $orientation ) )
-				continue;
-
-			foreach( $columnsToHide as $hiddenField => $status )
-			{
-				$fieldPos = array_search( $hiddenField, $inlineControlFields );
-				if( $fieldPos !== FALSE )
-					array_splice( $inlineControlFields, $fieldPos, 1);
-			}
-
-			return $inlineControlFields;
-		}
-
-		return $inlineControlFields;
-	}
-
-	/**
-	 * Check if some columns must be hidden on a device of particular type
-	 * if the current device has certain screen width and height params.
-	 * See also ProjectSettings::getDeviceMediaClause method
-	 * @param Number d				Device identifier
-	 * @param Number screenWidth
-	 * @param Number screenHeight
-	 * @param String orientation
-	 */
-	protected function isColumnHiddenForDevice( $d, $screenWidth, $screenHeight, $orientation )
-	{
-		if( $d == DESKTOP )
-			return $screenWidth >= 1281;
-
-		if( $d == TABLET_10_IN )
-			return $screenWidth == 768 && $screenHeight == 1024 || $screenWidth >= 1025 && $screenWidth <= 1280 && $screenHeight <= 1023 || $screenHeight >= 1025 && $screenHeight <= 1280 && $screenWidth <= 1023;
-
-		if( $d == TABLET_7_IN )
-			return $screenWidth <= 1024 && $screenHeight <= 800 || $screenHeight <= 1024 && $screenWidth <= 800;
-
-		if( $d == SMARTPHONE_LANDSCAPE )
-			return $screenHeight <= 420 && $orientation == 'landscape' || $screenWidth <= 420 && $orientation == 'landscape' ;
-
-		if( $d == SMARTPHONE_PORTRAIT )
-			return $screenHeight <= 420 && $orientation == 'portrait' || $screenWidth <= 420 && $orientation == 'portrait';
-
-		return false;
-	}
-
 
 	/**
 	 * @param String table				A table name
@@ -6014,7 +5965,9 @@ class RunnerPage
 	public function getPageTitle($page, $table = "", $record = null, $settings = null, $html = true)
 	{
 		if( $this->isDashboardElement()
-			&& GoodFieldName( $this->dashElementData["item"]["table"] ) == $table
+			/** #16829, labels details inside grid */
+			&& $this->dashElementData["table"] == $table
+		
 			&& $this->dashElementData["item"]["customLabel"]
 			&& $this->dashElementData["item"]["dashLabel"] ) {
 			return GetMLString($this->dashElementData["item"]["dashLabel"]);
@@ -6860,23 +6813,51 @@ class RunnerPage
 
 		include_once getabspath("classes/paramsLogger.php");
 
-		$logger = new paramsLogger( $this->tName, SHFIELDS_PARAMS_TYPE );
-		$hideColumns = $logger->getShowHideData();
+		$logger = new paramsLogger( $this->tName, NEWSHFIELDS_PARAMS_TYPE );
+		/**
+		 * array( $deviceClass => array( field => boolean ) ), field's show/hide status
+		 */
+		$savedColumnStates = $logger->getShowHideData();
 
-		$columnsByDeviceEnabled = $this->pSet->columnsByDeviceEnabled();
+		$oldLogger = new paramsLogger( $this->tName, SHFIELDS_PARAMS_TYPE );
+		/**
+		 * array( $deviceClass => array( field ) ), hidden fields only
+		 */
+		$savedHiddenColumns = $oldLogger->getShowHideData();
 
+		if( !$this->pSet->columnsByDeviceEnabled() ) {
+			//	only use DESKTOP settings
+			$savedColumnStates[ dmcSMARTPHONE ] = $savedColumnStates[ dmcDESKTOP ];
+			$savedHiddenColumns[ dmcSMARTPHONE ] = $savedHiddenColumns[ dmcDESKTOP ];
+		}
 		$ret = array();
-		$devices = array( DESKTOP, TABLET_10_IN, SMARTPHONE_LANDSCAPE, SMARTPHONE_PORTRAIT, TABLET_7_IN );
+
+		$devices = array( DESKTOP, SMARTPHONE_PORTRAIT );
 		foreach( $devices as $d )
 		{
-			if( !$columnsByDeviceEnabled )
-				$ret[ $d ] = $hideColumns[ 0 ];
-			else if( $hideColumns[ RunnerPage::deviceClassToMacro($d) ] )
-				$ret[ $d ] = $hideColumns[ RunnerPage::deviceClassToMacro($d) ];
-			else
-			{
-				$ret[ $d ] = array_keys( $this->pSet->getHiddenGoodNameFields( $d ) );
+			$dmc = RunnerPage::deviceClassToMacro( $d );
+			$hideFields = array();
+			$initialFields = $this->pSet->getHiddenGoodNameFields( $d );
+			if( $savedColumnStates[ $dmc ] ) {
+				//	new saved data available, field by field
+				foreach( $this->pSet->getPageFields() as $f ) {
+					$gf = GoodFieldName( $f );
+					if( array_key_exists( $gf, $savedColumnStates[ $dmc ] ) ) {
+						if( $savedColumnStates[ $dmc ][ $gf ] === false ) {
+							$hideFields[] = $gf;
+						}
+					} else if( array_search( $gf, $initialFields ) !== false ) {
+						$hideFields[] = $gf;
+					}
+				} 
+			} else if( $savedHiddenColumns[ $dmc ] ) {
+				//	use old saved data
+				$hideFields = $savedHiddenColumns[ $dmc ];
+			} else {
+				//	use initial data
+				$hideFields = $initialFields;
 			}
+			$ret[ $d ] = $hideFields;
 		}
 		return $ret;
 	}
@@ -6891,7 +6872,7 @@ class RunnerPage
 		$devices = array( TABLET_7_IN, SMARTPHONE_PORTRAIT, SMARTPHONE_LANDSCAPE, TABLET_10_IN, DESKTOP );
 		foreach( $devices as $d )
 		{
-			$columnsToHide[ $d ] = array_keys($this->pSet->getHiddenGoodNameFields( $d ));
+			$columnsToHide[ $d ] = $this->pSet->getHiddenGoodNameFields( $d );
 		}
 		return $columnsToHide;
 	}
@@ -7286,7 +7267,7 @@ class RunnerPage
 	function getDataSourceFilterCriteria( $ignoreFilterField = "" )
 	{
 		$security = $this->getSecurityCondition();
-		$search = $this->searchClauseObj->getSearchDataCondition( $controls );
+		$search = $this->searchClauseObj->getSearchDataCondition();
 		$filter = $this->searchClauseObj->getFilterCondition( $this->pSet, $ignoreFilterField );
 		$master = $this->getMasterCondition();
 		$tab = DataCondition::SQLCondition( $this->getCurrentTabWhere() );
@@ -7770,7 +7751,8 @@ class RunnerPage
 	}
 
 	protected function getFieldFilterFields() {
-		if ( $this->pageType == PAGE_PRINT || $this->pageType == PAGE_EXPORT ) {
+		if ( $this->pageType == PAGE_PRINT || $this->pageType == PAGE_EXPORT 
+			|| $this->pageType == PAGE_EDIT || $this->pageType == PAGE_VIEW ) {
 			$settings = $this->getFieldFilterSettings();
 			return array_keys( $settings );
 		}
@@ -7814,8 +7796,7 @@ class RunnerPage
 	 * FieldFilter DISTINCT values of field
 	 */
 	protected function getFieldFilterDistinctValues( $fieldName ) {
-		global $fieldFilterMaxValuesCount,
-			$fieldFilterDefaultValue;
+		global $fieldFilterMaxValuesCount;
 
 		// dont' apply current field's fieldFilter
 		$fieldFilterSettings = $this->getFieldFilterSettings();
@@ -7865,9 +7846,9 @@ class RunnerPage
 		[
 				{
 			  		value: <field value>,
-			  		display: <formatted field value, с учетом viewAs>,
-			  		search: [массив строк],
-			  		selected: boolean - если в поле есть фильтр, и это значение выбрано, то true
+			  		display: <formatted field value, according to 'View as' settings>,
+			  		search: [string array] - all different original field values for given 'display'?
+			  		selected: boolean - true when filter by this field is enabled
 				}
 		] for each field DISTINCT value
 	*/
@@ -7968,9 +7949,13 @@ class RunnerPage
 	}
 
 	protected function getFieldFilterCondition() {
-		$pageFields = $this->getPageFields();
-		$fieldFilterFields = $this->getFieldFilterFields();
-		$filterFields = array_intersect( $pageFields, $fieldFilterFields );
+		$filterFields = $this->getFieldFilterFields();
+		
+		if( $this->pageType == PAGE_LIST ) {
+			// don't apply old field filters on List page, 
+			// but on Edit/View all set filters must apply regardless of field's presence on the page
+			$filterFields = array_intersect( $this->getPageFields(), $filterFields );
+		}
 
 		$fieldsConditions = array();
 		foreach( $filterFields as $fieldName ) {
@@ -8302,7 +8287,6 @@ class RunnerPage
 
 		$settings["masterPageId"] = $this->masterPageId;
 
-
 		return $settings;
 
 	}
@@ -8316,6 +8300,7 @@ class RunnerPage
 	}
 
 	protected function buildJsDetailsSettings( $pSet ) {
+
 		if( $this->pageType != PAGE_LIST && $this->pageType != PAGE_REPORT && $this->pageType != PAGE_CHART ) {
 			return array();
 		}
@@ -8345,12 +8330,13 @@ class RunnerPage
 		}
 		return $settings;
 	}
-	protected function buildJsFieldSettings( $pSet, $field, $pageType ) {
+	protected function buildJsFieldSettings( $pSet, $field, $targetPageType ) {
 		$settings = array();
 		$settings["isUseTimeStamp"] = $pSet->isUseTimestamp( $field );
 		$settings["strName"] = $field;
 		$viewFormat = $pSet->getViewFormat( $field );
 		$editFormat = $pSet->getEditFormat( $field );
+		$originalEditFormat = $editFormat;
 		
 		if( $this->pSet->table() == $pSet->table() ) {
 			$editFormat = $this->getEditFormat( $field );
@@ -8410,7 +8396,7 @@ class RunnerPage
 			$settings["fileStorageProvider"] = $pSet->getFieldValue( $field, 'storageProvider' );
 		}
 
-		if( $editFormat === EDIT_FORMAT_LOOKUP_WIZARD ) {
+		if( $editFormat === EDIT_FORMAT_LOOKUP_WIZARD || $originalEditFormat === EDIT_FORMAT_LOOKUP_WIZARD /* details key on add page */) {
 			$settings["parentFields"] = $pSet->getLookupParentFNames( $field );
 			$settings["lcType"] = $pSet->getFieldValue( $field, 'edit', 'lookupControlType' );
 			$settings["lookupTable"] = $pSet->getFieldValue( $field, 'edit', 'lookupTable' );
@@ -8425,6 +8411,8 @@ class RunnerPage
 			$settings["autoCompleteFields"] = $pSet->getAutoCompleteFields( $field );
 			$settings["listPageId"] = $pSet->getFieldValue( $field, 'edit', 'lookupListPage' );
 			$settings["addPageId"] = $pSet->getFieldValue( $field, 'edit', 'lookupAddPage' );
+			$settings["editPageId"] = $pSet->getFieldValue( $field, 'edit', 'lookupEditPage' );
+			
 			$this->addMainFieldsSettings( $pSet, $field, $settings );
 		}
 
@@ -8438,11 +8426,19 @@ class RunnerPage
 				);
 			}
 		}
-		$settings['validation'] = $this->buildJsValidationData( $pSet, $field );
+		$validationPageTypes = array( PAGE_ADD, PAGE_EDIT, PAGE_REGISTER );
+		if( array_search( $pSet->getPageType(), $validationPageTypes ) !== false || 
+			array_search( $this->pageType, $validationPageTypes ) !== false ||
+			array_search( $targetPageType, $validationPageTypes ) !== false
+			) {
+				
+			$settings['validation'] = $this->buildJsValidationData( $pSet, $field );
+		}
+
 
 		//	copy jsControlSettings 
-		if( is_array( @$this->jsControlSettings[ $field ] ) && is_array( @$this->jsControlSettings[ $field ][ $pageType ] ) ) {
-			foreach( @$this->jsControlSettings[ $field ][ $pageType ] as $name => $value ) {
+		if( is_array( @$this->jsControlSettings[ $field ] ) && is_array( @$this->jsControlSettings[ $field ][ $targetPageType ] ) ) {
+			foreach( @$this->jsControlSettings[ $field ][ $targetPageType ] as $name => $value ) {
 				$settings[ $name ] = $value;
 			}
 		}
@@ -8526,6 +8522,9 @@ class RunnerPage
 	}
 
 	protected function useCKEditor() {
+		if( !ProjectSettings::richTextEnabled() ) {
+			return false;
+		}
 		$rteType = ProjectSettings::rteType();
 		return $rteType == rteCKEditor || $rteType == rteCKEditor5;
 	}
@@ -8540,6 +8539,93 @@ class RunnerPage
 			}
 		}
 		return false;
+	}
+
+
+	/**
+	 * Get lookup data from a record added
+	 * in 'add/edit value On the Fly' mode
+	 * or in Inline Add mode on List page with search.
+	 * @return Array
+	 */
+	public function getLookupData( $lookupTable, $lookupField, $lookupPageType, $newRecordData ) {
+		// get Project Settings object for $this->lookupTable
+		$lookupPSet = $this->pSet->getLookupMainTableSettings( $lookupTable, $lookupField, $lookupPageType );
+		if( !$lookupPSet )
+			return array();
+
+		$lvals = $this->getNewLookupValues( $lookupPSet, $lookupField, $newRecordData );
+		if( !$lvals )
+			return array();
+
+		$linkField = $lookupPSet->getLinkField( $lookupField );
+		$dispfield = $lookupPSet->getDisplayField( $lookupField );
+
+		$respData = array(
+			$linkField => $lvals["link"],
+			$dispfield => $lvals["display"]
+		);
+
+		// format DATE or TIME value
+		if(  in_array( $lookupPSet->getViewFormat( $lookupField ), array(FORMAT_DATE_SHORT, FORMAT_DATE_LONG, FORMAT_DATE_TIME) ) ) {
+			$viewContainer = new ViewControlsContainer( $lookupPSet, PAGE_LIST, null );
+
+			$ctrlData = array();
+			$ctrlData[ $lookupField ] = $respData[ $linkField ];
+
+			$respData[ $dispfield ] = $viewContainer->getControl( $lookupField )->getTextValue( $ctrlData );
+		}
+
+		return array(
+			'linkValue' => $respData[ $linkField ],
+			'displayValue' => $respData[ $dispfield ],
+			'vals' => $respData
+		);
+	}
+	
+	/**
+	 * Return link and display field values after Add on the fly
+	 * @return array or false
+	 * 	"link" => <link field value>
+	 *  "display" => <display field value>
+	 */
+	protected function getNewLookupValues( $lookupPSet, $lookupField, &$newRecordData )
+	{
+		$linkFieldName = $lookupPSet->getLinkField( $lookupField );
+		$dispFieldName = $lookupPSet->getDisplayField( $lookupField );
+		if( $this->keys ) {
+			$dc = new DsCommand();
+			$dc->keys = $this->keys;
+
+			if( $lookupPSet->getCustomDisplay( $lookupField ) ) {
+				$customField = new DsFieldData( $dispFieldName, generateAlias(), "" );
+				$dispFieldName = $customField->alias;
+				$dc->extraColumns[] = $customField;
+			}
+			$data = $this->cipherer->DecryptFetchedArray( $this->dataSource->getSingle( $dc )->fetchAssoc() );
+		}
+		if( !$data ) {
+			$data = $newRecordData;
+		}
+		return array(
+			"link" => $data[ $linkFieldName ],
+			"display" => $data[ $dispFieldName ]
+		);
+	}	
+
+	/**
+	 * $data - record data
+	 * $permission - 'E' or 'D'
+	 */
+	public function recordEditable( $data, $permission = 'E' ) {
+		$editable = Security::userCan( $permission, $this->tName, true, $data[ $this->pSet->getTableOwnerIdField() ] );
+
+		global $globalEvents;
+		if( $globalEvents->exists("IsRecordEditable", $this->tName ) ) {
+			$editable = $globalEvents->IsRecordEditable( $data, true, $this->tName );
+		}
+		return $editable;
+
 	}
 
 }

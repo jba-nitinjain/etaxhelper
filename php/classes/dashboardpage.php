@@ -3,6 +3,9 @@ class DashboardPage extends RunnerPage
 {
 	protected $elementsPermissions = array();
 
+	public $action = "";
+	public $elementName = "";
+
 	/**
 	 * @constructor
 	 * @param &Array params
@@ -29,6 +32,22 @@ class DashboardPage extends RunnerPage
 			echo printJSON( $returnJSON );
 			exit();
 		}
+		
+		if ( $this->action == "reloadElement" ) {
+			$snippetId = postvalue("snippetId");
+			
+			foreach( $this->pSet->getDashboardElements() as $key => $elem ) {
+				if ( $elem["type"] == DASHBOARD_SNIPPET && $elem["elementName"] == $this->elementName ) {
+					$snippetData = $this->callSnippet( $elem );
+					$contentHtml = $this->getSnippetHtml( $elem, $snippetData );
+					break;
+				}
+			}
+			
+			$returnJSON = array("success" => true, "contentHtml" => $contentHtml );
+			echo printJSON( $returnJSON );
+			exit();
+		}
 
 		// Set language params, if have more than one language
 		$this->setLangParams();
@@ -50,12 +69,12 @@ class DashboardPage extends RunnerPage
 	 * @param String $pageType
 	 * @return Array permission types
 	 */
-	function getPermissionType($pageType)
+	function getPermissionType( $pageType )
 	{
 		$result = array();
 		$type = parent::getPermisType($pageType);
 
-		if ($pageType == "view" || $pageType == "chart" || $pageType == "report" || $pageType == "list")
+		if ($pageType == "view" || $pageType == "chart" || $pageType == "report" || $pageType == "list" || $pageType == "calendar" || $pageType == "gantt")
 			$type = "S";
 		elseif ($pageType == "add")
 			$type = "A";
@@ -416,7 +435,8 @@ class DashboardPage extends RunnerPage
 			{
 				foreach( $t as $i )
 				{
-					if( $elements[$i]["type"] == DASHBOARD_LIST || $elements[$i]["type"] == DASHBOARD_CHART || $elements[$i]["type"] == DASHBOARD_REPORT )
+					$elementType = $elements[$i]["type"];
+					if( $elementType == DASHBOARD_LIST || $elementType == DASHBOARD_CHART || $elementType == DASHBOARD_REPORT || $elementType == DASHBOARD_CALENDAR || $elementType == DASHBOARD_GANTT )
 					{
 						$major = $elements[$i]["elementName"];
 						break;
@@ -510,8 +530,12 @@ class DashboardPage extends RunnerPage
 				}
 				
 			} elseif( $elem['type'] == DASHBOARD_CHART || $elem['type'] == DASHBOARD_REPORT || $elem['type'] == DASHBOARD_SEARCH) {
-				$permissions = $this->CheckPermissions($elem['table'], "Search" );
+				$permissions = $this->CheckPermissions($elem['table'], "list" );
 			} elseif( $elem['type'] == DASHBOARD_LIST ) {
+				$permissions = $this->CheckPermissions( $elem['table'], "list" );
+			} elseif( $elem['type'] == DASHBOARD_CALENDAR ) {
+				$permissions = $this->CheckPermissions( $elem['table'], "list" );
+			} elseif( $elem['type'] == DASHBOARD_GANTT ) {
 				$permissions = $this->CheckPermissions( $elem['table'], "list" );
 			} elseif( $elem['type'] == DASHBOARD_MAP ) {
 				$permissions = $this->CheckPermissions( $elem['table'], "list" );

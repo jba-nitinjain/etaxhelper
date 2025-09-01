@@ -8,9 +8,8 @@ class SearchPageDash extends SearchPage
 	{
 		parent::__construct($params);
 		
-		if ($this->mode == SEARCH_DASHBOARD)
-		{
-			$this->jsSettings['tableSettings'][ $this->tName ]['isDashSearchPage'] = true;
+		if( $this->mode == SEARCH_DASHBOARD ) {
+			$this->pageData['isDashSearchPage'] = true;
 		}
 	}
 	
@@ -66,7 +65,7 @@ class SearchPageDash extends SearchPage
 			{
 				$firstFieldParams['fName'] = $f;
 				$firstFieldParams['eType'] = '';
-				$firstFieldParams['value1'] = $this->pSet->getDefaultValue( $field );
+				$firstFieldParams['value1'] = $this->pSet->getSearchDefaultValue( $field );
 				$firstFieldParams['value2'] = '';
 				$firstFieldParams['not'] = false;
 				$firstFieldParams['opt'] = $this->pSet->getDefaultSearchOption( $f );

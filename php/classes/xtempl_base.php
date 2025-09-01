@@ -108,13 +108,11 @@ class XTempl_Base
 		$this->assign_function("htmlcustom","xt_htmlcustom",array());
 		$this->assign_function("cl_length","xt_cl_length",array());
 		$this->assign_function("caption","xt_caption",array());
-		$this->assign_function("pagetitlelabel", "xt_pagetitlelabel", array());
 		$this->assign_function("logo","printProjectLogo",array());
 		$this->assign_function("home_link","printHomeLink",array());
 		$this->assign_function("file_url","getFileUrl",array());
 		$this->assign_function("jscaption","xt_jscaption",array());
 		$this->assign_function("jslabel","xt_jslabel",array());
-		$this->assign_function("jspagetitlelabel","xt_jspagetitlelabel",array());
 
 		$this->assign_function("pdf_image","getPdfImageObject",array());
 		$this->assign_function("pdf_chart", "getPdfChartObject", array());
@@ -260,20 +258,13 @@ class XTempl_Base
 
 	function xt_event($params)
 	{
-		global $projectLanguage;
 		if( $this->jsonMode ) {
-			//if( $projectLanguage !== "aspx" ) {
-				ob_start();
-				$this->xt_doevent( $params );
-				$out = jsreplace( ob_get_contents() );
-				ob_end_clean();
-				echo $out;
-				return;
-			/*	
-			} else {
-				return jsreplace( $this->xt_doevent( $params ) );
-			}
-			*/
+			ob_start();
+			$this->xt_doevent( $params );
+			$out = jsreplace( ob_get_contents() );
+			ob_end_clean();
+			echo $out;
+			return;
 		}
 		return $this->xt_doevent( $params );
 	}

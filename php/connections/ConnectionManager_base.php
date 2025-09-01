@@ -75,6 +75,9 @@ class ConnectionManager_Base
 	 */
 	public function byId( $connId )
 	{
+		if( !$connId ) {
+			$connId = $this->getDefaultConnId();
+		}
 		if( !isset( $this->cache[ $connId ] ) ) {
 			$conn = $this->getConnection( $connId );
 			global $restApis;

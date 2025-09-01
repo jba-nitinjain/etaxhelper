@@ -52,7 +52,7 @@ class SearchPage extends RunnerPage
 	public function displaySearchControl() 
 	{
 		$this->searchControlBuilder = new PanelSearchControl($this->searchControllerId, $this->tName, $this->searchClauseObj, $this);
-		$defaultValue = $this->pSet->getDefaultValue( $this->ctrlField );
+		$defaultValue = $this->pSet->getSearchDefaultValue( $this->ctrlField );
 		$ctrlBlockArr = $this->searchControlBuilder->buildSearchCtrlBlockArr($this->id, $this->ctrlField, 0, '', false, true, $defaultValue, '');	
 		
 		// build array for encode
@@ -120,7 +120,7 @@ class SearchPage extends RunnerPage
 			{
 				$firstFieldParams['fName'] = $field;
 				$firstFieldParams['eType'] = '';
-				$firstFieldParams['value1'] = $this->pSet->getDefaultValue( $field );
+				$firstFieldParams['value1'] = $this->pSet->getSearchDefaultValue( $field );
 				$firstFieldParams['value2'] = '';
 				$firstFieldParams['not'] = false;
 				$firstFieldParams['opt'] = $this->pSet->getDefaultSearchOption( $field );

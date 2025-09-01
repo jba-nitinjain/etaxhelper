@@ -71,7 +71,7 @@ class DatabaseFileField extends EditControl
 					$disp = "<a target=_blank";
 
 					$disp.=" href=\"".
-						GetTableLink("imager", "",
+						GetTableLink("file", "",
 						"page=".$this->pageObject->pageName.
 						"&table=".GetTableURL($this->pageObject->tName).
 						"&".$this->iquery.
@@ -80,18 +80,12 @@ class DatabaseFileField extends EditControl
 					if($this->is508)
 						$disp .= " alt=\"Image from DB\"";
 					
-					//	show thumbnail or fullsize image
-					$displayField = $this->pageObject->pSetEdit->getThumbnailField($this->field);
-					if( !strlen( $data[ $displayField ]) ) {
-						$displayField = $this->field;
-					}
-
 					$disp .= " src=\"".
-						GetTableLink("imager", "",
+						GetTableLink("file", "",
 							"page=".$this->pageObject->pageName.
 							"&table=".GetTableURL($this->pageObject->tName).
-							"&field=".rawurlencode( $displayField ).
-							$this->keylink.
+							"&thumbnail=1".
+							"&".$this->iquery.
 							"&rndVal=".rand(0,32768))."\">";
 					$disp.= "</a>";
 				}
@@ -101,7 +95,7 @@ class DatabaseFileField extends EditControl
 					if($this->is508)
 						$disp.= ' alt="Image from DB"';
 					$disp.=' border=0 src="'.
-						GetTableLink("imager", "",
+						GetTableLink("file", "",
 							'table='.GetTableURL($this->pageObject->tName).
 							"&page=".$this->pageObject->pageName.
 							'&'.$this->iquery."&src=1&rndVal=".rand(0,32768)).'">';
@@ -145,14 +139,14 @@ class DatabaseFileField extends EditControl
 						.$this->cfieldname.'" size="20" maxlength="50" value="'.runner_htmlspecialchars($filename).'">';
 				}
 			}
+			$labelTag = '<label class="r-img-control">';
 			if(strlen($value)) {
-				$strtype = '<br><input id="'.$this->ctype.'_keep" type="Radio" name="'.$this->ctype.'" value="file0" checked class="rnr-uploadtype">'.mlang_message('KEEP');
+				$strtype = '<br>'.$labelTag.'<input id="'.$this->ctype.'_keep" type="Radio" name="'.$this->ctype.'" value="file0" checked class="rnr-uploadtype">'.mlang_message('KEEP').'</label>';
 
-			if(strlen($value) && !$this->pageObject->pSetEdit->isRequired($this->field))
-			{
-					$strtype .= '<input id="'.$this->ctype.'_delete" type="Radio" name="'.$this->ctype.'" value="file1" class="rnr-uploadtype">'.mlang_message('DELETE');
-			}
-				$strtype .= '<input id="'.$this->ctype.'_update" type="Radio" name="'.$this->ctype.'" value="file2" class="rnr-uploadtype">'.mlang_message('UPDATE');
+				if(strlen($value) && !$this->pageObject->pSetEdit->isRequired($this->field)) {
+					$strtype .= $labelTag.'<input id="'.$this->ctype.'_delete" type="Radio" name="'.$this->ctype.'" value="file1" class="rnr-uploadtype">'.mlang_message('DELETE').'</label>';
+				}
+				$strtype .= $labelTag.'<input id="'.$this->ctype.'_update" type="Radio" name="'.$this->ctype.'" value="file2" class="rnr-uploadtype">'.mlang_message('UPDATE').'</label>';
 			} else {
 				$strtype = '<input id="'.$this->ctype.'_update" type="hidden" name="'.$this->ctype.'" value="file2" class="rnr-uploadtype">';
 		}

@@ -371,11 +371,28 @@ class ViewPage extends RunnerPage
 
 			if( !$this->pdfJsonMode() ) {
 				$value = '<span id="view'.$this->id.'_'.$gname.'" >' . $this->showDBValue( $f, $data, $keylink ). '</span>';
-				$this->xt->assign( $gname . "_value", $value );
+				$varName = $gname . "_value";
 			} else {
-				//	$value = "'" . jsreplace( $this->getTextValue( $f, $data ) ) . "'";
-				$this->xt->assign( $gname . "_pdfvalue", $this->showDBValue( $f, $data, $keylink ) );
+				$value = $this->showDBValue( $f, $data, $keylink );
+				$varName = $gname . "_pdfvalue";
 			}
+			$parameters = array( 'value' => $value );
+			if( $this->pSet->getViewFormat( $f ) == FORMAT_CHECKBOX ) {
+				$parameters[ "xt" ] = $this->xt;
+				$parameters[ "clearVar" ] = $gname . "_forward_control";
+			} 
+			
+			$this->xt->assign_function( $varName, 'xt_buildviewcontrol', $parameters );
+
+			if( $this->pSet->getViewFormat( $f ) == FORMAT_CHECKBOX ) {
+				$parameters = array();
+				$parameters[ "xt" ] = $this->xt;
+				$parameters[ "clearVar" ] = $varName;
+				$parameters[ 'value' ] = $value;
+
+				$this->xt->assign_function( $gname . "_forward_control", "xt_forwardViewControl", $parameters );
+			}
+
 
 			$this->xt->assign( $gname . "_fieldblock", true );
 
@@ -485,13 +502,8 @@ class ViewPage extends RunnerPage
 		if( $this->editAvailable() )
 		{
 			$data = $this->getCurrentRecordInternal();
-			$editable = Security::userCan( 'E', $this->tName, true, $data[ $this->pSet->getTableOwnerIdField() ] );
-
-			if( $globalEvents->exists("IsRecordEditable", $this->tName) )
-				$editable = $globalEvents->IsRecordEditable($this->getCurrentRecordInternal(), $editable, $this->tName);
-
-			if( $editable )
-			{
+			
+			if( $this->recordEditable( $data ) ) {
 				$this->xt->assign("edit_page_button", true);
 				$this->xt->assign("edit_page_button_attrs", "id=\"editPageButton".$this->id."\"");
 			}

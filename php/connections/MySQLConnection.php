@@ -57,10 +57,7 @@ class MySQLConnection extends Connection
 		//	fix IPv6 slow connection issue
 		if( $this->host == "localhost" )
 		{
-			if( $_SESSION["myqsladdress"] )
-				$hosts[] = $_SESSION["myqsladdress"];
-			else
-				$hosts[] = "127.0.0.1";
+			$hosts[] = "127.0.0.1";
 		}
 		$hosts[] = $this->host;
 
@@ -69,15 +66,12 @@ class MySQLConnection extends Connection
 			$this->conn = @mysql_connect($h.":".$this->port, $this->user, $this->pwd);
 			if( $this->conn )
 			{
-				if( $this->host == "localhost" )
-					$_SESSION["myqsladdress"] = $h;
 				break;
 			}
 		}
 
 		if (!$this->conn || !mysql_select_db($this->sys_dbname, $this->conn))
 		{
-			unset( $_SESSION["myqsladdress"] );
 			$this->triggerError( mysql_error() );
 		}
 

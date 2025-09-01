@@ -343,8 +343,17 @@ class ListPage_Lookup extends ListPage_Embed
 
 				$dispVal = $viewContainer->getControl( $this->mainField )->getTextValue( $ctrlData );
 			}
-
-			$this->lookupValuesArr[] = array('linkVal' => $data[$this->linkField], 'dispVal' => $dispVal);
+			
+			if( $this->mainPSet->isAllowToEdit($this->mainField) ) {
+				$keys = array();
+				foreach( $this->pSetEdit->getTableKeys() as $kf ) {
+					$keys[] = $data[ $kf ];
+				}
+				$this->lookupValuesArr[] = array('linkVal' => $data[$this->linkField], 'dispVal' => $dispVal, 'keys'=> $keys);
+			
+			} else {
+				$this->lookupValuesArr[] = array('linkVal' => $data[$this->linkField], 'dispVal' => $dispVal);
+			}
 		}
 	}
 

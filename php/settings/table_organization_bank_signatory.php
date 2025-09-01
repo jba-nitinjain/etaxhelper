@@ -7,12 +7,6 @@ $runnerTableSettings['organization_bank_signatory'] = array(
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -25,33 +19,39 @@ $runnerTableSettings['organization_bank_signatory'] = array(
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'pageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'defaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'afterEditDetails' => 'organization_bank_signatory',
 	'afterAddDetail' => 'organization_bank_signatory',
-	'detailsBadgeColor' => 'e67349',
+	'detailsBadgeColor' => '00c2c5',
 	'sql' => 'SELECT
 	signatory_id,
 	bank_id,
@@ -80,6 +80,7 @@ FROM
 			'index' => 1,
 			'type' => 20,
 			'autoinc' => true,
+			'sqlExpression' => 'signatory_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -89,7 +90,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank_signatory' 
 		),
 		'bank_id' => array(
 			'name' => 'bank_id',
@@ -97,6 +99,7 @@ FROM
 			'strField' => 'bank_id',
 			'index' => 2,
 			'type' => 20,
+			'sqlExpression' => 'bank_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -104,15 +107,22 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 2,
+					'lookupTable' => 'organization_bank',
+					'lookupTableConnection' => 'conn',
+					'lookupLinkField' => 'bank_id',
+					'lookupDisplayField' => 'bank_name' 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank_signatory' 
 		),
 		'NAME' => array(
 			'name' => 'NAME',
 			'goodName' => 'NAME',
 			'strField' => 'NAME',
 			'index' => 3,
+			'sqlExpression' => 'NAME',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -122,13 +132,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank_signatory' 
 		),
 		'designation' => array(
 			'name' => 'designation',
 			'goodName' => 'designation',
 			'strField' => 'designation',
 			'index' => 4,
+			'sqlExpression' => 'designation',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -138,13 +150,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank_signatory' 
 		),
 		'email' => array(
 			'name' => 'email',
 			'goodName' => 'email',
 			'strField' => 'email',
 			'index' => 5,
+			'sqlExpression' => 'email',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -154,13 +168,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_bank_signatory' 
 		),
 		'phone' => array(
 			'name' => 'phone',
 			'goodName' => 'phone',
 			'strField' => 'phone',
 			'index' => 6,
+			'sqlExpression' => 'phone',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -170,6 +186,18 @@ FROM
 				'edit' => array(
 					 
 				) 
+			),
+			'tableName' => 'organization_bank_signatory' 
+		) 
+	),
+	'masterTables' => array( 
+		array(
+			'table' => 'organization_bank',
+			'detailsKeys' => array( 
+				'bank_id' 
+			),
+			'masterKeys' => array( 
+				'bank_id' 
 			) 
 		) 
 	),
@@ -192,9 +220,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'signatory_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank_signatory',
+					'name' => 'signatory_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'signatory_id' 
@@ -205,9 +235,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'bank_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank_signatory',
+					'name' => 'bank_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'bank_id' 
@@ -218,9 +250,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'NAME',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank_signatory',
+					'name' => 'NAME' 
 				),
 				'encrypted' => false,
 				'columnName' => 'NAME' 
@@ -231,9 +265,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'designation',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank_signatory',
+					'name' => 'designation' 
 				),
 				'encrypted' => false,
 				'columnName' => 'designation' 
@@ -244,9 +280,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'email',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank_signatory',
+					'name' => 'email' 
 				),
 				'encrypted' => false,
 				'columnName' => 'email' 
@@ -257,9 +295,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'phone',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_bank_signatory',
+					'name' => 'phone' 
 				),
 				'encrypted' => false,
 				'columnName' => 'phone' 
@@ -275,7 +315,12 @@ FROM
 					'parsed' => true,
 					'type' => 'SQLTable',
 					'columns' => array( 
-						 
+						'signatory_id',
+						'bank_id',
+						'NAME',
+						'designation',
+						'email',
+						'phone' 
 					),
 					'name' => 'organization_bank_signatory' 
 				),
@@ -390,12 +435,6 @@ FROM
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -408,28 +447,34 @@ FROM
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'originalPageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'originalDefaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'searchSettings' => array(
@@ -483,6 +528,16 @@ FROM
 	),
 	'dataSourceOperations' => array(
 		 
+	),
+	'calendarSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
+	),
+	'ganttSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
 	) 
 );
 

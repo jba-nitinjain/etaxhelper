@@ -37,6 +37,12 @@ define('PAGE_ADMIN_MEMBERS', "admin_members_list");
 define('PAGE_ADMIN_ADMEMBERS', "admin_admembers_list");
 define('PAGE_USERINFO',"userinfo");
 define('PAGE_SESSION_EXPIRED',"session_expired");
+define('PAGE_CALENDAR',"calendar");
+define('PAGE_GANTT',"gantt");
+
+define( 'CALENDAR_ADD_PAGE', 'add_calendar' );
+define( 'CALENDAR_EDIT_PAGE', 'edit_calendar' );
+define( 'CALENDAR_VIEW_PAGE', 'view_calendar' );
 
 define('ADMIN_USERS',"admin_users");
 
@@ -134,6 +140,7 @@ define("nDATABASE_PostgreSQL",4);
 define("nDATABASE_Informix",5);
 define("nDATABASE_SQLite3",6);
 define("nDATABASE_DB2",7);
+define("nDATABASE_iSeries",18);
 define("nDATABASE_Interbase", 16);
 define("nDATABASE_REST", 19 );
 
@@ -149,6 +156,7 @@ define("ADD_MASTER_DASH",7);
 //	Edit page modes
 define("EDIT_SIMPLE",0); 	//	standalone Edit page
 define("EDIT_INLINE",1);	//	inlineEdit
+define("EDIT_ONTHEFLY",2);	// edit lookup item
 define("EDIT_POPUP",3);		//	edit page in popup
 define("EDIT_DASHBOARD",4);	//	edit page in dashboard
 define("EDIT_SELECTED_SIMPLE",5);
@@ -250,6 +258,22 @@ define("CHART_POPUPDETAILS", 1);
 define("CHART_DASHBOARD", 2);
 define("CHART_DETAILS", 3);
 define("CHART_DASHDETAILS", 4);
+
+/**
+ * Calendar page mode constants MUST be equal to the corresponding Chart page modes
+ */
+define("CALENDAR_SIMPLE", 0);
+define("CALENDAR_DASHBOARD", 2);
+
+/**
+ * Gantt page mode constants MUST be equal to the corresponding Chart page modes
+ */
+define("GANTT_SIMPLE", 0);
+define("GANTT_DASHBOARD", 2);
+define("GANTT_DETAILS", 3);
+define("GANTT_DASHDETAILS", 4);
+
+
 
 define("DP_POPUP",0);
 define("DP_INLINE",1);
@@ -357,13 +381,21 @@ define("gltVERTICAL", 1);
 define("gltCOLUMNS", 2);
 define("gltFLEXIBLE", 3);
 
-/* Define comstamts for hidden columns devices*/
+/** 
+ * DEPRECATED, see next block of defines
+ * Constants for hidden columns devices
+ * */
 define("DESKTOP", 1);
-define("TABLET_10_IN", 2);
-define("TABLET_7_IN", 3);
-define("SMARTPHONE_LANDSCAPE", 4);
+define("TABLET_10_IN", 2);	//	not used
+define("TABLET_7_IN", 3); 	//	not used
+define("SMARTPHONE_LANDSCAPE", 4); //	not used
 define("SMARTPHONE_PORTRAIT", 5);
-/**/
+
+/*  Macro device classes */
+define("dmcDESKTOP", 0);
+define("dmcTABLET", 1);	//	not used
+define("dmcSMARTPHONE", 2);
+
 
 /* Dashboard types */
 define("DASHBOARD_LIST", 0);
@@ -374,6 +406,8 @@ define("DASHBOARD_SEARCH", 4);
 define("DASHBOARD_DETAILS", 5);
 define("DASHBOARD_MAP", 6);
 define("DASHBOARD_SNIPPET", 7);
+define("DASHBOARD_CALENDAR", 8);
+define("DASHBOARD_GANTT", 9);
 /**/
 
 /* Define message type constants */
@@ -434,6 +468,7 @@ define('SSEARCH_PARAMS_TYPE', 1);
 define('CRESIZE_PARAMS_TYPE', 2);
 define('SHFIELDS_PARAMS_TYPE', 3);
 define('FORDER_PARAMS_TYPE', 4);
+define('NEWSHFIELDS_PARAMS_TYPE', 5);
 
 // remind password method
 define('RPM_SEND', 0 );
@@ -579,5 +614,60 @@ define( 'VALIDATE_AS_SSN', "US SSN" );
 define( 'VALIDATE_AS_CC', "Credit Card" );
 define( 'VALIDATE_AS_REGEXP', "Regular expression" );
 define( 'VALIDATE_AS_TIME', "Time" );
+
+define( 'rklURL', 'url' );
+define( 'rklHEADER', 'header' );
+define( 'rklPOST', 'post' );
+
+define( 'SQLF_AVG', 0 );
+define( 'SQLF_SUM', 1 );
+define( 'SQLF_MIN', 2 );
+define( 'SQLF_MAX', 3 );
+define( 'SQLF_COUNT', 4 );
+define( 'SQLF_CUSTOM', 5 );
+
+define( 'adBigInt', 20 );
+define( 'adBinary', 128 );
+define( 'adBoolean', 11 );
+define( 'adBSTR', 8 );
+define( 'adChapter', 136 );
+define( 'adChar', 129 );
+define( 'adCurrency', 6 );
+define( 'adDate', 7 );
+define( 'adDBDate', 133 );
+define( 'adDBTime', 134 );
+define( 'adDBTimeStamp', 135 );
+define( 'adDecimal', 14 );
+define( 'adDouble', 5 );
+define( 'adEmpty', 0 );
+define( 'adError', 10 );
+define( 'adFileTime', 64 );
+define( 'adGUID', 72 );
+define( 'adIDispatch', 9 );
+define( 'adInteger', 3 );
+define( 'adIUnknown', 13 );
+define( 'adLongVarBinary', 205 );
+define( 'adLongVarChar', 201 );
+define( 'adLongVarWChar', 203 );
+define( 'adNumeric', 131 );
+define( 'adPropVariant', 138 );
+define( 'adSingle', 4 );
+define( 'adSmallInt', 2 );
+define( 'adTinyInt', 16 );
+define( 'adUnsignedBigInt', 21 );
+define( 'adUnsignedInt', 19 );
+define( 'adUnsignedSmallInt', 18 );
+define( 'adUnsignedTinyInt', 17 );
+define( 'adUserDefined', 132 );
+define( 'adVarBinary', 204 );
+define( 'adVarChar', 200 );
+define( 'adVariant', 12 );
+define( 'adVarNumeric', 139 );
+define( 'adVarWChar', 202 );
+define( 'adWChar', 130 );
+define( 'adExtTime', 145);
+define( 'adExtNumber', 1001);
+
+
 
 ?>

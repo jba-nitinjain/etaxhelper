@@ -44,7 +44,7 @@ $bSubqueriesSupported = true;
 $regenerateSessionOnLogin = true;
 $ajaxSearchStartsWith = true;
 $suggestAllContent = true;
-$doMySQLCountBugWorkaround = true;
+$doMySQLCountBugWorkaround = false;
 
 
 //	application state variables
@@ -76,6 +76,16 @@ $jsonDataFromRequest = null;
 $runnerDbTableInfo = array();
 $runnerDbTables = array();
 $tableinfo_cache = array();
+/**
+ * substitute for $_SESSION when in REST API (stateless) mode
+ */
+$restStorage = array();
+/**
+ * Only used in .NET
+ */
+$_eventClasses = array();
+
+
 
 // debug variables
 $strictSettings = false;
@@ -95,6 +105,8 @@ $pageTypesForView[] = "rprint";
 $pageTypesForView[] = "chart";
 $pageTypesForView[] = "masterlist";
 $pageTypesForView[] = "masterprint";
+$pageTypesForView[] = "gantt";
+$pageTypesForView[] = "calendar";
 
 $pageTypesForEdit = array();
 $pageTypesForEdit[] = "add";

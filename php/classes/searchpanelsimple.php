@@ -139,7 +139,7 @@ class SearchPanelSimple {
 			$isSrchPanelField = in_array($searchField, $this->panelSearchFields);
 
 			if( !$srchFields ) {
-				$defaultValue = $this->pSet->getDefaultValue( $searchField );
+				$defaultValue = $this->pSet->getSearchDefaultValue( $searchField );
 				
 				if( $isSrchPanelField ) {
 					$opt = '';
@@ -198,7 +198,7 @@ class SearchPanelSimple {
 		if( $srchCtrlBlocksNumber > 0 && $srchCtrlBlocksNumber < $gLoadSearchControls ) {
 			$otherSearchControlsMaxNumber = $gLoadSearchControls - $srchCtrlBlocksNumber + count($otherFieldsBlocks);
 			foreach( $notAddedFileds as $searchField ) {			
-				$defaultValue = $this->pSet->getDefaultValue( $searchField );
+				$defaultValue = $this->pSet->getSearchDefaultValue( $searchField );
 				// add cached ctrl
 				$otherFieldsBlocks[] = $this->controlBuilder->buildSearchCtrlBlockArr(
 					$recId, 

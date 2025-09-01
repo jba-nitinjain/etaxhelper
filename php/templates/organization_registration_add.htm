@@ -114,17 +114,19 @@
 	data-signal-error-for="org_id{$id}" {$required_attr_org_id}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="org_id" data-fieldname="org_id" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_org_id}">
-		{BEGIN org_id_label}{$label organization_registration org_id }{END org_id_label}
+	<label class="r-edit-label control-label {$org_id_label_class}" for="{$labelfor_org_id}">
+		{BEGIN org_id_label}
+			{$org_id_forward_control}
+			{$label organization_registration org_id }			{END org_id_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$org_id_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_registration org_id } >
+		<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_registration org_id } >
 		<div class="text-muted" >
 		{$tooltip organization_registration org_id }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END org_id_fieldblock}
@@ -136,17 +138,19 @@
 	data-signal-error-for="reg_type{$id}" {$required_attr_reg_type}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="reg_type" data-fieldname="reg_type" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_reg_type}">
-		{BEGIN reg_type_label}{$label organization_registration reg_type }{END reg_type_label}
+	<label class="r-edit-label control-label {$reg_type_label_class}" for="{$labelfor_reg_type}">
+		{BEGIN reg_type_label}
+			{$reg_type_forward_control}
+			{$label organization_registration reg_type }			{END reg_type_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$reg_type_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="reg_type" {$tooltipAttr organization_registration reg_type } >
+		<div class="r-edit-tooltip" data-helpfor="reg_type" {$tooltipAttr organization_registration reg_type } >
 		<div class="text-muted" >
 		{$tooltip organization_registration reg_type }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END reg_type_fieldblock}
@@ -158,17 +162,19 @@
 	data-signal-error-for="reg_number{$id}" {$required_attr_reg_number}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="reg_number" data-fieldname="reg_number" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_reg_number}">
-		{BEGIN reg_number_label}{$label organization_registration reg_number }{END reg_number_label}
+	<label class="r-edit-label control-label {$reg_number_label_class}" for="{$labelfor_reg_number}">
+		{BEGIN reg_number_label}
+			{$reg_number_forward_control}
+			{$label organization_registration reg_number }			{END reg_number_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$reg_number_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="reg_number" {$tooltipAttr organization_registration reg_number } >
+		<div class="r-edit-tooltip" data-helpfor="reg_number" {$tooltipAttr organization_registration reg_number } >
 		<div class="text-muted" >
 		{$tooltip organization_registration reg_number }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END reg_number_fieldblock}
@@ -180,17 +186,19 @@
 	data-signal-error-for="valid_from{$id}" {$required_attr_valid_from}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="valid_from" data-fieldname="valid_from" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_valid_from}">
-		{BEGIN valid_from_label}{$label organization_registration valid_from }{END valid_from_label}
+	<label class="r-edit-label control-label {$valid_from_label_class}" for="{$labelfor_valid_from}">
+		{BEGIN valid_from_label}
+			{$valid_from_forward_control}
+			{$label organization_registration valid_from }			{END valid_from_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$valid_from_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="valid_from" {$tooltipAttr organization_registration valid_from } >
+		<div class="r-edit-tooltip" data-helpfor="valid_from" {$tooltipAttr organization_registration valid_from } >
 		<div class="text-muted" >
 		{$tooltip organization_registration valid_from }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END valid_from_fieldblock}
@@ -202,17 +210,19 @@
 	data-signal-error-for="valid_to{$id}" {$required_attr_valid_to}
 	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="valid_to" data-fieldname="valid_to" >
 
-	<label class="r-edit-label control-label" for="{$labelfor_valid_to}">
-		{BEGIN valid_to_label}{$label organization_registration valid_to }{END valid_to_label}
+	<label class="r-edit-label control-label {$valid_to_label_class}" for="{$labelfor_valid_to}">
+		{BEGIN valid_to_label}
+			{$valid_to_forward_control}
+			{$label organization_registration valid_to }			{END valid_to_label}
 		<span class="icon-required"></span>
 	</label>
 	<div class="r-edit-field">
 		{$valid_to_editcontrol}	</div>
-	<div class="r-edit-tooltip" data-helpfor="valid_to" {$tooltipAttr organization_registration valid_to } >
+		<div class="r-edit-tooltip" data-helpfor="valid_to" {$tooltipAttr organization_registration valid_to } >
 		<div class="text-muted" >
 		{$tooltip organization_registration valid_to }		</div>
 	</div>
-</div>
+	</div>
 
 
 {END valid_to_fieldblock}
@@ -242,11 +252,13 @@
 							{mlang_message SAVE}			</a>
 </span>
 	 
-		<span data-itemtype="add_reset" data-itemid="add_reset" {$item_add_reset} data-pageid="{$pageid}" data-small data-button-item>
+		{BEGIN reset_button}
+<span data-itemtype="add_reset" data-itemid="add_reset" {$item_add_reset} data-pageid="{$pageid}" data-small data-button-item>
 	<a type="button" title="" class="btn btn-default   
 	" id="resetButton{$id}" >
 							{mlang_message RESET}			</a>
 </span>
+{END reset_button}
 	 
 		{BEGIN back_button}
 <span data-itemtype="add_back_list" data-itemid="add_back_list" {$item_add_back_list} data-pageid="{$pageid}" data-small data-button-item>

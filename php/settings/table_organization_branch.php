@@ -7,12 +7,6 @@ $runnerTableSettings['organization_branch'] = array(
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -25,33 +19,39 @@ $runnerTableSettings['organization_branch'] = array(
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'pageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'defaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'afterEditDetails' => 'organization_branch',
 	'afterAddDetail' => 'organization_branch',
-	'detailsBadgeColor' => 'db7093',
+	'detailsBadgeColor' => '4682b4',
 	'sql' => 'SELECT
 	branch_id,
 	org_id,
@@ -84,6 +84,7 @@ FROM
 			'index' => 1,
 			'type' => 20,
 			'autoinc' => true,
+			'sqlExpression' => 'branch_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -93,7 +94,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_branch' 
 		),
 		'org_id' => array(
 			'name' => 'org_id',
@@ -101,6 +103,7 @@ FROM
 			'strField' => 'org_id',
 			'index' => 2,
 			'type' => 20,
+			'sqlExpression' => 'org_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -108,15 +111,22 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 2,
+					'lookupTable' => 'ORGANIZATION',
+					'lookupTableConnection' => 'conn',
+					'lookupLinkField' => 'org_id',
+					'lookupDisplayField' => 'org_type' 
 				) 
-			) 
+			),
+			'tableName' => 'organization_branch' 
 		),
 		'branch_name' => array(
 			'name' => 'branch_name',
 			'goodName' => 'branch_name',
 			'strField' => 'branch_name',
 			'index' => 3,
+			'sqlExpression' => 'branch_name',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -126,13 +136,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_branch' 
 		),
 		'address_line' => array(
 			'name' => 'address_line',
 			'goodName' => 'address_line',
 			'strField' => 'address_line',
 			'index' => 4,
+			'sqlExpression' => 'address_line',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -142,13 +154,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_branch' 
 		),
 		'city' => array(
 			'name' => 'city',
 			'goodName' => 'city',
 			'strField' => 'city',
 			'index' => 5,
+			'sqlExpression' => 'city',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -158,13 +172,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_branch' 
 		),
 		'state' => array(
 			'name' => 'state',
 			'goodName' => 'state',
 			'strField' => 'state',
 			'index' => 6,
+			'sqlExpression' => '`state`',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -174,13 +190,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_branch' 
 		),
 		'postal_code' => array(
 			'name' => 'postal_code',
 			'goodName' => 'postal_code',
 			'strField' => 'postal_code',
 			'index' => 7,
+			'sqlExpression' => 'postal_code',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -190,13 +208,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_branch' 
 		),
 		'country' => array(
 			'name' => 'country',
 			'goodName' => 'country',
 			'strField' => 'country',
 			'index' => 8,
+			'sqlExpression' => 'country',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -206,13 +226,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_branch' 
 		),
 		'phone' => array(
 			'name' => 'phone',
 			'goodName' => 'phone',
 			'strField' => 'phone',
 			'index' => 9,
+			'sqlExpression' => 'phone',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -222,13 +244,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_branch' 
 		),
 		'email' => array(
 			'name' => 'email',
 			'goodName' => 'email',
 			'strField' => 'email',
 			'index' => 10,
+			'sqlExpression' => 'email',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -238,6 +262,18 @@ FROM
 				'edit' => array(
 					 
 				) 
+			),
+			'tableName' => 'organization_branch' 
+		) 
+	),
+	'masterTables' => array( 
+		array(
+			'table' => 'ORGANIZATION',
+			'detailsKeys' => array( 
+				'org_id' 
+			),
+			'masterKeys' => array( 
+				'org_id' 
 			) 
 		) 
 	),
@@ -264,9 +300,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'branch_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'branch_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'branch_id' 
@@ -277,9 +315,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'org_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'org_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'org_id' 
@@ -290,9 +330,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'branch_name',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'branch_name' 
 				),
 				'encrypted' => false,
 				'columnName' => 'branch_name' 
@@ -303,9 +345,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'address_line',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'address_line' 
 				),
 				'encrypted' => false,
 				'columnName' => 'address_line' 
@@ -316,9 +360,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'city',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'city' 
 				),
 				'encrypted' => false,
 				'columnName' => 'city' 
@@ -329,9 +375,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => '`state`',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'state' 
 				),
 				'encrypted' => false,
 				'columnName' => 'state' 
@@ -342,9 +390,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'postal_code',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'postal_code' 
 				),
 				'encrypted' => false,
 				'columnName' => 'postal_code' 
@@ -355,9 +405,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'country',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'country' 
 				),
 				'encrypted' => false,
 				'columnName' => 'country' 
@@ -368,9 +420,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'phone',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'phone' 
 				),
 				'encrypted' => false,
 				'columnName' => 'phone' 
@@ -381,9 +435,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'email',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_branch',
+					'name' => 'email' 
 				),
 				'encrypted' => false,
 				'columnName' => 'email' 
@@ -399,7 +455,16 @@ FROM
 					'parsed' => true,
 					'type' => 'SQLTable',
 					'columns' => array( 
-						 
+						'branch_id',
+						'org_id',
+						'branch_name',
+						'address_line',
+						'city',
+						'state',
+						'postal_code',
+						'country',
+						'phone',
+						'email' 
 					),
 					'name' => 'organization_branch' 
 				),
@@ -546,12 +611,6 @@ FROM
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -564,28 +623,34 @@ FROM
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'originalPageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'originalDefaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
 		'search' => 'search' 
 	),
 	'searchSettings' => array(
@@ -647,6 +712,16 @@ FROM
 	),
 	'dataSourceOperations' => array(
 		 
+	),
+	'calendarSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
+	),
+	'ganttSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
 	) 
 );
 

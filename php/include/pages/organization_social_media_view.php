@@ -3,6 +3,17 @@
 	'pdf' => array(
 		'pdfView' => false 
 	),
+	'details' => array(
+		'organization_login' => array(
+			'displayPreview' => 2,
+			'previewPageId' => '' 
+		) 
+	),
+	'master' => array(
+		'ORGANIZATION' => array(
+			'preview' => false 
+		) 
+	),
 	'fields' => array(
 		'gridFields' => array( 
 			'social_id',

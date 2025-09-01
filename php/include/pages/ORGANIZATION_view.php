@@ -3,6 +3,36 @@
 	'pdf' => array(
 		'pdfView' => false 
 	),
+	'details' => array(
+		'organization_bank' => array(
+			'displayPreview' => 2,
+			'previewPageId' => '' 
+		),
+		'organization_branch' => array(
+			'displayPreview' => 2,
+			'previewPageId' => '' 
+		),
+		'organization_contact' => array(
+			'displayPreview' => 2,
+			'previewPageId' => '' 
+		),
+		'organization_director' => array(
+			'displayPreview' => 2,
+			'previewPageId' => '' 
+		),
+		'organization_login' => array(
+			'displayPreview' => 2,
+			'previewPageId' => '' 
+		),
+		'organization_registration' => array(
+			'displayPreview' => 2,
+			'previewPageId' => '' 
+		),
+		'organization_social_media' => array(
+			'displayPreview' => 2,
+			'previewPageId' => '' 
+		) 
+	),
 	'fields' => array(
 		'gridFields' => array( 
 			'org_id',

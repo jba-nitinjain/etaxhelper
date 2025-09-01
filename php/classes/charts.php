@@ -1261,7 +1261,7 @@ class Chart_Gauge extends Chart {
 	{
 		$data = array();
 
-		for($i = 0; $i < count($this->arrDataSeries); $i++)
+		for($i = count( $this->arrDataSeries ) - 1; $i >= 0 ; --$i)
 		{
 			$chart = array();
 
@@ -1315,7 +1315,7 @@ class Chart_Gauge extends Chart {
 					"radius" => 70,
 					"from" => $colorZone["begin"],
 					"to" => $colorZone["end"],
-					"fill" => $colorZone["color"],
+					"fill" => '#' . $colorZone["color"],
 					"endSize" => "10%",
 					"startSize" => "10%"
 				);
@@ -1340,7 +1340,7 @@ class Chart_Gauge extends Chart {
 					"name" => "",
 					"offset" => "10%",
 					"dataIndex" => $ind + 1, // 0 is an index of the db point then range bars coords go
-					"color" => $colorZone["color"]
+					"color" => '#' . $colorZone["color"]
 				);
 			}
 		
@@ -1447,7 +1447,7 @@ class Chart_Gauge extends Chart {
 	 */
 	protected function getGaugeScales( $seriesNumber )
 	{
-		$min = $thia->arrDataSeries[ $seriesNumber ]["minValue"];
+		$min = $this->arrDataSeries[ $seriesNumber ]["minValue"];
 		$max = $this->arrDataSeries[ $seriesNumber ]["maxValue"];
 
 		if( !is_numeric( $min ) )

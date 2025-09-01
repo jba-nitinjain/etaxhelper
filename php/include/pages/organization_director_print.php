@@ -3,6 +3,11 @@
 	'pdf' => array(
 		'pdfView' => false 
 	),
+	'master' => array(
+		'ORGANIZATION' => array(
+			'preview' => true 
+		) 
+	),
 	'totals' => array(
 		'director_id' => array(
 			'totalsType' => '' 
@@ -126,14 +131,17 @@
 		'formItems' => array(
 			'formItems' => array(
 				'above-grid' => array( 
-					'print_pages' 
+					'print_pages',
+					'grid_inline_cancel',
+					'inline_add' 
 				),
 				'below-grid' => array( 
 					 
 				),
 				'top' => array( 
 					'print_header',
-					'print_subheader' 
+					'print_subheader',
+					'master_info' 
 				),
 				'grid' => array( 
 					'simple_grid_field12',
@@ -164,7 +172,9 @@
 			),
 			'formXtTags' => array(
 				'above-grid' => array( 
-					'print_pages' 
+					'print_pages',
+					'inline_cancel',
+					'inlineadd_link' 
 				),
 				'below-grid' => array( 
 					 
@@ -172,8 +182,11 @@
 			),
 			'itemForms' => array(
 				'print_pages' => 'above-grid',
+				'grid_inline_cancel' => 'above-grid',
+				'inline_add' => 'above-grid',
 				'print_header' => 'top',
 				'print_subheader' => 'top',
+				'master_info' => 'top',
 				'simple_grid_field12' => 'grid',
 				'simple_grid_field' => 'grid',
 				'simple_grid_field13' => 'grid',
@@ -311,6 +324,9 @@
 			'print_pages' => array( 
 				'print_pages' 
 			),
+			'master_info' => array( 
+				'master_info' 
+			),
 			'grid_field' => array( 
 				'simple_grid_field',
 				'simple_grid_field1',
@@ -338,6 +354,12 @@
 				'simple_grid_field21',
 				'simple_grid_field22',
 				'simple_grid_field23' 
+			),
+			'inline_add' => array( 
+				'inline_add' 
+			),
+			'grid_inline_cancel' => array( 
+				'grid_inline_cancel' 
 			) 
 		),
 		'cellMaps' => array(
@@ -1010,7 +1032,9 @@
 				'c1' => array(
 					'model' => 'c1',
 					'items' => array( 
-						'print_pages' 
+						'print_pages',
+						'grid_inline_cancel',
+						'inline_add' 
 					) 
 				) 
 			),
@@ -1054,6 +1078,14 @@
 						) 
 					),
 					'section' => '' 
+				),
+				array(
+					'cells' => array( 
+						array(
+							'cell' => 'c4' 
+						) 
+					),
+					'section' => '' 
 				) 
 			),
 			'cells' => array(
@@ -1062,6 +1094,12 @@
 					'items' => array( 
 						'print_header',
 						'print_subheader' 
+					) 
+				),
+				'c4' => array(
+					'model' => 'c4',
+					'items' => array( 
+						'master_info' 
 					) 
 				) 
 			),
@@ -1479,6 +1517,12 @@
 		'print_pages' => array(
 			'type' => 'print_pages' 
 		),
+		'master_info' => array(
+			'type' => 'master_info',
+			'tables' => array(
+				'3171' => 'true' 
+			) 
+		),
 		'simple_grid_field' => array(
 			'field' => 'director_id',
 			'type' => 'grid_field' 
@@ -1574,6 +1618,13 @@
 		'simple_grid_field23' => array(
 			'type' => 'grid_field_label',
 			'field' => 'date_of_appointment' 
+		),
+		'inline_add' => array(
+			'type' => 'inline_add',
+			'detailsOnly' => true 
+		),
+		'grid_inline_cancel' => array(
+			'type' => 'grid_inline_cancel' 
 		) 
 	),
 	'dbProps' => array(

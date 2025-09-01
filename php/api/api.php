@@ -117,8 +117,9 @@ class API {
 	public static function valuesFromRequest( $pSet ) {
 		$values = array();
 		foreach( $pSet->getFieldsList() as $f ) {
-			if( postvalue( $f ) || GetUploadedFileName( $f ) ) {
-				$values[ $f ] = API::processRequestValue( $f, postvalue( $f ), $pSet );
+			$value = postvalue( $f );
+			if( $value || $value === '0' || GetUploadedFileName( $f ) ) {
+				$values[ $f ] = API::processRequestValue( $f, $value, $pSet );
 			}
 		}
 		

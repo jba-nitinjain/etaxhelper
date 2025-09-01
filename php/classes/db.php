@@ -260,7 +260,7 @@ class DB
 	public static function _findDBTable( $table, $conn = null )
 	{
 		global $runnerDbTables;
-		require_once( getabspath( 'settings/dbtables.php' ) );
+		importTableList();
 		if( !$conn )
 			$conn = DB::CurrentConnection();
 		$tableName = $conn->getTableNameComponents( $table );

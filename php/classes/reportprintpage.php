@@ -1,4 +1,6 @@
 <?php
+require_once( getabspath( "classes/runnerpage.php" ) );
+
 class ReportPrintPage extends ReportPage
 {
 	public $pageWidth = PDF_PAGE_WIDTH;
@@ -28,6 +30,11 @@ class ReportPrintPage extends ReportPage
 	public $isReportEmpty = false;
 
 	public $multipleDetails = false;
+
+	/**
+	 * php2net issue
+	 */
+	public $format;
 	
 	/**
 	 *
@@ -135,6 +142,7 @@ class ReportPrintPage extends ReportPage
 		$this->addCommonJs();
 
 		$this->showPage();
+		exit();
 	}
 	
 	/**

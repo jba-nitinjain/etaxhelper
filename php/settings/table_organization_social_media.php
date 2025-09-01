@@ -7,12 +7,6 @@ $runnerTableSettings['organization_social_media'] = array(
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -25,33 +19,49 @@ $runnerTableSettings['organization_social_media'] = array(
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
+		'masterlist' => array( 
+			'masterlist' 
+		),
+		'masterprint' => array( 
+			'masterprint' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'pageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'defaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'afterEditDetails' => 'organization_social_media',
 	'afterAddDetail' => 'organization_social_media',
-	'detailsBadgeColor' => '6493ea',
+	'detailsBadgeColor' => '5f9ea0',
 	'sql' => 'SELECT
 	social_id,
 	org_id,
@@ -80,6 +90,7 @@ FROM
 			'index' => 1,
 			'type' => 20,
 			'autoinc' => true,
+			'sqlExpression' => 'social_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -89,7 +100,8 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_social_media' 
 		),
 		'org_id' => array(
 			'name' => 'org_id',
@@ -97,6 +109,7 @@ FROM
 			'strField' => 'org_id',
 			'index' => 2,
 			'type' => 20,
+			'sqlExpression' => 'org_id',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -104,15 +117,22 @@ FROM
 			),
 			'editFormats' => array(
 				'edit' => array(
-					 
+					'format' => 'Lookup wizard',
+					'lookupType' => 2,
+					'lookupTable' => 'ORGANIZATION',
+					'lookupTableConnection' => 'conn',
+					'lookupLinkField' => 'org_id',
+					'lookupDisplayField' => 'org_type' 
 				) 
-			) 
+			),
+			'tableName' => 'organization_social_media' 
 		),
 		'platform' => array(
 			'name' => 'platform',
 			'goodName' => 'platform',
 			'strField' => 'platform',
 			'index' => 3,
+			'sqlExpression' => 'platform',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -122,13 +142,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_social_media' 
 		),
 		'handle_name' => array(
 			'name' => 'handle_name',
 			'goodName' => 'handle_name',
 			'strField' => 'handle_name',
 			'index' => 4,
+			'sqlExpression' => 'handle_name',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -138,13 +160,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_social_media' 
 		),
 		'website' => array(
 			'name' => 'website',
 			'goodName' => 'website',
 			'strField' => 'website',
 			'index' => 5,
+			'sqlExpression' => 'website',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -154,13 +178,15 @@ FROM
 				'edit' => array(
 					 
 				) 
-			) 
+			),
+			'tableName' => 'organization_social_media' 
 		),
 		'mobile_app' => array(
 			'name' => 'mobile_app',
 			'goodName' => 'mobile_app',
 			'strField' => 'mobile_app',
 			'index' => 6,
+			'sqlExpression' => 'mobile_app',
 			'viewFormats' => array(
 				'view' => array(
 					 
@@ -170,8 +196,23 @@ FROM
 				'edit' => array(
 					 
 				) 
+			),
+			'tableName' => 'organization_social_media' 
+		) 
+	),
+	'masterTables' => array( 
+		array(
+			'table' => 'ORGANIZATION',
+			'detailsKeys' => array( 
+				'org_id' 
+			),
+			'masterKeys' => array( 
+				'org_id' 
 			) 
 		) 
+	),
+	'detailsTables' => array( 
+		'organization_login' 
 	),
 	'query' => array(
 		'sql' => 'SELECT
@@ -192,9 +233,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'social_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_social_media',
+					'name' => 'social_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'social_id' 
@@ -205,9 +248,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'org_id',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_social_media',
+					'name' => 'org_id' 
 				),
 				'encrypted' => false,
 				'columnName' => 'org_id' 
@@ -218,9 +263,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'platform',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_social_media',
+					'name' => 'platform' 
 				),
 				'encrypted' => false,
 				'columnName' => 'platform' 
@@ -231,9 +278,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'handle_name',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_social_media',
+					'name' => 'handle_name' 
 				),
 				'encrypted' => false,
 				'columnName' => 'handle_name' 
@@ -244,9 +293,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'website',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_social_media',
+					'name' => 'website' 
 				),
 				'encrypted' => false,
 				'columnName' => 'website' 
@@ -257,9 +308,11 @@ FROM
 				'type' => 'FieldListItem',
 				'alias' => '',
 				'expression' => array(
-					'sql' => 'mobile_app',
+					'sql' => '',
 					'parsed' => true,
-					'type' => 'NonParsedEntity' 
+					'type' => 'SQLField',
+					'table' => 'organization_social_media',
+					'name' => 'mobile_app' 
 				),
 				'encrypted' => false,
 				'columnName' => 'mobile_app' 
@@ -275,7 +328,12 @@ FROM
 					'parsed' => true,
 					'type' => 'SQLTable',
 					'columns' => array( 
-						 
+						'social_id',
+						'org_id',
+						'platform',
+						'handle_name',
+						'website',
+						'mobile_app' 
 					),
 					'name' => 'organization_social_media' 
 				),
@@ -390,12 +448,6 @@ FROM
 		'add' => array( 
 			'add' 
 		),
-		'list' => array( 
-			'list' 
-		),
-		'print' => array( 
-			'print' 
-		),
 		'export' => array( 
 			'export' 
 		),
@@ -408,28 +460,44 @@ FROM
 		'view' => array( 
 			'view' 
 		),
+		'list' => array( 
+			'list' 
+		),
+		'print' => array( 
+			'print' 
+		),
+		'masterlist' => array( 
+			'masterlist' 
+		),
+		'masterprint' => array( 
+			'masterprint' 
+		),
 		'search' => array( 
 			'search' 
 		) 
 	),
 	'originalPageTypes' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'originalDefaultPages' => array(
 		'add' => 'add',
-		'list' => 'list',
-		'print' => 'print',
 		'export' => 'export',
 		'import' => 'import',
 		'edit' => 'edit',
 		'view' => 'view',
+		'list' => 'list',
+		'print' => 'print',
+		'masterlist' => 'masterlist',
+		'masterprint' => 'masterprint',
 		'search' => 'search' 
 	),
 	'searchSettings' => array(
@@ -483,6 +551,16 @@ FROM
 	),
 	'dataSourceOperations' => array(
 		 
+	),
+	'calendarSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
+	),
+	'ganttSettings' => array(
+		'categoryColors' => array( 
+			 
+		) 
 	) 
 );
 

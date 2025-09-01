@@ -259,6 +259,9 @@ class ChangePasswordPage extends RunnerPage
 
 			$this->pageData["buttons"] = array_merge( $this->pageData["buttons"], $this->pSet->buttons() );
 			foreach( $this->pSet->buttons() as $b ) {
+				if( !$b ) {
+					continue;
+				}
 				$this->AddJSFile( "usercode/button_".$b.".js" );
 			}
 		}

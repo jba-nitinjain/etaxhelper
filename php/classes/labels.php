@@ -70,16 +70,20 @@ class Labels {
 		if( $table == "" )
 			return "";
 		$lng = Labels::findLanguage( $lng );
-		return Labels::getLanguageValue( ProjectSettings::getProjectValue( 'allTables', $table, 'caption' ), $lng );
+		$strings = ProjectSettings::getProjectValue( 'allTables', $table, 'caption' );
+		if( !$strings ) {
+			return $table;
+		}
+		return Labels::getLanguageValue( $strings , $lng );
 	}
 
 	public static function setTableCaption( $table, $str, $lng = "" ) {
-		global $tableCaptions;
+		global $runnerProjectSettings;
 		$table = Labels::findTable( $table );
 		if( $table == "" )
 			return false;
 		$lng = Labels::findLanguage( $lng );
-		$tableCaptions[ $lng ][ GoodFieldName($table) ] = $str;
+		$runnerProjectSettings[ 'allTables' ][ $table ][ 'caption' ][ $lng ] = $str;
 		return true;
 	}
 
@@ -251,6 +255,9 @@ class Labels {
 
 	
 	protected static function getLanguageValue( &$strings, $lang ) {
+		if( !$strings ) {
+			return '';
+		}
 		if( array_key_exists( $lang, $strings ) ) {
 			return $strings[ $lang ];
 		}

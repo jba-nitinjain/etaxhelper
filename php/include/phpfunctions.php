@@ -421,6 +421,11 @@ function myfile_exists( $filename )
  */
 function try_create_new_file($filename)
 {
+	if( file_exists($filename) ) {
+		//	this check should not be required, 
+		//	but helps with the PHP or Linux bug where fopen creates a new file and returns false
+		return false;
+	}
 	$file = @fopen($filename,"x");
 	if($file)
 	{
@@ -1901,7 +1906,7 @@ function imageCreateThumb($new_width,$new_height,$img_width,$img_height,$file_pa
 					$new_height,
 					$img_width,
 					$img_height
-				) && imagegif($new_img, $new_file_path, $image_quality);
+				) && imagegif($new_img, $new_file_path);
 			break;
 		case "image/png":
 		case "image/x-png":
@@ -2550,18 +2555,17 @@ function findMatches( $pattern, $str )
 	return $ret;
 }
 
-/*
-function getPageStrings( $tableName ) {
-	require_once( getabspath("include/".$tableName."_pages.php"  ));
-	return $pageStrings;
-}
-*/
-function importTableSettings( $table )
+
+
+/**
+ * xxx__table - $table variable is used in After table initi event. If he user changes it everything goes wrong
+ */
+function importTableSettings( $xxx__table )
 {
-	require_once( getabspath("settings/table_".GetTableURL( $table ).".php") );
+	require_once( getabspath("settings/table_".GetTableURL( $xxx__table ).".php") );
 	
 	//	call after initialized event each time settings are imported
-	createEventClass( $table );
+	createEventClass( $xxx__table );
 }
 
 function importPageOptions( $table, $page )
@@ -2589,6 +2593,12 @@ function loadMaps( $pSet ) {
 	}
 
 }
+
+function importTableList() {
+	global $runnerDbTables;
+	include_once( getabspath( "settings/dbtables.php" ) );
+}
+
 
 function importTableInfo( $varname ) {
 	global $runnerDbTableInfo;
@@ -3051,10 +3061,10 @@ function startSession() {
 	$cookieParams = session_get_cookie_params();
 	$secure = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
 	if( array_key_exists( "secure", $cookieParams ) ) {
-		session_set_cookie_params( 0, $cookieParams["path"], $cookieParams["domain"], $secure, true );
+		@session_set_cookie_params( 0, $cookieParams["path"], $cookieParams["domain"], $secure, true );
 	} else {
 		//	pre-PHP 5.2
-		session_set_cookie_params( 0, $cookieParams["path"], $cookieParams["domain"], $secure );
+		@session_set_cookie_params( 0, $cookieParams["path"], $cookieParams["domain"], $secure );
 	}
 
 	//	isolate sessions for projects running on the same site
@@ -3088,6 +3098,7 @@ function init_json_library() {
 }
 
 function runner_json_encode( $value){
+	global $useUTF8;
 	if( !function_exists('json_encode') || !$useUTF8 || version_compare( PHP_VERSION ,"5.5.0") < 0 ) {
 		init_json_library();
 		return $GLOBALS['JSON_OBJECT']->encode($value);
@@ -3097,6 +3108,7 @@ function runner_json_encode( $value){
 }
 
 function runner_json_decode( $value ){
+	global $useUTF8;
 	if( !function_exists('json_encode') || !$useUTF8 || version_compare( PHP_VERSION ,"5.5.0") < 0 ) {
 		init_json_library();
 		$result = $GLOBALS['JSON_OBJECT']->decode($value);
@@ -3124,13 +3136,12 @@ function runnerGetConnectionInfo( $id ) {
 		$methodName = 'db_' . GoodFieldName( $id );
 		$updates = $dbEvents->$methodName();
 		$info['connInfo'] = $updates['connInfo'];
-		if( array_key_exists( 'ODBCString', $updates ) ) {
+		if( array_key_exists( 'ODBCString', $updates ) && $updates['ODBCString'] ) {
 			$info['ODBCString'] = $updates['ODBCString'];
 		}
 		return $info;
 	}
 
-	global $runnerDatabases;
 	return $runnerDatabases[ $id ];
 }
 

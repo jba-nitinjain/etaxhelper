@@ -342,7 +342,7 @@ class RunnerCipherer
 		if ( $this->connection->_encryptInfo["encryptAlgorithm"] == ENCRYPTION_ALG_DES )
 			return new RunnerCiphererDES($this->key);
 		if ( $this->aesAlgorithm() )
-			return new RunnerCiphererAES($this->key);
+			return new RunnerCiphererAES($this->key, $this->connection->_encryptInfo["encryptAlgorithm"] );
 		return null;
 	}
 	

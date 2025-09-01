@@ -37,9 +37,9 @@ class UserControl extends EditControl
 	{
 		$tName = $this->pageObject->tName;
 		$field = $this->field;
-		$pSet = $this->pageObject->pSet;
-if($this->pageObject->pageType == PAGE_SEARCH && $this->pageObject->pSet->getDefaultPageType() == PAGE_DASHBOARD) {
-			$dashFields = $this->pageObject->pSet->getDashboardSearchFields();
+		$pSet = $this->pageObject->pSetEdit;
+		if($this->pageObject->pageType == PAGE_SEARCH && $pSet->getDefaultPageType() == PAGE_DASHBOARD) {
+			$dashFields = $pSet->getDashboardSearchFields();
 			$tName = $dashFields[$field][0]["table"];
 			$field = $dashFields[$field][0]["field"];
 			$pSet = new projectSettings( $tName, PAGE_SEARCH );
