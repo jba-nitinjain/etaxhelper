@@ -4,13 +4,15 @@ import {
   LayoutDashboard, 
   Users, 
   Settings,
-  Building
+  Building,
+  Landmark
 } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
   { name: 'Contacts', href: '/contacts', icon: Users },
   { name: 'Organizations', href: '/organizations', icon: Building },
+  { name: 'Bank Accounts', href: '/organization-banks', icon: Landmark },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 

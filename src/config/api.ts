@@ -1,30 +1,50 @@
 // API configuration for frontend
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = 'https://api-etaxhelper.etaxhelper.com/api/v1.php';
 
 // API client with error handling
 class ApiClient {
   private baseURL: string;
+  private apiKey?: string;
 
-  constructor(baseURL: string) {
+  constructor(baseURL: string, apiKey?: string) {
     this.baseURL = baseURL;
+    this.apiKey = apiKey;
   }
 
-  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const url = `${this.baseURL}${endpoint}`;
+  private toUrlEncoded(obj: any): string {
+    return Object.keys(obj)
+      .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k]))
+      .join('&');
+  }
+
+  private async request<T>(data: any): Promise<T> {
+    const url = this.baseURL;
     
+    const headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+
+    if (this.apiKey) {
+      headers['X-Auth-Token'] = this.apiKey;
+    }
+
     const config: RequestInit = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
+      method: 'POST',
+      headers: headers,
+      body: this.toUrlEncoded(data),
     };
 
     try {
       const response = await fetch(url, config);
       
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        const errorText = await response.text();
+        let errorData;
+        try {
+          errorData = JSON.parse(errorText);
+        } catch (e) {
+          errorData = { error: errorText || `HTTP error! status: ${response.status}` };
+        }
         throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
 
@@ -33,37 +53,40 @@ class ApiClient {
         return {} as T;
       }
 
-      return await response.json();
+      const responseData = await response.json();
+      if (!responseData.success) {
+        throw new Error(responseData.error || 'API request failed');
+      }
+
+      return responseData as T;
     } catch (error) {
-      console.error(`API request failed: ${endpoint}`, error);
+      console.error(`API request failed`, error);
       throw error;
     }
   }
 
-  async get<T>(endpoint: string): Promise<T> {
-    return this.request<T>(endpoint, { method: 'GET' });
+  async get<T>(params: any): Promise<T> {
+    return this.request<T>({ ...params, action: 'list' });
   }
 
-  async post<T>(endpoint: string, data: any): Promise<T> {
-    return this.request<T>(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
+  async getSingle<T>(params: any): Promise<T> {
+    return this.request<T>({ ...params, action: 'view' });
   }
 
-  async put<T>(endpoint: string, data: any): Promise<T> {
-    return this.request<T>(endpoint, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-    });
+  async post<T>(params: any): Promise<T> {
+    return this.request<T>({ ...params, action: 'insert' });
   }
 
-  async delete<T>(endpoint: string): Promise<T> {
-    return this.request<T>(endpoint, { method: 'DELETE' });
+  async put<T>(params: any): Promise<T> {
+    return this.request<T>({ ...params, action: 'update' });
+  }
+
+  async delete<T>(params: any): Promise<T> {
+    return this.request<T>({ ...params, action: 'delete' });
   }
 }
 
-export const apiClient = new ApiClient(API_BASE_URL);
+export const apiClient = new ApiClient(API_BASE_URL, '5L3atFvNO1IKE3wTJJfLuzbiQZErw0qA');
 
 // Indian locale formatting utilities for frontend
 export const formatCurrency = (amount: number): string => {

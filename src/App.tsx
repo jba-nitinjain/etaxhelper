@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Sidebar } from './components/Layout/Sidebar';
 import { Dashboard } from './pages/Dashboard';
 import { Contacts } from './pages/Contacts';
+import { Organizations } from './pages/Organizations';
+import { OrganizationBanks } from './pages/OrganizationBanks';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,12 +28,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/contacts" element={<Contacts />} />
-                <Route path="/organizations" element={
-                  <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-                    <h1 className="text-2xl font-bold text-slate-900 mb-4">Organizations</h1>
-                    <p className="text-slate-600">Organizations management coming soon...</p>
-                  </div>
-                } />
+                <Route path="/organizations" element={<Organizations />} />
+                <Route path="/organization-banks" element={<OrganizationBanks />} />
                 <Route path="/settings" element={
                   <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
                     <h1 className="text-2xl font-bold text-slate-900 mb-4">Settings</h1>
