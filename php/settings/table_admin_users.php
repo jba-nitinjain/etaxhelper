@@ -377,7 +377,8 @@ FROM
 						'fullname',
 						'groupid',
 						'active',
-						'ext_security_id' 
+						'ext_security_id',
+						'apikey' 
 					),
 					'name' => 'users' 
 				),

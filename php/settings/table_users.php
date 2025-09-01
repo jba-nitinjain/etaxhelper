@@ -14,9 +14,11 @@ $runnerTableSettings['users'] = array(
 	fullname,
 	groupid,
 	active,
-	ext_security_id
+	ext_security_id,
+	apikey
 FROM
-	users',
+	users
+',
 	'keyFields' => array( 
 		'ID' 
 	),
@@ -175,6 +177,24 @@ FROM
 				) 
 			),
 			'tableName' => 'users' 
+		),
+		'apikey' => array(
+			'name' => 'apikey',
+			'goodName' => 'apikey',
+			'strField' => 'apikey',
+			'index' => 9,
+			'sqlExpression' => 'apikey',
+			'viewFormats' => array(
+				'view' => array(
+					 
+				) 
+			),
+			'editFormats' => array(
+				'edit' => array(
+					 
+				) 
+			),
+			'tableName' => '' 
 		) 
 	),
 	'query' => array(
@@ -186,9 +206,11 @@ FROM
 	fullname,
 	groupid,
 	active,
-	ext_security_id
+	ext_security_id,
+	apikey
 FROM
-	users',
+	users
+',
 		'parsed' => true,
 		'type' => 'SQLQuery',
 		'fieldList' => array( 
@@ -311,6 +333,21 @@ FROM
 				),
 				'encrypted' => false,
 				'columnName' => 'ext_security_id' 
+			),
+			array(
+				'sql' => 'apikey',
+				'parsed' => true,
+				'type' => 'FieldListItem',
+				'alias' => '',
+				'expression' => array(
+					'sql' => '',
+					'parsed' => true,
+					'type' => 'SQLField',
+					'table' => 'users',
+					'name' => 'apikey' 
+				),
+				'encrypted' => false,
+				'columnName' => 'apikey' 
 			) 
 		),
 		'fromList' => array( 
@@ -330,7 +367,8 @@ FROM
 						'fullname',
 						'groupid',
 						'active',
-						'ext_security_id' 
+						'ext_security_id',
+						'apikey' 
 					),
 					'name' => 'users' 
 				),
@@ -440,6 +478,13 @@ FROM
 				'groupByIndex' => -1,
 				'whereIndex' => -1,
 				'havingIndex' => -1 
+			),
+			array(
+				'fieldIndex' => 8,
+				'orderByIndex' => -1,
+				'groupByIndex' => -1,
+				'whereIndex' => -1,
+				'havingIndex' => -1 
 			) 
 		),
 		'headSql' => 'SELECT',
@@ -450,7 +495,8 @@ FROM
 	fullname,
 	groupid,
 	active,
-	ext_security_id',
+	ext_security_id,
+	apikey',
 		'fromListSql' => 'FROM
 	users',
 		'orderBySql' => '',
@@ -476,7 +522,8 @@ FROM
 			'fullname',
 			'groupid',
 			'active',
-			'ext_security_id' 
+			'ext_security_id',
+			'apikey' 
 		),
 		'searchSuggest' => true,
 		'highlightSearchResults' => true,
@@ -490,7 +537,8 @@ FROM
 			'fullname',
 			'groupid',
 			'active',
-			'ext_security_id' 
+			'ext_security_id',
+			'apikey' 
 		) 
 	),
 	'connId' => 'conn',
@@ -546,7 +594,8 @@ if( mlang_getcurrentlang() === 'English' ) {
 		'fullname' => 'Fullname',
 		'groupid' => 'Groupid',
 		'active' => 'Active',
-		'ext_security_id' => 'Ext Security Id' 
+		'ext_security_id' => 'Ext Security Id',
+		'apikey' => 'Apikey' 
 	),
 	'fieldTooltips' => array(
 		'ID' => '',
@@ -556,7 +605,8 @@ if( mlang_getcurrentlang() === 'English' ) {
 		'fullname' => '',
 		'groupid' => '',
 		'active' => '',
-		'ext_security_id' => '' 
+		'ext_security_id' => '',
+		'apikey' => '' 
 	),
 	'fieldPlaceholders' => array(
 		'ID' => '',
@@ -566,7 +616,8 @@ if( mlang_getcurrentlang() === 'English' ) {
 		'fullname' => '',
 		'groupid' => '',
 		'active' => '',
-		'ext_security_id' => '' 
+		'ext_security_id' => '',
+		'apikey' => '' 
 	),
 	'pageTitles' => array(
 		 
