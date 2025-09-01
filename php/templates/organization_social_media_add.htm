@@ -1,0 +1,273 @@
+<!doctype html>
+<html  {$html_attrs}>
+	<head>
+						<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{$pagetitle}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<base href="{$projectPath}">
+		{BEGIN styleCSSFiles}
+<link REL="stylesheet" href="{$stylepath}" type="text/css">
+{END styleCSSFiles}
+			
+	</head>
+
+	<body class="{$stylename} function-add" >
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		{$locking}
+		<div class="r-small-page" 
+			data-body-align="center"
+			data-body-width="standard"
+		>
+							{BEGIN top_block}
+<div class="r-form" data-location="top" id="form_top_{$pageid}" data-makeup="small" {$form_top} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="top_c1" data-pageid="{$pageid}"	{$cell_top_c1}
+	class=" r-ori-vert			col-md-12
+	">
+	 
+		<h2 data-itemtype="add_header" data-itemid="add_header" {$item_add_header} data-pageid="{$pageid}" >{$pagetitlelabel organization_social_media add}</h2>
+	</div>					</div>
+	</div>		
+{END top_block}
+									{BEGIN above-grid_block}
+<div class="r-form" data-location="above-grid" id="form_above-grid_{$pageid}" data-makeup="small" {$form_above-grid} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="above-grid_c1" data-pageid="{$pageid}"	{$cell_above-grid_c1}
+	class=" r-ori-vert			col-md-12
+	">
+	 
+		{BEGIN message_block}
+<div data-itemtype="add_message" data-itemid="add_message" {$item_add_message} data-pageid="{$pageid}" class="alert {$message_class}" role="alert">
+<h5>{$message}</h5>
+<div>
+{BEGIN message_back_button}
+		
+	<button class="btn btn-sm btn-default" {$backbutton_attrs}>{mlang_message BACK_TO_LIST}</button>
+	{END message_back_button}
+{BEGIN view_page_button}
+	<button class="btn btn-sm btn-default" {$view_page_button_attrs}>{mlang_message VIEW}</button>
+{END view_page_button}
+{BEGIN edit_page_button}
+	<button class="btn btn-sm btn-default" {$edit_page_button_attrs}>{mlang_message EDIT}</button>
+{END edit_page_button}
+</div>
+</div>
+{END message_block}	</div>					</div>
+	</div>		
+{END above-grid_block}
+									{BEGIN grid_block}
+
+
+
+
+ 
+	 
+												<table 
+	data-body-align="center"
+	data-location="grid" id="form_grid_{$pageid}" data-makeup="small" {$form_grid} data-pageid="{$pageid}" 
+	class="r-edit-form" cellpadding="0" cellspacing="0" 
+	{$grid_hiddenattr} 
+		data-form-width="1"
+		
+		data-v-width="4"
+	>
+	<tbody>
+										<tr {$row_grid_0} >
+										
+
+{BEGIN cellblock_grid_c3}
+<td
+	{$cell_grid_c3}
+	class=" r-ori-vert"
+	
+				data-fullwidth
+		
+			data-cellId="grid_c3" data-pageid="{$pageid}"
+		data-v-cell="4"
+		
+>
+	<div edit-form-cell class="clearfix">
+				
+{BEGIN org_id_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_org_id}  r-vertical-field" 
+	data-signal-error-for="org_id{$id}" {$required_attr_org_id}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="org_id" data-fieldname="org_id" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_org_id}">
+		{BEGIN org_id_label}{$label organization_social_media org_id }{END org_id_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$org_id_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_social_media org_id } >
+		<div class="text-muted" >
+		{$tooltip organization_social_media org_id }		</div>
+	</div>
+</div>
+
+
+{END org_id_fieldblock}
+											
+{BEGIN platform_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_platform}  r-vertical-field" 
+	data-signal-error-for="platform{$id}" {$required_attr_platform}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="platform" data-fieldname="platform" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_platform}">
+		{BEGIN platform_label}{$label organization_social_media platform }{END platform_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$platform_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="platform" {$tooltipAttr organization_social_media platform } >
+		<div class="text-muted" >
+		{$tooltip organization_social_media platform }		</div>
+	</div>
+</div>
+
+
+{END platform_fieldblock}
+											
+{BEGIN handle_name_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_handle_name}  r-vertical-field" 
+	data-signal-error-for="handle_name{$id}" {$required_attr_handle_name}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="handle_name" data-fieldname="handle_name" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_handle_name}">
+		{BEGIN handle_name_label}{$label organization_social_media handle_name }{END handle_name_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$handle_name_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="handle_name" {$tooltipAttr organization_social_media handle_name } >
+		<div class="text-muted" >
+		{$tooltip organization_social_media handle_name }		</div>
+	</div>
+</div>
+
+
+{END handle_name_fieldblock}
+											
+{BEGIN website_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_website}  r-vertical-field" 
+	data-signal-error-for="website{$id}" {$required_attr_website}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="website" data-fieldname="website" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_website}">
+		{BEGIN website_label}{$label organization_social_media website }{END website_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$website_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="website" {$tooltipAttr organization_social_media website } >
+		<div class="text-muted" >
+		{$tooltip organization_social_media website }		</div>
+	</div>
+</div>
+
+
+{END website_fieldblock}
+											
+{BEGIN mobile_app_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_mobile_app}  r-vertical-field" 
+	data-signal-error-for="mobile_app{$id}" {$required_attr_mobile_app}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="mobile_app" data-fieldname="mobile_app" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_mobile_app}">
+		{BEGIN mobile_app_label}{$label organization_social_media mobile_app }{END mobile_app_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$mobile_app_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="mobile_app" {$tooltipAttr organization_social_media mobile_app } >
+		<div class="text-muted" >
+		{$tooltip organization_social_media mobile_app }		</div>
+	</div>
+</div>
+
+
+{END mobile_app_fieldblock}
+	
+								</td>
+			{END cellblock_grid_c3}
+								</tr>
+			</tbody></table>
+{END grid_block}
+									{BEGIN below-grid_block}
+<div class="r-form" data-location="below-grid" id="form_below-grid_{$pageid}" data-makeup="small" {$form_below-grid} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="below-grid_c1" data-pageid="{$pageid}"	{$cell_below-grid_c1}
+	class="			col-md-12
+	">
+	 
+		<span data-itemtype="add_save" data-itemid="add_save" {$item_add_save} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-primary   
+	" {$savebutton_attrs} >
+							{mlang_message SAVE}			</a>
+</span>
+	 
+		<span data-itemtype="add_reset" data-itemid="add_reset" {$item_add_reset} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-default   
+	" id="resetButton{$id}" >
+							{mlang_message RESET}			</a>
+</span>
+	 
+		{BEGIN back_button}
+<span data-itemtype="add_back_list" data-itemid="add_back_list" {$item_add_back_list} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-default   
+	" id="backButton{$id}" >
+							{mlang_message BACK_TO_LIST}			</a>
+</span>
+{END back_button}
+	 
+		{BEGIN cancel_button}
+<span data-itemtype="add_cancel" data-itemid="add_cancel" {$item_add_cancel} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-default   
+	" id="cancelButton{$id}" >
+							{mlang_message CANCEL}			</a>
+</span>
+{END cancel_button}
+	</div>					</div>
+	</div>		
+{END below-grid_block}
+			</div>
+		{$footer}
+	{END body}
+	</body>
+</html>

@@ -1,0 +1,32 @@
+[data-page="_global_menu"][data-itemid="welcome_item"] > .bs-welcome-header {
+  background-color: #00c2c5;
+}
+[data-page="_global_menu"][data-itemid="welcome_item1"] > .bs-welcome-header {
+  background-color: #7b68ee;
+}
+[data-page="_global_menu"][data-itemid="welcome_item2"] > .bs-welcome-header {
+  background-color: #e67349;
+}
+[data-page="_global_menu"][data-itemid="welcome_item3"] > .bs-welcome-header {
+  background-color: #db7093;
+}
+[data-page="_global_menu"][data-itemid="welcome_item4"] > .bs-welcome-header {
+  background-color: #9acd32;
+}
+[data-page="_global_menu"][data-itemid="welcome_item5"] > .bs-welcome-header {
+  background-color: #e8926f;
+}
+[data-page="_global_menu"][data-itemid="welcome_item6"] > .bs-welcome-header {
+  background-color: #9acd32;
+}
+[data-page="_global_menu"][data-itemid="welcome_item7"] > .bs-welcome-header {
+  background-color: #d2691e;
+}
+[data-page="_global_menu"][data-itemid="welcome_item8"] > .bs-welcome-header {
+  background-color: #6493ea;
+}
+[data-page="_global_menu"][data-itemid="page_image_ash8f23hr"] {
+  width: 400px;
+}
+
+

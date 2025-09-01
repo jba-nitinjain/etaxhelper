@@ -1,0 +1,378 @@
+<!doctype html>
+<html  {$html_attrs}>
+	<head>
+						<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{$pagetitle}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<base href="{$projectPath}">
+		{BEGIN styleCSSFiles}
+<link REL="stylesheet" href="{$stylepath}" type="text/css">
+{END styleCSSFiles}
+			
+	</head>
+
+	<body class="{$stylename} function-view" >
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		{$locking}
+		<div class="r-small-page" 
+			data-body-align="center"
+			data-body-width="standard"
+		>
+							{BEGIN top_block}
+<div class="r-form" data-location="top" id="form_top_{$pageid}" data-makeup="small" {$form_top} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="top_c1" data-pageid="{$pageid}"	{$cell_top_c1}
+	class=" r-ori-vert			col-md-12
+	">
+	 
+		<h2 data-itemtype="view_header" data-itemid="view_header" {$item_view_header} data-pageid="{$pageid}" >{$pagetitlelabel organization_branch view}</h2>
+	</div>					</div>
+	</div>		
+{END top_block}
+									{BEGIN above-grid_block}
+<div class="r-form" data-location="above-grid" id="form_above-grid_{$pageid}" data-makeup="small" {$form_above-grid} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="above-grid_c1" data-pageid="{$pageid}"	{$cell_above-grid_c1}
+	class=" r-ori-vert			col-md-12
+	">
+	</div>					</div>
+	</div>		
+{END above-grid_block}
+									{BEGIN grid_block}
+
+
+
+
+ 
+	 
+												<table 
+	data-body-align="center"
+	data-location="grid" id="form_grid_{$pageid}" data-makeup="small" {$form_grid} data-pageid="{$pageid}" 
+	class="r-edit-form" cellpadding="0" cellspacing="0" 
+	{$grid_hiddenattr} 
+		data-form-width="1"
+		
+		data-v-width="4"
+	>
+	<tbody>
+										<tr {$row_grid_0} >
+										
+
+{BEGIN cellblock_grid_c3}
+<td
+	{$cell_grid_c3}
+	class=" r-ori-vert"
+	
+				data-fullwidth
+		
+			data-cellId="grid_c3" data-pageid="{$pageid}"
+		data-v-cell="4"
+		
+>
+	<div edit-form-cell class="clearfix">
+				
+{BEGIN branch_id_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_branch_id}  r-vertical-field" 
+	data-signal-error-for="branch_id{$id}" {$required_attr_branch_id}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="branch_id" data-fieldname="branch_id" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_branch_id}">
+		{BEGIN branch_id_label}{$label organization_branch branch_id }{END branch_id_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$branch_id_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="branch_id" {$tooltipAttr organization_branch branch_id } >
+		<div class="text-muted" >
+		{$tooltip organization_branch branch_id }		</div>
+	</div>
+</div>
+
+
+{END branch_id_fieldblock}
+											
+{BEGIN org_id_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_org_id}  r-vertical-field" 
+	data-signal-error-for="org_id{$id}" {$required_attr_org_id}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="org_id" data-fieldname="org_id" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_org_id}">
+		{BEGIN org_id_label}{$label organization_branch org_id }{END org_id_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$org_id_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_branch org_id } >
+		<div class="text-muted" >
+		{$tooltip organization_branch org_id }		</div>
+	</div>
+</div>
+
+
+{END org_id_fieldblock}
+											
+{BEGIN branch_name_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_branch_name}  r-vertical-field" 
+	data-signal-error-for="branch_name{$id}" {$required_attr_branch_name}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="branch_name" data-fieldname="branch_name" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_branch_name}">
+		{BEGIN branch_name_label}{$label organization_branch branch_name }{END branch_name_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$branch_name_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="branch_name" {$tooltipAttr organization_branch branch_name } >
+		<div class="text-muted" >
+		{$tooltip organization_branch branch_name }		</div>
+	</div>
+</div>
+
+
+{END branch_name_fieldblock}
+											
+{BEGIN address_line_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_address_line}  r-vertical-field" 
+	data-signal-error-for="address_line{$id}" {$required_attr_address_line}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="address_line" data-fieldname="address_line" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_address_line}">
+		{BEGIN address_line_label}{$label organization_branch address_line }{END address_line_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$address_line_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="address_line" {$tooltipAttr organization_branch address_line } >
+		<div class="text-muted" >
+		{$tooltip organization_branch address_line }		</div>
+	</div>
+</div>
+
+
+{END address_line_fieldblock}
+											
+{BEGIN city_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_city}  r-vertical-field" 
+	data-signal-error-for="city{$id}" {$required_attr_city}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="city" data-fieldname="city" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_city}">
+		{BEGIN city_label}{$label organization_branch city }{END city_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$city_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="city" {$tooltipAttr organization_branch city } >
+		<div class="text-muted" >
+		{$tooltip organization_branch city }		</div>
+	</div>
+</div>
+
+
+{END city_fieldblock}
+											
+{BEGIN state_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_state}  r-vertical-field" 
+	data-signal-error-for="state{$id}" {$required_attr_state}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field5" {$item_integrated_edit_field5} data-pageid="{$pageid}" data-field="state" data-fieldname="state" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_state}">
+		{BEGIN state_label}{$label organization_branch state }{END state_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$state_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="state" {$tooltipAttr organization_branch state } >
+		<div class="text-muted" >
+		{$tooltip organization_branch state }		</div>
+	</div>
+</div>
+
+
+{END state_fieldblock}
+											
+{BEGIN postal_code_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_postal_code}  r-vertical-field" 
+	data-signal-error-for="postal_code{$id}" {$required_attr_postal_code}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field6" {$item_integrated_edit_field6} data-pageid="{$pageid}" data-field="postal_code" data-fieldname="postal_code" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_postal_code}">
+		{BEGIN postal_code_label}{$label organization_branch postal_code }{END postal_code_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$postal_code_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="postal_code" {$tooltipAttr organization_branch postal_code } >
+		<div class="text-muted" >
+		{$tooltip organization_branch postal_code }		</div>
+	</div>
+</div>
+
+
+{END postal_code_fieldblock}
+											
+{BEGIN country_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_country}  r-vertical-field" 
+	data-signal-error-for="country{$id}" {$required_attr_country}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field7" {$item_integrated_edit_field7} data-pageid="{$pageid}" data-field="country" data-fieldname="country" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_country}">
+		{BEGIN country_label}{$label organization_branch country }{END country_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$country_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="country" {$tooltipAttr organization_branch country } >
+		<div class="text-muted" >
+		{$tooltip organization_branch country }		</div>
+	</div>
+</div>
+
+
+{END country_fieldblock}
+											
+{BEGIN phone_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_phone}  r-vertical-field" 
+	data-signal-error-for="phone{$id}" {$required_attr_phone}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field8" {$item_integrated_edit_field8} data-pageid="{$pageid}" data-field="phone" data-fieldname="phone" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_phone}">
+		{BEGIN phone_label}{$label organization_branch phone }{END phone_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$phone_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="phone" {$tooltipAttr organization_branch phone } >
+		<div class="text-muted" >
+		{$tooltip organization_branch phone }		</div>
+	</div>
+</div>
+
+
+{END phone_fieldblock}
+											
+{BEGIN email_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_email}  r-vertical-field" 
+	data-signal-error-for="email{$id}" {$required_attr_email}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field9" {$item_integrated_edit_field9} data-pageid="{$pageid}" data-field="email" data-fieldname="email" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_email}">
+		{BEGIN email_label}{$label organization_branch email }{END email_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$email_value}	</div>
+	<div class="r-edit-tooltip" data-helpfor="email" {$tooltipAttr organization_branch email } >
+		<div class="text-muted" >
+		{$tooltip organization_branch email }		</div>
+	</div>
+</div>
+
+
+{END email_fieldblock}
+	
+								</td>
+			{END cellblock_grid_c3}
+								</tr>
+			</tbody></table>
+{END grid_block}
+									{BEGIN below-grid_block}
+<div class="r-form" data-location="below-grid" id="form_below-grid_{$pageid}" data-makeup="small" {$form_below-grid} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="below-grid_c1" data-pageid="{$pageid}"	{$cell_below-grid_c1}
+	class="			col-md-6
+	">
+	 
+		{BEGIN back_button}
+<span data-itemtype="view_back_list" data-itemid="view_back_list" {$item_view_back_list} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-default   
+	" {$backbutton_attrs} >
+							{mlang_message BACK_TO_LIST}			</a>
+</span>
+{END back_button}
+	 
+		{BEGIN close_button}
+<span data-itemtype="view_close" data-itemid="view_close" {$item_view_close} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-default   
+	" href="#" {$closebutton_attrs} >
+							{mlang_message CLOSE_WINDOW}			</a>
+</span>
+{END close_button}
+	</div>			 
+				<div 
+	data-cellId="below-grid_c2" data-pageid="{$pageid}"	{$cell_below-grid_c2}
+	class="r-align-right r-ori-vert			col-md-6
+	">
+	 
+		<span data-itemtype="hamburger" data-itemid="hamburger" {$item_hamburger} data-pageid="{$pageid}" data-small data-button-item>
+	<span class="dropdown dropup">
+		<button type="button" title="" class="btn btn-default   dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">		
+										<span class="glyphicon glyphicon-menu-hamburger"></span>
+												<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+							{BEGIN edit_page_button}
+	<li data-itemtype="view_edit" data-itemid="view_edit" {$item_view_edit} data-pageid="{$pageid}" data-small >
+				<a  href="organization_branch_edit.php?{$editlink}" {$edit_page_button_attrs}  title="" >
+				
+		{mlang_message EDIT}		
+		</a>
+	</li>
+{END edit_page_button}
+					</ul>
+	</span>
+</span>
+	</div>					</div>
+	</div>		
+{END below-grid_block}
+			</div>
+		{$footer}
+	{END body}
+	</body>
+</html>

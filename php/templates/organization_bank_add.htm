@@ -1,0 +1,339 @@
+<!doctype html>
+<html  {$html_attrs}>
+	<head>
+						<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{$pagetitle}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<base href="{$projectPath}">
+		{BEGIN styleCSSFiles}
+<link REL="stylesheet" href="{$stylepath}" type="text/css">
+{END styleCSSFiles}
+			
+	</head>
+
+	<body class="{$stylename} function-add" >
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		{$locking}
+		<div class="r-small-page" 
+			data-body-align="center"
+			data-body-width="standard"
+		>
+							{BEGIN top_block}
+<div class="r-form" data-location="top" id="form_top_{$pageid}" data-makeup="small" {$form_top} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="top_c1" data-pageid="{$pageid}"	{$cell_top_c1}
+	class=" r-ori-vert			col-md-12
+	">
+	 
+		<h2 data-itemtype="add_header" data-itemid="add_header" {$item_add_header} data-pageid="{$pageid}" >{$pagetitlelabel organization_bank add}</h2>
+	</div>					</div>
+	</div>		
+{END top_block}
+									{BEGIN above-grid_block}
+<div class="r-form" data-location="above-grid" id="form_above-grid_{$pageid}" data-makeup="small" {$form_above-grid} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="above-grid_c1" data-pageid="{$pageid}"	{$cell_above-grid_c1}
+	class=" r-ori-vert			col-md-12
+	">
+	 
+		{BEGIN message_block}
+<div data-itemtype="add_message" data-itemid="add_message" {$item_add_message} data-pageid="{$pageid}" class="alert {$message_class}" role="alert">
+<h5>{$message}</h5>
+<div>
+{BEGIN message_back_button}
+		
+	<button class="btn btn-sm btn-default" {$backbutton_attrs}>{mlang_message BACK_TO_LIST}</button>
+	{END message_back_button}
+{BEGIN view_page_button}
+	<button class="btn btn-sm btn-default" {$view_page_button_attrs}>{mlang_message VIEW}</button>
+{END view_page_button}
+{BEGIN edit_page_button}
+	<button class="btn btn-sm btn-default" {$edit_page_button_attrs}>{mlang_message EDIT}</button>
+{END edit_page_button}
+</div>
+</div>
+{END message_block}	</div>					</div>
+	</div>		
+{END above-grid_block}
+									{BEGIN grid_block}
+
+
+
+
+ 
+	 
+												<table 
+	data-body-align="center"
+	data-location="grid" id="form_grid_{$pageid}" data-makeup="small" {$form_grid} data-pageid="{$pageid}" 
+	class="r-edit-form" cellpadding="0" cellspacing="0" 
+	{$grid_hiddenattr} 
+		data-form-width="1"
+		
+		data-v-width="4"
+	>
+	<tbody>
+										<tr {$row_grid_0} >
+										
+
+{BEGIN cellblock_grid_c3}
+<td
+	{$cell_grid_c3}
+	class=" r-ori-vert"
+	
+				data-fullwidth
+		
+			data-cellId="grid_c3" data-pageid="{$pageid}"
+		data-v-cell="4"
+		
+>
+	<div edit-form-cell class="clearfix">
+				
+{BEGIN org_id_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_org_id}  r-vertical-field" 
+	data-signal-error-for="org_id{$id}" {$required_attr_org_id}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="org_id" data-fieldname="org_id" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_org_id}">
+		{BEGIN org_id_label}{$label organization_bank org_id }{END org_id_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$org_id_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="org_id" {$tooltipAttr organization_bank org_id } >
+		<div class="text-muted" >
+		{$tooltip organization_bank org_id }		</div>
+	</div>
+</div>
+
+
+{END org_id_fieldblock}
+											
+{BEGIN bank_name_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_bank_name}  r-vertical-field" 
+	data-signal-error-for="bank_name{$id}" {$required_attr_bank_name}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="bank_name" data-fieldname="bank_name" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_bank_name}">
+		{BEGIN bank_name_label}{$label organization_bank bank_name }{END bank_name_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$bank_name_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="bank_name" {$tooltipAttr organization_bank bank_name } >
+		<div class="text-muted" >
+		{$tooltip organization_bank bank_name }		</div>
+	</div>
+</div>
+
+
+{END bank_name_fieldblock}
+											
+{BEGIN branch_name_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_branch_name}  r-vertical-field" 
+	data-signal-error-for="branch_name{$id}" {$required_attr_branch_name}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="branch_name" data-fieldname="branch_name" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_branch_name}">
+		{BEGIN branch_name_label}{$label organization_bank branch_name }{END branch_name_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$branch_name_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="branch_name" {$tooltipAttr organization_bank branch_name } >
+		<div class="text-muted" >
+		{$tooltip organization_bank branch_name }		</div>
+	</div>
+</div>
+
+
+{END branch_name_fieldblock}
+											
+{BEGIN account_no_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_account_no}  r-vertical-field" 
+	data-signal-error-for="account_no{$id}" {$required_attr_account_no}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="account_no" data-fieldname="account_no" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_account_no}">
+		{BEGIN account_no_label}{$label organization_bank account_no }{END account_no_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$account_no_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="account_no" {$tooltipAttr organization_bank account_no } >
+		<div class="text-muted" >
+		{$tooltip organization_bank account_no }		</div>
+	</div>
+</div>
+
+
+{END account_no_fieldblock}
+											
+{BEGIN ifsc_code_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_ifsc_code}  r-vertical-field" 
+	data-signal-error-for="ifsc_code{$id}" {$required_attr_ifsc_code}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="ifsc_code" data-fieldname="ifsc_code" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_ifsc_code}">
+		{BEGIN ifsc_code_label}{$label organization_bank ifsc_code }{END ifsc_code_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$ifsc_code_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="ifsc_code" {$tooltipAttr organization_bank ifsc_code } >
+		<div class="text-muted" >
+		{$tooltip organization_bank ifsc_code }		</div>
+	</div>
+</div>
+
+
+{END ifsc_code_fieldblock}
+											
+{BEGIN swift_code_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_swift_code}  r-vertical-field" 
+	data-signal-error-for="swift_code{$id}" {$required_attr_swift_code}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field5" {$item_integrated_edit_field5} data-pageid="{$pageid}" data-field="swift_code" data-fieldname="swift_code" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_swift_code}">
+		{BEGIN swift_code_label}{$label organization_bank swift_code }{END swift_code_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$swift_code_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="swift_code" {$tooltipAttr organization_bank swift_code } >
+		<div class="text-muted" >
+		{$tooltip organization_bank swift_code }		</div>
+	</div>
+</div>
+
+
+{END swift_code_fieldblock}
+											
+{BEGIN account_type_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_account_type}  r-vertical-field" 
+	data-signal-error-for="account_type{$id}" {$required_attr_account_type}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field6" {$item_integrated_edit_field6} data-pageid="{$pageid}" data-field="account_type" data-fieldname="account_type" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_account_type}">
+		{BEGIN account_type_label}{$label organization_bank account_type }{END account_type_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$account_type_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="account_type" {$tooltipAttr organization_bank account_type } >
+		<div class="text-muted" >
+		{$tooltip organization_bank account_type }		</div>
+	</div>
+</div>
+
+
+{END account_type_fieldblock}
+											
+{BEGIN mode_of_operation_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_mode_of_operation}  r-vertical-field" 
+	data-signal-error-for="mode_of_operation{$id}" {$required_attr_mode_of_operation}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field7" {$item_integrated_edit_field7} data-pageid="{$pageid}" data-field="mode_of_operation" data-fieldname="mode_of_operation" >
+
+	<label class="r-edit-label control-label" for="{$labelfor_mode_of_operation}">
+		{BEGIN mode_of_operation_label}{$label organization_bank mode_of_operation }{END mode_of_operation_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$mode_of_operation_editcontrol}	</div>
+	<div class="r-edit-tooltip" data-helpfor="mode_of_operation" {$tooltipAttr organization_bank mode_of_operation } >
+		<div class="text-muted" >
+		{$tooltip organization_bank mode_of_operation }		</div>
+	</div>
+</div>
+
+
+{END mode_of_operation_fieldblock}
+	
+								</td>
+			{END cellblock_grid_c3}
+								</tr>
+			</tbody></table>
+{END grid_block}
+									{BEGIN below-grid_block}
+<div class="r-form" data-location="below-grid" id="form_below-grid_{$pageid}" data-makeup="small" {$form_below-grid} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="below-grid_c1" data-pageid="{$pageid}"	{$cell_below-grid_c1}
+	class="			col-md-12
+	">
+	 
+		<span data-itemtype="add_save" data-itemid="add_save" {$item_add_save} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-primary   
+	" {$savebutton_attrs} >
+							{mlang_message SAVE}			</a>
+</span>
+	 
+		<span data-itemtype="add_reset" data-itemid="add_reset" {$item_add_reset} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-default   
+	" id="resetButton{$id}" >
+							{mlang_message RESET}			</a>
+</span>
+	 
+		{BEGIN back_button}
+<span data-itemtype="add_back_list" data-itemid="add_back_list" {$item_add_back_list} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-default   
+	" id="backButton{$id}" >
+							{mlang_message BACK_TO_LIST}			</a>
+</span>
+{END back_button}
+	 
+		{BEGIN cancel_button}
+<span data-itemtype="add_cancel" data-itemid="add_cancel" {$item_add_cancel} data-pageid="{$pageid}" data-small data-button-item>
+	<a type="button" title="" class="btn btn-default   
+	" id="cancelButton{$id}" >
+							{mlang_message CANCEL}			</a>
+</span>
+{END cancel_button}
+	</div>					</div>
+	</div>		
+{END below-grid_block}
+			</div>
+		{$footer}
+	{END body}
+	</body>
+</html>
