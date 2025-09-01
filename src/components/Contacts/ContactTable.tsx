@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatPhone, formatDate } from '../../config/database';
+import { formatPhone, formatDate } from '../../config/api';
 import { Edit, Trash2, Mail, Phone, Building } from 'lucide-react';
 import { OrganizationContact } from '../../types';
 
