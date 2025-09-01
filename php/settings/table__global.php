@@ -8,24 +8,34 @@ $runnerTableSettings[ GLOBAL_PAGES ] = array(
 	'pagesByType' => array(
 		'menu' => array( 
 			'menu' 
+		),
+		'login' => array( 
+			'login' 
 		) 
 	),
 	'pageTypes' => array(
-		'menu' => 'menu' 
+		'menu' => 'menu',
+		'login' => 'login' 
 	),
 	'defaultPages' => array(
-		'menu' => 'menu' 
+		'menu' => 'menu',
+		'login' => 'login' 
 	),
 	'originalPagesByType' => array(
 		'menu' => array( 
 			'menu' 
+		),
+		'login' => array( 
+			'login' 
 		) 
 	),
 	'originalPageTypes' => array(
-		'menu' => 'menu' 
+		'menu' => 'menu',
+		'login' => 'login' 
 	),
 	'originalDefaultPages' => array(
-		'menu' => 'menu' 
+		'menu' => 'menu',
+		'login' => 'login' 
 	),
 	'hasJsEvents' => false 
 );
@@ -34,7 +44,8 @@ global $runnerTableLabels;
 if( mlang_getcurrentlang() === 'English' ) {
 	$runnerTableLabels[ GLOBAL_PAGES ] = array(
 	'pageTitles' => array(
-		'menu' => '' 
+		'menu' => '',
+		'login' => '' 
 	) 
 );
 }

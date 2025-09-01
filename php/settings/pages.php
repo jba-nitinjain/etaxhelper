@@ -211,20 +211,23 @@ $runnerPageInfo = array(
 		'<global>' => array(
 			'menu' => array( 
 				'menu' 
+			),
+			'login' => array( 
+				'login' 
 			) 
 		) 
 	),
 	'tableMasks' => array(
 		'<global>' => 'S',
 		'organization_bank' => 'ADESPI',
-		'ORGANIZATION' => 'ADESPI',
-		'organization_registration' => 'ADESPI',
-		'organization_login' => 'ADESPI',
-		'organization_director' => 'ADESPI',
-		'organization_social_media' => 'ADESPI',
-		'organization_contact' => 'ADESPI',
 		'organization_bank_signatory' => 'ADESPI',
-		'organization_branch' => 'ADESPI' 
+		'ORGANIZATION' => 'ADESPI',
+		'organization_social_media' => 'ADESPI',
+		'organization_director' => 'ADESPI',
+		'organization_login' => 'ADESPI',
+		'organization_branch' => 'ADESPI',
+		'organization_contact' => 'ADESPI',
+		'organization_registration' => 'ADESPI' 
 	) 
 );
 ?>

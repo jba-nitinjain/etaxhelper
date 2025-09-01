@@ -41,18 +41,29 @@ $runnerProjectSettings = array(
 	'security' => array(
 		'projectName' => '',
 		'loginDataSource' => '',
-		'loginForm' => 3,
+		'loginForm' => 0,
 		'dynamicPermissions' => false,
 		'dpTablePrefix' => '',
 		'dpTableConnId' => '',
 		'providers' => array( 
-			 
+			array(
+				'type' => '%hardcoded',
+				'name' => 'hardcoded',
+				'active' => true,
+				'label' => array(
+					'text' => 'Hardcoded',
+					'type' => 0 
+				),
+				'code' => '00',
+				'username' => 'admin',
+				'password' => 'etaxhelper@123' 
+			) 
 		),
-		'enabled' => false,
+		'enabled' => true,
 		'advancedSecurityAvailable' => false,
 		'userGroupsAvailable' => false,
-		'hardcodedLogin' => false,
-		'defaultProviderCode' => '',
+		'hardcodedLogin' => true,
+		'defaultProviderCode' => '00',
 		'adOnlyLogin' => false,
 		'sessionControl' => array(
 			'lifeTime' => 15,
@@ -126,6 +137,18 @@ $runnerProjectSettings = array(
 			'groups' => array(
 				 
 			) 
+		),
+		'hardcodedProvider' => array(
+			'type' => '%hardcoded',
+			'name' => 'hardcoded',
+			'active' => true,
+			'label' => array(
+				'text' => 'Hardcoded',
+				'type' => 0 
+			),
+			'code' => '00',
+			'username' => 'admin',
+			'password' => 'etaxhelper@123' 
 		),
 		'adAdminGroups' => array( 
 			 
@@ -295,7 +318,7 @@ $runnerProjectSettings = array(
 	'defaultConnID' => 'conn',
 	'wrConnectionID' => '',
 	'wizardBuild' => '42453',
-	'projectBuild' => '2jL83T2gsKCW',
+	'projectBuild' => 'WW4lN7abpgbH',
 	'projectTheme' => 'default',
 	'projectSize' => 'normal',
 	'customErrorMsg' => array(

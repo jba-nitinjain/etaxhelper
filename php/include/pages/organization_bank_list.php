@@ -161,7 +161,9 @@
 					'collapse_button',
 					'breadcrumb',
 					'simple_search',
-					'list_options' 
+					'list_options',
+					'loginform_login',
+					'username_button' 
 				),
 				'top' => array( 
 					 
@@ -220,6 +222,8 @@
 				'breadcrumb' => 'supertop',
 				'simple_search' => 'supertop',
 				'list_options' => 'supertop',
+				'loginform_login' => 'supertop',
+				'username_button' => 'supertop',
 				'simple_grid_field9' => 'grid',
 				'simple_grid_field' => 'grid',
 				'simple_grid_field10' => 'grid',
@@ -420,6 +424,15 @@
 			),
 			'import' => array( 
 				'import' 
+			),
+			'username_button' => array( 
+				'username_button' 
+			),
+			'loginform_login' => array( 
+				'loginform_login' 
+			),
+			'logout_link' => array( 
+				'logout_link' 
 			),
 			'grid_field' => array( 
 				'simple_grid_field',
@@ -998,6 +1011,9 @@
 			) 
 		) 
 	),
+	'loginForm' => array(
+		'loginForm' => 0 
+	),
 	'page' => array(
 		'verticalBar' => true,
 		'labeledButtons' => array(
@@ -1197,7 +1213,9 @@
 					'model' => 'c2',
 					'items' => array( 
 						'simple_search',
-						'list_options' 
+						'list_options',
+						'loginform_login',
+						'username_button' 
 					) 
 				) 
 			),
@@ -1715,6 +1733,19 @@
 		),
 		'-2' => array(
 			'type' => '-' 
+		),
+		'username_button' => array(
+			'type' => 'username_button',
+			'items' => array( 
+				'logout_link' 
+			) 
+		),
+		'loginform_login' => array(
+			'type' => 'loginform_login',
+			'popup' => false 
+		),
+		'logout_link' => array(
+			'type' => 'logout_link' 
 		),
 		'-3' => array(
 			'type' => '-' 

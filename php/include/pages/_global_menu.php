@@ -9,6 +9,12 @@
 			'menu' => array(
 				'menutItem' => false 
 			),
+			'loginform_login' => array(
+				'menutItem' => false 
+			),
+			'username_button' => array(
+				'menutItem' => false 
+			),
 			'welcome_item' => array(
 				'menutItem' => true,
 				'group' => false,
@@ -105,7 +111,9 @@
 				),
 				'supertop' => array( 
 					'logo',
-					'menu' 
+					'menu',
+					'loginform_login',
+					'username_button' 
 				),
 				'grid' => array( 
 					'welcome_item',
@@ -127,6 +135,8 @@
 			'itemForms' => array(
 				'logo' => 'supertop',
 				'menu' => 'supertop',
+				'loginform_login' => 'supertop',
+				'username_button' => 'supertop',
 				'welcome_item' => 'grid',
 				'welcome_item1' => 'grid',
 				'welcome_item2' => 'grid',
@@ -141,7 +151,9 @@
 				 
 			),
 			'itemVisiblity' => array(
-				'menu' => 3 
+				'menu' => 3,
+				'username_button' => 3,
+				'loginform_login' => 3 
 			) 
 		),
 		'itemsByType' => array(
@@ -161,11 +173,23 @@
 				'welcome_item6',
 				'welcome_item7',
 				'welcome_item8' 
+			),
+			'username_button' => array( 
+				'username_button' 
+			),
+			'loginform_login' => array( 
+				'loginform_login' 
+			),
+			'logout_link' => array( 
+				'logout_link' 
 			) 
 		),
 		'cellMaps' => array(
 			 
 		) 
+	),
+	'loginForm' => array(
+		'loginForm' => 0 
 	),
 	'page' => array(
 		'verticalBar' => false,
@@ -273,7 +297,8 @@
 				'c2' => array(
 					'model' => 'c2',
 					'items' => array( 
-						 
+						'loginform_login',
+						'username_button' 
 					) 
 				) 
 			),
@@ -477,6 +502,19 @@
 			),
 			'background' => '#6493ea',
 			'linkType' => 0 
+		),
+		'username_button' => array(
+			'type' => 'username_button',
+			'items' => array( 
+				'logout_link' 
+			) 
+		),
+		'loginform_login' => array(
+			'type' => 'loginform_login',
+			'popup' => false 
+		),
+		'logout_link' => array(
+			'type' => 'logout_link' 
 		) 
 	),
 	'dbProps' => array(
