@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { X } from 'lucide-react';
-import { OrganizationContact, Organization } from '../../types';
+import { OrganizationContact } from '../../types';
 import { useOrganizations } from '../../hooks/useOrganizations';
 
 const contactSchema = z.object({
@@ -13,8 +13,8 @@ const contactSchema = z.object({
   email: z.string().email('Invalid email address').optional().or(z.literal('')),
   phone: z.string().optional(),
   dob: z.string().optional(),
-  city: z.string().optional(),
   pin: z.string().optional(),
+  city: z.string().optional(),
   country: z.string().optional(),
 });
 
@@ -29,12 +29,14 @@ interface ContactFormProps {
 
 export function ContactForm({ contact, onSubmit, onClose, isLoading }: ContactFormProps) {
   const { data: organizations = [] } = useOrganizations();
-  
+  const [isCityCountryAutofilled, setIsCityCountryAutofilled] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: contact ? {
@@ -51,6 +53,27 @@ export function ContactForm({ contact, onSubmit, onClose, isLoading }: ContactFo
       country: 'India',
     },
   });
+
+  const pinValue = watch('pin');
+
+  useEffect(() => {
+    if (pinValue && pinValue.length === 6) {
+      fetch(`https://api.postalpincode.in/pincode/${pinValue}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data && data[0].Status === 'Success') {
+            const postOffice = data[0].PostOffice[0];
+            setValue('city', postOffice.District);
+            setValue('country', postOffice.Country);
+            setIsCityCountryAutofilled(true);
+          }
+        })
+        .catch(error => console.error('Error fetching pincode data:', error));
+    } else {
+        setIsCityCountryAutofilled(false);
+    }
+  }, [pinValue, setValue]);
+
 
   const handleFormSubmit = (data: ContactFormData) => {
     const submitData = {
@@ -167,17 +190,6 @@ export function ContactForm({ contact, onSubmit, onClose, isLoading }: ContactFo
             
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                City
-              </label>
-              <input
-                {...register('city')}
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="e.g., Mumbai, Delhi"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
                 PIN Code
               </label>
               <input
@@ -189,10 +201,23 @@ export function ContactForm({ contact, onSubmit, onClose, isLoading }: ContactFo
             
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
+                City
+              </label>
+              <input
+                {...register('city')}
+                readOnly={isCityCountryAutofilled}
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="e.g., Mumbai, Delhi"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Country
               </label>
               <input
                 {...register('country')}
+                readOnly={isCityCountryAutofilled}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="India"
               />
