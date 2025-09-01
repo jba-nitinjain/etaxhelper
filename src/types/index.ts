@@ -124,3 +124,16 @@ export interface CreateOrganizationContactData {
 
 export interface UpdateOrganizationData extends Partial<CreateOrganizationData> {}
 export interface UpdateOrganizationContactData extends Partial<CreateOrganizationContactData> {}
+
+export interface CreateOrganizationBankData {
+  org_id: number;
+  bank_name: string;
+  branch_name?: string;
+  account_no: string;
+  ifsc_code?: string;
+  swift_code?: string;
+  account_type?: string;
+  mode_of_operation?: 'Singly' | 'Jointly' | 'Any two jointly' | 'Either or survivor' | 'Other';
+}
+
+export interface UpdateOrganizationBankData extends Partial<CreateOrganizationBankData> {}

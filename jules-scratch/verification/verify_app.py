@@ -7,83 +7,80 @@ def run_verification():
         page = browser.new_page()
 
         test_org_name = f"TestCorp_{int(time.time())}"
+        test_bank_name = f"TestBank_{int(time.time())}"
 
         try:
-            # 1. Navigate to the Organizations page
+            # --- SETUP: Create an organization first ---
             page.goto("http://localhost:5173/organizations", timeout=90000)
-            heading = page.get_by_role("heading", name="Organizations")
+            page.get_by_role("button", name="Add New").click()
+            page.get_by_label("Display Name *").fill(test_org_name)
+            page.get_by_role("button", name="Create Organization").click()
+            expect(page.get_by_role("row", name=test_org_name)).to_be_visible(timeout=30000)
+            print("SETUP: Organization created.")
+
+            # --- TEST `organization_bank` CRUD ---
+            # 1. Navigate to the Bank Accounts page
+            page.get_by_role("link", name="Bank Accounts").click()
+            heading = page.get_by_role("heading", name="Bank Accounts")
             expect(heading).to_be_visible(timeout=60000)
 
             # --- CREATE ---
-            # 2. Click "Add New" button
-            add_new_button = page.get_by_role("button", name="Add New")
-            expect(add_new_button).to_be_visible()
-            add_new_button.click()
-
-            # 3. Fill out the form
-            form_heading = page.get_by_role("heading", name="Add New Organization")
+            page.get_by_role("button", name="Add New").click()
+            form_heading = page.get_by_role("heading", name="Add New Bank Account")
             expect(form_heading).to_be_visible()
 
-            page.get_by_label("Display Name *").fill(test_org_name)
-            page.get_by_label("Company Name").fill("Test Company Inc.")
-            page.get_by_label("Email").fill("test@testcorp.com")
-            page.get_by_label("Work Phone").fill("123-456-7890")
-            page.get_by_label("Organization Type").select_option("Private Limited")
+            page.get_by_label("Organization *").select_option(label=test_org_name)
+            page.get_by_label("Bank Name *").fill(test_bank_name)
+            page.get_by_label("Account Number *").fill("1234567890")
+            page.get_by_role("button", name="Create Bank Account").click()
 
-            # 4. Submit the form
-            submit_button = page.get_by_role("button", name="Create Organization")
-            submit_button.click()
-
-            # 5. Verify the new organization appears in the table
-            expect(form_heading).not_to_be_visible() # Wait for form to close
-            new_org_row = page.get_by_role("row", name=test_org_name)
-            expect(new_org_row).to_be_visible(timeout=30000)
-            page.screenshot(path="jules-scratch/verification/01_create_success.png")
-            print("CREATE successful.")
+            expect(form_heading).not_to_be_visible()
+            new_bank_row = page.get_by_text(test_bank_name)
+            expect(new_bank_row).to_be_visible(timeout=30000)
+            page.screenshot(path="jules-scratch/verification/04_bank_create_success.png")
+            print("CREATE successful for bank.")
 
             # --- UPDATE ---
-            # 6. Click Edit button
-            edit_button = new_org_row.get_by_role("button", name="Edit Organization")
-            edit_button.click()
+            # This locator is not robust enough, let's find a better one
+            bank_row_to_edit = page.locator(f"tr:has-text('{test_bank_name}')")
+            bank_row_to_edit.get_by_role("button", name="Edit Bank").click()
 
-            # 7. Change details in the form
-            form_heading_edit = page.get_by_role("heading", name="Edit Organization")
+            form_heading_edit = page.get_by_role("heading", name="Edit Bank Account")
             expect(form_heading_edit).to_be_visible()
 
-            updated_phone = "987-654-3210"
-            page.get_by_label("Work Phone").fill(updated_phone)
+            updated_account_no = "0987654321"
+            page.get_by_label("Account Number *").fill(updated_account_no)
+            page.get_by_role("button", name="Update Bank Account").click()
 
-            # 8. Submit the form
-            update_button = page.get_by_role("button", name="Update Organization")
-            update_button.click()
-
-            # 9. Verify updated details
             expect(form_heading_edit).not_to_be_visible()
-            expect(new_org_row.get_by_text(updated_phone)).to_be_visible(timeout=30000)
-            page.screenshot(path="jules-scratch/verification/02_update_success.png")
-            print("UPDATE successful.")
+            expect(page.get_by_text(updated_account_no)).to_be_visible(timeout=30000)
+            page.screenshot(path="jules-scratch/verification/05_bank_update_success.png")
+            print("UPDATE successful for bank.")
 
             # --- DELETE ---
-            # 10. Click Delete button
-            delete_button = new_org_row.get_by_role("button", name="Delete Organization")
-
-            # Handle confirmation dialog
             page.on("dialog", lambda dialog: dialog.accept())
+            bank_row_to_edit.get_by_role("button", name="Delete Bank").click()
 
-            delete_button.click()
-
-            # 11. Verify the organization is removed
-            expect(new_org_row).not_to_be_visible(timeout=30000)
-            page.screenshot(path="jules-scratch/verification/03_delete_success.png")
-            print("DELETE successful.")
-
-            print("Verification script completed successfully.")
+            expect(page.get_by_text(test_bank_name)).not_to_be_visible(timeout=30000)
+            page.screenshot(path="jules-scratch/verification/06_bank_delete_success.png")
+            print("DELETE successful for bank.")
 
         except Exception as e:
             print(f"An error occurred during verification: {e}")
             page.screenshot(path="jules-scratch/verification/error.png")
 
         finally:
+            # --- CLEANUP: Delete the organization ---
+            page.goto("http://localhost:5173/organizations", timeout=90000)
+            try:
+                org_row = page.get_by_role("row", name=test_org_name)
+                if org_row.is_visible():
+                    page.on("dialog", lambda dialog: dialog.accept())
+                    org_row.get_by_role("button", name="Delete Organization").click()
+                    print("CLEANUP: Organization deleted.")
+            except Exception as e:
+                print(f"Cleanup failed, maybe the org was already deleted: {e}")
+
             browser.close()
 
 if __name__ == "__main__":
