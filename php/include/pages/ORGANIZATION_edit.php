@@ -30,6 +30,11 @@
 			'previewPageId' => '' 
 		) 
 	),
+	'master' => array(
+		'organization_group' => array(
+			'preview' => false 
+		) 
+	),
 	'captcha' => array(
 		'captcha' => false 
 	),
@@ -39,7 +44,8 @@
 			'company_name',
 			'display_name',
 			'email',
-			'phone_work' 
+			'phone_work',
+			'group_id' 
 		),
 		'searchRequiredFields' => array( 
 			 
@@ -65,6 +71,9 @@
 			),
 			'phone_work' => array( 
 				'integrated_edit_field4' 
+			),
+			'group_id' => array( 
+				'integrated_edit_field5' 
 			) 
 		) 
 	),
@@ -94,7 +103,8 @@
 					'integrated_edit_field1',
 					'integrated_edit_field2',
 					'integrated_edit_field3',
-					'integrated_edit_field4' 
+					'integrated_edit_field4',
+					'integrated_edit_field5' 
 				) 
 			),
 			'formXtTags' => array(
@@ -113,7 +123,8 @@
 				'integrated_edit_field1' => 'grid',
 				'integrated_edit_field2' => 'grid',
 				'integrated_edit_field3' => 'grid',
-				'integrated_edit_field4' => 'grid' 
+				'integrated_edit_field4' => 'grid',
+				'integrated_edit_field5' => 'grid' 
 			),
 			'itemLocations' => array(
 				'integrated_edit_field' => array(
@@ -133,6 +144,10 @@
 					'cellId' => 'c3' 
 				),
 				'integrated_edit_field4' => array(
+					'location' => 'grid',
+					'cellId' => 'c3' 
+				),
+				'integrated_edit_field5' => array(
 					'location' => 'grid',
 					'cellId' => 'c3' 
 				) 
@@ -168,7 +183,8 @@
 				'integrated_edit_field1',
 				'integrated_edit_field2',
 				'integrated_edit_field3',
-				'integrated_edit_field4' 
+				'integrated_edit_field4',
+				'integrated_edit_field5' 
 			),
 			'edit_view' => array( 
 				'edit_view' 
@@ -192,7 +208,8 @@
 							'integrated_edit_field1',
 							'integrated_edit_field2',
 							'integrated_edit_field3',
-							'integrated_edit_field4' 
+							'integrated_edit_field4',
+							'integrated_edit_field5' 
 						),
 						'fixedAtServer' => true,
 						'fixedAtClient' => false 
@@ -372,7 +389,8 @@
 						'integrated_edit_field1',
 						'integrated_edit_field2',
 						'integrated_edit_field3',
-						'integrated_edit_field4' 
+						'integrated_edit_field4',
+						'integrated_edit_field5' 
 					) 
 				) 
 			),
@@ -437,6 +455,11 @@
 		),
 		'edit_view' => array(
 			'type' => 'edit_view' 
+		),
+		'integrated_edit_field5' => array(
+			'field' => 'group_id',
+			'type' => 'integrated_edit_field',
+			'orientation' => 0 
 		) 
 	),
 	'dbProps' => array(

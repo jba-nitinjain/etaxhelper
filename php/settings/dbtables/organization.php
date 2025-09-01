@@ -3,7 +3,19 @@ global $runnerDbTableInfo;
 $runnerDbTableInfo['organization'] = array(
 	'type' => 0,
 	'foreignKeys' => array( 
-		 
+		array(
+			'name' => 'fk_org_group',
+			'refTable' => 'organization_group',
+			'refSchema' => '',
+			'del_rule' => 2,
+			'upd_rule' => 4,
+			'columns' => array( 
+				array(
+					'column' => 'group_id',
+					'ref_column' => 'group_id' 
+				) 
+			) 
+		) 
 	),
 	'fields' => array( 
 		array(
@@ -79,6 +91,17 @@ $runnerDbTableInfo['organization'] = array(
 			'size' => 32,
 			'scale' => 0,
 			'typeName' => 'varchar(32)',
+			'nullable' => true,
+			'autoinc' => false,
+			'defaultValueSQL' => null,
+			'defaultValue' => '' 
+		),
+		array(
+			'name' => 'group_id',
+			'type' => 20,
+			'size' => 0,
+			'scale' => 0,
+			'typeName' => 'bigint',
 			'nullable' => true,
 			'autoinc' => false,
 			'defaultValueSQL' => null,

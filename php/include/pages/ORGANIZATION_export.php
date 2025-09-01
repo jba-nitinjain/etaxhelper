@@ -18,6 +18,9 @@
 		),
 		'phone_work' => array(
 			'totalsType' => '' 
+		),
+		'group_id' => array(
+			'totalsType' => '' 
 		) 
 	),
 	'fields' => array(
@@ -27,7 +30,8 @@
 			'company_name',
 			'display_name',
 			'email',
-			'phone_work' 
+			'phone_work',
+			'group_id' 
 		),
 		'exportFields' => array( 
 			'org_id',
@@ -35,7 +39,8 @@
 			'company_name',
 			'display_name',
 			'email',
-			'phone_work' 
+			'phone_work',
+			'group_id' 
 		),
 		'searchRequiredFields' => array( 
 			 
@@ -61,6 +66,9 @@
 			),
 			'phone_work' => array( 
 				'export_field5' 
+			),
+			'group_id' => array( 
+				'export_field6' 
 			) 
 		) 
 	),
@@ -85,7 +93,8 @@
 					'export_field2',
 					'export_field3',
 					'export_field4',
-					'export_field5' 
+					'export_field5',
+					'export_field6' 
 				),
 				'footer' => array( 
 					'export_export',
@@ -105,6 +114,7 @@
 				'export_field3' => 'grid',
 				'export_field4' => 'grid',
 				'export_field5' => 'grid',
+				'export_field6' => 'grid',
 				'export_export' => 'footer',
 				'export_cancel' => 'footer' 
 			),
@@ -131,7 +141,8 @@
 				'export_field2',
 				'export_field3',
 				'export_field4',
-				'export_field5' 
+				'export_field5',
+				'export_field6' 
 			) 
 		),
 		'cellMaps' => array(
@@ -276,7 +287,8 @@
 						'export_field2',
 						'export_field3',
 						'export_field4',
-						'export_field5' 
+						'export_field5',
+						'export_field6' 
 					) 
 				) 
 			),
@@ -353,6 +365,10 @@
 		),
 		'export_field5' => array(
 			'field' => 'phone_work',
+			'type' => 'export_field' 
+		),
+		'export_field6' => array(
+			'field' => 'group_id',
 			'type' => 'export_field' 
 		) 
 	),

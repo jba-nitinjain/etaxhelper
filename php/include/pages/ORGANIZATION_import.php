@@ -7,7 +7,8 @@
 			'company_name',
 			'display_name',
 			'email',
-			'phone_work' 
+			'phone_work',
+			'group_id' 
 		),
 		'searchRequiredFields' => array( 
 			 
@@ -33,6 +34,9 @@
 			),
 			'phone_work' => array( 
 				'import_field5' 
+			),
+			'group_id' => array( 
+				'import_field6' 
 			) 
 		) 
 	),
@@ -57,7 +61,8 @@
 					'import_field2',
 					'import_field3',
 					'import_field4',
-					'import_field5' 
+					'import_field5',
+					'import_field6' 
 				) 
 			),
 			'formXtTags' => array(
@@ -72,7 +77,8 @@
 				'import_field2' => 'grid',
 				'import_field3' => 'grid',
 				'import_field4' => 'grid',
-				'import_field5' => 'grid' 
+				'import_field5' => 'grid',
+				'import_field6' => 'grid' 
 			),
 			'itemLocations' => array(
 				 
@@ -91,7 +97,8 @@
 				'import_field2',
 				'import_field3',
 				'import_field4',
-				'import_field5' 
+				'import_field5',
+				'import_field6' 
 			) 
 		),
 		'cellMaps' => array(
@@ -224,7 +231,8 @@
 						'import_field2',
 						'import_field3',
 						'import_field4',
-						'import_field5' 
+						'import_field5',
+						'import_field6' 
 					) 
 				) 
 			),
@@ -260,6 +268,10 @@
 		),
 		'import_field5' => array(
 			'field' => 'phone_work',
+			'type' => 'import_field' 
+		),
+		'import_field6' => array(
+			'field' => 'group_id',
 			'type' => 'import_field' 
 		) 
 	),

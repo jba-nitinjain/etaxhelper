@@ -43,6 +43,9 @@ $runnerProjectSettings = array(
 		),
 		'admin_users' => array(
 			'table' => 3579 
+		),
+		'organization_group' => array(
+			'table' => 3649 
 		) 
 	),
 	'userTableKeys' => array( 
@@ -402,6 +405,18 @@ $runnerProjectSettings = array(
 			'connId' => 'conn',
 			'color' => 'e8926f',
 			'originalTable' => 'users' 
+		),
+		'organization_group' => array(
+			'gid' => 3649,
+			'name' => 'organization_group',
+			'shortName' => 'organization_group',
+			'type' => 0,
+			'caption' => array(
+				'English' => 'Organization Group' 
+			),
+			'connId' => 'conn',
+			'color' => 'd2691e',
+			'originalTable' => 'organization_group' 
 		) 
 	),
 	'tablesByShort' => array(
@@ -415,7 +430,8 @@ $runnerProjectSettings = array(
 		'organization_registration' => 'organization_registration',
 		'organization_social_media' => 'organization_social_media',
 		'users' => 'users',
-		'admin_users' => 'admin_users' 
+		'admin_users' => 'admin_users',
+		'organization_group' => 'organization_group' 
 	),
 	'tablesByGood' => array(
 		'ORGANIZATION' => 'ORGANIZATION',
@@ -428,7 +444,8 @@ $runnerProjectSettings = array(
 		'organization_registration' => 'organization_registration',
 		'organization_social_media' => 'organization_social_media',
 		'users' => 'users',
-		'admin_users' => 'admin_users' 
+		'admin_users' => 'admin_users',
+		'organization_group' => 'organization_group' 
 	),
 	'events' => array( 
 		 
@@ -451,7 +468,7 @@ $runnerProjectSettings = array(
 	'defaultConnID' => 'conn',
 	'wrConnectionID' => '',
 	'wizardBuild' => '43729',
-	'projectBuild' => 'TmSFRnLlj49y',
+	'projectBuild' => 'B2xWN5CZs26C',
 	'projectTheme' => 'default',
 	'projectSize' => 'normal',
 	'customErrorMsg' => array(

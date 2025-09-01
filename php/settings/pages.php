@@ -1,53 +1,7 @@
 <?php
 $runnerPageInfo = array(
 	'allPages' => array(
-		'ORGANIZATION' => array(
-			'add' => array( 
-				'add' 
-			),
-			'export' => array( 
-				'export' 
-			),
-			'import' => array( 
-				'import' 
-			),
-			'edit' => array( 
-				'edit' 
-			),
-			'view' => array( 
-				'view' 
-			),
-			'list' => array( 
-				'list' 
-			),
-			'print' => array( 
-				'print' 
-			) 
-		),
 		'organization_bank' => array(
-			'add' => array( 
-				'add' 
-			),
-			'export' => array( 
-				'export' 
-			),
-			'import' => array( 
-				'import' 
-			),
-			'edit' => array( 
-				'edit' 
-			),
-			'view' => array( 
-				'view' 
-			),
-			'list' => array( 
-				'list' 
-			),
-			'print' => array( 
-				'print' 
-			) 
-		),
-		'organization_branch' => array(
 			'add' => array( 
 				'add' 
 			),
@@ -237,6 +191,49 @@ $runnerPageInfo = array(
 				'print' 
 			) 
 		),
+		'users' => array(
+			'list' => array( 
+				'list' 
+			),
+			'edit' => array( 
+				'edit' 
+			),
+			'add' => array( 
+				'add' 
+			),
+			'view' => array( 
+				'view' 
+			) 
+		),
+		'organization_group' => array(
+			'add' => array( 
+				'add' 
+			),
+			'export' => array( 
+				'export' 
+			),
+			'import' => array( 
+				'import' 
+			),
+			'edit' => array( 
+				'edit' 
+			),
+			'view' => array( 
+				'view' 
+			),
+			'list' => array( 
+				'list' 
+			),
+			'print' => array( 
+				'print' 
+			),
+			'masterlist' => array( 
+				'masterlist' 
+			),
+			'masterprint' => array( 
+				'masterprint' 
+			) 
+		),
 		'<global>' => array(
 			'menu' => array( 
 				'menu' 
@@ -254,33 +251,72 @@ $runnerPageInfo = array(
 				'admin_members_list' 
 			) 
 		),
-		'users' => array(
-			'list' => array( 
-				'list' 
+		'organization_branch' => array(
+			'add' => array( 
+				'add' 
+			),
+			'export' => array( 
+				'export' 
+			),
+			'import' => array( 
+				'import' 
 			),
 			'edit' => array( 
 				'edit' 
 			),
+			'view' => array( 
+				'view' 
+			),
+			'list' => array( 
+				'list' 
+			),
+			'print' => array( 
+				'print' 
+			) 
+		),
+		'ORGANIZATION' => array(
 			'add' => array( 
 				'add' 
 			),
+			'export' => array( 
+				'export' 
+			),
+			'import' => array( 
+				'import' 
+			),
+			'edit' => array( 
+				'edit' 
+			),
 			'view' => array( 
 				'view' 
+			),
+			'list' => array( 
+				'list' 
+			),
+			'print' => array( 
+				'print' 
+			),
+			'masterlist' => array( 
+				'masterlist' 
+			),
+			'masterprint' => array( 
+				'masterprint' 
 			) 
 		) 
 	),
 	'tableMasks' => array(
 		'ORGANIZATION' => 'ADESPI',
 		'admin_users' => 'ADESPI',
-		'organization_social_media' => 'ADESPI',
+		'organization_group' => 'ADESPI',
 		'organization_bank' => 'ADESPI',
-		'organization_login' => 'ADESPI',
 		'organization_branch' => 'ADESPI',
-		'organization_bank_signatory' => 'ADESPI',
 		'organization_contact' => 'ADESPI',
 		'organization_director' => 'ADESPI',
+		'organization_bank_signatory' => 'ADESPI',
 		'organization_registration' => 'ADESPI',
+		'organization_social_media' => 'ADESPI',
 		'users' => 'ADES',
+		'organization_login' => 'ADESPI',
 		'<global>' => 'S' 
 	) 
 );

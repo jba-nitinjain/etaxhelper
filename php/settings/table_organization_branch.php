@@ -82,7 +82,7 @@ FROM
 			'goodName' => 'branch_id',
 			'strField' => 'branch_id',
 			'index' => 1,
-			'type' => 20,
+			'type' => 3,
 			'autoinc' => true,
 			'sqlExpression' => 'branch_id',
 			'viewFormats' => array(
@@ -102,7 +102,7 @@ FROM
 			'goodName' => 'org_id',
 			'strField' => 'org_id',
 			'index' => 2,
-			'type' => 20,
+			'type' => 3,
 			'sqlExpression' => 'org_id',
 			'viewFormats' => array(
 				'view' => array(

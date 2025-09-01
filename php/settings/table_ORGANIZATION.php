@@ -68,9 +68,11 @@ $runnerTableSettings['ORGANIZATION'] = array(
 	company_name,
 	display_name,
 	email,
-	phone_work
+	phone_work,
+	group_id
 FROM
-	`ORGANIZATION`',
+	`ORGANIZATION`
+',
 	'keyFields' => array( 
 		'org_id' 
 	),
@@ -88,7 +90,7 @@ FROM
 			'goodName' => 'org_id',
 			'strField' => 'org_id',
 			'index' => 1,
-			'type' => 20,
+			'type' => 3,
 			'autoinc' => true,
 			'sqlExpression' => 'org_id',
 			'viewFormats' => array(
@@ -206,6 +208,41 @@ FROM
 				) 
 			),
 			'tableName' => 'ORGANIZATION' 
+		),
+		'group_id' => array(
+			'name' => 'group_id',
+			'goodName' => 'group_id',
+			'strField' => 'group_id',
+			'index' => 7,
+			'type' => 3,
+			'sqlExpression' => 'group_id',
+			'viewFormats' => array(
+				'view' => array(
+					 
+				) 
+			),
+			'editFormats' => array(
+				'edit' => array(
+					'format' => 'Lookup wizard',
+					'lookupType' => 2,
+					'lookupTable' => 'organization_group',
+					'lookupTableConnection' => 'conn',
+					'lookupLinkField' => 'group_id',
+					'lookupDisplayField' => 'group_name' 
+				) 
+			),
+			'tableName' => 'ORGANIZATION' 
+		) 
+	),
+	'masterTables' => array( 
+		array(
+			'table' => 'organization_group',
+			'detailsKeys' => array( 
+				'group_id' 
+			),
+			'masterKeys' => array( 
+				'group_id' 
+			) 
 		) 
 	),
 	'detailsTables' => array( 
@@ -224,9 +261,11 @@ FROM
 	company_name,
 	display_name,
 	email,
-	phone_work
+	phone_work,
+	group_id
 FROM
-	`ORGANIZATION`',
+	`ORGANIZATION`
+',
 		'parsed' => true,
 		'type' => 'SQLQuery',
 		'fieldList' => array( 
@@ -319,6 +358,21 @@ FROM
 				),
 				'encrypted' => false,
 				'columnName' => 'phone_work' 
+			),
+			array(
+				'sql' => 'group_id',
+				'parsed' => true,
+				'type' => 'FieldListItem',
+				'alias' => '',
+				'expression' => array(
+					'sql' => '',
+					'parsed' => true,
+					'type' => 'SQLField',
+					'table' => 'ORGANIZATION',
+					'name' => 'group_id' 
+				),
+				'encrypted' => false,
+				'columnName' => 'group_id' 
 			) 
 		),
 		'fromList' => array( 
@@ -336,7 +390,8 @@ FROM
 						'company_name',
 						'display_name',
 						'email',
-						'phone_work' 
+						'phone_work',
+						'group_id' 
 					),
 					'name' => 'ORGANIZATION' 
 				),
@@ -432,6 +487,13 @@ FROM
 				'groupByIndex' => -1,
 				'whereIndex' => -1,
 				'havingIndex' => -1 
+			),
+			array(
+				'fieldIndex' => 6,
+				'orderByIndex' => -1,
+				'groupByIndex' => -1,
+				'whereIndex' => -1,
+				'havingIndex' => -1 
 			) 
 		),
 		'headSql' => 'SELECT',
@@ -440,7 +502,8 @@ FROM
 	company_name,
 	display_name,
 	email,
-	phone_work',
+	phone_work,
+	group_id',
 		'fromListSql' => 'FROM
 	`ORGANIZATION`',
 		'orderBySql' => '',
@@ -511,7 +574,8 @@ FROM
 			'company_name',
 			'display_name',
 			'email',
-			'phone_work' 
+			'phone_work',
+			'group_id' 
 		),
 		'searchSuggest' => true,
 		'highlightSearchResults' => true,
@@ -523,7 +587,8 @@ FROM
 			'company_name',
 			'display_name',
 			'email',
-			'phone_work' 
+			'phone_work',
+			'group_id' 
 		) 
 	),
 	'connId' => 'conn',
@@ -577,7 +642,8 @@ if( mlang_getcurrentlang() === 'English' ) {
 		'company_name' => 'Company Name',
 		'display_name' => 'Display Name',
 		'email' => 'Email',
-		'phone_work' => 'Phone Work' 
+		'phone_work' => 'Phone Work',
+		'group_id' => 'Group Id' 
 	),
 	'fieldTooltips' => array(
 		'org_id' => '',
@@ -585,7 +651,8 @@ if( mlang_getcurrentlang() === 'English' ) {
 		'company_name' => '',
 		'display_name' => '',
 		'email' => '',
-		'phone_work' => '' 
+		'phone_work' => '',
+		'group_id' => '' 
 	),
 	'fieldPlaceholders' => array(
 		'org_id' => '',
@@ -593,7 +660,8 @@ if( mlang_getcurrentlang() === 'English' ) {
 		'company_name' => '',
 		'display_name' => '',
 		'email' => '',
-		'phone_work' => '' 
+		'phone_work' => '',
+		'group_id' => '' 
 	),
 	'pageTitles' => array(
 		 

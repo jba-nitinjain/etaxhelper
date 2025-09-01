@@ -33,9 +33,9 @@ $runnerDbTables = array(
 	),
 	array(
 		'connId' => 'conn',
-		'table' => 'organization_social_media',
+		'table' => 'organization_group',
 		'schema' => '',
-		'filename' => 'organization_social_media' 
+		'filename' => 'organization_group' 
 	),
 	array(
 		'connId' => 'conn',
@@ -45,21 +45,9 @@ $runnerDbTables = array(
 	),
 	array(
 		'connId' => 'conn',
-		'table' => 'organization_login',
-		'schema' => '',
-		'filename' => 'organization_login' 
-	),
-	array(
-		'connId' => 'conn',
 		'table' => 'organization_branch',
 		'schema' => '',
 		'filename' => 'organization_branch' 
-	),
-	array(
-		'connId' => 'conn',
-		'table' => 'organization_bank_signatory',
-		'schema' => '',
-		'filename' => 'organization_bank_signatory' 
 	),
 	array(
 		'connId' => 'conn',
@@ -75,9 +63,27 @@ $runnerDbTables = array(
 	),
 	array(
 		'connId' => 'conn',
+		'table' => 'organization_bank_signatory',
+		'schema' => '',
+		'filename' => 'organization_bank_signatory' 
+	),
+	array(
+		'connId' => 'conn',
 		'table' => 'organization_registration',
 		'schema' => '',
 		'filename' => 'organization_registration' 
+	),
+	array(
+		'connId' => 'conn',
+		'table' => 'organization_social_media',
+		'schema' => '',
+		'filename' => 'organization_social_media' 
+	),
+	array(
+		'connId' => 'conn',
+		'table' => 'organization_login',
+		'schema' => '',
+		'filename' => 'organization_login' 
 	) 
 );
 ?>

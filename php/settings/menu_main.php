@@ -277,6 +277,36 @@ $runnerMenus['main'] = array(
 					'table' => 3499,
 					'pageType' => 'list' 
 				) 
+			),
+			array(
+				'id' => '10',
+				'parent' => '',
+				'children' => array( 
+					 
+				),
+				'data' => array(
+					'name' => array(
+						'table' => 'organization_group',
+						'type' => 6 
+					),
+					'comments' => array(
+						'text' => '',
+						'type' => 0 
+					),
+					'style' => '',
+					'href' => '',
+					'params' => '',
+					'pageId' => '',
+					'itemType' => 2,
+					'linkType' => 0,
+					'openType' => 0,
+					'iconType' => 0,
+					'iconName' => '',
+					'showIconType' => 1,
+					'linkToAnotherApp' => false,
+					'table' => 3649,
+					'pageType' => 'list' 
+				) 
 			) 
 		),
 		'data' => array(

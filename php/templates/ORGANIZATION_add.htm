@@ -226,6 +226,30 @@
 
 
 {END phone_work_fieldblock}
+											
+{BEGIN group_id_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_group_id}  r-vertical-field" 
+	data-signal-error-for="group_id{$id}" {$required_attr_group_id}
+	data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field5" {$item_integrated_edit_field5} data-pageid="{$pageid}" data-field="group_id" data-fieldname="group_id" >
+
+	<label class="r-edit-label control-label {$group_id_label_class}" for="{$labelfor_group_id}">
+		{BEGIN group_id_label}
+			{$group_id_forward_control}
+			{$label ORGANIZATION group_id }			{END group_id_label}
+		<span class="icon-required"></span>
+	</label>
+	<div class="r-edit-field">
+		{$group_id_editcontrol}	</div>
+		<div class="r-edit-tooltip" data-helpfor="group_id" {$tooltipAttr ORGANIZATION group_id } >
+		<div class="text-muted" >
+		{$tooltip ORGANIZATION group_id }		</div>
+	</div>
+	</div>
+
+
+{END group_id_fieldblock}
 	
 								</td>
 			{END cellblock_grid_c3}

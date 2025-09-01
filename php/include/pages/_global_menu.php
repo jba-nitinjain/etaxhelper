@@ -86,6 +86,14 @@
 				'items' => null,
 				'table' => 'organization_social_media',
 				'page' => 'list' 
+			),
+			'welcome_item9' => array(
+				'menutItem' => true,
+				'group' => false,
+				'linkType' => 0,
+				'items' => null,
+				'table' => 'organization_group',
+				'page' => 'list' 
 			) 
 		) 
 	),
@@ -124,7 +132,8 @@
 					'welcome_item5',
 					'welcome_item6',
 					'welcome_item7',
-					'welcome_item8' 
+					'welcome_item8',
+					'welcome_item9' 
 				) 
 			),
 			'formXtTags' => array(
@@ -145,7 +154,8 @@
 				'welcome_item5' => 'grid',
 				'welcome_item6' => 'grid',
 				'welcome_item7' => 'grid',
-				'welcome_item8' => 'grid' 
+				'welcome_item8' => 'grid',
+				'welcome_item9' => 'grid' 
 			),
 			'itemLocations' => array(
 				 
@@ -172,7 +182,8 @@
 				'welcome_item5',
 				'welcome_item6',
 				'welcome_item7',
-				'welcome_item8' 
+				'welcome_item8',
+				'welcome_item9' 
 			),
 			'username_button' => array( 
 				'username_button' 
@@ -337,7 +348,8 @@
 						'welcome_item5',
 						'welcome_item6',
 						'welcome_item7',
-						'welcome_item8' 
+						'welcome_item8',
+						'welcome_item9' 
 					) 
 				) 
 			),
@@ -529,6 +541,18 @@
 		),
 		'adminarea_link' => array(
 			'type' => 'adminarea_link' 
+		),
+		'welcome_item9' => array(
+			'type' => 'welcome_item',
+			'linkUrl' => '',
+			'linkTable' => 'organization_group',
+			'linkPage' => 'list',
+			'linkText' => array(
+				'table' => 'organization_group',
+				'type' => 6 
+			),
+			'background' => '#d2691e',
+			'linkType' => 0 
 		) 
 	),
 	'dbProps' => array(

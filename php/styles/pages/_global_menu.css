@@ -25,6 +25,9 @@
 [data-page="_global_menu"][data-itemid="welcome_item8"] > .bs-welcome-header {
   background-color: #5f9ea0;
 }
+[data-page="_global_menu"][data-itemid="welcome_item9"] > .bs-welcome-header {
+  background-color: #d2691e;
+}
 [data-page="_global_menu"][data-itemid="page_image_ash8f23hr"] {
   width: 400px;
 }
