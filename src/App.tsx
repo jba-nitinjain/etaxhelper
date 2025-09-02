@@ -6,6 +6,13 @@ import { Dashboard } from './pages/Dashboard';
 import { Contacts } from './pages/Contacts';
 import { Organizations } from './pages/Organizations';
 import { OrganizationBanks } from './pages/OrganizationBanks';
+import { OrganizationBankSignatories } from './pages/OrganizationBankSignatories';
+import { OrganizationBranches } from './pages/OrganizationBranches';
+import { OrganizationDirectors } from './pages/OrganizationDirectors';
+import { OrganizationGroups } from './pages/OrganizationGroups';
+import { OrganizationLogins } from './pages/OrganizationLogins';
+import { OrganizationRegistrations } from './pages/OrganizationRegistrations';
+import { OrganizationSocialMedias } from './pages/OrganizationSocialMedias';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,6 +37,13 @@ function App() {
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/organizations" element={<Organizations />} />
                 <Route path="/organization-banks" element={<OrganizationBanks />} />
+                <Route path="/organization-bank-signatories" element={<OrganizationBankSignatories />} />
+                <Route path="/organization-branches" element={<OrganizationBranches />} />
+                <Route path="/organization-directors" element={<OrganizationDirectors />} />
+                <Route path="/organization-groups" element={<OrganizationGroups />} />
+                <Route path="/organization-logins" element={<OrganizationLogins />} />
+                <Route path="/organization-registrations" element={<OrganizationRegistrations />} />
+                <Route path="/organization-social-medias" element={<OrganizationSocialMedias />} />
                 <Route path="/settings" element={
                   <div className="bg-white rounded-lg shadow-sm border border-slate-200 p-6">
                     <h1 className="text-2xl font-bold text-slate-900 mb-4">Settings</h1>
