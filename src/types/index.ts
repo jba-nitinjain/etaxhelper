@@ -137,3 +137,87 @@ export interface CreateOrganizationBankData {
 }
 
 export interface UpdateOrganizationBankData extends Partial<CreateOrganizationBankData> {}
+
+export interface CreateOrganizationBranchData {
+  org_id: number;
+  branch_name?: string;
+  address_line?: string;
+  city?: string;
+  state?: string;
+  postal_code?: string;
+  country?: string;
+  phone?: string;
+  email?: string;
+}
+
+export interface UpdateOrganizationBranchData extends Partial<CreateOrganizationBranchData> {}
+
+export interface CreateOrganizationDirectorData {
+  org_id: number;
+  NAME: string;
+  designation?: string;
+  email?: string;
+  phone?: string;
+  din_number?: string;
+  dob?: Date;
+  city?: string;
+  pin?: string;
+  country?: string;
+  date_of_appointment?: Date;
+}
+
+export interface UpdateOrganizationDirectorData extends Partial<CreateOrganizationDirectorData> {}
+
+export interface CreateOrganizationBankSignatoryData {
+  bank_id: number;
+  NAME: string;
+  designation?: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface UpdateOrganizationBankSignatoryData extends Partial<CreateOrganizationBankSignatoryData> {}
+
+export interface OrganizationGroup {
+  group_id: number;
+  group_name: string;
+  description: string | null;
+}
+
+export interface CreateOrganizationGroupData {
+  group_name: string;
+  description?: string;
+}
+
+export interface UpdateOrganizationGroupData extends Partial<CreateOrganizationGroupData> {}
+
+export interface CreateOrganizationLoginData {
+  org_id: number;
+  related_social_id?: number;
+  website: string;
+  user_id: string;
+  PASSWORD?: string;
+  notes?: string;
+}
+
+export interface UpdateOrganizationLoginData extends Partial<CreateOrganizationLoginData> {}
+
+export interface CreateOrganizationRegistrationData {
+    org_id: number;
+    reg_type?: string;
+    reg_number?: string;
+    valid_from?: Date;
+    valid_to?: Date;
+}
+
+export interface UpdateOrganizationRegistrationData extends Partial<CreateOrganizationRegistrationData> {}
+
+export interface CreateOrganizationSocialMediaData {
+    org_id: number;
+    platform: string;
+    handle_name?: string;
+    website?: string;
+    mobile_app?: string;
+}
+
+export interface UpdateOrganizationSocialMediaData extends Partial<CreateOrganizationSocialMediaData> {}

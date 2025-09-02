@@ -5,14 +5,27 @@ import {
   Users, 
   Settings,
   Building,
-  Landmark
+  Landmark,
+  Shield,
+  Briefcase,
+  Key,
+  FileText,
+  Share2,
+  Map,
+  UserCheck
 } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-  { name: 'Contacts', href: '/contacts', icon: Users },
   { name: 'Organizations', href: '/organizations', icon: Building },
+  { name: 'Branches', href: '/organization-branches', icon: Map },
+  { name: 'Contacts', href: '/contacts', icon: Users },
+  { name: 'Directors', href: '/organization-directors', icon: Briefcase },
   { name: 'Bank Accounts', href: '/organization-banks', icon: Landmark },
+  { name: 'Bank Signatories', href: '/organization-bank-signatories', icon: UserCheck },
+  { name: 'Registrations', href: '/organization-registrations', icon: FileText },
+  { name: 'Logins', href: '/organization-logins', icon: Key },
+  { name: 'Groups', href: '/organization-groups', icon: Users },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 
